@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 300" fill="none">
+  <defs>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4338ca"/>
+      <stop offset="50%" stop-color="#6c63ff"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+    <linearGradient id="chipGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd700"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="holoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.15"/>
+      <stop offset="40%" stop-color="#6c63ff" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#ff6b9d" stop-opacity="0.15"/>
+    </linearGradient>
+    <filter id="cs"><feDropShadow dx="4" dy="12" stdDeviation="18" flood-color="#6c63ff" flood-opacity="0.55"/></filter>
+    <filter id="cg"><feGaussianBlur stdDeviation="4" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
+  </defs>
+  <!-- Card shadow -->
+  <ellipse cx="220" cy="275" rx="150" ry="14" fill="#6c63ff" fill-opacity="0.22"/>
+  <!-- Main card body -->
+  <rect x="28" y="30" width="384" height="232" rx="22" fill="url(#cardGrad)" filter="url(#cs)"/>
+  <!-- Holographic shimmer overlay -->
+  <rect x="28" y="30" width="384" height="232" rx="22" fill="url(#holoGrad)"/>
+  <!-- Card top highlight streak -->
+  <rect x="28" y="30" width="384" height="60" rx="22" fill="white" fill-opacity="0.08"/>
+  <!-- Card edge border -->
+  <rect x="28" y="30" width="384" height="232" rx="22" stroke="white" stroke-width="1.5" fill="none" opacity="0.3"/>
+  <!-- Inner card border -->
+  <rect x="36" y="38" width="368" height="216" rx="18" stroke="white" stroke-width="0.5" fill="none" opacity="0.15"/>
+
+  <!-- MAGNETIC STRIPE (back-looking detail, top) -->
+  <rect x="28" y="82" width="384" height="38" rx="0" fill="#1e1b4b" fill-opacity="0.5"/>
+
+  <!-- CHIP -->
+  <rect x="52" y="136" width="58" height="46" rx="8" fill="url(#chipGrad)" filter="url(#cg)"/>
+  <rect x="52" y="136" width="58" height="46" rx="8" stroke="#d97706" stroke-width="1.5" fill="none"/>
+  <!-- Chip contact lines (horizontal) -->
+  <line x1="52" y1="149" x2="110" y2="149" stroke="#1f2937" stroke-width="1" opacity="0.6"/>
+  <line x1="52" y1="159" x2="110" y2="159" stroke="#1f2937" stroke-width="1" opacity="0.6"/>
+  <line x1="52" y1="169" x2="110" y2="169" stroke="#1f2937" stroke-width="1" opacity="0.6"/>
+  <!-- Chip vertical lines -->
+  <line x1="75" y1="136" x2="75" y2="182" stroke="#1f2937" stroke-width="1" opacity="0.6"/>
+  <line x1="89" y1="136" x2="89" y2="182" stroke="#1f2937" stroke-width="1" opacity="0.6"/>
+  <!-- Chip center box -->
+  <rect x="60" y="144" width="38" height="30" rx="3" fill="#f59e0b" fill-opacity="0.5"/>
+  <rect x="63" y="147" width="32" height="24" rx="2" fill="#fbbf24" fill-opacity="0.4"/>
+
+  <!-- CONTACTLESS symbol -->
+  <path d="M128 148 C138 148 148 158 148 168 C148 178 138 188 128 188" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.8"/>
+  <path d="M128 156 C134 156 140 162 140 168 C140 174 134 180 128 180" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <path d="M128 163 C131 163 134 165.5 134 168 C134 170.5 131 173 128 173" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <circle cx="128" cy="168" r="3" fill="white" opacity="0.9"/>
+
+  <!-- CARD NUMBER -->
+  <text x="52" y="220" font-size="16" fill="white" font-family="monospace" font-weight="bold" letter-spacing="3" opacity="0.9">••••  ••••  ••••  4821</text>
+
+  <!-- CARD HOLDER NAME -->
+  <text x="52" y="248" font-size="12" fill="white" font-family="sans-serif" opacity="0.7" letter-spacing="2">CARD HOLDER</text>
+  <text x="52" y="264" font-size="14" fill="white" font-family="sans-serif" font-weight="bold" letter-spacing="1" opacity="0.95">DANIEL ANDERSON</text>
+
+  <!-- EXPIRY -->
+  <text x="310" y="248" font-size="11" fill="white" font-family="sans-serif" opacity="0.7" letter-spacing="1">VALID THRU</text>
+  <text x="310" y="264" font-size="14" fill="white" font-family="sans-serif" font-weight="bold" opacity="0.95">12/29</text>
+
+  <!-- NETWORK LOGO (right) -->
+  <circle cx="356" cy="155" r="26" fill="#f59e0b" fill-opacity="0.85"/>
+  <circle cx="384" cy="155" r="26" fill="#ef4444" fill-opacity="0.75"/>
+  <ellipse cx="370" cy="155" rx="12" ry="20" fill="#f97316" fill-opacity="0.8"/>
+
+  <!-- Holographic diagonal lines -->
+  <line x1="28" y1="130" x2="412" y2="80" stroke="white" stroke-width="0.5" opacity="0.08"/>
+  <line x1="28" y1="160" x2="412" y2="110" stroke="white" stroke-width="0.5" opacity="0.08"/>
+  <line x1="28" y1="190" x2="412" y2="140" stroke="white" stroke-width="0.5" opacity="0.08"/>
+  <line x1="28" y1="220" x2="412" y2="170" stroke="white" stroke-width="0.5" opacity="0.08"/>
+</svg>

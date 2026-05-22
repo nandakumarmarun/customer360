@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" fill="none">
+  <defs>
+    <radialGradient id="bodyGrad" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#8b85ff"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </radialGradient>
+    <radialGradient id="headGrad" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#a89fff"/>
+      <stop offset="100%" stop-color="#6c63ff"/>
+    </radialGradient>
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#00d4ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#312e81"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="shirtGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8e4ff"/>
+      <stop offset="100%" stop-color="#c7d2fe"/>
+    </linearGradient>
+    <linearGradient id="tieGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#6c63ff" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Ambient glow circle behind person -->
+  <ellipse cx="200" cy="260" rx="160" ry="180" fill="url(#glowGrad)"/>
+
+  <!-- BASE PLATFORM -->
+  <ellipse cx="200" cy="470" rx="110" ry="18" fill="#6c63ff" fill-opacity="0.2"/>
+  <ellipse cx="200" cy="470" rx="70" ry="10" fill="#6c63ff" fill-opacity="0.35"/>
+
+  <!-- SUIT BODY / TORSO -->
+  <!-- Left suit panel -->
+  <path d="M110 340 C110 300 130 270 155 255 L175 250 L185 310 L160 380 L130 400 Z" fill="url(#suitGrad)" filter="url(#shadow)"/>
+  <!-- Right suit panel -->
+  <path d="M290 340 C290 300 270 270 245 255 L225 250 L215 310 L240 380 L270 400 Z" fill="url(#suitGrad)"/>
+  <!-- Suit center / shirt front -->
+  <path d="M185 255 L175 250 L162 270 L175 360 L200 375 L225 360 L238 270 L225 250 L215 255 L200 265 Z" fill="url(#shirtGrad)"/>
+  <!-- Collar -->
+  <path d="M182 258 L200 285 L218 258 L210 248 L200 260 L190 248 Z" fill="url(#shirtGrad)"/>
+  <!-- Tie -->
+  <path d="M196 280 L200 350 L204 280 L202 268 L198 268 Z" fill="url(#tieGrad)" rx="2"/>
+  <!-- Tie knot -->
+  <ellipse cx="200" cy="272" rx="7" ry="5" fill="#0ea5e9"/>
+  <!-- Suit lapels -->
+  <path d="M185 255 L162 270 L175 300" stroke="#4f46e5" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <path d="M215 255 L238 270 L225 300" stroke="#4f46e5" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <!-- Suit buttons -->
+  <circle cx="200" cy="310" r="3" fill="#6c63ff"/>
+  <circle cx="200" cy="325" r="3" fill="#6c63ff"/>
+
+  <!-- SHOULDERS -->
+  <path d="M105 315 C95 290 115 260 145 250 L165 250 C145 270 135 295 140 330 Z" fill="url(#suitGrad)"/>
+  <path d="M295 315 C305 290 285 260 255 250 L235 250 C255 270 265 295 260 330 Z" fill="url(#suitGrad)"/>
+  <!-- Shoulder highlight -->
+  <path d="M108 300 C100 280 116 258 142 252" stroke="#8b85ff" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M292 300 C300 280 284 258 258 252" stroke="#8b85ff" stroke-width="2" fill="none" opacity="0.5"/>
+
+  <!-- NECK -->
+  <rect x="187" y="215" width="26" height="40" rx="8" fill="#a89fff"/>
+
+  <!-- HEAD -->
+  <ellipse cx="200" cy="190" rx="68" ry="75" fill="url(#headGrad)" filter="url(#shadow)"/>
+  <!-- Head highlight -->
+  <ellipse cx="178" cy="165" rx="28" ry="22" fill="#c7d2fe" fill-opacity="0.3"/>
+  <!-- Head outline for definition -->
+  <ellipse cx="200" cy="190" rx="68" ry="75" stroke="#8b85ff" stroke-width="1.5" fill="none" opacity="0.4"/>
+
+  <!-- FACE FEATURES -->
+  <!-- Brow ridge (subtle) -->
+  <path d="M170 168 C178 162 192 160 200 162" stroke="#4f46e5" stroke-width="3" fill="none" opacity="0.5" stroke-linecap="round"/>
+  <path d="M200 162 C208 160 222 162 230 168" stroke="#4f46e5" stroke-width="3" fill="none" opacity="0.5" stroke-linecap="round"/>
+  <!-- Eyes -->
+  <ellipse cx="178" cy="178" rx="11" ry="8" fill="#1e1b4b"/>
+  <ellipse cx="222" cy="178" rx="11" ry="8" fill="#1e1b4b"/>
+  <!-- Iris -->
+  <circle cx="180" cy="178" r="5" fill="#00d4ff"/>
+  <circle cx="224" cy="178" r="5" fill="#00d4ff"/>
+  <!-- Pupil -->
+  <circle cx="180" cy="178" r="2.5" fill="#0c0a1e"/>
+  <circle cx="224" cy="178" r="2.5" fill="#0c0a1e"/>
+  <!-- Eye shine -->
+  <circle cx="182" cy="176" r="1.5" fill="white"/>
+  <circle cx="226" cy="176" r="1.5" fill="white"/>
+  <!-- Nose -->
+  <path d="M196 185 C194 200 194 208 200 210 C206 208 206 200 204 185" fill="#5b52c4" fill-opacity="0.5"/>
+  <!-- Mouth -->
+  <path d="M184 218 C190 225 210 225 216 218" stroke="#4f46e5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Ear left -->
+  <ellipse cx="132" cy="192" rx="10" ry="15" fill="#8b85ff"/>
+  <ellipse cx="134" cy="192" rx="6" ry="10" fill="#6c63ff"/>
+  <!-- Ear right -->
+  <ellipse cx="268" cy="192" rx="10" ry="15" fill="#8b85ff"/>
+  <ellipse cx="266" cy="192" rx="6" ry="10" fill="#6c63ff"/>
+
+  <!-- HAIR -->
+  <path d="M133 165 C135 120 160 108 200 106 C240 108 265 120 267 165 C258 142 240 130 200 128 C160 130 142 142 133 165 Z" fill="#312e81"/>
+  <path d="M133 165 C130 155 130 145 135 135" stroke="#4338ca" stroke-width="1" fill="none"/>
+  <path d="M267 165 C270 155 270 145 265 135" stroke="#4338ca" stroke-width="1" fill="none"/>
+
+  <!-- POCKET SQUARE -->
+  <path d="M252 280 L262 275 L268 285 L260 290 Z" fill="#00d4ff" opacity="0.9"/>
+
+  <!-- Lapel PIN / badge detail -->
+  <circle cx="172" cy="285" r="5" fill="#ffd700" opacity="0.9"/>
+  <circle cx="172" cy="285" r="3" fill="#f59e0b"/>
+
+  <!-- HOLOGRAPHIC RING (bottom) -->
+  <ellipse cx="200" cy="460" rx="90" ry="14" stroke="#00d4ff" stroke-width="1.5" fill="none" opacity="0.5" stroke-dasharray="6 4"/>
+  <ellipse cx="200" cy="460" rx="72" ry="10" stroke="#6c63ff" stroke-width="1" fill="none" opacity="0.4" stroke-dasharray="4 6"/>
+
+  <!-- DATA DOTS floating around (suggests digital/data) -->
+  <circle cx="80" cy="200" r="4" fill="#00d4ff" opacity="0.7"/>
+  <circle cx="72" cy="180" r="2.5" fill="#6c63ff" opacity="0.6"/>
+  <circle cx="88" cy="160" r="3" fill="#00d4ff" opacity="0.5"/>
+  <circle cx="320" cy="200" r="4" fill="#00d4ff" opacity="0.7"/>
+  <circle cx="328" cy="175" r="2.5" fill="#6c63ff" opacity="0.6"/>
+  <circle cx="315" cy="155" r="3" fill="#00d4ff" opacity="0.5"/>
+
+  <!-- Connecting lines (data network) -->
+  <line x1="80" y1="200" x2="72" y2="180" stroke="#00d4ff" stroke-width="1" opacity="0.4"/>
+  <line x1="72" y1="180" x2="88" y2="160" stroke="#6c63ff" stroke-width="1" opacity="0.4"/>
+  <line x1="320" y1="200" x2="328" y2="175" stroke="#00d4ff" stroke-width="1" opacity="0.4"/>
+  <line x1="328" y1="175" x2="315" y2="155" stroke="#6c63ff" stroke-width="1" opacity="0.4"/>
+</svg>

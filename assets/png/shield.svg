@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" fill="none">
+  <defs>
+    <linearGradient id="shieldGrad" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#6c63ff"/>
+      <stop offset="50%" stop-color="#4338ca"/>
+      <stop offset="100%" stop-color="#312e81"/>
+    </linearGradient>
+    <linearGradient id="shieldGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#6c63ff" stop-opacity="0.1"/>
+    </linearGradient>
+    <radialGradient id="innerGlow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#6c63ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="outerGlow">
+      <feDropShadow dx="0" dy="0" stdDeviation="15" flood-color="#6c63ff" flood-opacity="0.6"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#00d4ff" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Outer glow shadow -->
+  <path d="M200 30 L340 80 L340 230 C340 330 270 400 200 440 C130 400 60 330 60 230 L60 80 Z" fill="#6c63ff" fill-opacity="0.15" filter="url(#outerGlow)"/>
+
+  <!-- MAIN SHIELD SHAPE -->
+  <path d="M200 38 L332 85 L332 228 C332 322 266 393 200 432 C134 393 68 322 68 228 L68 85 Z" fill="url(#shieldGrad)"/>
+
+  <!-- Shield inner face highlight -->
+  <path d="M200 52 L318 94 L318 228 C318 312 258 378 200 414 C142 378 82 312 82 228 L82 94 Z" fill="url(#shieldGlow)" fill-opacity="0.5"/>
+  <path d="M200 52 L318 94 L318 228 C318 312 258 378 200 414 C142 378 82 312 82 228 L82 94 Z" fill="url(#innerGlow)"/>
+
+  <!-- Shield edge border (bright) -->
+  <path d="M200 38 L332 85 L332 228 C332 322 266 393 200 432 C134 393 68 322 68 228 L68 85 Z" stroke="#00d4ff" stroke-width="2" fill="none" opacity="0.7"/>
+  <!-- Inner border line -->
+  <path d="M200 52 L318 94 L318 228 C318 312 258 378 200 414 C142 378 82 312 82 228 L82 94 Z" stroke="#8b85ff" stroke-width="1" fill="none" opacity="0.5"/>
+
+  <!-- CIRCUIT PATTERN LINES -->
+  <!-- Horizontal lines -->
+  <line x1="110" y1="140" x2="290" y2="140" stroke="#00d4ff" stroke-width="1" opacity="0.35" stroke-dasharray="8 6"/>
+  <line x1="95" y1="185" x2="305" y2="185" stroke="#00d4ff" stroke-width="1" opacity="0.25" stroke-dasharray="10 4"/>
+  <line x1="85" y1="230" x2="315" y2="230" stroke="#00d4ff" stroke-width="1" opacity="0.3" stroke-dasharray="6 8"/>
+
+  <!-- Circuit node dots -->
+  <circle cx="140" cy="140" r="3.5" fill="#00d4ff" opacity="0.7"/>
+  <circle cx="200" cy="140" r="3.5" fill="#00d4ff" opacity="0.7"/>
+  <circle cx="260" cy="140" r="3.5" fill="#00d4ff" opacity="0.7"/>
+  <circle cx="120" cy="185" r="3" fill="#6c63ff" opacity="0.7"/>
+  <circle cx="200" cy="185" r="3" fill="#6c63ff" opacity="0.7"/>
+  <circle cx="280" cy="185" r="3" fill="#6c63ff" opacity="0.7"/>
+
+  <!-- Vertical circuit connections -->
+  <line x1="140" y1="140" x2="140" y2="185" stroke="#00d4ff" stroke-width="1" opacity="0.4"/>
+  <line x1="200" y1="140" x2="200" y2="185" stroke="#00d4ff" stroke-width="1" opacity="0.4"/>
+  <line x1="260" y1="140" x2="260" y2="185" stroke="#00d4ff" stroke-width="1" opacity="0.4"/>
+
+  <!-- LOCK BODY (center) -->
+  <rect x="163" y="240" width="74" height="58" rx="10" fill="url(#lockGrad)" filter="url(#glow)"/>
+  <!-- Lock body highlight -->
+  <rect x="168" y="245" width="30" height="20" rx="5" fill="white" fill-opacity="0.2"/>
+  <!-- Lock keyhole -->
+  <circle cx="200" cy="263" r="10" fill="#1e1b4b"/>
+  <rect x="196" y="263" width="8" height="16" rx="3" fill="#1e1b4b"/>
+  <circle cx="200" cy="263" r="5" fill="#00d4ff" fill-opacity="0.6"/>
+
+  <!-- LOCK SHACKLE (arch) -->
+  <path d="M170 242 L170 210 C170 182 230 182 230 210 L230 242" stroke="url(#lockGrad)" stroke-width="14" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+  <!-- Shackle highlight -->
+  <path d="M173 238 L173 210 C173 186 227 186 227 210 L227 238" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.3"/>
+
+  <!-- SHIELD TOP EMBLEM / STAR -->
+  <polygon points="200,90 207,110 228,110 212,123 218,145 200,132 182,145 188,123 172,110 193,110" fill="#ffd700" opacity="0.9"/>
+  <polygon points="200,97 205,112 220,112 208,121 213,138 200,129 187,138 192,121 180,112 195,112" fill="#f59e0b"/>
+
+  <!-- SHIELD BOTTOM POINT accent -->
+  <path d="M185 425 L200 445 L215 425" stroke="#00d4ff" stroke-width="2" fill="none" opacity="0.6"/>
+
+  <!-- Corner accent nodes -->
+  <circle cx="68" cy="85" r="5" fill="#00d4ff" opacity="0.8"/>
+  <circle cx="332" cy="85" r="5" fill="#00d4ff" opacity="0.8"/>
+
+  <!-- Bottom platform glow -->
+  <ellipse cx="200" cy="460" rx="80" ry="10" fill="#6c63ff" fill-opacity="0.2"/>
+  <ellipse cx="200" cy="460" rx="50" ry="6" fill="#00d4ff" fill-opacity="0.15"/>
+</svg>

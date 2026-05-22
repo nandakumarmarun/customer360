@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <defs>
+    <linearGradient id="coinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd700"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="edgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="coinGlow">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#f59e0b" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <!-- Shadow -->
+  <ellipse cx="200" cy="360" rx="80" ry="15" fill="#000" fill-opacity="0.1"/>
+  
+  <!-- Coin Base -->
+  <circle cx="200" cy="190" r="140" fill="url(#edgeGrad)" filter="url(#coinGlow)"/>
+  <circle cx="200" cy="180" r="140" fill="url(#coinGrad)"/>
+  
+  <!-- Inner Ring -->
+  <circle cx="200" cy="180" r="115" stroke="#f59e0b" stroke-width="8" fill="none" opacity="0.5"/>
+  
+  <!-- Dollar Sign -->
+  <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="160" fill="#d97706" opacity="0.8">$</text>
+  <text x="50%" y="53%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="160" fill="#fff" opacity="0.3">$</text>
+  
+  <!-- Highlights -->
+  <path d="M100 100 Q150 50 250 80" stroke="white" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.4"/>
+</svg>

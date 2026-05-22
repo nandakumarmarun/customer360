@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 460" fill="none">
+  <defs>
+    <linearGradient id="b1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff"/><stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="b2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6c63ff"/><stop offset="100%" stop-color="#4338ca"/>
+    </linearGradient>
+    <linearGradient id="b3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="b4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="b5" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="bg"><feDropShadow dx="0" dy="-3" stdDeviation="6" flood-color="#00d4ff" flood-opacity="0.5"/></filter>
+    <filter id="lg"><feGaussianBlur stdDeviation="3" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
+  </defs>
+  <!-- Grid lines -->
+  <line x1="68" y1="100" x2="68" y2="350" stroke="#6c63ff" stroke-width="2" opacity="0.5"/>
+  <line x1="68" y1="350" x2="400" y2="350" stroke="#6c63ff" stroke-width="2" opacity="0.5"/>
+  <line x1="68" y1="150" x2="400" y2="150" stroke="#6c63ff" stroke-width="0.8" stroke-dasharray="5 5" opacity="0.2"/>
+  <line x1="68" y1="200" x2="400" y2="200" stroke="#6c63ff" stroke-width="0.8" stroke-dasharray="5 5" opacity="0.2"/>
+  <line x1="68" y1="250" x2="400" y2="250" stroke="#6c63ff" stroke-width="0.8" stroke-dasharray="5 5" opacity="0.2"/>
+  <line x1="68" y1="300" x2="400" y2="300" stroke="#6c63ff" stroke-width="0.8" stroke-dasharray="5 5" opacity="0.2"/>
+  <!-- Bars -->
+  <rect x="88" y="280" width="40" height="70" rx="4" fill="url(#b1)" filter="url(#bg)"/>
+  <rect x="88" y="280" width="40" height="12" rx="4" fill="white" fill-opacity="0.25"/>
+  <rect x="152" y="230" width="40" height="120" rx="4" fill="url(#b3)" filter="url(#bg)"/>
+  <rect x="152" y="230" width="40" height="12" rx="4" fill="white" fill-opacity="0.25"/>
+  <rect x="216" y="148" width="40" height="202" rx="4" fill="url(#b2)" filter="url(#bg)"/>
+  <rect x="216" y="148" width="40" height="14" rx="4" fill="white" fill-opacity="0.3"/>
+  <rect x="280" y="195" width="40" height="155" rx="4" fill="url(#b4)" filter="url(#bg)"/>
+  <rect x="280" y="195" width="40" height="12" rx="4" fill="white" fill-opacity="0.25"/>
+  <rect x="344" y="248" width="40" height="102" rx="4" fill="url(#b5)" filter="url(#bg)"/>
+  <rect x="344" y="248" width="40" height="12" rx="4" fill="white" fill-opacity="0.25"/>
+  <!-- Trend line -->
+  <polyline points="108,277 172,227 236,145 300,192 364,245" stroke="#ff6b9d" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#lg)"/>
+  <circle cx="108" cy="277" r="5" fill="#ff6b9d"/><circle cx="108" cy="277" r="2.5" fill="white"/>
+  <circle cx="172" cy="227" r="5" fill="#ff6b9d"/><circle cx="172" cy="227" r="2.5" fill="white"/>
+  <circle cx="236" cy="145" r="6" fill="#ff6b9d"/><circle cx="236" cy="145" r="3" fill="white"/>
+  <circle cx="300" cy="192" r="5" fill="#ff6b9d"/><circle cx="300" cy="192" r="2.5" fill="white"/>
+  <circle cx="364" cy="245" r="5" fill="#ff6b9d"/><circle cx="364" cy="245" r="2.5" fill="white"/>
+  <!-- Labels -->
+  <text x="108" y="274" text-anchor="middle" font-size="11" fill="#00d4ff" font-family="sans-serif" font-weight="bold">42K</text>
+  <text x="172" y="224" text-anchor="middle" font-size="11" fill="#a78bfa" font-family="sans-serif" font-weight="bold">68K</text>
+  <text x="236" y="142" text-anchor="middle" font-size="12" fill="#8b85ff" font-family="sans-serif" font-weight="bold">2.4M</text>
+  <text x="300" y="189" text-anchor="middle" font-size="11" fill="#34d399" font-family="sans-serif" font-weight="bold">1.1M</text>
+  <text x="364" y="242" text-anchor="middle" font-size="11" fill="#fbbf24" font-family="sans-serif" font-weight="bold">78K</text>
+  <!-- Growth badge -->
+  <rect x="305" y="52" width="110" height="50" rx="10" fill="#1e1b4b" fill-opacity="0.85" stroke="#6c63ff" stroke-width="1.5"/>
+  <text x="360" y="73" text-anchor="middle" font-size="13" fill="#4ade80" font-family="sans-serif" font-weight="bold">▲ 18.4%</text>
+  <text x="360" y="92" text-anchor="middle" font-size="10" fill="#6c63ff" font-family="sans-serif">YTD GROWTH</text>
+  <!-- Bottom glow -->
+  <ellipse cx="220" cy="440" rx="130" ry="12" fill="#6c63ff" fill-opacity="0.18"/>
+</svg>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" class="light-mode">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexaBank · Customer Intelligence</title>
+  <meta name="description" content="Premium AI-powered banking customer profile dashboard with cinematic 3D experience." />
+  <!-- ===== LOCAL FONTS ===== -->
+  <link rel="stylesheet" href="fonts/fonts.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="light-mode">
+  
+  <!-- SVG Chroma Key Filter (Removes Black) -->
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="remove-black">
+      <feColorMatrix type="matrix" values="1 0 0 0 0
+                                           0 1 0 0 0
+                                           0 0 1 0 0
+                                           1 1 1 0 -0.5" />
+    </filter>
+  </svg>
+
+  <!-- ===== THREE.JS CANVAS ===== -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ===== LOADING SCREEN ===== -->
+  <div id="loading-screen">
+    <div class="loading-bg-glow"></div>
+    <div class="loading-particles" id="loading-particles"></div>
+    <div class="loading-content">
+      <div class="loading-logo">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">NEXABANK</span>
+      </div>
+      <div class="loading-line-container">
+        <div class="loading-line" id="loading-line"></div>
+      </div>
+      <div class="loading-status" id="loading-status">Initializing System</div>
+      <div class="loading-percent" id="loading-percent">0%</div>
+      <div class="sound-wave" id="sound-wave">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="loading-shards">
+      <div class="shard s1"></div>
+      <div class="shard s2"></div>
+      <div class="shard s3"></div>
+      <div class="shard s4"></div>
+      <div class="shard s5"></div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN APP ===== -->
+  <div id="app" class="hidden">
+
+    <!-- SCENE 1: AVATAR REVEAL -->
+    <section id="scene-avatar" class="scene">
+      <div class="scene-inner">
+        <div class="avatar-reveal-container" id="avatar-container">
+          <div class="holographic-rings">
+            <div class="ring r1"></div>
+            <div class="ring r2"></div>
+            <div class="ring r3"></div>
+          </div>
+          <div class="avatar-orb" id="avatar-orb">
+            <div class="avatar-crown">👑</div>
+            <div class="avatar-inner">
+              <div class="avatar-face">DA</div>
+            </div>
+            <div class="avatar-glow"></div>
+          </div>
+          <div class="avatar-particles" id="avatar-particles"></div>
+          <div class="avatar-info" id="avatar-info">
+            <h1 class="customer-name">Daniel Anderson</h1>
+            <p class="customer-subtitle">Premium Banking Customer</p>
+            <div class="customer-badge">
+              <span class="badge-icon">★</span>
+              <span>Platinum Tier</span>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-hint" id="scroll-hint">
+          <span>Scroll to explore</span>
+          <div class="scroll-arrow"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCENE 2: DASHBOARD -->
+    <section id="scene-dashboard" class="scene">
+      <!-- HEADER -->
+      <header class="dash-header glass-card" id="dash-header">
+        <div class="header-left">
+          <div class="header-avatar-mini">DA</div>
+          <div class="header-info">
+            <span class="header-name">Daniel Anderson</span>
+            <span class="header-id">CID · NX-4829-0055</span>
+          </div>
+        </div>
+        <div class="header-center">
+          <div class="header-stat">
+            <span class="stat-label">Net Worth</span>
+            <span class="stat-value">$2.4M</span>
+          </div>
+          <div class="header-divider"></div>
+          <div class="header-stat">
+            <span class="stat-label">Credit Score</span>
+            <span class="stat-value credit-good">842</span>
+          </div>
+          <div class="header-divider"></div>
+          <div class="header-stat">
+            <span class="stat-label">Risk Level</span>
+            <span class="stat-value risk-low">Low</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+            <span class="sun">☀️</span>
+            <span class="moon">🌙</span>
+          </button>
+          <button class="btn-primary" id="edit-profile-btn">Edit Profile</button>
+          <div class="header-notif">
+            <span class="notif-dot"></span>
+            <span>🔔</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- ALERTS & STORIES -->
+      <section class="dash-updates" id="dash-updates">
+        <!-- Ticker Alert -->
+        <div class="alerts-bar glass-card">
+          <div class="alert-label">LIVE ALERT</div>
+          <div class="alert-ticker">
+            <div class="ticker-content">
+              <span>🚀 Market indices are up 2.4% today. Your portfolio has gained $12,400.</span>
+              <span>🔒 Security Reminder: Change your transaction PIN every 90 days for maximum safety.</span>
+              <span>💎 New Platinum Benefit: Priority lounge access at 1,200+ airports worldwide.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stories Model -->
+        <div class="stories-row">
+          <div class="story-item" data-story="security">
+            <div class="story-ring active">
+              <div class="story-avatar">🛡️</div>
+            </div>
+            <span>Security</span>
+          </div>
+          <div class="story-item" data-story="invest">
+            <div class="story-ring active">
+              <div class="story-avatar">📈</div>
+            </div>
+            <span>Insights</span>
+          </div>
+          <div class="story-item" data-story="rewards">
+            <div class="story-ring active">
+              <div class="story-avatar">🎁</div>
+            </div>
+            <span>Rewards</span>
+          </div>
+          <div class="story-item" data-story="lifestyle">
+            <div class="story-ring">
+              <div class="story-avatar">✈️</div>
+            </div>
+            <span>Travel</span>
+          </div>
+          <div class="story-item" data-story="ai">
+            <div class="story-ring">
+              <div class="story-avatar">🤖</div>
+            </div>
+            <span>AI Advice</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROFILE SIDEBAR + CARDS GRID -->
+      <div class="dash-body">
+
+        <!-- LEFT PROFILE CARD -->
+        <aside class="profile-sidebar glass-card" id="profile-sidebar">
+          <div class="profile-avatar-large">DA</div>
+          <h2 class="profile-name">Daniel Anderson</h2>
+          <p class="profile-cid">NX-4829-0055</p>
+          <div class="profile-status active">
+            <span class="status-dot"></span> Active Customer
+          </div>
+          <div class="profile-tier">
+            <span class="tier-badge">PLATINUM</span>
+          </div>
+          <div class="profile-stats">
+            <div class="pstat">
+              <span class="pstat-num">12</span>
+              <span class="pstat-lbl">Accounts</span>
+            </div>
+            <div class="pstat">
+              <span class="pstat-num">8yr</span>
+              <span class="pstat-lbl">Tenure</span>
+            </div>
+            <div class="pstat">
+              <span class="pstat-num">99%</span>
+              <span class="pstat-lbl">KYC</span>
+            </div>
+          </div>
+          <button class="btn-outline full-width mt-auto">View Full Profile</button>
+        </aside>
+
+        <!-- MAIN CARDS GRID -->
+        <main class="cards-grid" id="cards-grid">
+
+          <!-- CARD 1: PERSONAL INFO -->
+          <div class="info-card glass-card" id="card-personal" data-modal="modal-personal">
+            <div class="card-header">
+              <div class="card-icon">👤</div>
+              <div class="card-title-wrap">
+                <h3>Personal Information</h3>
+                <span class="card-tag">Verified</span>
+              </div>
+              <div class="card-arrow">›</div>
+            </div>
+            <div class="card-body">
+              <div class="card-row">
+                <span class="crow-label">Date of Birth</span>
+                <span class="crow-val">Mar 15, 1985</span>
+              </div>
+              <div class="card-row">
+                <span class="crow-label">Nationality</span>
+                <span class="crow-val">American</span>
+              </div>
+              <div class="card-row">
+                <span class="crow-label">Occupation</span>
+                <span class="crow-val">Senior Executive</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="cf-label">Click to view full details</span>
+            </div>
+          </div>
+
+          <!-- CARD 2: CONTACT INFO -->
+          <div class="info-card glass-card" id="card-contact" data-modal="modal-contact">
+            <div class="card-header">
+              <div class="card-icon">📡</div>
+              <div class="card-title-wrap">
+                <h3>Contact Information</h3>
+                <span class="card-tag">Active</span>
+              </div>
+              <div class="card-arrow">›</div>
+            </div>
+            <div class="card-body">
+              <div class="card-row">
+                <span class="crow-label">Email</span>
+                <span class="crow-val">d.ander***@mail.com</span>
+              </div>
+              <div class="card-row">
+                <span class="crow-label">Phone</span>
+                <span class="crow-val">+1 (***) ***-4291</span>
+              </div>
+              <div class="card-row">
+                <span class="crow-label">City</span>
+                <span class="crow-val">New York, NY</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="cf-label">Click to view full details</span>
+            </div>
+          </div>
+
+          <!-- CARD 3: ACCOUNT INFO -->
+          <div class="info-card glass-card" id="card-account" data-modal="modal-account">
+            <div class="card-header">
+              <div class="card-icon">🏦</div>
+              <div class="card-title-wrap">
+                <h3>Account Information</h3>
+                <span class="card-tag tag-gold">Premium</span>
+              </div>
+              <div class="card-arrow">›</div>
+            </div>
+            <div class="card-body">
+              <div class="card-row">
+                <span class="crow-label">Primary Acc.</span>
+                <span class="crow-val">****-****-4821</span>
+              </div>
+              <div class="card-row">
+                <span class="crow-label">Balance</span>
+                <span class="crow-val">$••••••</span>
+              </div>
+              <div class="card-row">
+                <span class="crow-label">Since</span>
+                <span class="crow-val">Jan 2017</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="cf-label">Click to view full details</span>
+            </div>
+          </div>
+
+          <!-- CARD 4: FINANCIAL INFO -->
+          <div class="info-card glass-card" id="card-financial" data-modal="modal-financial">
+            <div class="card-header">
+              <div class="card-icon">📊</div>
+              <div class="card-title-wrap">
+                <h3>Financial Information</h3>
+                <span class="card-tag">Updated</span>
+              </div>
+              <div class="card-arrow">›</div>
+            </div>
+            <div class="card-body">
+              <div class="card-row">
+                <span class="crow-label">Annual Income</span>
+                <span class="crow-val">$•••,•••</span>
+              </div>
+              <div class="card-row">
+                <span class="crow-label">Net Worth</span>
+                <span class="crow-val">$2.4M</span>
+              </div>
+              <div class="card-row">
+                <span class="crow-label">Credit Score</span>
+                <span class="crow-val credit-good">842 / 900</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="cf-label">Click to view full details</span>
+            </div>
+          </div>
+
+          <!-- CARD 5: TRANSACTION SUMMARY -->
+          <div class="info-card glass-card" id="card-transaction" data-modal="modal-transaction">
+            <div class="card-header">
+              <div class="card-icon">💳</div>
+              <div class="card-title-wrap">
+                <h3>Transaction Summary</h3>
+                <span class="card-tag tag-cyan">Live</span>
+              </div>
+              <div class="card-arrow">›</div>
+            </div>
+            <div class="card-body">
+              <div class="card-row">
+                <span class="crow-label">This Month</span>
+                <span class="crow-val">48 transactions</span>
+              </div>
+              <div class="card-row">
+                <span class="crow-label">Total Spent</span>
+                <span class="crow-val">$12,400</span>
+              </div>
+              <div class="card-row">
+                <span class="crow-label">Last Txn</span>
+                <span class="crow-val">2 hours ago</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="cf-label">Click to view full details</span>
+            </div>
+          </div>
+
+          <!-- CARD 6: KYC & COMPLIANCE -->
+          <div class="info-card glass-card" id="card-kyc" data-modal="modal-kyc">
+            <div class="card-header">
+              <div class="card-icon">🛡️</div>
+              <div class="card-title-wrap">
+                <h3>KYC & Compliance</h3>
+                <span class="card-tag tag-green">99% Done</span>
+              </div>
+              <div class="card-arrow">›</div>
+            </div>
+            <div class="card-body">
+              <div class="card-row">
+                <span class="crow-label">ID Verified</span>
+                <span class="crow-val check">✔ Passport</span>
+              </div>
+              <div class="card-row">
+                <span class="crow-label">Address</span>
+                <span class="crow-val check">✔ Verified</span>
+              </div>
+              <div class="card-row">
+                <span class="crow-label">AML Status</span>
+                <span class="crow-val check">✔ Clear</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="cf-label">Click to view full details</span>
+            </div>
+          </div>
+
+        </main>
+      </div>
+
+      <!-- BOTTOM NAVIGATION MODULES -->
+      <section class="bottom-modules" id="bottom-modules">
+        <h2 class="modules-title">Quick Access Modules</h2>
+        <div class="modules-grid">
+          <div class="module-card" id="mod-accounts">
+            <div class="mod-icon">🏦</div>
+            <span>Accounts</span>
+          </div>
+          <div class="module-card" id="mod-loans">
+            <div class="mod-icon">💰</div>
+            <span>Loans</span>
+          </div>
+          <div class="module-card" id="mod-investments">
+            <div class="mod-icon">📈</div>
+            <span>Investments</span>
+          </div>
+          <div class="module-card" id="mod-insurance">
+            <div class="mod-icon">🛡️</div>
+            <span>Insurance</span>
+          </div>
+          <div class="module-card" id="mod-cards">
+            <div class="mod-icon">💳</div>
+            <span>Credit Cards</span>
+          </div>
+          <div class="module-card" id="mod-docs">
+            <div class="mod-icon">📄</div>
+            <span>Documents</span>
+          </div>
+          <div class="module-card" id="mod-support">
+            <div class="mod-icon">🎧</div>
+            <span>Support</span>
+          </div>
+          <div class="module-card" id="mod-analytics">
+            <div class="mod-icon">📊</div>
+            <span>Analytics</span>
+          </div>
+        </div>
+      </section>
+
+    </section>
+  </div>
+
+  <!-- ===== CINEMATIC DETAIL VIEW (Replaces Modals) ===== -->
+  <div id="detail-view" class="hidden">
+    <button class="back-btn" id="back-to-dash">
+      <span class="back-icon">←</span>
+      <span>Back to Dashboard</span>
+    </button>
+    
+    <div class="detail-split">
+      <!-- Left: 3D Interaction Zone -->
+      <div class="detail-left">
+        <div class="detail-image-wrap">
+          <div class="hero-particles" id="hero-particles"></div>
+          <img id="detail-img" src="" alt="Detail Visual">
+          <div class="image-glow"></div>
+        </div>
+        <div class="model-info">
+          <h2 id="detail-model-title">Model Name</h2>
+          <p id="detail-model-desc">Premium Visualization</p>
+        </div>
+      </div>
+      
+      <!-- Right: Data Panel -->
+      <div class="detail-right">
+        <div class="detail-carousel-container">
+          <button class="nav-arrow prev-arrow" id="detail-prev" title="Previous">←</button>
+          <div class="detail-cards-stack" id="detail-cards-stack">
+            <!-- Dynamic cards injected by JS -->
+          </div>
+          <button class="nav-arrow next-arrow" id="detail-next" title="Next">→</button>
+        </div>
+        <div class="detail-nav-footer">
+          <div class="carousel-hint">Scroll or use arrows to navigate</div>
+          <div class="detail-nav-dots" id="detail-nav-dots"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="lib/three.min.js"></script>
+  <script src="lib/OrbitControls.js"></script>
+  <script src="lib/GLTFLoader.js"></script>
+  <script src="lib/gsap.min.js"></script>
+  <script src="lib/ScrollTrigger.min.js"></script>
+  <script src="assets.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
