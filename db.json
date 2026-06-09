@@ -1,0 +1,239 @@
+{
+  "summary": {
+    "avatarUrl": "",
+    "name": "Daniel Anderson",
+    "initials": "NM",
+    "subtitle": "Premium Banking Customer",
+    "cid": "NX-4829-0055",
+    "status": "Active Customer",
+    "tier": "PLATINUM",
+    "accountsCount": "12",
+    "tenure": "8yr",
+    "kycProgress": "99%",
+    "netWorth": "$2.4M",
+    "creditScore": "842",
+    "riskLevel": "Low"
+  },
+  "profile": {
+    "card": {
+      "title": "Personal ",
+      "tag": "Verified",
+      "tagClass": "tag-normal",
+      "icon": "👤",
+      "data": {
+        "Date of Birth": "Mar 15, 1985",
+        "Nationality": "American",
+        "Occupation": "Senior Executive"
+      }
+    },
+    "details": {
+      "title": "Personal Information",
+      "hero": "avatar.svg",
+      "sections": [
+        {
+          "name": "Identity Profile",
+          "fields": {
+            "Full Name": "Daniel James Anderson",
+            "Date of Birth": "March 15, 1985",
+            "Nationality": "United States",
+            "Gender": "Male"
+          }
+        },
+        {
+          "name": "Professional Status",
+          "fields": {
+            "Occupation": "Senior Executive",
+            "Employer": "Global Tech Corp",
+            "Industry": "Technology"
+          }
+        },
+        {
+          "name": "Banking Tier",
+          "fields": {
+            "Status": "Platinum Member",
+            "Since": "January 2017",
+            "Relationship Mgr": "Sarah Jenkins"
+          }
+        }
+      ]
+    }
+  },
+  "contact": {
+    "card": {
+      "title": "Contact Information",
+      "tag": "Active",
+      "tagClass": "tag-normal",
+      "icon": "📡",
+      "data": {
+        "Email": "d.ander***@mail.com",
+        "Phone": "+1 (***) ***-4291",
+        "City": "New York, NY"
+      }
+    },
+    "details": {
+      "title": "Contact Information",
+      "hero": "Phone.Svg",
+      "sections": [
+        {
+          "name": "Primary Communication",
+          "fields": {
+            "Personal Email": "daniel.a@gmail.com",
+            "Work Email": "d.anderson@gtc.com",
+            "Mobile": "+1 (212) 555-4291"
+          }
+        },
+        {
+          "name": "Residential Address",
+          "fields": {
+            "Street": "725 5th Ave",
+            "City": "New York",
+            "State": "NY 10022",
+            "Country": "USA"
+          }
+        }
+      ]
+    }
+  },
+  "address": {
+    "card": {
+      "title": "Address Information",
+      "tag": "Verified",
+      "tagClass": "tag-gold",
+      "icon": "📍",
+      "data": {
+        "Street Address": "725 5th Ave",
+        "City & State": "New York, NY 10022",
+        "Country": "United States"
+      }
+    },
+    "details": {
+      "title": "Address Information",
+      "hero": "address.svg",
+      "sections": [
+        {
+          "name": "Residential Address",
+          "fields": {
+            "Street Address": "725 5th Ave",
+            "City & State": "New York, NY 10022",
+            "Country": "United States"
+          }
+        },
+        {
+          "name": "Mailing Address",
+          "fields": {
+            "Type": "Same as Residential",
+            "Delivery Point": "Front Door",
+            "Status": "Confirmed"
+          }
+        }
+      ]
+    }
+  },
+  "owner": {
+    "card": {
+      "title": "Beneficial Owner Details",
+      "tag": "100% Share",
+      "tagClass": "tag-normal",
+      "icon": "👥",
+      "data": {
+        "Ultimate Owner": "Daniel James Anderson",
+        "Ownership Share": "100%",
+        "Control Status": "Direct Control"
+      }
+    },
+    "details": {
+      "title": "Beneficial Owner Details",
+      "hero": "owner.svg",
+      "sections": [
+        {
+          "name": "Primary Beneficial Owner",
+          "fields": {
+            "Full Name": "Daniel James Anderson",
+            "Ownership Share": "100%",
+            "Nationality": "United States",
+            "TIN/SSN": "Verified"
+          }
+        },
+        {
+          "name": "Control & Authority",
+          "fields": {
+            "Role": "Direct Controller",
+            "Signing Power": "Sole Signatory",
+            "Approved Date": "Jan 2017"
+          }
+        }
+      ]
+    }
+  },
+  "other": {
+    "card": {
+      "title": "Other Information",
+      "tag": "Details",
+      "tagClass": "tag-cyan",
+      "icon": "⚙️",
+      "data": {
+        "Preferred Channel": "Digital & Mobile",
+        "Language": "English (US)",
+        "Marketing Opt-in": "Yes (E-mail)"
+      }
+    },
+    "details": {
+      "title": "Other Information",
+      "hero": "other.svg",
+      "sections": [
+        {
+          "name": "Customer Preferences",
+          "fields": {
+            "Preferred Channel": "Digital & Mobile",
+            "Language": "English (US)",
+            "Marketing Opt-in": "Yes (E-mail)",
+            "Statement Delivery": "Paperless"
+          }
+        },
+        {
+          "name": "Additional Details",
+          "fields": {
+            "Segment": "HNW Retail",
+            "Tax Residency": "United States",
+            "PEP Status": "Clear (Non-PEP)"
+          }
+        }
+      ]
+    }
+  },
+  "kyc": {
+    "card": {
+      "title": "KYC & Compliance",
+      "tag": "99% Done",
+      "tagClass": "tag-green",
+      "icon": "🛡️",
+      "data": {
+        "ID Verified": "✔ Passport",
+        "Address": "✔ Verified",
+        "AML Status": "✔ Clear"
+      }
+    },
+    "details": {
+      "title": "KYC & Compliance",
+      "hero": "shield.Svg",
+      "sections": [
+        {
+          "name": "Compliance Status",
+          "fields": {
+            "AML Risk": "Low",
+            "Source of Funds": "Verified",
+            "Sanctions Check": "Clear"
+          }
+        },
+        {
+          "name": "Document Vault",
+          "fields": {
+            "ID Type": "Passport (Valid)",
+            "Address Proof": "Utility Bill",
+            "TIN/SSN": "Verified"
+          }
+        }
+      ]
+    }
+  }
+}

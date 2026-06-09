@@ -80,6 +80,40 @@
               <span class="badge-icon">★</span>
               <span>Platinum Tier</span>
             </div>
+            
+            <!-- Stories Model -->
+            <div class="stories-row">
+              <div class="story-item" data-story="security">
+                <div class="story-ring active">
+                  <div class="story-avatar">🛡️</div>
+                </div>
+                <span>Security</span>
+              </div>
+              <div class="story-item" data-story="invest">
+                <div class="story-ring active">
+                  <div class="story-avatar">📈</div>
+                </div>
+                <span>Insights</span>
+              </div>
+              <div class="story-item" data-story="rewards">
+                <div class="story-ring active">
+                  <div class="story-avatar">🎁</div>
+                </div>
+                <span>Rewards</span>
+              </div>
+              <div class="story-item" data-story="lifestyle">
+                <div class="story-ring">
+                  <div class="story-avatar">✈️</div>
+                </div>
+                <span>Travel</span>
+              </div>
+              <div class="story-item" data-story="ai">
+                <div class="story-ring">
+                  <div class="story-avatar">🤖</div>
+                </div>
+                <span>AI Advice</span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="scroll-hint" id="scroll-hint">
@@ -91,7 +125,19 @@
 
     <!-- SCENE 2: DASHBOARD -->
     <section id="scene-dashboard" class="scene">
-      <!-- HEADER -->
+      <!-- Ticker Alert -->
+      <div class="alerts-bar glass-card">
+        <div class="alert-label">LIVE ALERT</div>
+        <div class="alert-ticker">
+          <div class="ticker-content">
+            <span>🚀 Market indices are up 2.4% today. Your portfolio has gained $12,400.</span>
+            <span>🔒 Security Reminder: Change your transaction PIN every 90 days for maximum safety.</span>
+            <span>💎 New Platinum Benefit: Priority lounge access at 1,200+ airports worldwide.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEADER (below alert row, sticky top) -->
       <header class="dash-header glass-card" id="dash-header">
         <div class="header-left">
           <div class="header-avatar-mini">DA</div>
@@ -128,55 +174,6 @@
           </div>
         </div>
       </header>
-
-      <!-- ALERTS & STORIES -->
-      <section class="dash-updates" id="dash-updates">
-        <!-- Ticker Alert -->
-        <div class="alerts-bar glass-card">
-          <div class="alert-label">LIVE ALERT</div>
-          <div class="alert-ticker">
-            <div class="ticker-content">
-              <span>🚀 Market indices are up 2.4% today. Your portfolio has gained $12,400.</span>
-              <span>🔒 Security Reminder: Change your transaction PIN every 90 days for maximum safety.</span>
-              <span>💎 New Platinum Benefit: Priority lounge access at 1,200+ airports worldwide.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Stories Model -->
-        <div class="stories-row">
-          <div class="story-item" data-story="security">
-            <div class="story-ring active">
-              <div class="story-avatar">🛡️</div>
-            </div>
-            <span>Security</span>
-          </div>
-          <div class="story-item" data-story="invest">
-            <div class="story-ring active">
-              <div class="story-avatar">📈</div>
-            </div>
-            <span>Insights</span>
-          </div>
-          <div class="story-item" data-story="rewards">
-            <div class="story-ring active">
-              <div class="story-avatar">🎁</div>
-            </div>
-            <span>Rewards</span>
-          </div>
-          <div class="story-item" data-story="lifestyle">
-            <div class="story-ring">
-              <div class="story-avatar">✈️</div>
-            </div>
-            <span>Travel</span>
-          </div>
-          <div class="story-item" data-story="ai">
-            <div class="story-ring">
-              <div class="story-avatar">🤖</div>
-            </div>
-            <span>AI Advice</span>
-          </div>
-        </div>
-      </section>
 
       <!-- PROFILE SIDEBAR + CARDS GRID -->
       <div class="dash-body">
@@ -223,18 +220,7 @@
               <div class="card-arrow">›</div>
             </div>
             <div class="card-body">
-              <div class="card-row">
-                <span class="crow-label">Date of Birth</span>
-                <span class="crow-val">Mar 15, 1985</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Nationality</span>
-                <span class="crow-val">American</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Occupation</span>
-                <span class="crow-val">Senior Executive</span>
-              </div>
+              <!-- Loaded Dynamically -->
             </div>
             <div class="card-footer">
               <span class="cf-label">Click to view full details</span>
@@ -252,105 +238,61 @@
               <div class="card-arrow">›</div>
             </div>
             <div class="card-body">
-              <div class="card-row">
-                <span class="crow-label">Email</span>
-                <span class="crow-val">d.ander***@mail.com</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Phone</span>
-                <span class="crow-val">+1 (***) ***-4291</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">City</span>
-                <span class="crow-val">New York, NY</span>
-              </div>
+              <!-- Loaded Dynamically -->
             </div>
             <div class="card-footer">
               <span class="cf-label">Click to view full details</span>
             </div>
           </div>
 
-          <!-- CARD 3: ACCOUNT INFO -->
-          <div class="info-card glass-card" id="card-account" data-modal="modal-account">
+          <!-- CARD 3: ADDRESS INFO -->
+          <div class="info-card glass-card" id="card-address" data-modal="modal-address">
             <div class="card-header">
-              <div class="card-icon">🏦</div>
+              <div class="card-icon">📍</div>
               <div class="card-title-wrap">
-                <h3>Account Information</h3>
-                <span class="card-tag tag-gold">Premium</span>
+                <h3>Address Information</h3>
+                <span class="card-tag tag-gold">Verified</span>
               </div>
               <div class="card-arrow">›</div>
             </div>
             <div class="card-body">
-              <div class="card-row">
-                <span class="crow-label">Primary Acc.</span>
-                <span class="crow-val">****-****-4821</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Balance</span>
-                <span class="crow-val">$••••••</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Since</span>
-                <span class="crow-val">Jan 2017</span>
-              </div>
+              <!-- Loaded Dynamically -->
             </div>
             <div class="card-footer">
               <span class="cf-label">Click to view full details</span>
             </div>
           </div>
 
-          <!-- CARD 4: FINANCIAL INFO -->
-          <div class="info-card glass-card" id="card-financial" data-modal="modal-financial">
+          <!-- CARD 4: BENEFICIAL OWNER DETAILS -->
+          <div class="info-card glass-card" id="card-owner" data-modal="modal-owner">
             <div class="card-header">
-              <div class="card-icon">📊</div>
+              <div class="card-icon">👥</div>
               <div class="card-title-wrap">
-                <h3>Financial Information</h3>
-                <span class="card-tag">Updated</span>
+                <h3>Beneficial Owner Details</h3>
+                <span class="card-tag">100% Share</span>
               </div>
               <div class="card-arrow">›</div>
             </div>
             <div class="card-body">
-              <div class="card-row">
-                <span class="crow-label">Annual Income</span>
-                <span class="crow-val">$•••,•••</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Net Worth</span>
-                <span class="crow-val">$2.4M</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Credit Score</span>
-                <span class="crow-val credit-good">842 / 900</span>
-              </div>
+              <!-- Loaded Dynamically -->
             </div>
             <div class="card-footer">
               <span class="cf-label">Click to view full details</span>
             </div>
           </div>
 
-          <!-- CARD 5: TRANSACTION SUMMARY -->
-          <div class="info-card glass-card" id="card-transaction" data-modal="modal-transaction">
+          <!-- CARD 5: OTHER INFORMATION -->
+          <div class="info-card glass-card" id="card-other" data-modal="modal-other">
             <div class="card-header">
-              <div class="card-icon">💳</div>
+              <div class="card-icon">⚙️</div>
               <div class="card-title-wrap">
-                <h3>Transaction Summary</h3>
-                <span class="card-tag tag-cyan">Live</span>
+                <h3>Other Information</h3>
+                <span class="card-tag tag-cyan">Details</span>
               </div>
               <div class="card-arrow">›</div>
             </div>
             <div class="card-body">
-              <div class="card-row">
-                <span class="crow-label">This Month</span>
-                <span class="crow-val">48 transactions</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Total Spent</span>
-                <span class="crow-val">$12,400</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Last Txn</span>
-                <span class="crow-val">2 hours ago</span>
-              </div>
+              <!-- Loaded Dynamically -->
             </div>
             <div class="card-footer">
               <span class="cf-label">Click to view full details</span>
@@ -368,18 +310,7 @@
               <div class="card-arrow">›</div>
             </div>
             <div class="card-body">
-              <div class="card-row">
-                <span class="crow-label">ID Verified</span>
-                <span class="crow-val check">✔ Passport</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Address</span>
-                <span class="crow-val check">✔ Verified</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">AML Status</span>
-                <span class="crow-val check">✔ Clear</span>
-              </div>
+              <!-- Loaded Dynamically -->
             </div>
             <div class="card-footer">
               <span class="cf-label">Click to view full details</span>
@@ -470,11 +401,16 @@
   </div>
 
   <!-- SCRIPTS -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="lib/three.min.js"></script>
   <script src="lib/OrbitControls.js"></script>
   <script src="lib/GLTFLoader.js"></script>
   <script src="lib/gsap.min.js"></script>
   <script src="lib/ScrollTrigger.min.js"></script>
+  <script src="config.js"></script>
+  <script src="api-service.js"></script>
+  <script src="ui-renderer.js"></script>
+  <script src="data-loader.js"></script>
   <script src="assets.js"></script>
   <script src="script.js"></script>
 </body>

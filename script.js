@@ -164,10 +164,17 @@ function startApp() {
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Animate alert row (Ticker Alert)
+    gsap.from('.alerts-bar', {
+      scrollTrigger: { trigger: '#scene-dashboard', start: 'top 80%' },
+      y: -40, opacity: 0, duration: 0.8, ease: 'power3.out'
+    });
+
     // Animate dashboard header
     gsap.from('#dash-header', {
       scrollTrigger: { trigger: '#scene-dashboard', start: 'top 80%' },
-      y: -40, duration: 0.8, ease: 'power3.out'
+      y: -40, opacity: 0, duration: 0.8, ease: 'power3.out',
+      clearProps: 'transform'
     });
 
     // Animate profile sidebar
@@ -298,20 +305,6 @@ function updateThreeTheme(isLight) {
 }
 
 /* ====== CINEMATIC DETAIL VIEW (HERO PNG VERSION) ====== */
-const DETAIL_DATA = {
-  'modal-personal': { title: 'Personal Information', hero: 'avatar.svg' },
-  'modal-contact': { title: 'Contact Information', hero: 'Phone.Svg' },
-  'modal-account': { title: 'Account Information', hero: 'bank.svg' },
-  'modal-financial': { title: 'Financial Analytics', hero: 'chart.svg' },
-  'modal-transaction': { title: 'Transaction Summary', hero: 'card.svg' },
-  'modal-kyc': { title: 'KYC & Compliance', hero: 'shield.Svg' }
-};
-
-// Default content if not defined above
-const DEFAULT_SECTIONS = [
-  { name: 'Core Data', fields: { 'Status': 'Verified', 'Tier': 'Platinum', 'Risk': 'Low', 'Last Sync': 'Real-time' } },
-  { name: 'Security', fields: { 'Encryption': 'AES-256', 'Access': 'Biometric', 'Network': 'NexaSecure' } }
-];
 
 function initDetailView() {
   const cards = document.querySelectorAll('.info-card[data-modal]');
@@ -319,53 +312,18 @@ function initDetailView() {
 
   cards.forEach(card => {
     card.addEventListener('click', () => {
-      const modalId = card.dataset.modal;
-      // Get sections from the original DETAIL_DATA in previous versions or use default
-      const baseData = {
-        'modal-personal': {
-          sections: [
-            { name: 'Identity Profile', fields: { 'Full Name': 'Daniel James Anderson', 'Date of Birth': 'March 15, 1985', 'Nationality': 'United States', 'Gender': 'Male' } },
-            { name: 'Professional Status', fields: { 'Occupation': 'Senior Executive', 'Employer': 'Global Tech Corp', 'Industry': 'Technology' } },
-            { name: 'Banking Tier', fields: { 'Status': 'Platinum Member', 'Since': 'January 2017', 'Relationship Mgr': 'Sarah Jenkins' } }
-          ]
-        },
-        'modal-contact': {
-          sections: [
-            { name: 'Primary Communication', fields: { 'Personal Email': 'daniel.a@gmail.com', 'Work Email': 'd.anderson@gtc.com', 'Mobile': '+1 (212) 555-4291' } },
-            { name: 'Residential Address', fields: { 'Street': '725 5th Ave', 'City': 'New York', 'State': 'NY 10022', 'Country': 'USA' } }
-          ]
-        },
-        'modal-account': {
-          sections: [
-            { name: 'Checking & Savings', fields: { 'Primary Checking': '****4821 ($84,200)', 'Global Savings': '****0055 ($125,500)', 'Wealth Management': 'Managed' } },
-            { name: 'Card Services', fields: { 'Platinum Visa': 'Active', 'Infinite Credit': 'Unlimited', 'Business Debit': 'Active' } }
-          ]
-        },
-        'modal-financial': {
-          sections: [
-            { name: 'Wealth Overview', fields: { 'Estimated Net Worth': '$2.4M', 'Liquid Assets': '$420K', 'Investment Portfolio': '$1.8M' } },
-            { name: 'Credit Intelligence', fields: { 'Credit Score': '842 (Excellent)', 'Credit Limit': '$250,000', 'Utilization': '4.2%' } }
-          ]
-        },
-        'modal-transaction': {
-          sections: [
-            { name: 'Spending Analysis', fields: { 'Monthly Spend': '$12,400', 'Average Txn': '$258', 'Top Category': 'Travel' } },
-            { name: 'Recent Activity', fields: { 'Last Purchase': '$1,200 (Airline)', 'Flagged Txns': '0', 'Auto-Pays': '12 Active' } }
-          ]
-        },
-        'modal-kyc': {
-          sections: [
-            { name: 'Compliance Status', fields: { 'AML Risk': 'Low', 'Source of Funds': 'Verified', 'Sanctions Check': 'Clear' } },
-            { name: 'Document Vault', fields: { 'ID Type': 'Passport (Valid)', 'Address Proof': 'Utility Bill', 'TIN/SSN': 'Verified' } }
-          ]
-        }
-      };
+      // Avoid opening detail view if the card is currently loading or in an error state
+      if ($(card).find('.card-error-overlay.active, .card-loader-overlay.active').length > 0) {
+        return;
+      }
 
-      const data = {
-        ...DETAIL_DATA[modalId],
-        sections: baseData[modalId]?.sections || DEFAULT_SECTIONS
-      };
-      openDetail(data);
+      const modalId = card.dataset.modal;
+      const data = window.DetailDataCache ? window.DetailDataCache[modalId] : null;
+      if (data) {
+        openDetail(data);
+      } else {
+        console.warn(`No cached detail data found for: ${modalId}`);
+      }
     });
   });
 

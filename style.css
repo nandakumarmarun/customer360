@@ -260,6 +260,8 @@ body::before {
   gap: 20px;
   padding: 10px 0;
   overflow-x: auto;
+  margin-top: 24px;
+  justify-content: center;
 }
 .stories-row::-webkit-scrollbar { display: none; }
 
@@ -766,3 +768,118 @@ body::before {
   .modules-grid{grid-template-columns:repeat(2,1fr)}
   .header-center{display:none}
 }
+
+/* ==========================================
+   DATA INTEGRATION STATE OVERLAYS (GLASSMORPHIC)
+   ========================================== */
+.card-loader-overlay,
+.card-error-overlay,
+.card-empty-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 20, 28, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 20px;
+  text-align: center;
+}
+
+.light-mode .card-loader-overlay,
+.light-mode .card-error-overlay,
+.light-mode .card-empty-overlay {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.card-loader-overlay.active,
+.card-error-overlay.active,
+.card-empty-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Spinner */
+.card-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(108, 99, 255, 0.1);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: card-spin 1s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite;
+  margin-bottom: 12px;
+  box-shadow: 0 0 15px rgba(108, 99, 255, 0.2);
+}
+
+@keyframes card-spin {
+  to { transform: rotate(360deg); }
+}
+
+.card-loader-text {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Error Overlay */
+.card-error-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+  animation: card-shake 0.5s ease-in-out;
+}
+
+.card-error-msg {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.card-retry-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border: none;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+}
+
+.card-retry-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108, 99, 255, 0.5);
+}
+
+/* Empty Overlay */
+.card-empty-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+
+.card-empty-msg {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+@keyframes card-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
