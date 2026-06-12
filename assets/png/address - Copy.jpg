@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 480" fill="none">
+  <defs>
+    <linearGradient id="pinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#6c63ff"/>
+    </linearGradient>
+    <linearGradient id="gridGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6c63ff" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff6b9d"/>
+      <stop offset="100%" stop-color="#6c63ff"/>
+    </linearGradient>
+    <radialGradient id="shadowGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#6c63ff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="pinShadow">
+      <feDropShadow dx="0" dy="12" stdDeviation="15" flood-color="#6c63ff" flood-opacity="0.4"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- GROUND SHADOW / MAP RINGS -->
+  <ellipse cx="210" cy="410" rx="130" ry="25" fill="url(#shadowGlow)"/>
+  <ellipse cx="210" cy="410" rx="90" ry="17" stroke="#00d4ff" stroke-width="2" opacity="0.4" filter="url(#glow)"/>
+  <ellipse cx="210" cy="410" rx="50" ry="9" stroke="#ff6b9d" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- PERSPECTIVE MAP GRID -->
+  <g opacity="0.4">
+    <!-- Horizontal Perspective Lines -->
+    <line x1="60" y1="410" x2="360" y2="410" stroke="url(#gridGrad)" stroke-width="1.5"/>
+    <line x1="80" y1="390" x2="340" y2="390" stroke="url(#gridGrad)" stroke-width="1.5"/>
+    <line x1="100" y1="370" x2="320" y2="370" stroke="url(#gridGrad)" stroke-width="1.5"/>
+    <line x1="40" y1="430" x2="380" y2="430" stroke="url(#gridGrad)" stroke-width="1.5"/>
+    <line x1="20" y1="450" x2="400" y2="450" stroke="url(#gridGrad)" stroke-width="1.5"/>
+    
+    <!-- Vanishing Radial Lines -->
+    <line x1="210" y1="330" x2="20" y2="460" stroke="url(#gridGrad)" stroke-width="1.5"/>
+    <line x1="210" y1="330" x2="100" y2="460" stroke="url(#gridGrad)" stroke-width="1.5"/>
+    <line x1="210" y1="330" x2="160" y2="460" stroke="url(#gridGrad)" stroke-width="1.5"/>
+    <line x1="210" y1="330" x2="210" y2="460" stroke="url(#gridGrad)" stroke-width="2"/>
+    <line x1="210" y1="330" x2="260" y2="460" stroke="url(#gridGrad)" stroke-width="1.5"/>
+    <line x1="210" y1="330" x2="320" y2="460" stroke="url(#gridGrad)" stroke-width="1.5"/>
+    <line x1="210" y1="330" x2="400" y2="460" stroke="url(#gridGrad)" stroke-width="1.5"/>
+  </g>
+
+  <!-- MAP PIN (3D GLOWING) -->
+  <g filter="url(#pinShadow)">
+    <path d="M210,90 C150,90 100,140 100,200 C100,270 210,380 210,380 C210,380 320,270 320,200 C320,140 270,90 210,90 Z" fill="url(#pinGrad)" />
+    <!-- Pin highlight -->
+    <path d="M210,100 C160,100 115,145 115,200 C115,255 180,320 210,355 C240,320 305,255 305,200 C305,145 260,100 210,100 Z" fill="#ffffff" fill-opacity="0.1" />
+  </g>
+
+  <!-- INNER PIN HOLE (glowing core) -->
+  <circle cx="210" cy="200" r="40" fill="#12141c" stroke="url(#ringGrad)" stroke-width="4"/>
+  <circle cx="210" cy="200" r="30" fill="url(#ringGrad)" filter="url(#glow)" opacity="0.6"/>
+  <circle cx="210" cy="200" r="18" fill="#ffffff" filter="url(#glow)"/>
+
+  <!-- Scanning Ring -->
+  <ellipse cx="210" cy="380" rx="40" ry="12" stroke="#00d4ff" stroke-width="2" opacity="0.7">
+    <animate attributeName="rx" values="10;70;10" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="ry" values="3;20;3" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.8;0.1;0.8" dur="3s" repeatCount="indefinite"/>
+  </ellipse>
+</svg>

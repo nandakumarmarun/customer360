@@ -1,6 +1,6 @@
 # Walkthrough - Dynamic AJAX Data Integration Layer
 
-We successfully decoupled the NexaBank customer dashboard UI from the static code, establishing a decoupled, asynchronous, mapping-oriented Data Integration Layer driven entirely by jQuery AJAX and a mock JSON Server.
+We successfully decoupled the CUSTOMER360 customer dashboard UI from the static code, establishing a decoupled, asynchronous, mapping-oriented Data Integration Layer driven entirely by jQuery AJAX and a mock JSON Server.
 
 ## Changes Completed
 

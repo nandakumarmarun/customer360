@@ -52,7 +52,6 @@
       updateAvatar($('.avatar-inner'), data.avatarUrl || data.avatarImage, data.initials);
       $('.customer-name').text(data.name);
       $('.customer-subtitle').text(data.subtitle);
-      $('.customer-badge span:last-child').text(`${data.tier} Tier`);
 
       // 2. Dashboard Header (Scene 2)
       updateAvatar($('.header-avatar-mini'), data.avatarUrl || data.avatarImage, data.initials);
@@ -75,20 +74,82 @@
       updateAvatar($('.profile-avatar-large'), data.avatarUrl || data.avatarImage, data.initials);
       $('.profile-name').text(data.name);
       $('.profile-cid').text(data.cid);
-      $('.profile-status').html(`<span class="status-dot"></span> ${escapeHtml(data.status)}`);
-      $('.profile-tier .tier-badge').text(data.tier);
 
-      $('.pstat').each(function() {
-        const label = $(this).find('.pstat-lbl').text().trim().toLowerCase();
-        const $num = $(this).find('.pstat-num');
-        if (label === 'accounts') {
-          $num.text(data.accountsCount);
-        } else if (label === 'tenure') {
-          $num.text(data.tenure);
-        } else if (label === 'kyc') {
-          $num.text(data.kycProgress);
+      // Simple dot + label status indicator
+      const isActive = (data.customerStatus || data.status || '').toLowerCase() === 'active';
+      const $statusEl = $('#profile-status-pill');
+      $statusEl
+        .removeClass('active suspended')
+        .addClass(isActive ? 'active' : 'suspended');
+      $statusEl.find('.status-pill-label').text(isActive ? 'Active' : 'Suspended');
+
+      // Avatar status ring glow
+      const statusClass = isActive ? 'status-active' : 'status-suspended';
+      $('#avatar-status-ring')
+        .removeClass('status-active status-suspended')
+        .addClass(statusClass);
+
+      // Tier + segment badges — shown inside .customer-badge in scene 1
+      const tierVal    = (data.tier || '').toLowerCase().trim();
+      const $tierBadge = $('#cb-tier-badge');
+      const $crown     = $('#sidebar-crown');
+
+      if (tierVal === 'prime platinum') {
+        $tierBadge.html('👑 PRIME PLATINUM').show();
+        $crown.show();
+      } else if (tierVal === 'prime') {
+        $tierBadge.html('★ PRIME').show();
+        $crown.hide();
+      } else {
+        $tierBadge.hide();
+        $crown.hide();
+      }
+
+      // Trade Finance badge — shown only when tradeFinanceEnabled is true
+      const $tradeBadge = $('#cb-trade-badge');
+      data.tradeFinanceEnabled ? $tradeBadge.show() : $tradeBadge.hide();
+
+      // Rating badge
+      $('.profile-tier .rating-badge').text(`★ ${data.rating || 'A+'}`);
+
+
+
+      $('.pstat-row').each(function() {
+        const stat = $(this).attr('data-stat');
+        const $val = $(this).find('.pstat-row-val');
+        if (stat === 'gender') {
+          const genderVal = data.gender || '';
+          const genderIcon = genderVal.toLowerCase() === 'male' ? '♂️' : (genderVal.toLowerCase() === 'female' ? '♀️' : genderVal);
+          const colorClass = genderVal.toLowerCase() === 'male' ? 'male-color' : (genderVal.toLowerCase() === 'female' ? 'female-color' : '');
+          $val.html(`<span class="gender-icon ${colorClass}">${genderIcon}</span> ${genderVal}`);
+        } else if (stat === 'branch') {
+          $val.text(`${data.branchId} · ${data.branchName}`);
+        } else if (stat === 'region') {
+          $val.text(`${data.regionId} · ${data.regionName}`);
+        } else if (stat === 'since') {
+          $val.text(data.customerSince);
+        } else if (stat === 'status') {
+          $val.text(data.customerStatus);
+        } else if (stat === 'classification') {
+          $val.text(data.classification);
         }
       });
+
+      // 4. Contact Information sidebar section
+      if (data.contactEmail) {
+        $('.contact-info-section .contact-item').each(function(i) {
+          const $text = $(this).find('.contact-text');
+          if (i === 0) $text.text(data.contactEmail);
+          if (i === 1) $text.text(data.contactPhone || '');
+        });
+      }
+
+      // 5. Relationship Manager sidebar section
+      if (data.rmName) {
+        $('.rm-name').text(data.rmName);
+        $('.rm-role').text(data.rmRole || '');
+        $('.rm-phone-number').text(data.rmPhone || '');
+      }
     },
 
     /**

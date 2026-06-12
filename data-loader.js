@@ -1,91 +1,118 @@
 /**
  * Data Integration Layer - Data Loader
- * Coordinates independent data loading, maps models, and manages memory cache.
+ * Makes ONE API call to CUSTOMER_ENDPOINT and distributes the
+ * response to renderSummary + all card renderers.
+ *
+ * Expected API response shape:
+ * {
+ *   summary : { name, cid, tier, … },
+ *   profile : { card: {…}, details: {…} },
+ *   contact : { card: {…}, details: {…} },
+ *   address : { card: {…}, details: {…} },
+ *   owner   : { card: {…}, details: {…} },
+ *   other   : { card: {…}, details: {…} },
+ *   kyc     : { card: {…}, details: {…} }
+ * }
  */
 (function() {
   window.DetailDataCache = {};
 
+  // Show loaders on every card immediately
+  function showAllLoaders() {
+    if (!window.CARD_CONFIG) return;
+    Object.values(window.CARD_CONFIG).forEach(function(cfg) {
+      window.UIRenderer.showLoader(cfg.target);
+    });
+  }
+
+  // Build the standard UI card model from a section response
+  function buildCardModel(section) {
+    return {
+      title    : section.card ? section.card.title    : "",
+      tag      : section.card ? section.card.tag      : "",
+      tagClass : section.card ? section.card.tagClass : "",
+      icon     : section.card ? section.card.icon     : "",
+      data     : section.card ? section.card.data     : {}
+    };
+  }
+
+  // Build the standard UI details model from a section response
+  function buildDetailsModel(section, fallbackTitle) {
+    return {
+      title    : section.details ? section.details.title    : (fallbackTitle || "Details"),
+      hero     : section.details ? section.details.hero     : "default.svg",
+      sections : section.details ? section.details.sections : []
+    };
+  }
+
   const DataLoader = {
-    loadCard: function(cardKey) {
-      const cfg = window.CARD_CONFIG[cardKey];
-      if (!cfg) return;
+    /**
+     * Single API call — fetches everything at once and
+     * distributes each section to the correct renderer.
+     */
+    loadAll: function() {
+      const endpoint = window.API_CONFIG.CUSTOMER_ENDPOINT || "/customer";
 
-      const target = cfg.target;
-      const endpoint = cfg.endpoint;
-      const modalId = cfg.modalId;
+      showAllLoaders();
 
-      // Show card loader
-      window.UIRenderer.showLoader(target);
+      window.ApiService.get(
+        endpoint,
 
-      // Perform independent AJAX fetch
-      window.ApiService.get(endpoint, 
-        // Success callback
+        // ── SUCCESS ──────────────────────────────────────────
         function(response) {
-          window.UIRenderer.hideLoader(target);
-
-          if (!response || (!response.card && !response.details)) {
-            window.UIRenderer.showEmptyState(target);
+          if (!response) {
+            console.error("Customer API returned empty response.");
             return;
           }
 
-          // Backend -> UI Mapper logic
-          // Normalize and map backend structures to frontend standard layout models
-          const uiCardModel = {
-            title: response.card ? response.card.title : "",
-            tag: response.card ? response.card.tag : "",
-            tagClass: response.card ? response.card.tagClass : "",
-            icon: response.card ? response.card.icon : "",
-            data: response.card ? response.card.data : {}
-          };
+          // 1. Render sidebar / header summary
+          if (response.summary) {
+            window.UIRenderer.renderSummary(response.summary);
+          }
 
-          const uiDetailsModel = {
-            title: response.details ? response.details.title : (response.card ? response.card.title : "Details"),
-            hero: response.details ? response.details.hero : "default.svg",
-            sections: response.details ? response.details.sections : []
-          };
+          // 2. Render each card section
+          if (window.CARD_CONFIG) {
+            Object.keys(window.CARD_CONFIG).forEach(function(key) {
+              const cfg     = window.CARD_CONFIG[key];
+              const section = response[key];   // e.g. response.profile, response.contact …
 
-          // Cache details data for dynamic modal detail view mapping
-          window.DetailDataCache[modalId] = uiDetailsModel;
+              window.UIRenderer.hideLoader(cfg.target);
 
-          // Render card UI representation
-          window.UIRenderer.renderCard(target, uiCardModel);
-        },
-        // Error callback
-        function(errorMsg) {
-          window.UIRenderer.showError(target, errorMsg, function() {
-            DataLoader.loadCard(cardKey);
-          });
-        }
-      );
-    },
+              if (!section) {
+                window.UIRenderer.showEmptyState(cfg.target);
+                return;
+              }
 
-    loadSummary: function() {
-      const endpoint = window.API_CONFIG.SUMMARY_ENDPOINT || "/summary";
-      window.ApiService.get(endpoint,
-        function(response) {
-          if (response) {
-            window.UIRenderer.renderSummary(response);
+              // Cache detail data for the cinematic detail view
+              const detailsModel = buildDetailsModel(section, key);
+              window.DetailDataCache[cfg.modalId] = detailsModel;
+
+              // Render the card face
+              window.UIRenderer.renderCard(cfg.target, buildCardModel(section));
+            });
           }
         },
+
+        // ── ERROR ─────────────────────────────────────────────
         function(errorMsg) {
-          console.error("Failed to load customer summary data:", errorMsg);
+          console.error("Failed to load customer data:", errorMsg);
+
+          // Show retry on every card
+          if (window.CARD_CONFIG) {
+            Object.values(window.CARD_CONFIG).forEach(function(cfg) {
+              window.UIRenderer.showError(cfg.target, errorMsg, function() {
+                DataLoader.loadAll();   // single retry reloads everything
+              });
+            });
+          }
         }
       );
-    },
-
-    loadAll: function() {
-      this.loadSummary();
-
-      if (!window.CARD_CONFIG) return;
-      Object.keys(window.CARD_CONFIG).forEach(key => {
-        this.loadCard(key);
-      });
     }
   };
 
   window.DataLoader = DataLoader;
 
-  // Auto-init load when jQuery & DOM are ready
+  // Auto-init when jQuery + DOM are ready
   $(function() {
     DataLoader.loadAll();
   });

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 480" fill="none">
+  <defs>
+    <linearGradient id="otherGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff6b9d"/>
+      <stop offset="100%" stop-color="#6c63ff"/>
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#6c63ff"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="12" stdDeviation="15" flood-color="#ff6b9d" flood-opacity="0.3"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- BACKGROUND RINGS -->
+  <ellipse cx="210" cy="420" rx="140" ry="18" fill="url(#otherGrad)" opacity="0.1"/>
+  <ellipse cx="210" cy="420" rx="90" ry="10" stroke="#ff6b9d" stroke-width="1.5" opacity="0.3" filter="url(#glow)"/>
+
+  <!-- GLOWING ORB BACKDROP -->
+  <circle cx="210" cy="220" r="110" fill="url(#otherGrad)" opacity="0.05" filter="url(#glow)"/>
+
+  <!-- GEAR / PREFERENCES SYSTEM (CENTERED 3D STYLE) -->
+  <g filter="url(#shadow)">
+    <!-- Base stylized document shield -->
+    <path d="M140,120 L280,120 L300,260 L210,350 L120,260 Z" fill="#1c1f2b" stroke="url(#otherGrad)" stroke-width="3.5" />
+    <path d="M150,135 L270,135 L285,250 L210,330 L135,250 Z" fill="url(#otherGrad)" opacity="0.1" />
+  </g>
+
+  <!-- GLOWING INFO / GEAR ELEMENTS -->
+  <g filter="url(#glow)">
+    <!-- Top-Right gear -->
+    <circle cx="270" cy="160" r="16" fill="url(#glowGrad)" opacity="0.8"/>
+    <circle cx="270" cy="160" r="8" fill="#1c1f2b"/>
+    <!-- Gear teeth -->
+    <path d="M270,140 L270,144" stroke="url(#glowGrad)" stroke-width="4" stroke-linecap="round"/>
+    <path d="M270,176 L270,180" stroke="url(#glowGrad)" stroke-width="4" stroke-linecap="round"/>
+    <path d="M250,160 L254,160" stroke="url(#glowGrad)" stroke-width="4" stroke-linecap="round"/>
+    <path d="M286,160 L290,160" stroke="url(#glowGrad)" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Stylized Check Lines representing Preferences -->
+    <line x1="160" y1="190" x2="200" y2="190" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+    <circle cx="250" cy="190" r="6" fill="#00d4ff"/>
+
+    <line x1="160" y1="230" x2="230" y2="230" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+    <circle cx="250" cy="230" r="6" fill="#00d4ff"/>
+
+    <line x1="160" y1="270" x2="210" y2="270" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+    <circle cx="250" cy="270" r="6" fill="#00d4ff"/>
+  </g>
+
+  <!-- Floating info sparkles -->
+  <circle cx="160" cy="140" r="3" fill="#00d4ff" filter="url(#glow)"/>
+  <circle cx="210" cy="310" r="4" fill="#ff6b9d" filter="url(#glow)"/>
+</svg>

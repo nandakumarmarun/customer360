@@ -21,8 +21,8 @@ let threeObjects = {}; // To store scene, stars, etc. for theme updates
     positions[i * 3 + 1] = (Math.random() - 0.5) * 400;
     positions[i * 3 + 2] = (Math.random() - 0.5) * 400;
     const r = Math.random();
-    if (r < 0.33) { colors[i * 3] = 0.42; colors[i * 3 + 1] = 0.39; colors[i * 3 + 2] = 1; }
-    else if (r < 0.66) { colors[i * 3] = 0; colors[i * 3 + 1] = 0.83; colors[i * 3 + 2] = 1; }
+    if (r < 0.33) { colors[i * 3] = 1; colors[i * 3 + 1] = 0.2; colors[i * 3 + 2] = 0.4; }
+    else if (r < 0.66) { colors[i * 3] = 1; colors[i * 3 + 1] = 0.45; colors[i * 3 + 2] = 0.45; }
     else { colors[i * 3] = 1; colors[i * 3 + 1] = 1; colors[i * 3 + 2] = 1; }
   }
   starGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -40,7 +40,7 @@ let threeObjects = {}; // To store scene, stars, etc. for theme updates
   for (let i = 0; i < 6; i++) {
     const geo = geos[i % geos.length];
     const mat = new THREE.MeshBasicMaterial({
-      color: i % 3 === 0 ? 0x6c63ff : i % 3 === 1 ? 0x00d4ff : 0xff6b9d,
+      color: i % 3 === 0 ? 0xaa0000 : i % 3 === 1 ? 0xf87171 : 0xf43f5e,
       wireframe: true, transparent: true, opacity: 0.15
     });
     const mesh = new THREE.Mesh(geo, mat);
@@ -223,34 +223,68 @@ function initStories() {
   });
 }
 
-/* ====== THEME TOGGLE ====== */
+/* ====== THEME & COLOR PICKER TOGGLE ====== */
 function initThemeToggle() {
   const btn = document.getElementById('theme-toggle');
   const root = document.documentElement;
 
   // Load saved theme, default to light
-  const savedTheme = localStorage.getItem('nexabank-theme') || 'light';
+  const savedTheme = localStorage.getItem('customer360-theme') || 'light';
 
+  // Apply light/dark mode classes on start
   if (savedTheme === 'light') {
     root.classList.add('light-mode');
     document.body.classList.add('light-mode');
-    // Ensure Three.js is ready before updating
-    const checkThree = setInterval(() => {
-      if (threeObjects.starGeo) {
-        updateThreeTheme(true);
-        clearInterval(checkThree);
-      }
-    }, 100);
   } else {
     root.classList.remove('light-mode');
     document.body.classList.remove('light-mode');
-    setTimeout(() => updateThreeTheme(false), 100);
   }
+
+  // Load saved color theme, default to red
+  const savedColorTheme = localStorage.getItem('customer360-color-theme') || 'red';
+  const pickers = document.querySelectorAll('.theme-picker-btn');
+
+  function applyColorTheme(theme) {
+    if (theme === 'neon') {
+      root.classList.add('theme-neon');
+    } else {
+      root.classList.remove('theme-neon');
+    }
+    pickers.forEach(p => {
+      if (p.dataset.theme === theme) {
+        p.classList.add('active');
+      } else {
+        p.classList.remove('active');
+      }
+    });
+    // Update Three.js scene colors
+    updateThreeTheme(root.classList.contains('light-mode'));
+  }
+
+  applyColorTheme(savedColorTheme);
+
+  // Bind click listeners for color theme pickers
+  pickers.forEach(p => {
+    p.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const theme = p.dataset.theme;
+      localStorage.setItem('customer360-color-theme', theme);
+      applyColorTheme(theme);
+    });
+  });
+
+  // Ensure Three.js is ready before updating on initial load
+  const checkThree = setInterval(() => {
+    if (threeObjects.starGeo) {
+      updateThreeTheme(root.classList.contains('light-mode'));
+      clearInterval(checkThree);
+    }
+  }, 100);
 
   btn.addEventListener('click', () => {
     const isLight = root.classList.toggle('light-mode');
     document.body.classList.toggle('light-mode');
-    localStorage.setItem('nexabank-theme', isLight ? 'light' : 'dark');
+    localStorage.setItem('customer360-theme', isLight ? 'light' : 'dark');
 
     // Wow Effect: Expansion Flash
     const flash = document.createElement('div');
@@ -278,27 +312,49 @@ function updateThreeTheme(isLight) {
 
   const { starGeo, meshes } = threeObjects;
   const colors = starGeo.attributes.color.array;
+  const isNeon = document.documentElement.classList.contains('theme-neon');
 
   for (let i = 0; i < colors.length / 3; i++) {
     if (isLight) {
-      // Warmer/Professional colors for light mode
-      colors[i * 3] = 0.31; colors[i * 3 + 1] = 0.27; colors[i * 3 + 2] = 0.9; // Indigo
+      if (isNeon) {
+        // Neon light mode (Indigo/Purple stars)
+        colors[i * 3] = 0.31; colors[i * 3 + 1] = 0.27; colors[i * 3 + 2] = 0.9;
+      } else {
+        // Red light mode (Crimson Red stars)
+        colors[i * 3] = 0.88; colors[i * 3 + 1] = 0.11; colors[i * 3 + 2] = 0.28;
+      }
     } else {
-      // Original neon colors
-      const r = Math.random();
-      if (r < 0.33) { colors[i * 3] = 0.42; colors[i * 3 + 1] = 0.39; colors[i * 3 + 2] = 1; }
-      else if (r < 0.66) { colors[i * 3] = 0; colors[i * 3 + 1] = 0.83; colors[i * 3 + 2] = 1; }
-      else { colors[i * 3] = 1; colors[i * 3 + 1] = 1; colors[i * 3 + 2] = 1; }
+      if (isNeon) {
+        // Neon dark mode colors
+        const r = Math.random();
+        if (r < 0.33) { colors[i * 3] = 0.42; colors[i * 3 + 1] = 0.39; colors[i * 3 + 2] = 1; }
+        else if (r < 0.66) { colors[i * 3] = 0; colors[i * 3 + 1] = 0.83; colors[i * 3 + 2] = 1; }
+        else { colors[i * 3] = 1; colors[i * 3 + 1] = 1; colors[i * 3 + 2] = 1; }
+      } else {
+        // Red dark mode colors
+        const r = Math.random();
+        if (r < 0.33) { colors[i * 3] = 1; colors[i * 3 + 1] = 0.2; colors[i * 3 + 2] = 0.4; }
+        else if (r < 0.66) { colors[i * 3] = 1; colors[i * 3 + 1] = 0.45; colors[i * 3 + 2] = 0.45; }
+        else { colors[i * 3] = 1; colors[i * 3 + 1] = 1; colors[i * 3 + 2] = 1; }
+      }
     }
   }
   starGeo.attributes.color.needsUpdate = true;
 
   meshes.forEach((m, i) => {
     if (isLight) {
-      m.material.color.setHex(0x4f46e5);
+      if (isNeon) {
+        m.material.color.setHex(0x4f46e5); // Indigo
+      } else {
+        m.material.color.setHex(0xaa0000); // Crimson Red
+      }
       m.material.opacity = 0.1;
     } else {
-      m.material.color.setHex(i % 3 === 0 ? 0x6c63ff : i % 3 === 1 ? 0x00d4ff : 0xff6b9d);
+      if (isNeon) {
+        m.material.color.setHex(i % 3 === 0 ? 0x6c63ff : i % 3 === 1 ? 0x00d4ff : 0xff6b9d);
+      } else {
+        m.material.color.setHex(i % 3 === 0 ? 0xaa0000 : i % 3 === 1 ? 0xf87171 : 0xf43f5e);
+      }
       m.material.opacity = 0.15;
     }
   });
