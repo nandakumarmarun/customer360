@@ -1,0 +1,386 @@
+{
+  "customer": {
+    "summary": {
+      "alerts": [
+        "🚀 Market indices are up 2.4% today. Your portfolio has gained $12,400.",
+        "🔒 Security Reminder: Change your transaction PIN every 90 days for maximum safety.",
+        "💎 New Platinum Benefit: Priority lounge access at 1,200+ airports worldwide."
+      ],
+      "avatarUrl": "",
+      "name": "Anderson",
+      "initials": "NM",
+      "subtitle": "Cooporate Customer Insight",
+      "cid": "NX-4829-0055",
+      "status": "Active Customer",
+      "tier": "prime platinum",
+      "accountsCount": "12",
+      "tenure": "8yr",
+      "kycProgress": "99%",
+      "netWorth": "$2.4M",
+      "creditScore": "842",
+      "riskLevel": "Low",
+      "gender": "Male",
+      "branchId": "8082",
+      "branchName": "New York Office",
+      "regionId": "US-EAST",
+      "regionName": "North America",
+      "customerSince": "Jan 2017",
+      "customerStatus": "Active",
+      "classification": "Major",
+      "rating": "A+",
+      "contactEmail": "arun.chacko@email.com",
+      "contactPhone": "+91 98765 43210",
+      "rmName": "Ms. Priya Menon",
+      "rmRole": "Assistant Manager",
+      "rmPhone": "+91 98765 12345",
+      "tradeFinanceEnabled": true
+    },
+    "profile": {
+      "card": {
+        "title": "Personal Information",
+        "tag": "Verified",
+        "tagClass": "tag-normal",
+        "icon": "👤",
+        "data": {
+          "Date of Birth": "Mar 15, 1985",
+          "Nationality": "American",
+          "Occupation": "Senior Executive",
+          "Tax ID": "Verified"
+        }
+      },
+      "details": {
+        "title": "Personal Information",
+        "hero": "avatar.svg",
+        "sections": [
+          {
+            "name": "Identity Profile",
+            "fields": {
+              "Full Name": "Daniel James Anderson",
+              "Date of Birth": "March 15, 1985",
+              "Nationality": "United States",
+              "Gender": "Male",
+              "customerSince": "Jan 2017",
+              "customerStatus": "Active",
+              "classification": "Major",
+              "rating": "A+",
+              "contactEmail": "arun.chacko@email.com",
+              "contactPhone": "+91 98765 43210",
+              "rmName": "Ms. Priya Menon",
+              "rmRole": "Assistant ManagerCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer InsightCooporate Customer Insight",
+              "rmPhone": "+91 98765 12345",
+              "tradeFinanceEnabled": true,
+              "Rm Role": "Assistant Manager",
+              "dsfdf": "dfddfsssf",
+              "dfd": "dfdsdfsdfdsfsdf"
+            }
+          },
+          {
+            "name": "Professional Status",
+            "fields": {
+              "Occupation": "Senior Executive",
+              "Employer": "Global Tech Corp",
+              "Industry": "Technology"
+            }
+          },
+          {
+            "name": "Banking Tier",
+            "fields": {
+              "Status": "Platinum Member",
+              "Since": "January 2017",
+              "Relationship Mgr": "Sarah Jenkins"
+            }
+          }
+        ]
+      }
+    },
+    "contact": {
+      "card": {
+        "title": "Contact Information",
+        "tag": "Active",
+        "tagClass": "tag-normal",
+        "icon": "📡",
+        "data": {
+          "Email": "d.ander***@mail.com",
+          "Phone": "+1 (***) ***-4291",
+          "City": "New York, NY",
+          "Preferred": "Mobile App"
+        }
+      },
+      "details": {
+        "title": "Contact Information",
+        "hero": "Phone.Svg",
+        "sections": [
+          {
+            "name": "Primary Communication",
+            "fields": {
+              "Personal Email": "daniel.a@gmail.com",
+              "Work Email": "d.anderson@gtc.com",
+              "Mobile": "+1 (212) 555-4291"
+            }
+          },
+          {
+            "name": "Residential Address",
+            "fields": {
+              "Street": "725 5th Ave",
+              "City": "New York",
+              "State": "NY 10022",
+              "Country": "USA"
+            }
+          }
+        ]
+      }
+    },
+    "address": {
+      "card": {
+        "title": "Address Information",
+        "tag": "Verified",
+        "tagClass": "tag-gold",
+        "icon": "📍",
+        "data": {
+          "Street Address": "725 5th Ave",
+          "City & State": "New York, NY 10022",
+          "Country": "United States",
+          "Address Type": "Residential"
+        }
+      },
+      "details": {
+        "title": "Address Information",
+        "hero": "address.svg",
+        "sections": [
+          {
+            "name": "Home Address",
+            "fields": {
+              "Address": {
+                "value": "Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016,Flat No. 12B, Green Valley Apartments, MG Road, Kochi, Kerala 682016",
+                "hideLabel": true
+              }
+            }
+          },
+          {
+            "name": "Residential Address",
+            "fields": {
+              "Street Address": "725 5th Ave",
+              "City & State": "New York, NY 10022",
+              "Country": "United States"
+            }
+          },
+          {
+            "name": "Mailing Address",
+            "fields": {
+              "Type": "Same as Residential",
+              "Delivery Point": "Front Door",
+              "Status": "Confirmed"
+            }
+          }
+        ]
+      }
+    },
+    "owner": {
+      "card": {
+        "title": "Beneficial Owner Details",
+        "tag": "100% Share",
+        "tagClass": "tag-normal",
+        "icon": "👥",
+        "data": {
+          "Ultimate Owner": "Daniel James Anderson",
+          "Ownership Share": "100%",
+          "Control Status": "Direct Control",
+          "Approved": "Jan 2017"
+        }
+      },
+      "details": {
+        "title": "Beneficial Owner Details",
+        "hero": "owner.svg",
+        "sections": [
+          {
+            "name": "Primary Beneficial Owner",
+            "fields": {
+              "Full Name": "Daniel James Anderson",
+              "Ownership Share": "100%",
+              "Nationality": "United States",
+              "TIN/SSN": "Verified"
+            }
+          },
+          {
+            "name": "Control & Authority",
+            "fields": {
+              "Role": "Direct Controller",
+              "Signing Power": "Sole Signatory",
+              "Approved Date": "Jan 2017"
+            }
+          }
+        ]
+      }
+    },
+    "other": {
+      "card": {
+        "title": "Other Information",
+        "tag": "Details",
+        "tagClass": "tag-cyan",
+        "icon": "⚙️",
+        "data": {
+          "Preferred Channel": "Digital & Mobile",
+          "Language": "English (US)",
+          "Marketing Opt-in": "Yes (E-mail)",
+          "Segment": "HNW Retail"
+        }
+      },
+      "details": {
+        "title": "Other Information",
+        "hero": "other.svg",
+        "sections": [
+          {
+            "name": "Customer Preferences",
+            "fields": {
+              "Preferred Channel": "Digital & Mobile",
+              "Language": "English (US)",
+              "Marketing Opt-in": "Yes (E-mail)",
+              "Statement Delivery": "Paperless"
+            }
+          },
+          {
+            "name": "Additional Details",
+            "fields": {
+              "Segment": "HNW Retail",
+              "Tax Residency": "United States",
+              "PEP Status": "Clear (Non-PEP)"
+            }
+          },
+          {
+            "name": "Business Description",
+            "fields": {
+              "Description": {
+                "value": "Leading provider of financial technology solutions across South India.",
+                "hideLabel": true
+              }
+            }
+          },
+          {
+            "name": "Remarks",
+            "fields": {
+              "Remark": {
+                "value": "Customer prefers communication through email during business hours.",
+                "hideLabel": true
+              }
+            }
+          }
+        ]
+      }
+    },
+    "kyc": {
+      "card": {
+        "title": "KYC & Compliance",
+        "tag": "99% Done",
+        "tagClass": "tag-green",
+        "icon": "🛡️",
+        "data": {
+          "ID Verified": "✔ Passport",
+          "Address": "✔ Verified",
+          "AML Status": "✔ Clear",
+          "PEP Status": "✔ Non-PEP"
+        }
+      },
+      "details": {
+        "title": "KYC & Compliance",
+        "hero": "shield.Svg",
+        "sections": [
+          {
+            "name": "Compliance Status",
+            "fields": {
+              "AML Risk": "Low",
+              "Source of Funds": "Verified",
+              "Sanctions Check": "Clear"
+            }
+          },
+          {
+            "name": "Document Vault",
+            "fields": {
+              "ID Type": "Passport (Valid)",
+              "Address Proof": "Utility Bill",
+              "TIN/SSN": "Verified"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "tour": [
+    {
+      "target": "center",
+      "title": "Welcome to Customer 360",
+      "content": "Let's take a quick tour to explore your new dashboard features and capabilities.",
+      "position": "center"
+    },
+    {
+      "target": ".header-left",
+      "title": "Customer Profile",
+      "content": "Here is the customer profile overview.",
+      "position": "bottom"
+    },
+    {
+      "target": ".header-center",
+      "title": "Key Statistics",
+      "content": "Quick insights like Net Worth and AI scores are displayed here.",
+      "position": "bottom"
+    },
+    {
+      "target": "#card-personal",
+      "title": "Detailed Interactions",
+      "content": "Click this card to trigger a cinematic 3D detailed view of the customer data.",
+      "position": "bottom",
+      "actionRequired": true
+    },
+    {
+      "target": "#detail-view",
+      "title": "Cinematic Detailed View",
+      "content": "This immersive view provides deep insights into the customer profile.",
+      "position": "center"
+    },
+    {
+      "target": "#detail-next",
+      "title": "Data Navigation",
+      "content": "If a section has a lot of data, it will be paginated. Click this arrow to slide to the next data card.",
+      "position": "left",
+      "actionRequired": true
+    },
+    {
+      "target": "#back-to-dash",
+      "title": "Return to Dashboard",
+      "content": "Click here to close the detailed view and return to the main dashboard.",
+      "position": "bottom",
+      "actionRequired": true
+    },
+    {
+      "target": ".qm-nav-dots",
+      "title": "Quick Module Navigation",
+      "content": "Use these dots to quickly jump between different modules.",
+      "position": "left"
+    },
+    {
+      "target": "#mod-case",
+      "title": "Quick Access Modules",
+      "content": "Click this module card to open the quick view and explore further.",
+      "position": "right",
+      "actionRequired": true
+    },
+    {
+      "target": "#quick-module-view",
+      "title": "Quick Module Layout",
+      "content": "This interface allows you to view detailed lists or forms without losing your dashboard context.",
+      "position": "center"
+    },
+    {
+      "target": "#qm-back-to-dash",
+      "title": "Floating Action Button",
+      "content": "Click the floating button to return to your main profile view.",
+      "position": "left",
+      "actionRequired": true
+    },
+    {
+      "target": "center",
+      "title": "Thank you please explore your self",
+      "content": "Let's take a quick tour to explore your new dashboard features and capabilities.",
+      "position": "center"
+    }
+  ]
+}

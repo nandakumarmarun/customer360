@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" class="light-mode">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NexaBank · Customer Intelligence</title>
-  <meta name="description" content="Premium AI-powered banking customer profile dashboard with cinematic 3D experience." />
+  <title>CUSTOMER360 · Customer Intelligence</title>
+  <meta name="description"
+    content="Premium AI-powered banking customer profile dashboard with cinematic 3D experience." />
   <!-- ===== LOCAL FONTS ===== -->
   <link rel="stylesheet" href="fonts/fonts.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body class="light-mode">
-  
+
   <!-- SVG Chroma Key Filter (Removes Black) -->
   <svg width="0" height="0" style="position:absolute">
     <filter id="remove-black">
@@ -31,7 +34,7 @@
     <div class="loading-content">
       <div class="loading-logo">
         <span class="logo-icon">⬡</span>
-        <span class="logo-text">NEXABANK</span>
+        <span class="logo-text">CUSTOMER360</span>
       </div>
       <div class="loading-line-container">
         <div class="loading-line" id="loading-line"></div>
@@ -66,7 +69,7 @@
             <div class="ring r3"></div>
           </div>
           <div class="avatar-orb" id="avatar-orb">
-            <div class="avatar-crown">👑</div>
+            <div class="avatar-crown" id="avatar-crown" style="display:none">👑</div>
             <div class="avatar-inner">
               <div class="avatar-face">DA</div>
             </div>
@@ -76,9 +79,45 @@
           <div class="avatar-info" id="avatar-info">
             <h1 class="customer-name">Daniel Anderson</h1>
             <p class="customer-subtitle">Premium Banking Customer</p>
-            <div class="customer-badge">
-              <span class="badge-icon">★</span>
-              <span>Platinum Tier</span>
+            <div class="customer-badge" id="customer-badge-row">
+              <!-- Tier badge: prime platinum shows 👑 + label; prime shows label; others hidden -->
+              <span class="cb-tier" id="cb-tier-badge" style="display:none"></span>
+              <!-- Trade Finance badge: shown only when tradeFinanceEnabled = true -->
+              <span class="cb-trade" id="cb-trade-badge" style="display:none">⚓ Trade Finance Enabled</span>
+            </div>
+
+            <!-- Stories Model -->
+            <div class="stories-row">
+              <div class="story-item" data-story="security">
+                <div class="story-ring active">
+                  <div class="story-avatar">🛡️</div>
+                </div>
+                <span>Security</span>
+              </div>
+              <div class="story-item" data-story="invest">
+                <div class="story-ring active">
+                  <div class="story-avatar">📈</div>
+                </div>
+                <span>Insights</span>
+              </div>
+              <div class="story-item" data-story="rewards">
+                <div class="story-ring active">
+                  <div class="story-avatar">🎁</div>
+                </div>
+                <span>Rewards</span>
+              </div>
+              <div class="story-item" data-story="lifestyle">
+                <div class="story-ring">
+                  <div class="story-avatar">✈️</div>
+                </div>
+                <span>Travel</span>
+              </div>
+              <div class="story-item" data-story="ai">
+                <div class="story-ring">
+                  <div class="story-avatar">🤖</div>
+                </div>
+                <span>AI Advice</span>
+              </div>
             </div>
           </div>
         </div>
@@ -91,7 +130,19 @@
 
     <!-- SCENE 2: DASHBOARD -->
     <section id="scene-dashboard" class="scene">
-      <!-- HEADER -->
+      <!-- Ticker Alert -->
+      <div class="alerts-bar glass-card">
+        <div class="alert-label">LIVE ALERT</div>
+        <div class="alert-ticker">
+          <div class="ticker-content">
+            <span>🚀 Market indices are up 2.4% today. Your portfolio has gained $12,400.</span>
+            <span>🔒 Security Reminder: Change your transaction PIN every 90 days for maximum safety.</span>
+            <span>💎 New Platinum Benefit: Priority lounge access at 1,200+ airports worldwide.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEADER (below alert row, sticky top) -->
       <header class="dash-header glass-card" id="dash-header">
         <div class="header-left">
           <div class="header-avatar-mini">DA</div>
@@ -117,11 +168,23 @@
           </div>
         </div>
         <div class="header-right">
+          <div class="theme-picker-group">
+            <button class="theme-picker-btn red-theme-picker active" data-theme="red"
+              title="Crimson Red Theme"></button>
+            <button class="theme-picker-btn neon-theme-picker" data-theme="neon" title="Neon Palette Theme"></button>
+          </div>
           <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
             <span class="sun">☀️</span>
             <span class="moon">🌙</span>
           </button>
           <button class="btn-primary" id="edit-profile-btn">Edit Profile</button>
+          <div class="menu-container" style="position:relative">
+            <button class="icon-btn" id="tour-menu-btn" style="background:transparent; border:none; color:var(--text); font-size:24px; font-weight: bold; cursor:pointer; padding-left: 8px;">⋮</button>
+            <div class="dropdown-menu glass-card" id="tour-dropdown" style="display:none; position:absolute; right:0; top:40px; padding:10px; border-radius:10px; width:150px; z-index:1000; flex-direction:column; gap:8px;">
+                <button class="dropdown-item" id="start-tour-btn" style="background:var(--glass2); border:1px solid var(--border); border-radius:6px; color:var(--text); width:100%; text-align:left; padding:8px 12px; cursor:pointer; font-family:inherit;">Start Tour</button>
+                <button class="dropdown-item" style="background:var(--glass2); border:1px solid var(--border); border-radius:6px; color:var(--text); width:100%; text-align:left; padding:8px 12px; cursor:pointer; font-family:inherit;">Help Center</button>
+            </div>
+          </div>
           <div class="header-notif">
             <span class="notif-dot"></span>
             <span>🔔</span>
@@ -129,85 +192,103 @@
         </div>
       </header>
 
-      <!-- ALERTS & STORIES -->
-      <section class="dash-updates" id="dash-updates">
-        <!-- Ticker Alert -->
-        <div class="alerts-bar glass-card">
-          <div class="alert-label">LIVE ALERT</div>
-          <div class="alert-ticker">
-            <div class="ticker-content">
-              <span>🚀 Market indices are up 2.4% today. Your portfolio has gained $12,400.</span>
-              <span>🔒 Security Reminder: Change your transaction PIN every 90 days for maximum safety.</span>
-              <span>💎 New Platinum Benefit: Priority lounge access at 1,200+ airports worldwide.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Stories Model -->
-        <div class="stories-row">
-          <div class="story-item" data-story="security">
-            <div class="story-ring active">
-              <div class="story-avatar">🛡️</div>
-            </div>
-            <span>Security</span>
-          </div>
-          <div class="story-item" data-story="invest">
-            <div class="story-ring active">
-              <div class="story-avatar">📈</div>
-            </div>
-            <span>Insights</span>
-          </div>
-          <div class="story-item" data-story="rewards">
-            <div class="story-ring active">
-              <div class="story-avatar">🎁</div>
-            </div>
-            <span>Rewards</span>
-          </div>
-          <div class="story-item" data-story="lifestyle">
-            <div class="story-ring">
-              <div class="story-avatar">✈️</div>
-            </div>
-            <span>Travel</span>
-          </div>
-          <div class="story-item" data-story="ai">
-            <div class="story-ring">
-              <div class="story-avatar">🤖</div>
-            </div>
-            <span>AI Advice</span>
-          </div>
-        </div>
-      </section>
-
       <!-- PROFILE SIDEBAR + CARDS GRID -->
       <div class="dash-body">
 
         <!-- LEFT PROFILE CARD -->
         <aside class="profile-sidebar glass-card" id="profile-sidebar">
-          <div class="profile-avatar-large">DA</div>
+          <!-- Avatar with status ring + conditional crown -->
+          <div class="avatar-status-ring status-active" id="avatar-status-ring">
+            <!-- Crown: only for prime platinum -->
+            <span class="sidebar-crown" id="sidebar-crown" style="display:none">👑</span>
+            <div class="profile-avatar-large">DA</div>
+          </div>
+
           <h2 class="profile-name">Daniel Anderson</h2>
-          <p class="profile-cid">NX-4829-0055</p>
-          <div class="profile-status active">
-            <span class="status-dot"></span> Active Customer
+          <!-- Enhanced status pill -->
+          <div class="profile-status active" id="profile-status-pill">
+            <span class="status-dot"></span>
+            <span class="status-pill-label">Active</span>
           </div>
+
           <div class="profile-tier">
-            <span class="tier-badge">PLATINUM</span>
+            <span class="rating-badge">★ A+</span>
+            <span class="meta-badge meta-badge-status"><strong>Male</strong></span>
+            <span class="meta-badge meta-badge-staff"><strong>Staff</strong></span>
+            <span class="meta-badge meta-badge-class"><strong>Major</strong></span>
           </div>
-          <div class="profile-stats">
-            <div class="pstat">
-              <span class="pstat-num">12</span>
-              <span class="pstat-lbl">Accounts</span>
+          <div class="profile-stats-vertical">
+            <div class="pstat-row" data-stat="branch" data-tooltip="Branch: 8082 · New York Office">
+              <span class="pstat-row-lbl">Branch</span>
+              <span class="pstat-row-val">8082 · New York Office</span>
             </div>
-            <div class="pstat">
-              <span class="pstat-num">8yr</span>
-              <span class="pstat-lbl">Tenure</span>
+            <div class="pstat-row" data-stat="region" data-tooltip="Region: US-EAST · North America">
+              <span class="pstat-row-lbl">Region</span>
+              <span class="pstat-row-val">US-EAST · North America</span>
             </div>
-            <div class="pstat">
-              <span class="pstat-num">99%</span>
-              <span class="pstat-lbl">KYC</span>
+            <div class="pstat-row" data-stat="since">
+              <span class="pstat-row-lbl">Since</span>
+              <span class="pstat-row-val">Jan 2017</span>
             </div>
           </div>
-          <button class="btn-outline full-width mt-auto">View Full Profile</button>
+
+          <!-- ── CONTACT INFORMATION ── -->
+          <div class="sidebar-divider"></div>
+          <div class="contact-info-section">
+            <h4 class="sidebar-section-title">CONTACT INFORMATION</h4>
+            <div class="contact-item">
+              <span class="contact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="3" />
+                  <polyline points="2,4 12,13 22,4" />
+                </svg>
+              </span>
+              <span class="contact-text">arun.chacko@email.com</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.86a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </span>
+              <span class="contact-text">+91 98765 43210</span>
+            </div>
+          </div>
+
+          <!-- ── RELATIONSHIP MANAGER ── -->
+          <div class="sidebar-divider"></div>
+          <div class="rm-section">
+            <h4 class="sidebar-section-title">RELATIONSHIP MANAGER</h4>
+            <div class="rm-card">
+              <div class="rm-avatar">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="4" />
+                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                </svg>
+              </div>
+              <div class="rm-info">
+                <span class="rm-name">Ms. Priya Menon</span>
+                <span class="rm-role">Assistant Manager</span>
+              </div>
+            </div>
+            <div class="rm-phone-row">
+              <span class="rm-phone-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.86a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </span>
+              <span class="rm-phone-number">+91 98765 12345</span>
+            </div>
+          </div>
+
         </aside>
+
 
         <!-- MAIN CARDS GRID -->
         <main class="cards-grid" id="cards-grid">
@@ -223,18 +304,7 @@
               <div class="card-arrow">›</div>
             </div>
             <div class="card-body">
-              <div class="card-row">
-                <span class="crow-label">Date of Birth</span>
-                <span class="crow-val">Mar 15, 1985</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Nationality</span>
-                <span class="crow-val">American</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Occupation</span>
-                <span class="crow-val">Senior Executive</span>
-              </div>
+              <!-- Loaded Dynamically -->
             </div>
             <div class="card-footer">
               <span class="cf-label">Click to view full details</span>
@@ -252,105 +322,61 @@
               <div class="card-arrow">›</div>
             </div>
             <div class="card-body">
-              <div class="card-row">
-                <span class="crow-label">Email</span>
-                <span class="crow-val">d.ander***@mail.com</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Phone</span>
-                <span class="crow-val">+1 (***) ***-4291</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">City</span>
-                <span class="crow-val">New York, NY</span>
-              </div>
+              <!-- Loaded Dynamically -->
             </div>
             <div class="card-footer">
               <span class="cf-label">Click to view full details</span>
             </div>
           </div>
 
-          <!-- CARD 3: ACCOUNT INFO -->
-          <div class="info-card glass-card" id="card-account" data-modal="modal-account">
+          <!-- CARD 3: ADDRESS INFO -->
+          <div class="info-card glass-card" id="card-address" data-modal="modal-address">
             <div class="card-header">
-              <div class="card-icon">🏦</div>
+              <div class="card-icon">📍</div>
               <div class="card-title-wrap">
-                <h3>Account Information</h3>
-                <span class="card-tag tag-gold">Premium</span>
+                <h3>Address Information</h3>
+                <span class="card-tag tag-gold">Verified</span>
               </div>
               <div class="card-arrow">›</div>
             </div>
             <div class="card-body">
-              <div class="card-row">
-                <span class="crow-label">Primary Acc.</span>
-                <span class="crow-val">****-****-4821</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Balance</span>
-                <span class="crow-val">$••••••</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Since</span>
-                <span class="crow-val">Jan 2017</span>
-              </div>
+              <!-- Loaded Dynamically -->
             </div>
             <div class="card-footer">
               <span class="cf-label">Click to view full details</span>
             </div>
           </div>
 
-          <!-- CARD 4: FINANCIAL INFO -->
-          <div class="info-card glass-card" id="card-financial" data-modal="modal-financial">
+          <!-- CARD 4: BENEFICIAL OWNER DETAILS -->
+          <div class="info-card glass-card" id="card-owner" data-modal="modal-owner">
             <div class="card-header">
-              <div class="card-icon">📊</div>
+              <div class="card-icon">👥</div>
               <div class="card-title-wrap">
-                <h3>Financial Information</h3>
-                <span class="card-tag">Updated</span>
+                <h3>Beneficial Owner Details</h3>
+                <span class="card-tag">100% Share</span>
               </div>
               <div class="card-arrow">›</div>
             </div>
             <div class="card-body">
-              <div class="card-row">
-                <span class="crow-label">Annual Income</span>
-                <span class="crow-val">$•••,•••</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Net Worth</span>
-                <span class="crow-val">$2.4M</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Credit Score</span>
-                <span class="crow-val credit-good">842 / 900</span>
-              </div>
+              <!-- Loaded Dynamically -->
             </div>
             <div class="card-footer">
               <span class="cf-label">Click to view full details</span>
             </div>
           </div>
 
-          <!-- CARD 5: TRANSACTION SUMMARY -->
-          <div class="info-card glass-card" id="card-transaction" data-modal="modal-transaction">
+          <!-- CARD 5: OTHER INFORMATION -->
+          <div class="info-card glass-card" id="card-other" data-modal="modal-other">
             <div class="card-header">
-              <div class="card-icon">💳</div>
+              <div class="card-icon">⚙️</div>
               <div class="card-title-wrap">
-                <h3>Transaction Summary</h3>
-                <span class="card-tag tag-cyan">Live</span>
+                <h3>Other Information</h3>
+                <span class="card-tag tag-cyan">Details</span>
               </div>
               <div class="card-arrow">›</div>
             </div>
             <div class="card-body">
-              <div class="card-row">
-                <span class="crow-label">This Month</span>
-                <span class="crow-val">48 transactions</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Total Spent</span>
-                <span class="crow-val">$12,400</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Last Txn</span>
-                <span class="crow-val">2 hours ago</span>
-              </div>
+              <!-- Loaded Dynamically -->
             </div>
             <div class="card-footer">
               <span class="cf-label">Click to view full details</span>
@@ -368,18 +394,7 @@
               <div class="card-arrow">›</div>
             </div>
             <div class="card-body">
-              <div class="card-row">
-                <span class="crow-label">ID Verified</span>
-                <span class="crow-val check">✔ Passport</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">Address</span>
-                <span class="crow-val check">✔ Verified</span>
-              </div>
-              <div class="card-row">
-                <span class="crow-label">AML Status</span>
-                <span class="crow-val check">✔ Clear</span>
-              </div>
+              <!-- Loaded Dynamically -->
             </div>
             <div class="card-footer">
               <span class="cf-label">Click to view full details</span>
@@ -387,43 +402,69 @@
           </div>
 
         </main>
+
+        <!-- ===== QUICK MODULE VIEW (In-place Layout) ===== -->
+        <div id="quick-module-view" class="hidden">
+          <div class="qm-header-inline">
+            <h2 id="qm-title">Module Title</h2>
+          </div>
+          <div class="qm-content-area" id="qm-content">
+            <!-- HTML content will be injected here -->
+          </div>
+        </div>
+        
+        <!-- FLOATING BACK BUTTON (Outside layout) -->
+        <button class="qm-floating-close hidden" id="qm-back-to-dash">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          <span>Back to Profile</span>
+        </button>
+        
+        <!-- Fixed Navigation Dots for Dashboard/Modules -->
+        <div class="qm-nav-dots" id="qm-nav-dots"></div>
       </div>
+
 
       <!-- BOTTOM NAVIGATION MODULES -->
       <section class="bottom-modules" id="bottom-modules">
         <h2 class="modules-title">Quick Access Modules</h2>
         <div class="modules-grid">
-          <div class="module-card" id="mod-accounts">
-            <div class="mod-icon">🏦</div>
-            <span>Accounts</span>
+          <div class="module-card" id="mod-case">
+            <div class="mod-icon">📁</div>
+            <span>Case</span>
           </div>
-          <div class="module-card" id="mod-loans">
-            <div class="mod-icon">💰</div>
-            <span>Loans</span>
+          <div class="module-card" id="mod-lead">
+            <div class="mod-icon">🎯</div>
+            <span>Lead</span>
           </div>
-          <div class="module-card" id="mod-investments">
-            <div class="mod-icon">📈</div>
-            <span>Investments</span>
+          <div class="module-card" id="mod-activities">
+            <div class="mod-icon">📅</div>
+            <span>Activities</span>
           </div>
-          <div class="module-card" id="mod-insurance">
-            <div class="mod-icon">🛡️</div>
-            <span>Insurance</span>
+          <div class="module-card" id="mod-contacts">
+            <div class="mod-icon">👥</div>
+            <span>Related Contacts</span>
           </div>
-          <div class="module-card" id="mod-cards">
-            <div class="mod-icon">💳</div>
-            <span>Credit Cards</span>
+          <div class="module-card" id="mod-group">
+            <div class="mod-icon">🏢</div>
+            <span>Group</span>
           </div>
-          <div class="module-card" id="mod-docs">
-            <div class="mod-icon">📄</div>
-            <span>Documents</span>
+          <div class="module-card" id="mod-attachments">
+            <div class="mod-icon">📎</div>
+            <span>Attachments</span>
           </div>
-          <div class="module-card" id="mod-support">
-            <div class="mod-icon">🎧</div>
-            <span>Support</span>
-          </div>
-          <div class="module-card" id="mod-analytics">
+          <div class="module-card" id="mod-holding">
             <div class="mod-icon">📊</div>
-            <span>Analytics</span>
+            <span>Holding</span>
+          </div>
+          <div class="module-card" id="mod-profiler">
+            <div class="mod-icon">👤</div>
+            <span>Profiler</span>
+          </div>
+          <div class="module-card" id="mod-offers">
+            <div class="mod-icon">🏷️</div>
+            <span>Offers</span>
           </div>
         </div>
       </section>
@@ -437,7 +478,7 @@
       <span class="back-icon">←</span>
       <span>Back to Dashboard</span>
     </button>
-    
+
     <div class="detail-split">
       <!-- Left: 3D Interaction Zone -->
       <div class="detail-left">
@@ -447,11 +488,14 @@
           <div class="image-glow"></div>
         </div>
         <div class="model-info">
-          <h2 id="detail-model-title">Model Name</h2>
-          <p id="detail-model-desc">Premium Visualization</p>
+          <div class="model-title-wrap" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px;">
+            <h2 id="detail-model-title" style="margin: 0;">Model Name</h2>
+            <span id="detail-model-tag" class="card-tag" style="font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;"></span>
+          </div>
+          <p id="detail-model-desc" style="margin-top: 0;">Premium Visualization</p>
         </div>
       </div>
-      
+
       <!-- Right: Data Panel -->
       <div class="detail-right">
         <div class="detail-carousel-container">
@@ -470,12 +514,19 @@
   </div>
 
   <!-- SCRIPTS -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="lib/three.min.js"></script>
   <script src="lib/OrbitControls.js"></script>
   <script src="lib/GLTFLoader.js"></script>
   <script src="lib/gsap.min.js"></script>
   <script src="lib/ScrollTrigger.min.js"></script>
+  <script src="config.js"></script>
+  <script src="api-service.js"></script>
+  <script src="ui-renderer.js"></script>
+  <script src="data-loader.js"></script>
   <script src="assets.js"></script>
   <script src="script.js"></script>
+  <script src="tour.js"></script>
 </body>
+
 </html>

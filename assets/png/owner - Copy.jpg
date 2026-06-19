@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 480" fill="none">
+  <defs>
+    <linearGradient id="centerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd700"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#6c63ff"/>
+    </linearGradient>
+    <linearGradient id="connGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd700" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#6c63ff" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="ownerGlow">
+      <feDropShadow dx="0" dy="8" stdDeviation="15" flood-color="#f59e0b" flood-opacity="0.3"/>
+    </filter>
+    <filter id="nodeGlow">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#6c63ff" flood-opacity="0.4"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- BACKGROUND DUST / PARTICLES -->
+  <circle cx="100" cy="120" r="3" fill="#ffd700" opacity="0.3" filter="url(#glow)"/>
+  <circle cx="320" cy="110" r="4" fill="#00d4ff" opacity="0.4" filter="url(#glow)"/>
+  <circle cx="90" cy="360" r="5" fill="#6c63ff" opacity="0.3" filter="url(#glow)"/>
+  <circle cx="330" cy="380" r="3" fill="#ff6b9d" opacity="0.5" filter="url(#glow)"/>
+
+  <!-- NETWORK CONNECTION PATHS -->
+  <path d="M210,220 L110,140" stroke="url(#connGrad)" stroke-width="3" stroke-dasharray="4 4"/>
+  <path d="M210,220 L310,140" stroke="url(#connGrad)" stroke-width="3" stroke-dasharray="4 4"/>
+  <path d="M210,220 L110,320" stroke="url(#connGrad)" stroke-width="3" stroke-dasharray="4 4"/>
+  <path d="M210,220 L310,320" stroke="url(#connGrad)" stroke-width="3" stroke-dasharray="4 4"/>
+
+  <!-- GLOWING ORBITS -->
+  <circle cx="210" cy="220" r="130" stroke="#6c63ff" stroke-width="1" stroke-dasharray="10 15" opacity="0.2"/>
+  <circle cx="210" cy="220" r="85" stroke="#00d4ff" stroke-width="1.5" stroke-dasharray="6 8" opacity="0.3"/>
+
+  <!-- SECONDARY OWNER NODES -->
+  <g filter="url(#nodeGlow)">
+    <!-- Node Top Left -->
+    <circle cx="110" cy="140" r="28" fill="#1c1f2b" stroke="url(#nodeGrad)" stroke-width="2.5"/>
+    <circle cx="110" cy="140" r="20" fill="url(#nodeGrad)" opacity="0.15"/>
+    <!-- Individual Icon (Stylized Head) -->
+    <circle cx="110" cy="134" r="7" fill="#00d4ff"/>
+    <path d="M98,151 C98,145 103,143 110,143 C117,143 122,145 122,151" fill="#00d4ff"/>
+
+    <!-- Node Top Right -->
+    <circle cx="310" cy="140" r="28" fill="#1c1f2b" stroke="url(#nodeGrad)" stroke-width="2.5"/>
+    <circle cx="310" cy="140" r="20" fill="url(#nodeGrad)" opacity="0.15"/>
+    <!-- Individual Icon -->
+    <circle cx="310" cy="134" r="7" fill="#00d4ff"/>
+    <path d="M298,151 C298,145 303,143 310,143 C317,143 322,145 322,151" fill="#00d4ff"/>
+
+    <!-- Node Bottom Left -->
+    <circle cx="110" cy="320" r="28" fill="#1c1f2b" stroke="url(#nodeGrad)" stroke-width="2.5"/>
+    <circle cx="110" cy="320" r="20" fill="url(#nodeGrad)" opacity="0.15"/>
+    <!-- Individual Icon -->
+    <circle cx="110" cy="314" r="7" fill="#6c63ff"/>
+    <path d="M98,331 C98,325 103,323 110,323 C117,323 122,325 122,331" fill="#6c63ff"/>
+
+    <!-- Node Bottom Right -->
+    <circle cx="310" cy="320" r="28" fill="#1c1f2b" stroke="url(#nodeGrad)" stroke-width="2.5"/>
+    <circle cx="310" cy="320" r="20" fill="url(#nodeGrad)" opacity="0.15"/>
+    <!-- Individual Icon -->
+    <circle cx="310" cy="314" r="7" fill="#6c63ff"/>
+    <path d="M298,331 C298,325 303,323 310,323 C317,323 322,325 322,331" fill="#6c63ff"/>
+  </g>
+
+  <!-- PRIMARY BENEFICIAL OWNER NODE (CENTER) -->
+  <g filter="url(#ownerGlow)">
+    <circle cx="210" cy="220" r="54" fill="#12141c" stroke="url(#centerGrad)" stroke-width="4.5"/>
+    <circle cx="210" cy="220" r="44" fill="url(#centerGrad)" opacity="0.12"/>
+    <circle cx="210" cy="220" r="36" fill="url(#centerGrad)" opacity="0.2" filter="url(#glow)"/>
+    
+    <!-- Stylized Crown & Profile Center Icon -->
+    <!-- Crown -->
+    <path d="M195,190 L200,202 L210,195 L220,202 L225,190 L220,209 L195,209 Z" fill="url(#centerGrad)"/>
+    <!-- Head -->
+    <circle cx="210" cy="214" r="10" fill="url(#centerGrad)"/>
+    <!-- Shoulders -->
+    <path d="M192,238 C192,228 200,226 210,226 C220,226 228,228 228,238" fill="url(#centerGrad)"/>
+  </g>
+
+  <!-- Glowing outer check / verified emblem -->
+  <g filter="url(#glow)">
+    <circle cx="248" cy="180" r="14" fill="#10b981" />
+    <path d="M242,180 L246,184 L254,175" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
