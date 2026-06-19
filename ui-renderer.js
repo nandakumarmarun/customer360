@@ -2,26 +2,25 @@
  * Data Integration Layer - UI Renderer
  * Generates markup and sets loading/error states.
  */
-(function() {
+(function () {
   // Utility for escaping HTML
   function escapeHtml(str) {
     if (str === null || str === undefined) return "";
     if (typeof str !== 'string') str = String(str);
     return str.replace(/&/g, '&amp;')
-              .replace(/</g, '&lt;')
-              .replace(/>/g, '&gt;')
-              .replace(/"/g, '&quot;')
-              .replace(/'/g, '&#039;');
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 
   const UIRenderer = {
     /**
      * Renders the common customer summary details across the sidebar, header, and avatar panel.
      */
-    renderSummary: function(data) {
+    renderSummary: function (data) {
       if (!data) return;
 
-      // Helper function to update avatar container with image or initials
       function updateAvatar($el, imageUrl, initials) {
         $el.empty();
         if ($el.css('position') === 'static') {
@@ -29,22 +28,46 @@
         }
         $el.css('overflow', 'hidden');
 
+        // 1. Always render the initials as the reliable base layer
+        if ($el.hasClass('avatar-inner')) {
+          $el.append($('<div class="avatar-face"></div>').text(initials));
+        } else {
+          $el.text(initials);
+        }
+
+        // 2. If an image URL or resource is provided, format it and layer it on top
+        let finalSrc = null;
         if (imageUrl) {
-          const $img = $('<img>').attr('src', imageUrl).css({
+          if (typeof imageUrl === 'string' && imageUrl.trim() !== '') {
+            let trimmed = imageUrl.trim();
+            // If the string doesn't look like a URL or an existing data URI, assume it's raw base64 bytes
+            if (!trimmed.startsWith('http') && !trimmed.startsWith('data:') && !trimmed.startsWith('/') && !trimmed.startsWith('.')) {
+              finalSrc = 'data:image/png;base64,' + trimmed;
+            } else {
+              finalSrc = trimmed;
+            }
+          } else if (imageUrl instanceof Blob || imageUrl instanceof File) {
+            // Handle raw binary resources
+            finalSrc = URL.createObjectURL(imageUrl);
+          }
+        }
+
+        if (finalSrc) {
+          const $img = $('<img>').attr('src', finalSrc).css({
             width: '100%',
             height: '100%',
             'object-fit': 'cover',
+            'border-radius': '50%',
             position: 'absolute',
-            inset: 0
+            top: 0,
+            left: 0,
+            'z-index': 10
+          }).on('error', function () {
+            // If the image fails to load or is an invalid type, just remove it 
+            // and the base layer initials will instantly be visible.
+            $(this).remove();
           });
           $el.append($img);
-        } else {
-          // If it's the main orb, match the original internal structure: <div class="avatar-face">NM</div>
-          if ($el.hasClass('avatar-inner')) {
-            $el.append($('<div class="avatar-face"></div>').text(initials));
-          } else {
-            $el.text(initials);
-          }
         }
       }
 
@@ -57,8 +80,8 @@
       updateAvatar($('.header-avatar-mini'), data.avatarUrl || data.avatarImage, data.initials);
       $('.header-name').text(data.name);
       $('.header-id').text(`CID · ${data.cid}`);
-      
-      $('.header-stat').each(function() {
+
+      $('.header-stat').each(function () {
         const label = $(this).find('.stat-label').text().trim().toLowerCase();
         const $val = $(this).find('.stat-value');
         if (label === 'net worth') {
@@ -90,19 +113,23 @@
         .addClass(statusClass);
 
       // Tier + segment badges — shown inside .customer-badge in scene 1
-      const tierVal    = (data.tier || '').toLowerCase().trim();
+      const tierVal = (data.tier || '').toLowerCase().trim();
       const $tierBadge = $('#cb-tier-badge');
-      const $crown     = $('#sidebar-crown');
+      const $sidebarCrown = $('#sidebar-crown');
+      const $avatarCrown = $('#avatar-crown');
 
       if (tierVal === 'prime platinum') {
         $tierBadge.html('👑 PRIME PLATINUM').show();
-        $crown.show();
+        $sidebarCrown.show();
+        $avatarCrown.show();
       } else if (tierVal === 'prime') {
         $tierBadge.html('★ PRIME').show();
-        $crown.hide();
+        $sidebarCrown.hide();
+        $avatarCrown.show();
       } else {
         $tierBadge.hide();
-        $crown.hide();
+        $sidebarCrown.hide();
+        $avatarCrown.hide();
       }
 
       // Trade Finance badge — shown only when tradeFinanceEnabled is true
@@ -114,7 +141,7 @@
 
 
 
-      $('.pstat-row').each(function() {
+      $('.pstat-row').each(function () {
         const stat = $(this).attr('data-stat');
         const $val = $(this).find('.pstat-row-val');
         if (stat === 'gender') {
@@ -137,7 +164,7 @@
 
       // 4. Contact Information sidebar section
       if (data.contactEmail) {
-        $('.contact-info-section .contact-item').each(function(i) {
+        $('.contact-info-section .contact-item').each(function (i) {
           const $text = $(this).find('.contact-text');
           if (i === 0) $text.text(data.contactEmail);
           if (i === 1) $text.text(data.contactPhone || '');
@@ -150,12 +177,29 @@
         $('.rm-role').text(data.rmRole || '');
         $('.rm-phone-number').text(data.rmPhone || '');
       }
+
+      // 6. Live Alerts Ticker
+      if (data.alerts && Array.isArray(data.alerts) && data.alerts.length > 0) {
+        const $tickerContent = $('.ticker-content');
+        $tickerContent.empty();
+        data.alerts.forEach(alert => {
+          $tickerContent.append(`<span>${escapeHtml(alert)}</span>`);
+        });
+
+        // Ensure animation triggers smoothly by resetting the animation
+        $tickerContent.css('animation', 'none');
+        $tickerContent[0].offsetHeight; // trigger reflow
+        $tickerContent.css('animation', '');
+      }
+
+      // Remove skeleton classes from all summary elements
+      $('.skeleton-box').removeClass('skeleton-box');
     },
 
     /**
      * Renders a card's face elements and dynamic body rows.
      */
-    renderCard: function(targetSelector, cardModel) {
+    renderCard: function (targetSelector, cardModel) {
       const $card = $(targetSelector);
       if (!$card.length) return;
 
@@ -175,6 +219,9 @@
         }
       }
 
+      // Remove skeleton classes from the header
+      $card.find('.skeleton-box').removeClass('skeleton-box');
+
       // Update Card Body
       const $body = $card.find('.card-body');
       $body.empty();
@@ -186,10 +233,15 @@
           const checkClass = isCheck ? 'check' : '';
           const cleanVal = isCheck ? valStr.substring(1).trim() : valStr;
           
+          // Apply scroll logic for long text on small cards
+          const isScrollable = cleanVal.length > 80;
+          const scrollStyle = isScrollable ? 'max-height: 60px; overflow-y: auto; padding-right: 4px; display: block; white-space: pre-wrap; word-break: break-word;' : '';
+          const scrollClass = isScrollable ? 'scrollable-field' : '';
+
           const rowHtml = `
             <div class="card-row">
               <span class="crow-label">${escapeHtml(key)}</span>
-              <span class="crow-val ${checkClass}">${isCheck ? '✔ ' : ''}${escapeHtml(cleanVal)}</span>
+              <span class="crow-val ${checkClass} ${scrollClass}" style="${scrollStyle}">${isCheck ? '✔ ' : ''}${escapeHtml(cleanVal)}</span>
             </div>
           `;
           $body.append(rowHtml);
@@ -202,7 +254,7 @@
     /**
      * Shows a glassmorphic loading spinner inside the target container.
      */
-    showLoader: function(targetSelector) {
+    showLoader: function (targetSelector) {
       const $container = $(targetSelector);
       if (!$container.length) return;
 
@@ -233,7 +285,7 @@
     /**
      * Hides the loading spinner.
      */
-    hideLoader: function(targetSelector) {
+    hideLoader: function (targetSelector) {
       const $container = $(targetSelector);
       if (!$container.length) return;
 
@@ -251,7 +303,7 @@
     /**
      * Shows an error overlay with retry button.
      */
-    showError: function(targetSelector, message, onRetry) {
+    showError: function (targetSelector, message, onRetry) {
       const $container = $(targetSelector);
       if (!$container.length) return;
 
@@ -271,7 +323,7 @@
       `);
 
       if (onRetry) {
-        $error.find('.card-retry-btn').on('click', function(e) {
+        $error.find('.card-retry-btn').on('click', function (e) {
           e.stopPropagation(); // Stop click from launching modal
           $error.removeClass('active');
           setTimeout(() => $error.remove(), 300);
@@ -282,7 +334,7 @@
       }
 
       $container.append($error);
-      
+
       // Force reflow
       $error[0].offsetHeight;
       $error.addClass('active');
@@ -291,7 +343,7 @@
     /**
      * Shows an empty state overlay.
      */
-    showEmptyState: function(targetSelector) {
+    showEmptyState: function (targetSelector) {
       const $container = $(targetSelector);
       if (!$container.length) return;
 
@@ -310,7 +362,7 @@
       `);
 
       $container.append($empty);
-      
+
       // Force reflow
       $empty[0].offsetHeight;
       $empty.addClass('active');

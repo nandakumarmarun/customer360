@@ -69,7 +69,7 @@
             <div class="ring r3"></div>
           </div>
           <div class="avatar-orb" id="avatar-orb">
-            <div class="avatar-crown">👑</div>
+            <div class="avatar-crown" id="avatar-crown" style="display:none">👑</div>
             <div class="avatar-inner">
               <div class="avatar-face">DA</div>
             </div>
@@ -178,6 +178,13 @@
             <span class="moon">🌙</span>
           </button>
           <button class="btn-primary" id="edit-profile-btn">Edit Profile</button>
+          <div class="menu-container" style="position:relative">
+            <button class="icon-btn" id="tour-menu-btn" style="background:transparent; border:none; color:var(--text); font-size:24px; font-weight: bold; cursor:pointer; padding-left: 8px;">⋮</button>
+            <div class="dropdown-menu glass-card" id="tour-dropdown" style="display:none; position:absolute; right:0; top:40px; padding:10px; border-radius:10px; width:150px; z-index:1000; flex-direction:column; gap:8px;">
+                <button class="dropdown-item" id="start-tour-btn" style="background:var(--glass2); border:1px solid var(--border); border-radius:6px; color:var(--text); width:100%; text-align:left; padding:8px 12px; cursor:pointer; font-family:inherit;">Start Tour</button>
+                <button class="dropdown-item" style="background:var(--glass2); border:1px solid var(--border); border-radius:6px; color:var(--text); width:100%; text-align:left; padding:8px 12px; cursor:pointer; font-family:inherit;">Help Center</button>
+            </div>
+          </div>
           <div class="header-notif">
             <span class="notif-dot"></span>
             <span>🔔</span>
@@ -395,7 +402,29 @@
           </div>
 
         </main>
+
+        <!-- ===== QUICK MODULE VIEW (In-place Layout) ===== -->
+        <div id="quick-module-view" class="hidden">
+          <div class="qm-header-inline">
+            <h2 id="qm-title">Module Title</h2>
+          </div>
+          <div class="qm-content-area" id="qm-content">
+            <!-- HTML content will be injected here -->
+          </div>
+        </div>
+        
+        <!-- FLOATING BACK BUTTON (Outside layout) -->
+        <button class="qm-floating-close hidden" id="qm-back-to-dash">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          <span>Back to Profile</span>
+        </button>
+        
+        <!-- Fixed Navigation Dots for Dashboard/Modules -->
+        <div class="qm-nav-dots" id="qm-nav-dots"></div>
       </div>
+
 
       <!-- BOTTOM NAVIGATION MODULES -->
       <section class="bottom-modules" id="bottom-modules">
@@ -459,8 +488,11 @@
           <div class="image-glow"></div>
         </div>
         <div class="model-info">
-          <h2 id="detail-model-title">Model Name</h2>
-          <p id="detail-model-desc">Premium Visualization</p>
+          <div class="model-title-wrap" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px;">
+            <h2 id="detail-model-title" style="margin: 0;">Model Name</h2>
+            <span id="detail-model-tag" class="card-tag" style="font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;"></span>
+          </div>
+          <p id="detail-model-desc" style="margin-top: 0;">Premium Visualization</p>
         </div>
       </div>
 
@@ -494,6 +526,7 @@
   <script src="data-loader.js"></script>
   <script src="assets.js"></script>
   <script src="script.js"></script>
+  <script src="tour.js"></script>
 </body>
 
 </html>
