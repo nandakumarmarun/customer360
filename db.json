@@ -310,6 +310,155 @@
       }
     }
   },
+  "leads": {
+    "title": "Leads Information",
+    "data": [
+      {
+        "leadId": "LD-1001",
+        "product": "Home Loan",
+        "status": "Approved",
+        "createdDate": "12-Jun-2026"
+      },
+      {
+        "leadId": "LD-1002",
+        "product": "Credit Card",
+        "status": "Pending",
+        "createdDate": "18-Jun-2026"
+      },
+      {
+        "leadId": "LD-1003",
+        "product": "Car Loan",
+        "status": "In Progress",
+        "createdDate": "22-Jun-2026"
+      },
+      {
+        "leadId": "LD-1004",
+        "product": "Personal Loan",
+        "status": "Rejected",
+        "createdDate": "25-Jun-2026"
+      },
+      {
+        "leadId": "LD-1005",
+        "product": "Business Expansion Loan",
+        "status": "Approved",
+        "createdDate": "28-Jun-2026"
+      },
+      {
+        "leadId": "LD-1006",
+        "product": "Wealth Advisory Service",
+        "status": "Pending",
+        "createdDate": "01-Jul-2026"
+      },
+      {
+        "leadId": "LD-1007",
+        "product": "Gold Savings Plan",
+        "status": "In Progress",
+        "createdDate": "03-Jul-2026"
+      },
+      {
+        "leadId": "LD-1008",
+        "product": "Education Loan",
+        "status": "Approved",
+        "createdDate": "05-Jul-2026"
+      },
+      {
+        "leadId": "LD-1009",
+        "product": "Premium Checking Account",
+        "status": "Approved",
+        "createdDate": "07-Jul-2026"
+      },
+      {
+        "leadId": "LD-1010",
+        "product": "Corporate Credit Card",
+        "status": "Pending",
+        "createdDate": "10-Jul-2026"
+      },
+      {
+        "leadId": "LD-1011",
+        "product": "Home Refinancing",
+        "status": "In Progress",
+        "createdDate": "12-Jul-2026"
+      },
+      {
+        "leadId": "LD-1012",
+        "product": "Commercial Real Estate Loan",
+        "status": "Rejected",
+        "createdDate": "15-Jul-2026"
+      },
+      {
+        "leadId": "LD-1013",
+        "product": "Asset Management Service",
+        "status": "Approved",
+        "createdDate": "17-Jul-2026"
+      },
+      {
+        "leadId": "LD-1014",
+        "product": "Agriculture Development Loan",
+        "status": "Pending",
+        "createdDate": "20-Jul-2026"
+      },
+      {
+        "leadId": "LD-1015",
+        "product": "SME Business Line of Credit",
+        "status": "In Progress",
+        "createdDate": "22-Jul-2026"
+      },
+      {
+        "leadId": "LD-1016",
+        "product": "Overdraft Protection Facility",
+        "status": "Approved",
+        "createdDate": "25-Jul-2026"
+      },
+      {
+        "leadId": "LD-1017",
+        "product": "Foreign Exchange Trading Desk",
+        "status": "Rejected",
+        "createdDate": "27-Jul-2026"
+      },
+      {
+        "leadId": "LD-1018",
+        "product": "Fixed Deposit Scheme",
+        "status": "Approved",
+        "createdDate": "29-Jul-2026"
+      },
+      {
+        "leadId": "LD-1019",
+        "product": "Retirement Planning Annuity",
+        "status": "Pending",
+        "createdDate": "01-Aug-2026"
+      },
+      {
+        "leadId": "LD-1020",
+        "product": "Mutual Fund Investment Account",
+        "status": "In Progress",
+        "createdDate": "04-Aug-2026"
+      },
+      {
+        "leadId": "LD-1021",
+        "product": "Medical Equipment Finance",
+        "status": "Approved",
+        "createdDate": "06-Aug-2026"
+      },
+      {
+        "leadId": "LD-1022",
+        "product": "Venture Debt Capital",
+        "status": "Pending",
+        "createdDate": "09-Aug-2026"
+      },
+      {
+        "leadId": "LD-1023",
+        "product": "Equipment Leasing Plan",
+        "status": "In Progress",
+        "createdDate": "11-Aug-2026"
+      },
+      {
+        "leadId": "LD-1024",
+        "product": "Infrastructure Bond Issue",
+        "status": "Approved",
+        "createdDate": "14-Aug-2026"
+      }
+    ]
+  },
   "tour": [
     {
       "target": "center",
