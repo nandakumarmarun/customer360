@@ -639,13 +639,15 @@ function initQuickModules() {
   let isAnimating = false;
 
   const moduleCards = document.querySelectorAll('.module-card');
-  qmModules = [{ title: 'Main Dashboard', isMain: true, index: 0, element: null }];
+  qmModules = [{ title: 'Main Dashboard', isMain: true, index: 0, element: null, icon: '🏠' }];
   Array.from(moduleCards).forEach((card, i) => {
+    const iconEl = card.querySelector('.mod-icon');
     qmModules.push({
       title: card.querySelector('span').innerText,
       isMain: false,
       index: i + 1,
-      element: card
+      element: card,
+      icon: iconEl ? iconEl.innerText.trim() : '🔹'
     });
   });
 
@@ -760,6 +762,7 @@ function initQuickModules() {
       const dot = document.createElement('div');
       dot.className = 'qm-dot';
       dot.setAttribute('data-title', m.title);
+      dot.innerHTML = `<span class="qm-dot-icon">${m.icon}</span>`;
       if (i === 0) dot.classList.add('active'); // Dashboard is initially active
       dot.addEventListener('click', () => {
         if (!isAnimating && i !== currentQmIndex) {
