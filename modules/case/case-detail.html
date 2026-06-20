@@ -373,18 +373,25 @@
       $('.detail-content').hide();
 
       ApiService.get(
-        `/cases?caseId=${encodeURIComponent(caseId)}`,
+        '/cases',
         function (response) {
           UIRenderer.hideLoader('.detail-card');
           
-          if (!response || response.length === 0) {
+          let dataList = null;
+          if (response && response.data) {
+            dataList = response.data;
+          } else if (Array.isArray(response)) {
+            dataList = response;
+          }
+
+          const item = (dataList || []).find(c => c.caseId === caseId);
+          
+          if (!item) {
             UIRenderer.showError('.detail-card', `Case not found: ${caseId}`, function () {
               closeOrBack();
             });
             return;
           }
-
-          const item = response[0];
           
           // Populate details
           $('#detail-case-id').text(item.caseId);

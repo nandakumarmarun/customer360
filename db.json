@@ -538,114 +538,117 @@
       "position": "center"
     }
   ],
-  "cases": [
-    {
-      "id": 1,
-      "caseId": "CS-9402-A1",
-      "customer": "NX-4829-0055",
-      "caseType": "Complaint",
-      "requestType": "Credit Card Billing Dispute",
-      "status": "In Progress",
-      "createdDate": "2026-06-18"
-    },
-    {
-      "id": 2,
-      "caseId": "CS-9304-B2",
-      "customer": "NX-4829-0055",
-      "caseType": "Request",
-      "requestType": "Account Reactivation",
-      "status": "Open",
-      "createdDate": "2026-06-17"
-    },
-    {
-      "id": 3,
-      "caseId": "CS-9281-C5",
-      "customer": "NX-4829-0055",
-      "caseType": "Request",
-      "requestType": "Home Loan Document Copy",
-      "status": "Resolved",
-      "createdDate": "2026-06-15"
-    },
-    {
-      "id": 4,
-      "caseId": "CS-9150-D8",
-      "customer": "NX-4829-0055",
-      "caseType": "Complaint",
-      "requestType": "Unauthorized Transaction ATM",
-      "status": "Rejected",
-      "createdDate": "2026-06-12"
-    },
-    {
-      "id": 5,
-      "caseId": "CS-9012-E3",
-      "customer": "NX-4829-0055",
-      "caseType": "Request",
-      "requestType": "Interest Rate Revision",
-      "status": "Closed",
-      "createdDate": "2026-06-10"
-    },
-    {
-      "id": 6,
-      "caseId": "CS-8954-F1",
-      "customer": "NX-4829-0055",
-      "caseType": "Complaint",
-      "requestType": "Mobile App Payment Failure",
-      "status": "Resolved",
-      "createdDate": "2026-06-08"
-    },
-    {
-      "id": 7,
-      "caseId": "CS-8843-G7",
-      "customer": "NX-4829-0055",
-      "caseType": "Request",
-      "requestType": "Credit Limit Enhancement",
-      "status": "In Progress",
-      "createdDate": "2026-06-05"
-    },
-    {
-      "id": 8,
-      "caseId": "CS-8732-H9",
-      "customer": "NX-4829-0055",
-      "caseType": "Complaint",
-      "requestType": "Delayed Wire Transfer",
-      "status": "Closed",
-      "createdDate": "2026-06-02"
-    },
-    {
-      "id": 9,
-      "caseId": "CS-8621-I2",
-      "customer": "NX-4829-0055",
-      "caseType": "Request",
-      "requestType": "Auto Debit Setup",
-      "status": "Resolved",
-      "createdDate": "2026-05-28"
-    },
-    {
-      "id": 10,
-      "caseId": "CS-8510-J4",
-      "customer": "NX-4829-0055",
-      "caseType": "Request",
-      "requestType": "Address Update Request",
-      "status": "Open",
-      "createdDate": "2026-05-25"
-    },
-    {
-      "id": 11,
-      "caseId": "CS-8409-K6",
-      "customer": "NX-4829-0055",
-      "caseType": "Complaint",
-      "requestType": "Double Debit Charges",
-      "status": "Resolved",
-      "createdDate": "2026-05-20"
-    },
-    {
-      "id": 12,
-      "caseId": "CS-8302-L1",
-      "customer": "NX-4829-0055",
-      "caseType": "Complaint",
-      "requestType": "Branch Staff Behavior",
-      "status": "Rejected",
-      "createdDate": "2026-05-15"
-    }
-  ]
+  "cases": {
+    "title": "Case Information",
+    "data": [
+      {
+        "id": 1,
+        "caseId": "CS-9402-A1",
+        "customer": "NX-4829-0055",
+        "caseType": "Complaint",
+        "requestType": "Credit Card Billing Dispute",
+        "status": "In Progress",
+        "createdDate": "2026-06-18"
+      },
+      {
+        "id": 2,
+        "caseId": "CS-9304-B2",
+        "customer": "NX-4829-0055",
+        "caseType": "Request",
+        "requestType": "Account Reactivation",
+        "status": "Open",
+        "createdDate": "2026-06-17"
+      },
+      {
+        "id": 3,
+        "caseId": "CS-9281-C5",
+        "customer": "NX-4829-0055",
+        "caseType": "Request",
+        "requestType": "Home Loan Document Copy",
+        "status": "Resolved",
+        "createdDate": "2026-06-15"
+      },
+      {
+        "id": 4,
+        "caseId": "CS-9150-D8",
+        "customer": "NX-4829-0055",
+        "caseType": "Complaint",
+        "requestType": "Unauthorized Transaction ATM",
+        "status": "Rejected",
+        "createdDate": "2026-06-12"
+      },
+      {
+        "id": 5,
+        "caseId": "CS-9012-E3",
+        "customer": "NX-4829-0055",
+        "caseType": "Request",
+        "requestType": "Interest Rate Revision",
+        "status": "Closed",
+        "createdDate": "2026-06-10"
+      },
+      {
+        "id": 6,
+        "caseId": "CS-8954-F1",
+        "customer": "NX-4829-0055",
+        "caseType": "Complaint",
+        "requestType": "Mobile App Payment Failure",
+        "status": "Resolved",
+        "createdDate": "2026-06-08"
+      },
+      {
+        "id": 7,
+        "caseId": "CS-8843-G7",
+        "customer": "NX-4829-0055",
+        "caseType": "Request",
+        "requestType": "Credit Limit Enhancement",
+        "status": "In Progress",
+        "createdDate": "2026-06-05"
+      },
+      {
+        "id": 8,
+        "caseId": "CS-8732-H9",
+        "customer": "NX-4829-0055",
+        "caseType": "Complaint",
+        "requestType": "Delayed Wire Transfer",
+        "status": "Closed",
+        "createdDate": "2026-06-02"
+      },
+      {
+        "id": 9,
+        "caseId": "CS-8621-I2",
+        "customer": "NX-4829-0055",
+        "caseType": "Request",
+        "requestType": "Auto Debit Setup",
+        "status": "Resolved",
+        "createdDate": "2026-05-28"
+      },
+      {
+        "id": 10,
+        "caseId": "CS-8510-J4",
+        "customer": "NX-4829-0055",
+        "caseType": "Request",
+        "requestType": "Address Update Request",
+        "status": "Open",
+        "createdDate": "2026-05-25"
+      },
+      {
+        "id": 11,
+        "caseId": "CS-8409-K6",
+        "customer": "NX-4829-0055",
+        "caseType": "Complaint",
+        "requestType": "Double Debit Charges",
+        "status": "Resolved",
+        "createdDate": "2026-05-20"
+      },
+      {
+        "id": 12,
+        "caseId": "CS-8302-L1",
+        "customer": "NX-4829-0055",
+        "caseType": "Complaint",
+        "requestType": "Branch Staff Behavior",
+        "status": "Rejected",
+        "createdDate": "2026-05-15"
+      }
+    ]
+  }
 }
