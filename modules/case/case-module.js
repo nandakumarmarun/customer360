@@ -524,10 +524,24 @@
         function (response) {
           if (window.UIRenderer) window.UIRenderer.hideLoader("#qm-content");
           
-          let dataList = response || [];
+          let dataList = null;
+          if (response && response.data) {
+            dataList = response.data;
+          } else if (Array.isArray(response)) {
+            dataList = response;
+          }
+
           if (dataList && dataList.length > 0) {
-            allCases = dataList;
-            initCasesLayout();
+            allCases = dataList.filter(c => c.customer === cid);
+            if (allCases.length > 0) {
+              initCasesLayout();
+            } else {
+              if (window.UIRenderer) {
+                window.UIRenderer.showEmptyState("#qm-content");
+              } else {
+                $content.html("<div style='text-align:center; padding: 40px;'>No case data available.</div>");
+              }
+            }
           } else {
             if (window.UIRenderer) {
               window.UIRenderer.showEmptyState("#qm-content");
