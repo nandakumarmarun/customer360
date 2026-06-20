@@ -2,6 +2,23 @@
 <html lang="en" class="light-mode">
 
 <head>
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem('customer360-theme') || 'light';
+      const root = document.documentElement;
+      if (savedTheme === 'light') {
+        root.classList.add('light-mode');
+      } else {
+        root.classList.remove('light-mode');
+      }
+      const savedColorTheme = localStorage.getItem('customer360-color-theme') || 'red';
+      if (savedColorTheme === 'neon') {
+        root.classList.add('theme-neon');
+      } else {
+        root.classList.remove('theme-neon');
+      }
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CUSTOMER360 · Customer Intelligence</title>
@@ -474,42 +491,41 @@
 
   <!-- ===== CINEMATIC DETAIL VIEW (Replaces Modals) ===== -->
   <div id="detail-view" class="hidden">
-    <button class="back-btn" id="back-to-dash">
-      <span class="back-icon">←</span>
-      <span>Back to Dashboard</span>
-    </button>
-
-    <div class="detail-split">
-      <!-- Left: 3D Interaction Zone -->
-      <div class="detail-left">
-        <div class="detail-image-wrap">
-          <div class="hero-particles" id="hero-particles"></div>
-          <img id="detail-img" src="" alt="Detail Visual">
-          <div class="image-glow"></div>
-        </div>
-        <div class="model-info">
-          <div class="model-title-wrap" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px;">
-            <h2 id="detail-model-title" style="margin: 0;">Model Name</h2>
-            <span id="detail-model-tag" class="card-tag" style="font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;"></span>
-          </div>
-          <p id="detail-model-desc" style="margin-top: 0;">Premium Visualization</p>
-        </div>
+    <div class="detail-header">
+      <div class="hero-particles" id="hero-particles"></div>
+      <div class="detail-image-wrap">
+        <div class="image-glow"></div>
+        <img id="detail-img" src="" alt="Detail Visual">
       </div>
-
-      <!-- Right: Data Panel -->
-      <div class="detail-right">
-        <div class="detail-carousel-container">
-          <button class="nav-arrow prev-arrow" id="detail-prev" title="Previous">←</button>
-          <div class="detail-cards-stack" id="detail-cards-stack">
-            <!-- Dynamic cards injected by JS -->
-          </div>
-          <button class="nav-arrow next-arrow" id="detail-next" title="Next">→</button>
+      <div class="model-info">
+        <div class="model-title-wrap" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px;">
+          <h2 id="detail-model-title" style="margin: 0;">Model Name</h2>
+          <span id="detail-model-tag" class="card-tag" style="font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;"></span>
         </div>
-        <div class="detail-nav-footer">
-          <div class="carousel-hint">Scroll or use arrows to navigate</div>
-          <div class="detail-nav-dots" id="detail-nav-dots"></div>
-        </div>
+        <p id="detail-model-desc" style="margin-top: 0;">Premium Visualization</p>
       </div>
+      <button class="back-btn" id="back-to-dash">
+        <span class="back-icon">←</span>
+        <span>Back to Dashboard</span>
+      </button>
+    </div>
+    <div class="detail-content-area" id="detail-content-area">
+      <!-- Dynamic sections injected by JS -->
+    </div>
+  </div>
+
+  <!-- ===== NOTIFICATION PANEL ===== -->
+  <div id="notif-backdrop" class="notif-backdrop hidden"></div>
+  <div id="notif-panel" class="notif-panel hidden">
+    <div class="notif-header">
+      <div class="notif-header-left">
+        <h2>Alerts</h2>
+        <span class="notif-count-badge" id="notif-count-badge">0</span>
+      </div>
+      <button class="notif-close-btn" id="notif-close-btn" aria-label="Close Alerts">&times;</button>
+    </div>
+    <div class="notif-body" id="notif-list">
+      <!-- Notification cards injected dynamically -->
     </div>
   </div>
 

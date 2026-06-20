@@ -14,6 +14,23 @@
       .replace(/'/g, '&#039;');
   }
 
+  // Parse alert emoji and message helper
+  function parseAlert(alertStr) {
+    if (!alertStr) return { icon: "🔔", message: "" };
+    // Regex to extract emoji or symbol at the beginning
+    const match = alertStr.match(/^([^\w\s\d,.:;?!"'\(\)\[\]\{\}\-–—#$€£¥₹\+\*]+)\s*(.*)$/u);
+    if (match) {
+      return {
+        icon: match[1].trim(),
+        message: match[2].trim()
+      };
+    }
+    return {
+      icon: "🔔",
+      message: alertStr
+    };
+  }
+
   const UIRenderer = {
     /**
      * Renders the common customer summary details across the sidebar, header, and avatar panel.
@@ -190,6 +207,40 @@
         $tickerContent.css('animation', 'none');
         $tickerContent[0].offsetHeight; // trigger reflow
         $tickerContent.css('animation', '');
+      }
+
+      // 7. Dynamic Notifications Panel
+      const $notifList = $('#notif-list');
+      const $notifCount = $('#notif-count-badge');
+      const $notifDot = $('.notif-dot');
+      
+      if ($notifList.length) {
+        $notifList.empty();
+        const alerts = data.alerts || [];
+        $notifCount.text(alerts.length);
+        
+        if (alerts.length > 0) {
+          $notifDot.show();
+          alerts.forEach(alertText => {
+            const parsed = parseAlert(alertText);
+            const cardHtml = `
+              <div class="notif-card">
+                <div class="notif-card-icon">${parsed.icon}</div>
+                <div class="notif-card-content">
+                  <div class="notif-card-header">
+                    <span class="notif-card-title">Alert</span>
+                    <span class="notif-card-time">now</span>
+                  </div>
+                  <div class="notif-card-msg">${escapeHtml(parsed.message)}</div>
+                </div>
+              </div>
+            `;
+            $notifList.append(cardHtml);
+          });
+        } else {
+          $notifDot.hide();
+          $notifList.html('<div class="notif-empty-state">No Alerts Available</div>');
+        }
       }
 
       // Remove skeleton classes from all summary elements
