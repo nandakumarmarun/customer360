@@ -16,11 +16,11 @@
 
   // CSS Stylesheets matching the Leads Module design system
   const casesStyles = `
-    /* CSS for Case Module matching Leads layout */
+    /* CSS for Case Module matching Leads layout - Optimized for High Density */
     .cases-container {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 8px;
       width: 100%;
       animation: casesFadeIn 0.4s ease;
     }
@@ -35,7 +35,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
@@ -48,10 +48,10 @@
 
     .cases-search-icon {
       position: absolute;
-      left: 14px;
+      left: 12px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 14px;
+      font-size: 13px;
       color: var(--muted);
       pointer-events: none;
     }
@@ -62,9 +62,9 @@
       border: 1px solid var(--border);
       border-radius: 30px;
       color: var(--text);
-      padding: 10px 16px 10px 40px;
+      padding: 7px 14px 7px 35px;
       font-family: inherit;
-      font-size: 13px;
+      font-size: 12.5px;
       transition: all 0.3s ease;
       outline: none;
     }
@@ -78,22 +78,22 @@
     .cases-actions-wrapper {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .cases-filter-btn {
       background: var(--glass);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 10px 18px;
+      padding: 7px 15px;
       border-radius: 30px;
       font-family: inherit;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.3s ease;
     }
 
@@ -106,11 +106,11 @@
     .cases-page-size-wrapper {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .page-size-lbl {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
       font-weight: 600;
       text-transform: uppercase;
@@ -121,10 +121,10 @@
       background: var(--glass);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 8px 12px;
+      padding: 5px 10px;
       border-radius: 20px;
       font-family: inherit;
-      font-size: 13px;
+      font-size: 12.5px;
       outline: none;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -139,12 +139,12 @@
     .cases-filter-panel {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
       background: var(--glass2);
       border: 1px dashed var(--border);
-      padding: 12px 16px;
-      border-radius: 16px;
+      padding: 8px 12px;
+      border-radius: 12px;
       transition: all 0.3s ease;
     }
 
@@ -153,7 +153,7 @@
     }
 
     .filter-panel-title {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
       font-weight: 600;
       text-transform: uppercase;
@@ -165,10 +165,10 @@
       background: var(--glass);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 6px 14px;
+      padding: 4px 10px;
       border-radius: 20px;
       font-family: inherit;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -189,7 +189,7 @@
     /* Data Grid Table */
     .cases-table-container {
       overflow-x: auto;
-      border-radius: 16px;
+      border-radius: 12px;
       border: 1px solid var(--border);
       background: var(--glass);
       box-shadow: var(--shadow);
@@ -201,11 +201,11 @@
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .cases-table th, .cases-table td {
-      padding: 10px 14px;
+      padding: 6px 10px;
       border-bottom: 1px solid var(--border);
       border-right: 1px solid var(--border);
     }
@@ -220,7 +220,7 @@
       font-weight: 700;
       letter-spacing: 0.5px;
       text-transform: uppercase;
-      font-size: 11px;
+      font-size: 10.5px;
       user-select: none;
       cursor: pointer;
       position: sticky;
@@ -283,9 +283,9 @@
       background: var(--glass2);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 5px 12px;
+      padding: 3px 8px;
       border-radius: 14px;
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       text-decoration: none;
       transition: all 0.2s ease;
@@ -305,13 +305,13 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      padding: 3px 8px;
+      padding: 2px 6px;
       border-radius: 10px;
-      min-width: 84px;
+      min-width: 74px;
       text-align: center;
     }
 
@@ -356,7 +356,7 @@
       border: 1px solid rgba(239, 68, 68, 0.25);
       box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);
       min-width: auto;
-      padding: 3px 10px;
+      padding: 2px 8px;
     }
 
     .type-badge.request {
@@ -365,7 +365,7 @@
       border: 1px solid rgba(59, 130, 246, 0.25);
       box-shadow: 0 0 10px rgba(59, 130, 246, 0.1);
       min-width: auto;
-      padding: 3px 10px;
+      padding: 2px 8px;
     }
 
     /* Footer Section */
@@ -374,29 +374,29 @@
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 12px;
-      padding-top: 6px;
+      gap: 6px;
+      padding-top: 3px;
     }
 
     .cases-indicator {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--muted);
     }
 
     .cases-pagination {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
     }
 
     .cases-page-btn {
       background: var(--glass2);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 6px 12px;
+      padding: 4px 10px;
       border-radius: 14px;
       font-family: inherit;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -425,14 +425,14 @@
       background: transparent;
       border: 1px solid transparent;
       color: var(--text);
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: inherit;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -449,6 +449,7 @@
       color: #fff;
       box-shadow: 0 0 10px var(--glow-shadow);
     }
+
 
     .cases-sort-indicator {
       margin-left: 5px;
