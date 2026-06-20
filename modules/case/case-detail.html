@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem('customer360-theme') || 'light';
+      const root = document.documentElement;
+      if (savedTheme === 'light') {
+        root.classList.add('light-mode');
+      } else {
+        root.classList.remove('light-mode');
+      }
+      const savedColorTheme = localStorage.getItem('customer360-color-theme') || 'red';
+      if (savedColorTheme === 'neon') {
+        root.classList.add('theme-neon');
+      } else {
+        root.classList.remove('theme-neon');
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Details · CUSTOMER360</title>
+  <!-- Link relative stylesheets -->
+  <link rel="stylesheet" href="../../fonts/fonts.css" />
+  <link rel="stylesheet" href="../../style.css" />
+
+  <style>
+    /* Standalone overrides and additions */
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, var(--aurora-1), transparent 50%),
+                  radial-gradient(circle at 80% 20%, var(--aurora-2), transparent 50%),
+                  radial-gradient(circle at 20% 80%, var(--aurora-3), transparent 50%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .case-detail-container {
+      width: 100%;
+      max-width: 600px;
+      animation: scaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes scaleUp {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .detail-card {
+      padding: 30px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--glass);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      position: relative;
+      overflow: hidden;
+      min-height: 250px;
+    }
+
+    .detail-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 18px;
+      margin-bottom: 25px;
+    }
+
+    .detail-title-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-title-group h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin: 0;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .detail-title-group span {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .close-btn {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color var(--transition), border-color var(--transition), transform 0.2s ease;
+      font-family: inherit;
+    }
+
+    .close-btn:hover {
+      background: var(--glass2);
+      border-color: var(--accent);
+      box-shadow: 0 0 8px var(--glow-shadow);
+      transform: translateY(-1px);
+    }
+
+    .detail-hero-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--glass2);
+      border: 1px solid var(--border);
+      box-shadow: 0 0 15px var(--glow-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 20px auto;
+    }
+
+    .detail-section-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent2);
+      margin-bottom: 15px;
+      border-left: 3px solid var(--accent);
+      padding-left: 8px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    @media (max-width: 480px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    :root.light-mode .detail-item {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .detail-lbl {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .detail-val {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .detail-desc-box {
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text);
+      margin-top: 8px;
+    }
+
+    :root.light-mode .detail-desc-box {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Badges styles */
+    .case-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: 1px solid transparent;
+      width: fit-content;
+    }
+
+    /* Color definitions */
+    :root {
+      --case-color-red: #ff5252;
+      --case-color-blue: #40a9ff;
+      --case-color-orange: #ff9f43;
+      --case-color-green: #2ed573;
+      --case-color-grey: #a4b0be;
+    }
+    :root.light-mode {
+      --case-color-red: #d32f2f;
+      --case-color-blue: #1890ff;
+      --case-color-orange: #d35400;
+      --case-color-green: #27ae60;
+      --case-color-grey: #7f8c8d;
+    }
+
+    .case-badge.badge-type-complaint {
+      border-color: var(--case-color-red);
+      color: var(--case-color-red);
+      background: rgba(255, 82, 82, 0.08);
+    }
+    .case-badge.badge-type-request {
+      border-color: var(--case-color-blue);
+      color: var(--case-color-blue);
+      background: rgba(64, 169, 255, 0.08);
+    }
+    .case-badge.badge-status-open {
+      border-color: var(--case-color-orange);
+      color: var(--case-color-orange);
+      background: rgba(255, 159, 67, 0.08);
+    }
+    .case-badge.badge-status-inprogress {
+      border-color: var(--case-color-blue);
+      color: var(--case-color-blue);
+      background: rgba(64, 169, 255, 0.08);
+    }
+    .case-badge.badge-status-resolved {
+      border-color: var(--case-color-green);
+      color: var(--case-color-green);
+      background: rgba(46, 213, 115, 0.08);
+    }
+    .case-badge.badge-status-closed {
+      border-color: var(--case-color-grey);
+      color: var(--case-color-grey);
+      background: rgba(164, 176, 190, 0.08);
+    }
+    .case-badge.badge-status-rejected {
+      border-color: var(--case-color-red);
+      color: var(--case-color-red);
+      background: rgba(255, 82, 82, 0.08);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="case-detail-container">
+    <div class="detail-card">
+      <!-- Loading & Error overlays will be handled by UIRenderer inside this card -->
+
+      <div class="detail-content" style="display: none;">
+        <div class="detail-header">
+          <div class="detail-title-group">
+            <h1 id="detail-case-id">CS-XXXX-XX</h1>
+            <span>Detailed Investigation File</span>
+          </div>
+          <button onclick="closeOrBack()" class="close-btn">Close View</button>
+        </div>
+
+        <div class="detail-hero-icon">📁</div>
+
+        <div class="detail-section-title">Case Metadata</div>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-lbl">Case Type</span>
+            <span class="detail-val" id="detail-case-type">Complaint</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-lbl">Request Type</span>
+            <span class="detail-val" id="detail-request-type">Credit Card Dispute</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-lbl">Current Status</span>
+            <span class="detail-val" id="detail-status">In Progress</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-lbl">Created Date</span>
+            <span class="detail-val" id="detail-created-date">2026-06-18</span>
+          </div>
+        </div>
+
+        <div class="detail-section-title">Investigation Summary</div>
+        <div class="detail-desc-box" id="detail-desc">
+          Investigation details loading...
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="../../config.js"></script>
+  <script src="../../api-service.js"></script>
+  <script src="../../ui-renderer.js"></script>
+
+  <script>
+    // Navigation close/back helper
+    function closeOrBack() {
+      // Try closing the window/tab if opened in target="_blank"
+      window.close();
+      // If window didn't close (some browsers block script closing unless opened via script), redirect to dashboard
+      setTimeout(() => {
+        window.location.href = "../../index.html";
+      }, 100);
+    }
+
+    // Generate descriptive mock summaries dynamically based on Request Type
+    function getMockDescription(type, requestType, status) {
+      const descriptions = {
+        "Credit Card Billing Dispute": "Client reported an unauthorized charge on their platinum credit card. The dispute is currently being reviewed by the merchant chargeback department. Interim credit has been requested.",
+        "Account Reactivation": "Request for reactivation of inactive savings account. Client submitted identity verification documents and signed reactivation request form. Pending operations team verification.",
+        "Home Loan Document Copy": "Client requested physical copies of the primary home loan agreement, title deed certificates, and amortization schedule for audit purposes.",
+        "Unauthorized Transaction ATM": "Complaint filed regarding an ATM withdrawal attempt where cash was not dispensed but amount was debited from account. CCTV footage and transaction logs are being analyzed.",
+        "Interest Rate Revision": "Request for interest rate discount revision based on relationship value and long tenure. Approved and closed with revised 4.2% rate applied.",
+        "Mobile App Payment Failure": "Complaint regarding failed UPI transaction on mobile application. Found network timeout at beneficiary bank. Refund was processed and verified.",
+        "Credit Limit Enhancement": "Request to increase Credit Card limit to $50,000. Underwriting evaluation is currently analyzing risk profile and average account balances.",
+        "Delayed Wire Transfer": "Client reported an outbound international wire transfer that did not reach the beneficiary within 48 hours. Resolved: delayed due to intermediary bank compliance checks.",
+        "Auto Debit Setup": "Request to setup automatic monthly standing instruction for mutual fund portfolio investment. Configured and active starting next billing cycle.",
+        "Address Update Request": "Request to update residential address to 725 5th Ave. Utility bill verified. Address record updated successfully.",
+        "Double Debit Charges": "Complaint regarding transaction amount debited twice at a point-of-sale terminal. Confirmed merchant settlement error. Duplicate amount reversed.",
+        "Branch Staff Behavior": "Complaint regarding service delay and staff behavior at local New York branch. Logged and forwarded to Branch Operations Manager for review and internal training action."
+      };
+      return descriptions[requestType] || `This ${type.toLowerCase()} regarding '${requestType}' is currently ${status.toLowerCase()} and assigned to the primary relationship support team. Detailed review logs are being processed.`;
+    }
+
+    // Fetch Details based on Query Parameter
+    function loadCaseDetails() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const caseId = urlParams.get('id');
+
+      if (!caseId) {
+        UIRenderer.showError('.detail-card', 'Missing Case ID query parameter', function () {
+          closeOrBack();
+        });
+        return;
+      }
+
+      UIRenderer.showLoader('.detail-card');
+      $('.detail-content').hide();
+
+      ApiService.get(
+        `/cases?caseId=${encodeURIComponent(caseId)}`,
+        function (response) {
+          UIRenderer.hideLoader('.detail-card');
+          
+          if (!response || response.length === 0) {
+            UIRenderer.showError('.detail-card', `Case not found: ${caseId}`, function () {
+              closeOrBack();
+            });
+            return;
+          }
+
+          const item = response[0];
+          
+          // Populate details
+          $('#detail-case-id').text(item.caseId);
+          
+          // Type Badge
+          const typeClass = item.caseType.toLowerCase() === 'complaint' ? 'badge-type-complaint' : 'badge-type-request';
+          $('#detail-case-type').html(`<span class="case-badge ${typeClass}">${item.caseType}</span>`);
+          
+          // Request Type
+          $('#detail-request-type').text(item.requestType);
+          
+          // Status Badge
+          let statusClass = 'badge-status-closed';
+          const statusLower = item.status.toLowerCase();
+          if (statusLower === 'open') statusClass = 'badge-status-open';
+          else if (statusLower === 'in progress') statusClass = 'badge-status-inprogress';
+          else if (statusLower === 'resolved') statusClass = 'badge-status-resolved';
+          else if (statusLower === 'rejected') statusClass = 'badge-status-rejected';
+          $('#detail-status').html(`<span class="case-badge ${statusClass}">${item.status}</span>`);
+          
+          // Created Date
+          $('#detail-created-date').text(item.createdDate);
+          
+          // Description Box
+          const desc = getMockDescription(item.caseType, item.requestType, item.status);
+          $('#detail-desc').text(desc);
+
+          // Show Content
+          $('.detail-content').fadeIn(300);
+        },
+        function (errorMsg) {
+          UIRenderer.hideLoader('.detail-card');
+          UIRenderer.showError('.detail-card', 'Failed to retrieve case details: ' + errorMsg, function () {
+            loadCaseDetails();
+          });
+        }
+      );
+    }
+
+    $(document).ready(function () {
+      loadCaseDetails();
+    });
+  </script>
+</body>
+
+</html>
