@@ -102,12 +102,16 @@ let threeObjects = {}; // To store scene, stars, etc. for theme updates
   function nextStep() {
     if (i >= steps.length) {
       setTimeout(() => {
+        // Prepare layout and start animations behind the solid loading screen
+        app.classList.remove('hidden');
+        startApp();
+
+        // Fade out the loading screen smoothly
         screen.style.transition = 'opacity 0.8s ease';
         screen.style.opacity = '0';
+        
         setTimeout(() => {
           screen.style.display = 'none';
-          app.classList.remove('hidden');
-          startApp();
         }, 800);
       }, 400);
       return;
@@ -216,7 +220,6 @@ function startApp() {
 
   initDetailView();
   initCardHovers();
-  initThemeToggle();
   initStories();
 }
 
@@ -399,20 +402,20 @@ function initDetailView() {
 
   backBtn.addEventListener('click', closeDetail);
 
-  // Mouse Tilt & Particle Parallax for Hero Zone
-  const left = document.querySelector('.detail-left');
+  // Mouse Tilt & Particle Parallax for Header Banner
+  const header = document.querySelector('.detail-header');
   const hero = document.getElementById('detail-img');
   const particles = document.getElementById('hero-particles');
 
-  left.addEventListener('mousemove', (e) => {
-    const rect = left.getBoundingClientRect();
+  header.addEventListener('mousemove', (e) => {
+    const rect = header.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
 
     // Intensified Hero Tilt
     gsap.to(hero, {
-      rotateY: x * 40, // Increased from 20
-      rotateX: -y * 40, // Increased from 20
+      rotateY: x * 40,
+      rotateX: -y * 40,
       x: x * 50,
       y: y * 50,
       duration: 0.8,
@@ -432,7 +435,7 @@ function initDetailView() {
     });
   });
 
-  left.addEventListener('mouseleave', () => {
+  header.addEventListener('mouseleave', () => {
     gsap.to(hero, { rotateX: 0, rotateY: 0, x: 0, y: 0, duration: 1.2, ease: 'elastic.out(1, 0.5)' });
     const pDots = particles.querySelectorAll('.hero-particle');
     pDots.forEach(p => gsap.to(p, { x: 0, y: 0, duration: 1.5, ease: 'power2.out' }));
@@ -441,6 +444,7 @@ function initDetailView() {
 
 function createHeroParticles() {
   const container = document.getElementById('hero-particles');
+  if (!container) return;
   container.innerHTML = '';
   const count = 40;
 
@@ -474,8 +478,45 @@ function createHeroParticles() {
   }
 }
 
-let currentDetailIndex = 0;
-let isDetailScrolling = false;
+function getHeaderIcon(title) {
+  const t = (title || "").toLowerCase();
+  if (t.includes("personal")) return "👤";
+  if (t.includes("contact")) return "📡";
+  if (t.includes("address")) return "📍";
+  if (t.includes("owner")) return "👥";
+  if (t.includes("other")) return "⚙️";
+  if (t.includes("kyc") || t.includes("compliance")) return "🛡️";
+  return "🔹";
+}
+
+function getHeaderDesc(title) {
+  const t = (title || "").toLowerCase();
+  if (t.includes("personal")) return "Comprehensive identity profile, professional details, and bank tier status.";
+  if (t.includes("contact")) return "Primary communication channels and residential contact numbers.";
+  if (t.includes("address")) return "Verified home, residential, and mailing addresses.";
+  if (t.includes("owner")) return "Shareholders, ownership percentages, and control structures.";
+  if (t.includes("other")) return "Supplementary system parameters, remarks, and preferences.";
+  if (t.includes("kyc") || t.includes("compliance")) return "Regulatory check status, document verification, and risk metrics.";
+  return "Detailed client profile information.";
+}
+
+function getFieldIcon(label) {
+  const l = (label || "").toLowerCase();
+  if (l.includes("phone") || l.includes("mobile") || l.includes("tel")) return "📞";
+  if (l.includes("email") || l.includes("mail")) return "✉️";
+  if (l.includes("address") || l.includes("street") || l.includes("city") || l.includes("state") || l.includes("country") || l.includes("zip") || l.includes("postal")) return "📍";
+  if (l.includes("birth") || l.includes("dob") || l.includes("age")) return "🎂";
+  if (l.includes("gender") || l.includes("sex")) return "👤";
+  if (l.includes("nationality") || l.includes("passport")) return "🌐";
+  if (l.includes("occupation") || l.includes("employer") || l.includes("industry") || l.includes("job") || l.includes("work")) return "💼";
+  if (l.includes("status") || l.includes("classification") || l.includes("tier")) return "🏷️";
+  if (l.includes("net worth") || l.includes("balance") || l.includes("income") || l.includes("salary") || l.includes("revenue")) return "💰";
+  if (l.includes("score") || l.includes("rating") || l.includes("risk")) return "⭐️";
+  if (l.includes("since") || l.includes("date") || l.includes("time")) return "📅";
+  if (l.includes("tax") || l.includes("ssn") || l.includes("id") || l.includes("cid")) return "📄";
+  if (l.includes("rm") || l.includes("manager") || l.includes("owner") || l.includes("beneficial")) return "👥";
+  return "🔹";
+}
 
 function openDetail(data) {
   window.currentActiveDetailData = data;
@@ -485,6 +526,7 @@ function openDetail(data) {
   document.body.style.overflow = 'hidden';
 
   document.getElementById('detail-model-title').textContent = data.title;
+  document.getElementById('detail-model-desc').textContent = getHeaderDesc(data.title);
   document.getElementById('detail-img').src = `assets/png/${data.hero}`;
 
   // Tag Handling
@@ -499,21 +541,24 @@ function openDetail(data) {
     }
   }
 
-  const stack = document.getElementById('detail-cards-stack');
-  const dotsContainer = document.getElementById('detail-nav-dots');
-  stack.innerHTML = '';
-  dotsContainer.innerHTML = '';
-  currentDetailIndex = 0;
+  // Create particles
+  createHeroParticles();
 
-  // Preprocess sections to handle text splitting (only for structured fields, keep direct display fields intact)
-  const processedSections = [];
+  const contentArea = document.getElementById('detail-content-area');
+  contentArea.innerHTML = '';
+
   data.sections.forEach(sec => {
-    const newFields = {};
+    // Create Section Element
+    const secEl = document.createElement('div');
+    secEl.className = 'detail-section-block glass-card';
 
-    Object.entries(sec.fields).forEach(([k, v]) => {
+    let sectionHeader = `<h3>${sec.name}</h3>`;
+    let fieldsHtml = '';
+
+    Object.entries(sec.fields).forEach(([label, v]) => {
       let valStr = "";
       let hideLabel = false;
-      
+
       if (typeof v === 'object' && v !== null && !Array.isArray(v)) {
         valStr = String(v.value || "");
         hideLabel = !!v.hideLabel;
@@ -521,291 +566,43 @@ function openDetail(data) {
         valStr = String(v);
       }
 
-      newFields[k] = { value: valStr, hideLabel: hideLabel };
-    });
-
-    processedSections.push({
-      name: sec.name,
-      fields: newFields
-    });
-  });
-
-  // Group sections by their actual rendered pixel height to fit precisely inside the card without overflowing.
-  const BUDGET_HEIGHT = 410; // Maximum allowed height of card content in pixels (safe layout budget)
-  const HEADER_HEIGHT = 42; // Height of section h4 header plus its padding and border
-  const SECTION_MARGIN = 30; // margin-bottom of a section container
-  const GRID_GAP = 20; // row gap in grid
-
-  function getGridHeight(fields) {
-    if (fields.length === 0) return 0;
-    let rows = [];
-    let currentRowCols = 0; // 0, 1, or 2
-
-    fields.forEach(([k, f]) => {
-      const valLen = f.value ? f.value.length : 0;
-      const isScrollable = valLen > 100;
-      const isFullWidth = f.hideLabel || valLen > 25 || isScrollable;
-
-      let fieldHeight = 0;
-      if (isScrollable) {
-        fieldHeight = 90; // Clamped height for scrollable fields
-      } else if (f.hideLabel) {
-        // font-size 13px, line-height 1.6 => ~21px per line
-        const lines = Math.ceil(valLen / 60) || 1;
-        fieldHeight = lines * 21;
-      } else {
-        // label height is ~18px, span line-height ~1.4 for 12px font => ~17px per line
-        const lines = Math.ceil(valLen / 60) || 1;
-        fieldHeight = 18 + lines * 17;
-      }
-
-      if (isFullWidth) {
-        currentRowCols = 0; // Close any preceding half-row
-        rows.push(fieldHeight);
-      } else {
-        if (currentRowCols === 1) {
-          // Place in the second column of the current row, updating row height to the max
-          const prevHeight = rows[rows.length - 1];
-          rows[rows.length - 1] = Math.max(prevHeight, fieldHeight);
-          currentRowCols = 0;
-        } else {
-          // Start a new row
-          rows.push(fieldHeight);
-          currentRowCols = 1;
-        }
-      }
-    });
-
-    const totalRowsHeight = rows.reduce((sum, h) => sum + h, 0);
-    const totalGaps = (rows.length - 1) * GRID_GAP;
-    return totalRowsHeight + (totalGaps > 0 ? totalGaps : 0);
-  }
-
-  function getCardHeight(sections) {
-    if (sections.length === 0) return 0;
-    let total = 0;
-    sections.forEach((sec, idx) => {
-      total += HEADER_HEIGHT;
-      total += getGridHeight(Object.entries(sec.fields));
-      if (idx < sections.length - 1) {
-        total += SECTION_MARGIN;
-      }
-    });
-    return total;
-  }
-
-  const groupedSections = [];
-  let currentCardSections = [];
-
-  processedSections.forEach(sec => {
-    let remainingFields = Object.entries(sec.fields);
-    let isContinuation = false;
-
-    while (remainingFields.length > 0) {
-      const sectionTitle = isContinuation ? `${sec.name} (Cont.)` : sec.name;
+      const icon = getFieldIcon(label);
       
-      // Look for/create this section on the current card
-      let activeSection = currentCardSections.find(s => s.name === sectionTitle);
-      let isNewSectionOnCard = false;
-      if (!activeSection) {
-        activeSection = { name: sectionTitle, fields: {} };
-        isNewSectionOnCard = true;
+      // Dynamically calculate the column span based on data length:
+      // - span 1: short text (value length <= 15)
+      // - span 2: medium text (value length > 15 && value length <= 35)
+      // - span 3: long text (value length > 35)
+      let span = 1;
+      if (valStr.length > 35 || hideLabel) {
+        span = 3;
+      } else if (valStr.length > 15) {
+        span = 2;
       }
 
-      const addedFields = [];
-      while (remainingFields.length > 0) {
-        const [k, v] = remainingFields[0];
-        
-        // Temporarily assign field to activeSection
-        activeSection.fields[k] = v;
-        if (isNewSectionOnCard) {
-          currentCardSections.push(activeSection);
-          isNewSectionOnCard = false;
-        }
+      const isFullWidth = span === 3;
+      const isSpan2 = span === 2;
+      const isInline = false;
 
-        const height = getCardHeight(currentCardSections);
-        
-        // Force the first field of a clean card to fit to avoid infinite loops
-        const isFirstFieldOnCard = currentCardSections.length === 1 && Object.keys(currentCardSections[0].fields).length === 1;
-        
-        if (height <= BUDGET_HEIGHT || isFirstFieldOnCard) {
-          remainingFields.shift();
-          addedFields.push([k, v]);
-        } else {
-          // Rollback the field
-          delete activeSection.fields[k];
-          if (Object.keys(activeSection.fields).length === 0) {
-            const idx = currentCardSections.indexOf(activeSection);
-            if (idx > -1) {
-              currentCardSections.splice(idx, 1);
-            }
-          }
-          break; // Stop adding fields to this card
-        }
-      }
-
-      if (addedFields.length === 0) {
-        // Current card is full, push and reset
-        groupedSections.push(currentCardSections);
-        currentCardSections = [];
-        isContinuation = true;
-      } else {
-        if (remainingFields.length > 0) {
-          // Card was filled, push and reset
-          groupedSections.push(currentCardSections);
-          currentCardSections = [];
-          isContinuation = true;
-        }
-      }
-    }
-  });
-
-  if (currentCardSections.length > 0) {
-    groupedSections.push(currentCardSections);
-  }
-
-  groupedSections.forEach((group, idx) => {
-    // Create Card
-    const card = document.createElement('div');
-    card.className = `detail-card glass-card ${idx === 0 ? 'active' : ''}`;
-
-    let cardContent = '';
-    group.forEach(sec => {
-      let fieldsHtml = '';
-
-      for (const [k, fieldObj] of Object.entries(sec.fields)) {
-        const valStr = fieldObj.value;
-        const length = valStr.length;
-        
-        // Lower threshold to 100 chars to strictly enforce capacity limits
-        const isScrollable = length > 100;
-        // Clamp height to ~2 rows (90px) to match fieldCost = 4
-        const scrollStyle = isScrollable ? 'max-height: 90px; overflow-y: auto; padding-right: 8px;' : '';
-        const scrollClass = isScrollable ? 'scrollable-field' : '';
-
-        if (fieldObj.hideLabel) {
-          fieldsHtml += `
-            <div class="d-field direct-val ${scrollClass}" style="grid-column: 1 / -1; white-space: pre-line; display: block; width: 100%; ${scrollStyle}">
-              <span style="font-size: 13px; line-height: 1.6; font-weight: 400; color: var(--text);">${valStr}</span>
-            </div>
-          `;
-        } else {
-          const isLong = length > 25;
-          let fontSize = 12;
-          if (length > 100) fontSize = 10;
-          else if (length > 70) fontSize = 11;
-          else if (length > 40) fontSize = 11;
-
-          fieldsHtml += `
-            <div class="d-field ${isLong ? 'full' : ''} ${scrollClass}" style="${scrollStyle}">
-              <label>${k}</label>
-              <span style="font-size: ${fontSize}px; white-space: pre-wrap; word-break: break-word;">${valStr}</span>
-            </div>
-          `;
-        }
-      }
-
-      cardContent += `
-        <div class="card-inner-section">
-          <h4>${sec.name}</h4>
-          <div class="d-grid">${fieldsHtml}</div>
+      fieldsHtml += `
+        <div class="detail-field-card ${isFullWidth ? 'full-width' : ''} ${isSpan2 ? 'span-2' : ''} ${isInline ? 'inline-layout' : ''}">
+          <div class="df-info">
+            ${hideLabel ? '' : `<label class="df-label"><span class="df-icon-inline">${icon}</span> ${label}${isInline ? ':' : ''}</label>`}
+            <span class="df-value">${valStr}</span>
+          </div>
         </div>
       `;
     });
 
-    card.innerHTML = cardContent;
-    stack.appendChild(card);
+    secEl.innerHTML = `
+      ${sectionHeader}
+      <div class="detail-fields-grid">
+        ${fieldsHtml}
+      </div>
+    `;
 
-    // Create Dot
-    const dot = document.createElement('div');
-    dot.className = `nav-dot ${idx === 0 ? 'active' : ''}`;
-    dot.addEventListener('click', () => setDetailCard(idx));
-    dotsContainer.appendChild(dot);
+    contentArea.appendChild(secEl);
   });
-
-  // Event Listeners for Carousel
-  const rightPanel = document.querySelector('.detail-right');
-
-  // Wheel Interaction
-  rightPanel.onwheel = (e) => {
-    const scrollField = e.target.closest('.scrollable-field');
-    if (scrollField) {
-      const atTop = scrollField.scrollTop === 0;
-      const atBottom = Math.abs(scrollField.scrollHeight - scrollField.scrollTop - scrollField.clientHeight) < 2;
-      if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
-        return; // Allow native scroll inside the field
-      }
-    }
-    
-    if (isDetailScrolling) return;
-    if (e.deltaY > 20) setDetailCard(currentDetailIndex + 1);
-    else if (e.deltaY < -20) setDetailCard(currentDetailIndex - 1);
-  };
-
-  // Touch Interaction
-  let touchStart = 0;
-  rightPanel.ontouchstart = (e) => touchStart = e.touches[0].clientY;
-  rightPanel.ontouchmove = (e) => {
-    const scrollField = e.target.closest('.scrollable-field');
-    if (scrollField) {
-      const touchCurrent = e.touches[0].clientY;
-      const deltaY = touchStart - touchCurrent;
-      const atTop = scrollField.scrollTop === 0;
-      const atBottom = Math.abs(scrollField.scrollHeight - scrollField.scrollTop - scrollField.clientHeight) < 2;
-      
-      if ((deltaY < 0 && !atTop) || (deltaY > 0 && !atBottom)) {
-        touchStart = touchCurrent;
-        return;
-      }
-    }
-
-    if (isDetailScrolling) return;
-    let touchEnd = e.touches[0].clientY;
-    if (touchStart - touchEnd > 50) setDetailCard(currentDetailIndex + 1);
-    else if (touchEnd - touchStart > 50) setDetailCard(currentDetailIndex - 1);
-  };
-
-  // Conditional Navigation Visibility
-  const hasMultiple = groupedSections.length > 1;
-  document.getElementById('detail-prev').style.display = hasMultiple ? 'flex' : 'none';
-  document.getElementById('detail-next').style.display = hasMultiple ? 'flex' : 'none';
-  document.querySelector('.detail-nav-footer').style.display = hasMultiple ? 'flex' : 'none';
-
-  // Arrow Interaction
-  if (hasMultiple) {
-    document.getElementById('detail-prev').onclick = () => setDetailCard(currentDetailIndex - 1);
-    document.getElementById('detail-next').onclick = () => setDetailCard(currentDetailIndex + 1);
-  }
-
-  createHeroParticles();
 }
-
-function setDetailCard(index) {
-  const cards = document.querySelectorAll('.detail-card');
-  const dots = document.querySelectorAll('.nav-dot');
-  if (index < 0 || index >= cards.length || index === currentDetailIndex || isDetailScrolling) return;
-
-  isDetailScrolling = true;
-
-  // Update Classes
-  cards.forEach((c, i) => {
-    c.classList.remove('active', 'prev', 'next');
-    if (i === index) c.classList.add('active');
-    else if (i < index) c.classList.add('prev');
-    else c.classList.add('next');
-  });
-
-  dots.forEach((d, i) => {
-    d.classList.toggle('active', i === index);
-  });
-
-  currentDetailIndex = index;
-
-  // Throttle
-  setTimeout(() => isDetailScrolling = false, 800);
-}
-
-// Removed initDetailParallax in favor of carousel logic
 
 function closeDetail() {
   const detailView = document.getElementById('detail-view');
@@ -990,9 +787,75 @@ function initQuickModules() {
   }
 }
 
-/* ====== STARTUP ====== */
+/* ====== NOTIFICATIONS PANEL INITS ====== */
+function initNotifications() {
+  const bellBtn = document.querySelector('.header-notif');
+  const alertsBar = document.querySelector('.alerts-bar');
+  const panel = document.getElementById('notif-panel');
+  const backdrop = document.getElementById('notif-backdrop');
+  const closeBtn = document.getElementById('notif-close-btn');
+
+  if (!bellBtn || !panel || !backdrop || !closeBtn) return;
+
+  function openNotifPanel() {
+    panel.classList.remove('hidden');
+    backdrop.classList.remove('hidden');
+    // force reflow
+    panel.offsetHeight;
+    backdrop.offsetHeight;
+    panel.classList.add('active');
+    backdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeNotifPanel() {
+    panel.classList.remove('active');
+    backdrop.classList.remove('active');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      if (!panel.classList.contains('active')) {
+        panel.classList.add('hidden');
+      }
+      if (!backdrop.classList.contains('active')) {
+        backdrop.classList.add('hidden');
+      }
+    }, 400);
+  }
+
+  bellBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openNotifPanel();
+  });
+
+  if (alertsBar) {
+    alertsBar.style.cursor = 'pointer';
+    alertsBar.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openNotifPanel();
+    });
+  }
+
+  closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeNotifPanel();
+  });
+
+  backdrop.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeNotifPanel();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('active')) {
+      closeNotifPanel();
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeToggle();
   initQuickModules();
+  initNotifications();
   const orb = document.getElementById('avatar-orb');
   if (orb) {
     orb.addEventListener('click', () => {
