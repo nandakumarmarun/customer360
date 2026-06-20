@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CUSTOMER360 · Lead Detail Viewer</title>
+  <link rel="stylesheet" href="../../fonts/fonts.css" />
+  <link rel="stylesheet" href="../../style.css" />
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .lead-detail-card {
+      width: 100%;
+      max-width: 600px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      background: var(--glass2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lead-detail-card::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -20%;
+      width: 140%;
+      height: 140%;
+      background: radial-gradient(circle at 10% 20%, var(--aurora-1), transparent 40%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .ld-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+
+    .ld-avatar {
+      width: 64px;
+      height: 64px;
+      background: var(--glass2);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      box-shadow: 0 0 20px var(--glow-shadow-medium);
+    }
+
+    .ld-header-text h1 {
+      font-size: 24px;
+      font-weight: 800;
+      margin: 0 0 4px 0;
+      background: linear-gradient(135deg, #fff, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .light-mode .ld-header-text h1 {
+      background: linear-gradient(135deg, var(--text), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .ld-header-text p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .ld-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .ld-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      border-radius: 16px;
+    }
+
+    .ld-item.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .ld-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .ld-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .ld-status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      align-self: flex-start;
+    }
+
+    .ld-status-badge.approved {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .ld-status-badge.pending {
+      background: rgba(245, 158, 11, 0.12);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+
+    .ld-status-badge.in-progress {
+      background: rgba(59, 130, 246, 0.12);
+      color: #3b82f6;
+      border: 1px solid rgba(59, 130, 246, 0.25);
+    }
+
+    .ld-status-badge.rejected {
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+
+    .ld-footer {
+      display: flex;
+      justify-content: center;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+
+    .ld-close-btn {
+      background: var(--accent);
+      border: 1px solid var(--accent2);
+      color: #fff;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 5px 15px var(--glow-shadow);
+      transition: all 0.3s ease;
+    }
+
+    .ld-close-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px var(--glow-shadow-strong);
+    }
+  </style>
+</head>
+<body class="dark-mode">
+  <div class="lead-detail-card">
+    <div class="ld-header">
+      <div class="ld-avatar">🎯</div>
+      <div class="ld-header-text">
+        <h1 id="lead-id-title">LD-XXXX</h1>
+        <p>Enterprise Banking Lead Detail Record</p>
+      </div>
+    </div>
+
+    <div class="ld-grid">
+      <div class="ld-item">
+        <span class="ld-label">Lead Identification</span>
+        <span class="ld-value" id="lead-id-val">-</span>
+      </div>
+      <div class="ld-item">
+        <span class="ld-label">Status Check</span>
+        <span class="ld-status-badge pending" id="lead-status-val">-</span>
+      </div>
+      <div class="ld-item full-width">
+        <span class="ld-label">Acquisition Product</span>
+        <span class="ld-value" id="lead-product-val">-</span>
+      </div>
+      <div class="ld-item">
+        <span class="ld-label">Date Initiated</span>
+        <span class="ld-value" id="lead-date-val">-</span>
+      </div>
+      <div class="ld-item">
+        <span class="ld-label">Lead Rating</span>
+        <span class="ld-value">★ High Value</span>
+      </div>
+      <div class="ld-item full-width">
+        <span class="ld-label">Relationship Manager Assessment</span>
+        <span class="ld-value" style="font-weight: normal; font-size: 14px; color: var(--muted); line-height: 1.5;">
+          This client expresses strong interest in our premium banking lines. Follow up is recommended within 24 business hours to complete documentation and credit assessment schedules.
+        </span>
+      </div>
+    </div>
+
+    <div class="ld-footer">
+      <button class="ld-close-btn" onclick="window.close()">Close Window</button>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    // Adjust colors on theme load
+    const savedTheme = localStorage.getItem('customer360-theme') || 'light';
+    const root = document.documentElement;
+    if (savedTheme === 'light') {
+      root.classList.add('light-mode');
+      document.body.className = 'light-mode';
+    } else {
+      root.classList.remove('light-mode');
+      document.body.className = 'dark-mode';
+    }
+
+    const savedColorTheme = localStorage.getItem('customer360-color-theme') || 'red';
+    if (savedColorTheme === 'neon') {
+      root.classList.add('theme-neon');
+    }
+
+    // Get Lead ID from query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const leadId = urlParams.get('id');
+
+    if (leadId) {
+      // Fetch data
+      const dbUrl = 'http://localhost:3000/leads';
+      
+      $.getJSON(dbUrl)
+        .done(function(response) {
+          const dataList = response.data || response;
+          const lead = dataList.find(l => l.leadId === leadId);
+          if (lead) {
+            populateLead(lead);
+          } else {
+            showError("Lead record not found in database.");
+          }
+        })
+        .fail(function(xhr, status, error) {
+          showError("Failed to fetch lead details from the API server.");
+        });
+    } else {
+      showError("No Lead ID specified.");
+    }
+
+    function populateLead(lead) {
+      $('#lead-id-title').text(lead.leadId);
+      $('#lead-id-val').text(lead.leadId);
+      $('#lead-product-val').text(lead.product);
+      $('#lead-date-val').text(lead.createdDate);
+      
+      const $status = $('#lead-status-val');
+      $status.text(lead.status);
+      $status.removeClass('approved pending in-progress rejected')
+             .addClass(lead.status.toLowerCase().replace(/\\s+/g, '-'));
+    }
+
+    function showError(msg) {
+      $('.ld-grid').html(`
+        <div class="ld-item full-width" style="text-align: center; border-color: rgba(239,68,68,0.3);">
+          <span class="ld-label" style="color:#ef4444;">Error</span>
+          <span class="ld-value">${msg}</span>
+        </div>
+      `);
+    }
+  </script>
+</body>
+</html>
