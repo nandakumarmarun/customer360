@@ -1,6 +1,6 @@
 /**
  * Case Information Module
- * Decoupled module that handles rendering of client cases in a high-density table grid.
+ * Decoupled module that handles rendering of client cases in a layout matching the Leads module design.
  */
 (function () {
   // Module State
@@ -9,451 +9,691 @@
   let sortColumn = "createdDate";
   let sortDirection = "desc";
   let currentPage = 1;
-  let pageSize = 5;
-  let searchText = "";
+  let pageSize = 10;
+  let searchQuery = "";
   let statusFilter = "All";
-  let wasActive = false;
-  let defaultHeaderHTML = "";
+  let headerRestored = true;
 
-  // Inject Custom Stylesheets for Premium Design & Layout
-  function injectStyles() {
-    if (document.getElementById("case-module-styles")) return;
+  // CSS Stylesheets matching the Leads Module design system
+  const casesStyles = `
+    /* CSS for Case Module matching Leads layout */
+    .cases-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      animation: casesFadeIn 0.4s ease;
+    }
+    
+    @keyframes casesFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-    const style = document.createElement("style");
-    style.id = "case-module-styles";
-    style.textContent = `
-      /* Root variables for light/dark sensitive colors */
-      :root {
-        --case-color-red: #ff5252;
-        --case-color-blue: #40a9ff;
-        --case-color-orange: #ff9f43;
-        --case-color-green: #2ed573;
-        --case-color-grey: #a4b0be;
-      }
-      :root.light-mode {
-        --case-color-red: #d32f2f;
-        --case-color-blue: #1890ff;
-        --case-color-orange: #d35400;
-        --case-color-green: #27ae60;
-        --case-color-grey: #7f8c8d;
-      }
+    /* Controls Bar */
+    .cases-controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
 
-      /* Header Restructuring styles */
-      .qm-header-inline.case-header-active {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        border-bottom: 1px solid var(--border);
-        padding-bottom: 15px;
-        margin-bottom: 20px;
-      }
-      .qm-header-left-part {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-      }
-      .qm-header-avatar {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--glass2);
-        border: 1px solid var(--border);
-        box-shadow: 0 0 10px var(--glow-shadow);
-        font-size: 22px;
-      }
-      .qm-header-titles {
-        display: flex;
-        flex-direction: column;
-      }
-      .qm-header-titles h2 {
-        font-size: 20px;
-        font-weight: 700;
-        color: var(--text);
-        letter-spacing: 1px;
-        margin: 0;
-        text-transform: uppercase;
-        font-family: 'Outfit', sans-serif;
-      }
-      .qm-subtitle {
-        font-size: 13px;
-        color: var(--muted);
-        margin-top: 2px;
-        font-weight: 400;
-      }
-      .qm-header-right-part {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .qm-header-btn {
-        background: var(--glass);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        color: var(--text);
-        padding: 8px 16px;
-        font-size: 12px;
-        font-weight: 600;
-        font-family: 'Outfit', sans-serif;
-        cursor: pointer;
-        transition: background-color var(--transition), border-color var(--transition), transform 0.2s ease;
-      }
-      .qm-header-btn:hover {
-        background: var(--glass2);
-        border-color: var(--accent);
-        transform: translateY(-1px);
-        box-shadow: 0 0 8px var(--glow-shadow);
-      }
-      .qm-header-btn:active {
-        transform: translateY(0);
-      }
+    .cases-search-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+      max-width: 400px;
+    }
 
-      /* Case module wrappers */
-      .case-module-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-        animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+    .cases-search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: var(--muted);
+      pointer-events: none;
+    }
 
-      /* Control elements */
-      .case-controls-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 15px;
-        flex-wrap: wrap;
-        background: var(--glass);
-        padding: 12px 16px;
-        border-radius: 12px;
-        border: 1px solid var(--border);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-      }
-      .case-controls-left, .case-controls-right {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-      .case-input, .case-select {
-        background: rgba(0, 0, 0, 0.25);
-        border: 1px solid var(--border);
-        color: var(--text);
-        border-radius: 6px;
-        padding: 8px 12px;
-        font-size: 13px;
-        font-family: inherit;
-        outline: none;
-        transition: border-color var(--transition), box-shadow var(--transition);
-      }
-      :root.light-mode .case-input, :root.light-mode .case-select {
-        background: rgba(255, 255, 255, 0.85);
-      }
-      .case-input:focus, .case-select:focus {
-        border-color: var(--accent);
-        box-shadow: 0 0 6px var(--glow-shadow);
-      }
-      .case-input::placeholder {
-        color: var(--muted);
-        opacity: 0.8;
-      }
+    .cases-search-input {
+      width: 100%;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      color: var(--text);
+      padding: 10px 16px 10px 40px;
+      font-family: inherit;
+      font-size: 13px;
+      transition: all 0.3s ease;
+      outline: none;
+    }
 
-      /* High Density Table styles */
-      .case-table-wrapper {
-        overflow-x: auto;
-        border-radius: 12px;
-        border: 1px solid var(--border);
-        background: var(--glass);
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-      }
-      .case-table {
-        width: 100%;
-        border-collapse: collapse;
-        text-align: left;
-        font-size: 13px;
-      }
-      .case-table th, .case-table td {
-        padding: 10px 14px;
-        border-bottom: 1px solid var(--border);
-        border-right: 1px solid var(--border);
-      }
-      .case-table th:last-child, .case-table td:last-child {
-        border-right: none;
-      }
-      .case-table th {
-        background: var(--bg2);
-        color: var(--text);
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        font-size: 11px;
-        user-select: none;
-        cursor: pointer;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        transition: background-color var(--transition);
-      }
-      .case-table th:hover {
-        background: var(--glass2);
-      }
-      .case-table tbody tr {
-        transition: background-color 0.2s ease;
-      }
-      .case-table tbody tr:hover {
-        background: var(--glass2);
-      }
-      .case-table tbody tr:last-child td {
-        border-bottom: none;
-      }
+    .cases-search-input:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 10px var(--glow-shadow-medium);
+      background: var(--glass2);
+    }
 
-      /* Cell elements */
-      .case-link {
-        color: var(--accent2);
-        text-decoration: none;
-        font-weight: 600;
-        transition: color 0.2s ease;
-      }
-      .case-link:hover {
-        color: var(--accent);
-        text-decoration: underline;
-      }
-      
-      /* Badges styling */
-      .case-badge {
-        display: inline-flex;
-        align-items: center;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-size: 11px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        border: 1px solid transparent;
-      }
-      .case-badge.badge-type-complaint {
-        border-color: var(--case-color-red);
-        color: var(--case-color-red);
-        background: rgba(255, 82, 82, 0.08);
-      }
-      .case-badge.badge-type-request {
-        border-color: var(--case-color-blue);
-        color: var(--case-color-blue);
-        background: rgba(64, 169, 255, 0.08);
-      }
-      .case-badge.badge-status-open {
-        border-color: var(--case-color-orange);
-        color: var(--case-color-orange);
-        background: rgba(255, 159, 67, 0.08);
-      }
-      .case-badge.badge-status-inprogress {
-        border-color: var(--case-color-blue);
-        color: var(--case-color-blue);
-        background: rgba(64, 169, 255, 0.08);
-      }
-      .case-badge.badge-status-resolved {
-        border-color: var(--case-color-green);
-        color: var(--case-color-green);
-        background: rgba(46, 213, 115, 0.08);
-      }
-      .case-badge.badge-status-closed {
-        border-color: var(--case-color-grey);
-        color: var(--case-color-grey);
-        background: rgba(164, 176, 190, 0.08);
-      }
-      .case-badge.badge-status-rejected {
-        border-color: var(--case-color-red);
-        color: var(--case-color-red);
-        background: rgba(255, 82, 82, 0.08);
-      }
+    .cases-actions-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-      /* View Actions button */
-      .case-action-btn {
-        display: inline-block;
-        background: var(--accent);
-        color: #fff;
-        border: 1px solid var(--accent);
-        border-radius: 4px;
-        padding: 4px 10px;
-        font-size: 11px;
-        text-decoration: none;
-        text-transform: uppercase;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        text-align: center;
-        transition: background var(--transition), border-color var(--transition), transform 0.1s ease;
-      }
-      .case-action-btn:hover {
-        background: var(--accent2);
-        border-color: var(--accent2);
-        transform: scale(1.03);
-      }
+    .cases-filter-btn {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
 
-      /* Sorting indicator */
-      .case-sort-indicator {
-        margin-left: 5px;
-        font-size: 10px;
-        color: var(--accent2);
-      }
+    .cases-filter-btn:hover, .cases-filter-btn.active {
+      background: var(--glass2);
+      border-color: var(--accent);
+      box-shadow: 0 0 8px var(--glow-shadow);
+    }
 
-      /* Pagination controls */
-      .case-pagination-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 16px;
-        background: var(--glass);
-        border-radius: 12px;
-        border: 1px solid var(--border);
-        flex-wrap: wrap;
-        gap: 10px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-      }
-      .case-pagination-info {
-        font-size: 12px;
-        color: var(--muted);
-        font-weight: 500;
-      }
-      .case-pagination-buttons {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-      .case-page-btn {
-        background: var(--glass);
-        border: 1px solid var(--border);
-        color: var(--text);
-        border-radius: 4px;
-        min-width: 30px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        user-select: none;
-        transition: background var(--transition), border-color var(--transition);
-      }
-      .case-page-btn:hover:not(.disabled):not(.active) {
-        background: var(--glass2);
-        border-color: var(--accent);
-      }
-      .case-page-btn.active {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: #fff;
-        box-shadow: 0 0 8px var(--glow-shadow);
-      }
-      .case-page-btn.disabled {
-        opacity: 0.35;
-        cursor: not-allowed;
-      }
-    `;
-    document.head.appendChild(style);
-  }
+    .cases-page-size-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-  // Get current Customer ID from header label
+    .page-size-lbl {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cases-page-size-select {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .cases-page-size-select:focus {
+      border-color: var(--accent2);
+      background: var(--glass2);
+    }
+
+    /* Filter Panel */
+    .cases-filter-panel {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: var(--glass2);
+      border: 1px dashed var(--border);
+      padding: 12px 16px;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .cases-filter-panel.hidden {
+      display: none;
+    }
+
+    .filter-panel-title {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-right: 4px;
+    }
+
+    .status-filter-btn {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .status-filter-btn:hover {
+      background: var(--glass2);
+      border-color: var(--accent);
+    }
+
+    .status-filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent2);
+      color: #fff;
+      box-shadow: 0 0 8px var(--glow-shadow);
+    }
+
+    /* Data Grid Table */
+    .cases-table-container {
+      overflow-x: auto;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--glass);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+
+    .cases-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .cases-table th, .cases-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+
+    .cases-table th:last-child, .cases-table td:last-child {
+      border-right: none;
+    }
+
+    .cases-table th {
+      background: var(--bg2);
+      color: var(--text);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-size: 11px;
+      user-select: none;
+      cursor: pointer;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      transition: background-color var(--transition);
+    }
+
+    .cases-table th:hover {
+      background: var(--glass2);
+    }
+
+    .cases-table tbody tr {
+      transition: background-color 0.2s ease;
+    }
+
+    .cases-table tbody tr:hover {
+      background: var(--glass2);
+    }
+
+    .cases-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Col Widths */
+    .col-id { width: 14%; }
+    .col-type { width: 15%; }
+    .col-req { width: 27%; }
+    .col-status { width: 16%; }
+    .col-date { width: 14%; }
+    .col-action { width: 14%; }
+
+    @media (max-width: 768px) {
+      .col-id { width: 18%; }
+      .col-type { width: 16%; }
+      .col-req { width: 22%; }
+      .col-status { width: 16%; }
+      .col-date { width: 14%; }
+      .col-action { width: 14%; }
+    }
+
+    .case-id-link {
+      color: var(--accent2);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .case-id-link:hover {
+      color: var(--text);
+      text-decoration: underline;
+    }
+
+    /* Table Actions Button */
+    .cases-table-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: var(--glass2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 5px 12px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .cases-table-action-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent2);
+      color: #fff;
+      box-shadow: 0 0 10px var(--glow-shadow-medium);
+      transform: translateY(-1px);
+    }
+
+    /* Status & Type Badges */
+    .status-badge, .type-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 10px;
+      min-width: 84px;
+      text-align: center;
+    }
+
+    .status-badge.open {
+      background: rgba(245, 158, 11, 0.12);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.1);
+    }
+
+    .status-badge.in-progress {
+      background: rgba(59, 130, 246, 0.12);
+      color: #3b82f6;
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.1);
+    }
+
+    .status-badge.resolved {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+    }
+
+    .status-badge.closed {
+      background: rgba(148, 163, 184, 0.12);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: 0 0 10px rgba(148, 163, 184, 0.1);
+    }
+
+    .status-badge.rejected {
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);
+    }
+
+    .type-badge.complaint {
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);
+      min-width: auto;
+      padding: 3px 10px;
+    }
+
+    .type-badge.request {
+      background: rgba(59, 130, 246, 0.12);
+      color: #3b82f6;
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.1);
+      min-width: auto;
+      padding: 3px 10px;
+    }
+
+    /* Footer Section */
+    .cases-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 6px;
+    }
+
+    .cases-indicator {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .cases-pagination {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cases-page-btn {
+      background: var(--glass2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .cases-page-btn:hover:not(:disabled) {
+      background: var(--accent);
+      border-color: var(--accent2);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .cases-page-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .cases-page-numbers {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .cases-num-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .cases-num-btn:hover {
+      background: var(--glass2);
+      border-color: var(--border);
+    }
+
+    .cases-num-btn.active {
+      background: var(--accent);
+      border-color: var(--accent2);
+      color: #fff;
+      box-shadow: 0 0 10px var(--glow-shadow);
+    }
+
+    .cases-sort-indicator {
+      margin-left: 5px;
+      font-size: 10px;
+      color: var(--accent2);
+    }
+  `;
+
+  // Inject Styles dynamically
+  $(function () {
+    const $style = $("<style>").text(casesStyles);
+    $("head").append($style);
+  });
+
+  // Get current Customer ID from header
   function getCustomerID() {
     const headerText = $(".header-id").text() || "";
     const match = headerText.match(/CID\s*·\s*([\w-]+)/i);
     return match ? match[1].trim() : "NX-4829-0055"; // Default fallback
   }
 
-  // Activate Module and Render Header Customizations
-  function activateCaseModule() {
-    injectStyles();
-
-    // Cache default header html so we can restore it later
+  // ── CUSTOM HEADER RENDERING ──
+  function renderCasesHeader() {
     const $header = $(".qm-header-inline");
-    if ($header.length && !defaultHeaderHTML) {
-      defaultHeaderHTML = $header.html();
-    }
+    if (!$header.length || !$header.hasClass("cases-active")) {
+      $header.addClass("cases-active");
+      $header.empty();
 
-    // Structure Custom Header: Left part with avatar icon/title/subtitle
-    $header.addClass("case-header-active").html(`
-      <div class="qm-header-left-part">
-        <div class="qm-header-avatar">📁</div>
-        <div class="qm-header-titles">
-          <h2 id="qm-title">Case Information</h2>
-          <span class="qm-subtitle">Customer complaints and service requests</span>
+      const headerHtml = `
+        <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 15px;">
+          <div class="qm-header-avatar" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); border: 1px solid var(--border); box-shadow: 0 0 10px var(--glow-shadow); font-size: 22px;">📁</div>
+          <div class="qm-header-titles" style="display: flex; flex-direction: column;">
+            <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin: 0; text-transform: uppercase; font-family: 'Outfit', sans-serif;">CASE INFORMATION</h2>
+            <p class="qm-header-subtitle" style="font-size: 13px; color: var(--muted); margin-top: 2px; font-weight: 400; margin-bottom: 0;">Customer complaints and service requests</p>
+          </div>
         </div>
-      </div>
-    `);
+      `;
+      $header.append(headerHtml);
 
-    // Reset pagination state
-    currentPage = 1;
-    searchText = "";
-    statusFilter = "All";
+      headerRestored = false;
+    }
+  }
+
+  // ── RESTORE DEFAULT HEADER ──
+  function restoreDefaultHeader(title) {
+    const $header = $(".qm-header-inline");
+    if ($header.length && $header.hasClass("cases-active")) {
+      $header.removeClass("cases-active");
+      $header.empty();
+      $header.append(`<h2 id="qm-title">${title}</h2>`);
+      headerRestored = true;
+    }
+  }
+
+  // Fetch data from endpoint
+  function loadCases() {
+    const $content = $("#qm-content");
+    if (!$content.length) return;
+
+    if (window.UIRenderer) {
+      window.UIRenderer.showLoader("#qm-content");
+    } else {
+      $content.html("<div style='text-align:center; padding: 40px;'>Loading...</div>");
+    }
 
     const cid = getCustomerID();
-    loadCases(cid);
-  }
+    const endpoint = `/cases?customer=${encodeURIComponent(cid)}`;
 
-  // Restore Default Header Layout when navigating away
-  function deactivateCaseModule() {
-    const $header = $(".qm-header-inline");
-    if ($header.length && defaultHeaderHTML) {
-      $header.removeClass("case-header-active").html(defaultHeaderHTML);
-    }
-  }
-
-  // AJAX Fetch Cases from REST endpoint
-  function loadCases(cid) {
-    if (typeof UIRenderer !== "undefined") {
-      UIRenderer.showLoader("#qm-content");
-    }
-
-    if (typeof ApiService !== "undefined") {
-      ApiService.get(
-        `/cases?customer=${cid}`,
+    if (window.ApiService) {
+      window.ApiService.get(
+        endpoint,
         function (response) {
-          allCases = response || [];
-          if (typeof UIRenderer !== "undefined") {
-            UIRenderer.hideLoader("#qm-content");
-          }
-
-          if (allCases.length === 0) {
-            if (typeof UIRenderer !== "undefined") {
-              UIRenderer.showEmptyState("#qm-content");
-            }
+          if (window.UIRenderer) window.UIRenderer.hideLoader("#qm-content");
+          
+          let dataList = response || [];
+          if (dataList && dataList.length > 0) {
+            allCases = dataList;
+            initCasesLayout();
           } else {
-            applyFilters();
+            if (window.UIRenderer) {
+              window.UIRenderer.showEmptyState("#qm-content");
+            } else {
+              $content.html("<div style='text-align:center; padding: 40px;'>No case data available.</div>");
+            }
           }
         },
         function (errorMessage) {
-          if (typeof UIRenderer !== "undefined") {
-            UIRenderer.showError(
-              "#qm-content",
-              "Failed to load customer cases: " + errorMessage,
-              function () {
-                loadCases(cid);
-              }
-            );
+          if (window.UIRenderer) {
+            window.UIRenderer.showError("#qm-content", errorMessage || "Failed to load cases", function () {
+              loadCases();
+            });
+          } else {
+            $content.html(`<div style='text-align:center; padding: 40px; color:#ef4444;'>Failed to load cases: ${errorMessage}</div>`);
           }
         }
       );
     } else {
-      console.error("ApiService is not loaded.");
+      console.error("ApiService not found.");
     }
   }
 
-  // Filter and Sort local data array
-  function applyFilters() {
+  // Initialize Case Layout
+  function initCasesLayout() {
+    const $content = $("#qm-content");
+    if (!$content.length) return;
+
+    const layoutHtml = `
+      <div class="cases-container">
+        <!-- Controls Bar -->
+        <div class="cases-controls-bar">
+          <div class="cases-search-wrapper">
+            <span class="cases-search-icon">🔍</span>
+            <input type="text" class="cases-search-input" placeholder="Search request or case ID...">
+          </div>
+          <div class="cases-actions-wrapper">
+            <button class="cases-filter-btn" id="cases-filter-toggle">
+              <span>⧩</span> Filter by Status
+            </button>
+            <div class="cases-page-size-wrapper">
+              <span class="page-size-lbl">Show:</span>
+              <select class="cases-page-size-select" id="cases-page-size">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hidden Filter Panel -->
+        <div class="cases-filter-panel hidden" id="cases-filter-panel">
+          <span class="filter-panel-title">Filter status:</span>
+          <button class="status-filter-btn active" data-status="All">All</button>
+          <button class="status-filter-btn" data-status="Open">Open</button>
+          <button class="status-filter-btn" data-status="In Progress">In Progress</button>
+          <button class="status-filter-btn" data-status="Resolved">Resolved</button>
+          <button class="status-filter-btn" data-status="Closed">Closed</button>
+          <button class="status-filter-btn" data-status="Rejected">Rejected</button>
+        </div>
+
+        <!-- Data Grid Table -->
+        <div class="cases-table-container">
+          <table class="cases-table">
+            <thead>
+              <tr>
+                <th class="col-id" data-column="caseId">Case ID <span class="cases-sort-indicator"></span></th>
+                <th class="col-type" data-column="caseType">Case Type <span class="cases-sort-indicator"></span></th>
+                <th class="col-req" data-column="requestType">Request Type <span class="cases-sort-indicator"></span></th>
+                <th class="col-status" data-column="status">Status <span class="cases-sort-indicator"></span></th>
+                <th class="col-date" data-column="createdDate">Created Date <span class="cases-sort-indicator"></span></th>
+                <th class="col-action" style="text-align: center; cursor: default;">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="cases-table-body" id="cases-tbody">
+              <!-- Rendered Dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Footer Pagination -->
+        <div class="cases-footer">
+          <div class="cases-indicator" id="cases-indicator">
+            Showing 0 to 0 of 0 records
+          </div>
+          <div class="cases-pagination">
+            <button class="cases-page-btn" id="cases-prev-btn">Previous</button>
+            <div class="cases-page-numbers" id="cases-page-numbers">
+              <!-- Numeric pagination links -->
+            </div>
+            <button class="cases-page-btn" id="cases-next-btn">Next</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    $content.html(layoutHtml);
+
+    // Bind Event Listeners
+    $(".cases-search-input").on("input", function () {
+      searchQuery = $(this).val().toLowerCase().trim();
+      currentPage = 1;
+      applyFiltersAndRender();
+    });
+
+    $("#cases-filter-toggle").on("click", function () {
+      $(this).toggleClass("active");
+      $("#cases-filter-panel").toggleClass("hidden");
+    });
+
+    $(".status-filter-btn").on("click", function () {
+      $(".status-filter-btn").removeClass("active");
+      $(this).addClass("active");
+      statusFilter = $(this).attr("data-status");
+      currentPage = 1;
+      applyFiltersAndRender();
+    });
+
+    $("#cases-page-size").on("change", function () {
+      pageSize = parseInt($(this).val(), 10);
+      currentPage = 1;
+      applyFiltersAndRender();
+    });
+
+    $("#cases-prev-btn").on("click", function () {
+      if (currentPage > 1) {
+        currentPage--;
+        applyFiltersAndRender();
+      }
+    });
+
+    $("#cases-next-btn").on("click", function () {
+      const maxPage = Math.ceil(filteredCases.length / pageSize);
+      if (currentPage < maxPage) {
+        currentPage++;
+        applyFiltersAndRender();
+      }
+    });
+
+    $(".cases-table th").on("click", function () {
+      const col = $(this).attr("data-column");
+      if (!col) return; // Ignore action column
+
+      if (sortColumn === col) {
+        sortDirection = sortDirection === "asc" ? "desc" : "asc";
+      } else {
+        sortColumn = col;
+        sortDirection = "asc";
+      }
+      applyFiltersAndRender();
+    });
+
+    // Initial render
+    currentPage = 1;
+    applyFiltersAndRender();
+  }
+
+  // Filter, Sort, and Render cases
+  function applyFiltersAndRender() {
+    const $tbody = $("#cases-tbody");
+    if (!$tbody.length) return;
+
+    // 1. Filter
     filteredCases = allCases.filter((item) => {
-      const s = searchText.toLowerCase();
+      const s = searchQuery;
       const matchesSearch =
         item.caseId.toLowerCase().includes(s) ||
         item.caseType.toLowerCase().includes(s) ||
@@ -465,7 +705,7 @@
       return matchesSearch && matchesStatus;
     });
 
-    // Sort matching records
+    // 2. Sort
     filteredCases.sort((a, b) => {
       let valA = a[sortColumn] || "";
       let valB = b[sortColumn] || "";
@@ -478,181 +718,102 @@
       return 0;
     });
 
-    // Re-clamp current page
-    const totalPages = Math.ceil(filteredCases.length / pageSize) || 1;
-    if (currentPage > totalPages) {
-      currentPage = totalPages;
-    }
+    // Update Sorting Icons in DOM
+    $(".cases-table th").each(function () {
+      const col = $(this).attr("data-column");
+      const $indicator = $(this).find(".cases-sort-indicator");
+      if (col) {
+        if (col === sortColumn) {
+          $indicator.text(sortDirection === "asc" ? " ▲" : " ▼");
+        } else {
+          $indicator.text("");
+        }
+      }
+    });
 
-    renderTable();
-  }
+    const totalRecords = filteredCases.length;
 
-  // Build and render table DOM nodes
-  function renderTable() {
-    const $container = $("#qm-content");
-    if (!$container.length) return;
+    // 3. Pagination bounds
+    const maxPage = Math.ceil(totalRecords / pageSize) || 1;
+    if (currentPage > maxPage) currentPage = maxPage;
 
-    $container.empty();
-
-    const totalItems = filteredCases.length;
-    const totalPages = Math.ceil(totalItems / pageSize) || 1;
     const startIdx = (currentPage - 1) * pageSize;
-    const paginatedItems = filteredCases.slice(startIdx, startIdx + pageSize);
+    const endIdx = Math.min(startIdx + pageSize, totalRecords);
 
-    // 1. Controls Row (Search, Filter, Page Size)
-    const controlsHtml = `
-      <div class="case-controls-row">
-        <div class="case-controls-left">
-          <input type="text" id="case-search-input" class="case-input" placeholder="Search case details..." value="${escapeHtml(
-            searchText
-          )}" />
-          <select id="case-status-filter" class="case-select">
-            <option value="All" ${statusFilter === "All" ? "selected" : ""}>All Statuses</option>
-            <option value="Open" ${statusFilter === "Open" ? "selected" : ""}>Open</option>
-            <option value="In Progress" ${statusFilter === "In Progress" ? "selected" : ""}>In Progress</option>
-            <option value="Resolved" ${statusFilter === "Resolved" ? "selected" : ""}>Resolved</option>
-            <option value="Closed" ${statusFilter === "Closed" ? "selected" : ""}>Closed</option>
-            <option value="Rejected" ${statusFilter === "Rejected" ? "selected" : ""}>Rejected</option>
-          </select>
-        </div>
-        <div class="case-controls-right">
-          <select id="case-page-size" class="case-select">
-            <option value="5" ${pageSize === 5 ? "selected" : ""}>5 per page</option>
-            <option value="10" ${pageSize === 10 ? "selected" : ""}>10 per page</option>
-            <option value="20" ${pageSize === 20 ? "selected" : ""}>20 per page</option>
-          </select>
-        </div>
-      </div>
-    `;
+    // 4. Render Rows
+    $tbody.empty();
 
-    // Helpers to draw headers with active sort icons
-    function getHeaderTh(columnName, labelText) {
-      const isSorted = sortColumn === columnName;
-      const indicatorText = isSorted ? (sortDirection === "asc" ? " ▲" : " ▼") : "";
-      return `<th class="case-sortable-header" data-column="${columnName}">${labelText}<span class="case-sort-indicator">${indicatorText}</span></th>`;
-    }
-
-    // 2. Data Grid (Table)
-    let tbodyHtml = "";
-    if (paginatedItems.length === 0) {
-      tbodyHtml = `
+    if (totalRecords === 0) {
+      $tbody.append(`
         <tr>
-          <td colspan="6" style="text-align: center; padding: 30px; color: var(--muted); font-size: 14px;">
-            No cases match the filter criteria.
+          <td colspan="6" style="text-align: center; color: var(--muted); font-style: italic; padding: 30px;">
+            No cases match your search criteria.
           </td>
         </tr>
-      `;
+      `);
     } else {
-      paginatedItems.forEach((item) => {
+      const pageData = filteredCases.slice(startIdx, endIdx);
+      pageData.forEach((item) => {
         const typeClass =
-          item.caseType.toLowerCase() === "complaint" ? "badge-type-complaint" : "badge-type-request";
+          item.caseType.toLowerCase() === "complaint" ? "complaint" : "request";
         
-        let statusClass = "badge-status-closed";
+        let statusClass = "closed";
         const statusLower = item.status.toLowerCase();
-        if (statusLower === "open") statusClass = "badge-status-open";
-        else if (statusLower === "in progress") statusClass = "badge-status-inprogress";
-        else if (statusLower === "resolved") statusClass = "badge-status-resolved";
-        else if (statusLower === "rejected") statusClass = "badge-status-rejected";
+        if (statusLower === "open") statusClass = "open";
+        else if (statusLower === "in progress") statusClass = "in-progress";
+        else if (statusLower === "resolved") statusClass = "resolved";
+        else if (statusLower === "rejected") statusClass = "rejected";
 
         const detailUrl = `modules/case/case-detail.html?id=${encodeURIComponent(item.caseId)}`;
 
-        tbodyHtml += `
+        const rowHtml = `
           <tr>
-            <td>
-              <a href="${detailUrl}" target="_blank" class="case-link">${escapeHtml(item.caseId)}</a>
+            <td class="col-id" style="font-family: 'JetBrains Mono', monospace;">
+              <a href="${detailUrl}" target="_blank" class="case-id-link" title="Open details for ${escapeHtml(item.caseId)} in new tab">${escapeHtml(item.caseId)}</a>
             </td>
-            <td>
-              <span class="case-badge ${typeClass}">${escapeHtml(item.caseType)}</span>
+            <td class="col-type">
+              <span class="type-badge ${typeClass}">${escapeHtml(item.caseType)}</span>
             </td>
-            <td>
-              <span style="font-weight: 500;">${escapeHtml(item.requestType)}</span>
+            <td class="col-req" style="font-weight: 600;">${escapeHtml(item.requestType)}</td>
+            <td class="col-status">
+              <span class="status-badge ${statusClass}">${escapeHtml(item.status)}</span>
             </td>
-            <td>
-              <span class="case-badge ${statusClass}">${escapeHtml(item.status)}</span>
-            </td>
-            <td>
-              <span style="color: var(--muted); font-family: monospace;">${escapeHtml(item.createdDate)}</span>
-            </td>
-            <td style="text-align: center;">
-              <a href="${detailUrl}" target="_blank" class="case-action-btn">View</a>
+            <td class="col-date" style="color: var(--muted);">${escapeHtml(item.createdDate)}</td>
+            <td class="col-action" style="text-align: center;">
+              <a href="${detailUrl}" target="_blank" class="cases-table-action-btn" title="View details for ${escapeHtml(item.caseId)}">👁️ View</a>
             </td>
           </tr>
         `;
+        $tbody.append(rowHtml);
       });
     }
 
-    const tableHtml = `
-      <div class="case-table-wrapper">
-        <table class="case-table">
-          <thead>
-            <tr>
-              ${getHeaderTh("caseId", "Case ID")}
-              ${getHeaderTh("caseType", "Case Type")}
-              ${getHeaderTh("requestType", "Request Type")}
-              ${getHeaderTh("status", "Status")}
-              ${getHeaderTh("createdDate", "Created Date")}
-              <th style="text-align: center; cursor: default;">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${tbodyHtml}
-          </tbody>
-        </table>
-      </div>
-    `;
+    // 5. Update Records Indicator
+    const displayStart = totalRecords === 0 ? 0 : startIdx + 1;
+    $("#cases-indicator").html(`
+      Showing <strong>${displayStart}</strong> to <strong>${endIdx}</strong> of <strong>${totalRecords}</strong> records
+    `);
 
-    // 3. Pagination controls row
-    let paginationButtonsHtml = "";
-    if (totalPages > 1) {
-      // Prev arrow
-      const prevDisabled = currentPage === 1 ? "disabled" : "";
-      paginationButtonsHtml += `
-        <button class="case-page-btn ${prevDisabled}" data-page="prev">←</button>
-      `;
+    // 6. Update Prev/Next Buttons state
+    $("#cases-prev-btn").prop("disabled", currentPage === 1);
+    $("#cases-next-btn").prop("disabled", currentPage === maxPage);
 
-      // Page numbers (No dots/ellipsis, show clean sequential page numbers)
-      for (let i = 1; i <= totalPages; i++) {
-        const activeClass = currentPage === i ? "active" : "";
-        paginationButtonsHtml += `
-          <button class="case-page-btn ${activeClass}" data-page="${i}">${i}</button>
-        `;
-      }
+    // 7. Render Numeric Page Links
+    const $pageNumContainer = $("#cases-page-numbers");
+    $pageNumContainer.empty();
 
-      // Next arrow
-      const nextDisabled = currentPage === totalPages ? "disabled" : "";
-      paginationButtonsHtml += `
-        <button class="case-page-btn ${nextDisabled}" data-page="next">→</button>
-      `;
-    } else {
-      paginationButtonsHtml = `
-        <button class="case-page-btn disabled" style="width: auto; padding: 0 10px;">Page 1 of 1</button>
-      `;
+    for (let p = 1; p <= maxPage; p++) {
+      const activeClass = p === currentPage ? "active" : "";
+      const $btn = $(`<button class="cases-num-btn ${activeClass}">${p}</button>`);
+      $btn.on("click", function () {
+        currentPage = p;
+        applyFiltersAndRender();
+      });
+      $pageNumContainer.append($btn);
     }
-
-    const itemStart = totalItems === 0 ? 0 : startIdx + 1;
-    const itemEnd = Math.min(startIdx + pageSize, totalItems);
-
-    const paginationHtml = `
-      <div class="case-pagination-row">
-        <div class="case-pagination-info">
-          Showing ${itemStart} to ${itemEnd} of ${totalItems} records
-        </div>
-        <div class="case-pagination-buttons">
-          ${paginationButtonsHtml}
-        </div>
-      </div>
-    `;
-
-    // Append all items wrapped in an animation container
-    const $wrapper = $('<div class="case-module-wrapper"></div>')
-      .append(controlsHtml)
-      .append(tableHtml)
-      .append(paginationHtml);
-
-    $container.append($wrapper);
   }
 
-  // Simple HTML Escaper
+  // Helper for escaping HTML strings
   function escapeHtml(str) {
     if (str === null || str === undefined) return "";
     return String(str)
@@ -663,69 +824,28 @@
       .replace(/'/g, "&#039;");
   }
 
-  // Delegated Event Handlers
-  $(document).on("input", "#case-search-input", function () {
-    searchText = $(this).val() || "";
-    currentPage = 1; // reset page on search
-    applyFilters();
-  });
+  // ── MUTATIONOBSERVER ON QUICK MODULE TITLES ──
+  $(function () {
+    const $titleNode = $("#qm-title");
+    if (!$titleNode.length) return;
 
-  $(document).on("change", "#case-status-filter", function () {
-    statusFilter = $(this).val() || "All";
-    currentPage = 1; // reset page on status filter change
-    applyFilters();
-  });
-
-  $(document).on("change", "#case-page-size", function () {
-    pageSize = parseInt($(this).val()) || 5;
-    currentPage = 1; // reset page on size change
-    applyFilters();
-  });
-
-  $(document).on("click", ".case-sortable-header", function () {
-    const col = $(this).attr("data-column");
-    if (sortColumn === col) {
-      sortDirection = sortDirection === "asc" ? "desc" : "asc";
-    } else {
-      sortColumn = col;
-      sortDirection = "asc"; // Default to ascending for new sort columns
-    }
-    applyFilters();
-  });
-
-  $(document).on("click", ".case-page-btn", function () {
-    if ($(this).hasClass("disabled") || $(this).hasClass("active")) return;
-
-    const pageAttr = $(this).attr("data-page");
-    const totalPages = Math.ceil(filteredCases.length / pageSize) || 1;
-
-    if (pageAttr === "prev") {
-      currentPage = Math.max(1, currentPage - 1);
-    } else if (pageAttr === "next") {
-      currentPage = Math.min(totalPages, currentPage + 1);
-    } else {
-      currentPage = parseInt(pageAttr) || 1;
-    }
-    applyFilters();
-  });
-
-  // Action button events removed
-
-  // Monitor the Quick Module Title to activate/deactivate
-  $(document).ready(function () {
-    const qmTitle = document.getElementById("qm-title");
-    if (qmTitle) {
-      const observer = new MutationObserver(() => {
-        const isActive = qmTitle.innerText === "Case Module";
-        if (isActive && !wasActive) {
-          wasActive = true;
-          activateCaseModule();
-        } else if (!isActive && wasActive) {
-          wasActive = false;
-          deactivateCaseModule();
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        const text = $titleNode.text().trim();
+        if (text === "Case Module") {
+          renderCasesHeader();
+          loadCases();
+        } else if (text !== "" && !text.includes("CASE INFORMATION") && !headerRestored) {
+          // Navigated to another quick access module
+          restoreDefaultHeader(text);
         }
       });
-      observer.observe(qmTitle, { childList: true, characterData: true, subtree: true });
-    }
+    });
+
+    observer.observe($titleNode[0], {
+      childList: true,
+      characterData: true,
+      subtree: true
+    });
   });
 })();
