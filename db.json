@@ -650,5 +650,31 @@
         "createdDate": "2026-05-15"
       }
     ]
-  }
+  },
+  "customers": [
+    { "id": "NX-4829-0055", "name": "Daniel Anderson", "email": "arun.chacko@email.com", "phone": "+91 98765 43210", "status": "Active", "createdDate": "2017-01-15" },
+    { "id": "NX-4829-0056", "name": "Sarah Jenkins", "email": "sarah.j@email.com", "phone": "+1 555-0199", "status": "Active", "createdDate": "2018-05-12" },
+    { "id": "NX-4829-0057", "name": "Priya Menon", "email": "priya.m@email.com", "phone": "+91 98765 12345", "status": "Inactive", "createdDate": "2019-11-20" },
+    { "id": "NX-4829-0058", "name": "John Doe", "email": "john.doe@email.com", "phone": "+1 555-0100", "status": "Active", "createdDate": "2020-02-14" },
+    { "id": "NX-4829-0059", "name": "Jane Smith", "email": "jane.smith@email.com", "phone": "+1 555-0101", "status": "Active", "createdDate": "2020-07-22" },
+    { "id": "NX-4829-0060", "name": "Michael Brown", "email": "michael.b@email.com", "phone": "+1 555-0102", "status": "Inactive", "createdDate": "2021-03-09" },
+    { "id": "NX-4829-0061", "name": "Emily Davis", "email": "emily.d@email.com", "phone": "+1 555-0103", "status": "Active", "createdDate": "2021-08-30" },
+    { "id": "NX-4829-0062", "name": "David Wilson", "email": "david.w@email.com", "phone": "+1 555-0104", "status": "Active", "createdDate": "2022-01-11" },
+    { "id": "NX-4829-0063", "name": "Maria Garcia", "email": "maria.g@email.com", "phone": "+1 555-0105", "status": "Active", "createdDate": "2022-04-18" },
+    { "id": "NX-4829-0064", "name": "James Rodriguez", "email": "james.r@email.com", "phone": "+1 555-0106", "status": "Inactive", "createdDate": "2022-09-05" },
+    { "id": "NX-4829-0065", "name": "Patricia Martinez", "email": "patricia.m@email.com", "phone": "+1 555-0107", "status": "Active", "createdDate": "2022-12-25" },
+    { "id": "NX-4829-0066", "name": "Robert Hernandez", "email": "robert.h@email.com", "phone": "+1 555-0108", "status": "Active", "createdDate": "2023-03-14" },
+    { "id": "NX-4829-0067", "name": "Linda Lopez", "email": "linda.l@email.com", "phone": "+1 555-0109", "status": "Active", "createdDate": "2023-06-20" },
+    { "id": "NX-4829-0068", "name": "William Gonzalez", "email": "william.g@email.com", "phone": "+1 555-0110", "status": "Inactive", "createdDate": "2023-10-02" },
+    { "id": "NX-4829-0069", "name": "Elizabeth Wilson", "email": "elizabeth.w@email.com", "phone": "+1 555-0111", "status": "Active", "createdDate": "2023-11-15" },
+    { "id": "NX-4829-0070", "name": "Richard Thomas", "email": "richard.t@email.com", "phone": "+1 555-0112", "status": "Active", "createdDate": "2024-01-29" },
+    { "id": "NX-4829-0071", "name": "Barbara Taylor", "email": "barbara.t@email.com", "phone": "+1 555-0113", "status": "Active", "createdDate": "2024-03-10" },
+    { "id": "NX-4829-0072", "name": "Susan Moore", "email": "susan.m@email.com", "phone": "+1 555-0114", "status": "Inactive", "createdDate": "2024-05-18" },
+    { "id": "NX-4829-0073", "name": "Joseph Jackson", "email": "joseph.j@email.com", "phone": "+1 555-0115", "status": "Active", "createdDate": "2024-07-25" },
+    { "id": "NX-4829-0074", "name": "Thomas Martin", "email": "thomas.m@email.com", "phone": "+1 555-0116", "status": "Active", "createdDate": "2024-09-30" },
+    { "id": "NX-4829-0075", "name": "Margaret Lee", "email": "margaret.l@email.com", "phone": "+1 555-0117", "status": "Active", "createdDate": "2024-11-12" },
+    { "id": "NX-4829-0076", "name": "Charles Perez", "email": "charles.p@email.com", "phone": "+1 555-0118", "status": "Inactive", "createdDate": "2025-01-20" },
+    { "id": "NX-4829-0077", "name": "Jessica Thompson", "email": "jessica.t@email.com", "phone": "+1 555-0119", "status": "Active", "createdDate": "2025-03-15" },
+    { "id": "NX-4829-0078", "name": "Christopher White", "email": "christopher.w@email.com", "phone": "+1 555-0120", "status": "Active", "createdDate": "2025-05-02" }
+  ]
 }

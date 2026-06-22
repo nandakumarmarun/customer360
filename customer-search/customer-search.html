@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" class="light-mode">
+<head>
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem('customer360-theme') || 'light';
+      const root = document.documentElement;
+      if (savedTheme === 'light') {
+        root.classList.add('light-mode');
+      } else {
+        root.classList.remove('light-mode');
+      }
+      const savedColorTheme = localStorage.getItem('customer360-color-theme') || 'red';
+      if (savedColorTheme === 'neon') {
+        root.classList.add('theme-neon');
+      } else {
+        root.classList.remove('theme-neon');
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CUSTOMER360 · Customer Search</title>
+  <meta name="description" content="Search banking customer profile directory with interactive animation." />
+  
+  <!-- ===== APPLICATION STYLES ===== -->
+  <link rel="stylesheet" href="../fonts/fonts.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="customer360-preloader.css" />
+  <link rel="stylesheet" href="customer-search.css" />
+</head>
+
+<body class="light-mode">
+
+  <!-- ===== THREE.JS BACKGROUND CANVAS ===== -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ===== MAIN CUSTOMER SEARCH VIEW ===== -->
+  <div class="customer-search-page hidden">
+    
+    <!-- HEADER BAR -->
+    <header class="customer-search-header" id="search-header">
+      <div class="search-header-left" onclick="window.location.reload();">
+        <span class="search-header-logo-icon">⬡</span>
+        <span class="search-header-logo-text">CUSTOMER360</span>
+      </div>
+      
+      <div class="search-header-right">
+        <!-- Reuses existing application theme picker styles -->
+        <div class="theme-picker-group">
+          <button class="theme-picker-btn red-theme-picker active" data-theme="red" title="Crimson Red Theme"></button>
+          <button class="theme-picker-btn neon-theme-picker" data-theme="neon" title="Neon Palette Theme"></button>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+          <span class="sun">☀️</span>
+          <span class="moon">🌙</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT BODY -->
+    <main class="customer-search-main">
+      
+      <!-- SEARCH CONTROLS CONTAINER -->
+      <section class="customer-search-experience glass-card">
+        
+        <!-- Large Search Illustration -->
+        <div class="search-illustration-container">
+          <img src="assets/search-icon.svg" alt="Search Illustration" width="100%" height="100%" />
+        </div>
+
+        <h1 class="search-title animated-logo" aria-label="Customer 360">
+          <span>C</span><span>u</span><span>s</span><span>t</span><span>o</span><span>m</span><span>e</span><span>r</span><span>&nbsp;</span><span>3</span><span>6</span><span>0</span>
+        </h1>
+        <p class="search-subtitle">Search for banking customers using one of the options below</p>
+
+        <!-- Search Bar -->
+        <div class="search-bar-container">
+          <!-- Left side: Dropdown -->
+          <div class="search-select-wrapper">
+            <select class="search-type-selector" id="search-type" aria-label="Search Type">
+              <option value="cid">🆔 Customer ID</option>
+              <option value="email">✉️ Email</option>
+              <option value="phone">📞 Phone Number</option>
+            </select>
+            <span class="search-select-arrow">▼</span>
+          </div>
+
+          <!-- Middle: Input Field -->
+          <div class="search-input-wrapper">
+            <input type="text" class="search-input-field" id="search-input" placeholder="Enter Customer ID (e.g. NX-4829-0055)..." aria-label="Search Value" />
+          </div>
+
+          <!-- Right side: Button -->
+          <button class="search-submit-btn" id="search-btn">Search</button>
+        </div>
+
+      </section>
+
+      <!-- SEARCH RESULT TABLE SECTION -->
+      <section class="results-card glass-card" id="results-card">
+        <h2 class="results-card-title">Customer List</h2>
+
+        <!-- Statistics & Filters Row -->
+        <div class="results-stats-row">
+          <div class="results-count">
+            Found <strong id="results-total-count">0</strong> Customers
+          </div>
+
+          <div class="results-filters">
+            <!-- Active/Inactive Status Filters -->
+            <div class="results-status-filter">
+              <button class="status-btn active" data-status="All">All</button>
+              <button class="status-btn" data-status="Active">Active</button>
+              <button class="status-btn" data-status="Inactive">Inactive</button>
+            </div>
+
+            <!-- Date Range Range Picker -->
+            <div class="results-date-range">
+              <input type="date" class="date-input" id="date-from" placeholder="From" aria-label="Created Date From" />
+              <span class="date-range-sep">to</span>
+              <input type="date" class="date-input" id="date-to" placeholder="To" aria-label="Created Date To" />
+            </div>
+
+            <!-- Clear Filters Button -->
+            <button class="btn-clear-filters" id="btn-clear-filters">Clear Filters</button>
+          </div>
+        </div>
+
+        <!-- Sticky Table Grid Container -->
+        <div class="results-table-container" id="table-container-div">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th style="width: 16%;">Customer ID</th>
+                <th style="width: 22%;">Customer Name</th>
+                <th style="width: 22%;">Email</th>
+                <th style="width: 16%;">Phone</th>
+                <th style="width: 12%;">Status</th>
+                <th style="width: 12%;">Created Date</th>
+                <th style="width: 12%; text-align: center;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="results-tbody">
+              <!-- Rendered Dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty State Container -->
+        <div id="results-overlay-div" style="display: none;"></div>
+
+        <!-- Pagination Controls Row -->
+        <div class="results-pagination-row">
+          <div class="results-indicator" id="pagination-indicator">
+            Showing 0 to 0 of 0 records
+          </div>
+          <div class="pagination-controls">
+            <button class="pagination-btn" id="prev-btn">Previous</button>
+            <div class="pagination-page-numbers" id="pagination-page-numbers">
+              <!-- Page link buttons -->
+            </div>
+            <button class="pagination-btn" id="next-btn">Next</button>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===== EXTERNAL SCRIPTS ===== -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="../config.js"></script>
+  <script src="../api-service.js"></script>
+  <script src="../lib/three.min.js"></script>
+  <script src="../lib/gsap.min.js"></script>
+  <script src="customer360-preloader.js"></script>
+  <script src="customer-search-controller.js"></script>
+  <script src="customer-search.js"></script>
+</body>
+</html>

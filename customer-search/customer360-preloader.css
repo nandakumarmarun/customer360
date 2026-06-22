@@ -1,0 +1,328 @@
+/* Customer 360 Loading Preloader Stylesheet */
+
+.customer360-preloader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10005;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: rgba(18, 20, 28, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s ease;
+}
+
+.light-mode .customer360-preloader-overlay {
+  background: rgba(253, 244, 244, 0.5);
+}
+
+.customer360-preloader-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  background: rgba(18, 20, 28, 0.95);
+}
+
+.light-mode .customer360-preloader-overlay.active {
+  background: rgba(253, 244, 244, 0.96);
+}
+
+/* Background Dashboard Preview */
+.preloader-dashboard-preview {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  padding: 40px;
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.skeleton-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.light-mode .skeleton-card {
+  background: rgba(170, 0, 0, 0.02);
+}
+
+/* Sweep Shimmer Effect */
+.skeleton-card .shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+  transform: translateX(-100%);
+  animation: preloaderShimmerSweep 1.8s infinite;
+}
+
+.light-mode .skeleton-card .shimmer {
+  background: linear-gradient(90deg, transparent, rgba(170, 0, 0, 0.03), transparent);
+}
+
+@keyframes preloaderShimmerSweep {
+  100% { transform: translateX(100%); }
+}
+
+.skeleton-header {
+  width: 50%;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+}
+
+.light-mode .skeleton-header {
+  background: rgba(170, 0, 0, 0.05);
+}
+
+.skeleton-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-line {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+}
+
+.light-mode .skeleton-line {
+  background: rgba(170, 0, 0, 0.03);
+}
+
+.skeleton-line:nth-child(2) { width: 85%; }
+.skeleton-line:nth-child(3) { width: 60%; }
+
+/* Overlay Content Centered */
+.preloader-overlay-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  text-align: center;
+}
+
+/* Node Network Graph */
+.preloader-node-network {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin-bottom: 20px;
+}
+
+/* Connecting Lines */
+.network-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.network-line {
+  stroke: var(--border, rgba(170, 0, 0, 0.2));
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+  transition: all 0.4s ease;
+}
+
+.network-line.active {
+  stroke: var(--accent2, #ff4444);
+  stroke-width: 3;
+  stroke-dasharray: none;
+  filter: drop-shadow(0 0 5px var(--accent2));
+}
+
+/* Center Orb */
+.center-orb-wrapper {
+  position: absolute;
+  top: 135px;
+  left: 135px;
+  width: 130px;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Continuous 360 rotating ring */
+.rotating-ring-360 {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  border-top: 3px solid var(--accent2, #ff4444);
+  border-bottom: 3px solid var(--accent, #aa0000);
+  animation: preloaderRotateRing 6s linear infinite;
+  box-shadow: 0 0 15px var(--glow-shadow-medium);
+}
+
+/* Pulsing Customer Orb */
+.center-customer-orb {
+  position: relative;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: var(--bg2, #1c1f2b);
+  border: 2px solid var(--accent, #aa0000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  animation: preloaderCustomerPulse 1.6s ease-in-out infinite;
+  box-shadow: 0 0 20px var(--glow-shadow-strong);
+}
+
+.orb-icon {
+  font-size: 32px;
+}
+
+/* Connected Loading Nodes */
+.network-node {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(18, 20, 28, 0.85);
+  border: 1.5px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  opacity: 0.35;
+  transform: scale(0.9);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.light-mode .network-node {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.network-node.active {
+  opacity: 1;
+  transform: scale(1.05);
+  border-color: var(--accent2, #ff4444);
+  box-shadow: 0 0 15px var(--glow-shadow);
+}
+
+.node-icon {
+  font-size: 13px;
+}
+
+.node-label {
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Preloader Title & Subtitle */
+.preloader-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, var(--accent2, #ff4444), var(--accent, #aa0000));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.preloader-subtitle {
+  font-size: 12.5px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+/* Progress Area */
+.preloader-progress-container {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preloader-progress-bar {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.light-mode .preloader-progress-bar {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.02);
+}
+
+.preloader-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 3px;
+  box-shadow: 0 0 10px var(--accent2);
+  transition: width 0.3s cubic-bezier(0.1, 0.8, 0.25, 1);
+}
+
+.preloader-progress-status {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 700;
+  height: 16px;
+}
+
+/* Keyframes */
+@keyframes preloaderRotateRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes preloaderCustomerPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px var(--glow-shadow-medium);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 35px var(--glow-shadow-strong);
+  }
+}
+
+/* Responsive Scaling for preloader graph */
+@media (max-width: 480px) {
+  .preloader-node-network {
+    transform: scale(0.8);
+    margin-bottom: -20px;
+    margin-top: -20px;
+  }
+  .preloader-progress-container {
+    width: 260px;
+  }
+}
