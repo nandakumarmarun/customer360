@@ -1,7 +1,7 @@
 /* tour.js - Guided Tour functionality */
 
 const TourAPI = {
-  endpoint: '/api/tour/track',
+  endpoint: (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.TOUR_TRACK) || '/api/tour/track',
   userId: 'user_123', // Placeholder
   viewId: 'DASHBOARD_VIEW'
 };
@@ -25,7 +25,8 @@ class DashboardTour {
   init() {
     // Fetch tour data from the backend
     if (window.ApiService) {
-      window.ApiService.get('/tour', 
+      const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.TOUR) || '/tour';
+      window.ApiService.get(endpoint, 
         (response) => {
           if (response && Array.isArray(response)) {
             this.steps = response;

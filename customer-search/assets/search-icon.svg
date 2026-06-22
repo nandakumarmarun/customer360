@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <!-- Glow filter -->
+    <filter id="svg-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <!-- Accent Gradient -->
+    <linearGradient id="primary-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="var(--accent2, #ff4444)" />
+      <stop offset="100%" stop-color="var(--accent, #aa0000)" />
+    </linearGradient>
+    <!-- Subtle Inner Fill Gradient -->
+    <linearGradient id="fill-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.08)" />
+      <stop offset="100%" stop-color="rgba(255, 255, 255, 0.02)" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer 360 radar rings -->
+  <circle cx="60" cy="55" r="48" fill="none" stroke="var(--border, rgba(170, 0, 0, 0.15))" stroke-width="1" stroke-dasharray="3 5" />
+  <circle cx="60" cy="55" r="42" fill="none" stroke="url(#primary-gradient)" stroke-width="1.5" opacity="0.3" />
+  
+  <!-- Outer nodes representing 360 data categories -->
+  <circle cx="28" cy="23" r="3" fill="var(--accent2, #ff4444)" filter="url(#svg-glow)" />
+  <line x1="28" y1="23" x2="45" y2="40" stroke="var(--border, rgba(170, 0, 0, 0.15))" stroke-width="1" />
+
+  <circle cx="92" cy="23" r="3" fill="var(--accent2, #ff4444)" filter="url(#svg-glow)" />
+  <line x1="92" y1="23" x2="75" y2="40" stroke="var(--border, rgba(170, 0, 0, 0.15))" stroke-width="1" />
+
+  <circle cx="108" cy="65" r="2.5" fill="var(--accent2, #ff4444)" filter="url(#svg-glow)" />
+  <line x1="108" y1="65" x2="88" y2="65" stroke="var(--border, rgba(170, 0, 0, 0.15))" stroke-width="1" />
+
+  <circle cx="12" cy="65" r="2.5" fill="var(--accent2, #ff4444)" filter="url(#svg-glow)" />
+  <line x1="12" y1="65" x2="32" y2="65" stroke="var(--border, rgba(170, 0, 0, 0.15))" stroke-width="1" />
+
+  <!-- Center Customer Silhouette Badge (Shield/Hexagon shape) -->
+  <path d="M60 18 L88 34 L88 66 L60 82 L32 66 L32 34 Z" fill="url(#fill-gradient)" stroke="url(#primary-gradient)" stroke-width="3" filter="url(#svg-glow)" />
+
+  <!-- User Avatar inside Hexagon -->
+  <!-- Head -->
+  <circle cx="60" cy="44" r="10.5" fill="url(#primary-gradient)" filter="url(#svg-glow)" />
+  <!-- Hair/Badge details -->
+  <path d="M53 43 C53 36 67 36 67 43" fill="none" stroke="#fff" stroke-width="1" opacity="0.2" />
+
+  <!-- Shoulders -->
+  <path d="M43 68 C43 59 50 56 60 56 C70 56 77 59 77 68" fill="url(#primary-gradient)" filter="url(#svg-glow)" />
+  <path d="M48 68 C48 62 53 60 60 60 C67 60 72 62 72 68" fill="#fff" opacity="0.15" />
+</svg>

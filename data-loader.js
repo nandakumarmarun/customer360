@@ -45,18 +45,29 @@
     };
   }
 
+  // Extract customer ID parameter from query string
+  function getCustomerIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('cid') || 'NX-4829-0055'; // Fallback to default CID
+  }
+
   const DataLoader = {
     /**
      * Single API call — fetches everything at once and
      * distributes each section to the correct renderer.
      */
     loadAll: function() {
-      const endpoint = window.API_CONFIG.CUSTOMER_ENDPOINT || "/customer";
+      const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.CUSTOMER) || "/customer";
+      const cid = getCustomerIdFromUrl();
+      const paramKey = (window.API_CONFIG && window.API_CONFIG.PARAMS && window.API_CONFIG.PARAMS.CUSTOMER_ID) || "cid";
+      const params = {};
+      params[paramKey] = cid;
 
       showAllLoaders();
 
       window.ApiService.get(
         endpoint,
+        params,
 
         // ── SUCCESS ──────────────────────────────────────────
         function(response) {

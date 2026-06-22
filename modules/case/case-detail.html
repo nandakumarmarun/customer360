@@ -372,8 +372,9 @@
       UIRenderer.showLoader('.detail-card');
       $('.detail-content').hide();
 
+      const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.CASES) || '/cases';
       ApiService.get(
-        '/cases',
+        endpoint,
         function (response) {
           UIRenderer.hideLoader('.detail-card');
           

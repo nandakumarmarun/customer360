@@ -226,7 +226,10 @@
     </div>
   </div>
 
+  <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="../../config.js"></script>
+  <script src="../../api-service.js"></script>
   <script>
     // Adjust colors on theme load
     const savedTheme = localStorage.getItem('customer360-theme') || 'light';
@@ -250,21 +253,41 @@
 
     if (leadId) {
       // Fetch data
-      const dbUrl = 'http://localhost:3000/leads';
+      const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.LEADS) || '/leads';
       
-      $.getJSON(dbUrl)
-        .done(function(response) {
-          const dataList = response.data || response;
-          const lead = dataList.find(l => l.leadId === leadId);
-          if (lead) {
-            populateLead(lead);
-          } else {
-            showError("Lead record not found in database.");
+      if (window.ApiService) {
+        window.ApiService.get(
+          endpoint,
+          function(response) {
+            const dataList = response.data || response;
+            const lead = dataList.find(l => l.leadId === leadId);
+            if (lead) {
+              populateLead(lead);
+            } else {
+              showError("Lead record not found in database.");
+            }
+          },
+          function(errorMsg) {
+            showError("Failed to fetch lead details from the API server: " + errorMsg);
           }
-        })
-        .fail(function(xhr, status, error) {
-          showError("Failed to fetch lead details from the API server.");
-        });
+        );
+      } else {
+        // Fallback if ApiService is not available
+        const dbUrl = `${(window.API_CONFIG && window.API_CONFIG.BASE_URL) || 'http://localhost:3000'}${endpoint}`;
+        $.getJSON(dbUrl)
+          .done(function(response) {
+            const dataList = response.data || response;
+            const lead = dataList.find(l => l.leadId === leadId);
+            if (lead) {
+              populateLead(lead);
+            } else {
+              showError("Lead record not found in database.");
+            }
+          })
+          .fail(function(xhr, status, error) {
+            showError("Failed to fetch lead details from the API server.");
+          });
+      }
     } else {
       showError("No Lead ID specified.");
     }

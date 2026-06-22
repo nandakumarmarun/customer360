@@ -639,10 +639,15 @@
     }
 
     // Call ApiService to fetch
-    const endpoint = `/leads?customer=${encodeURIComponent(customerParam)}`;
+    const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.LEADS) || "/leads";
+    const paramKey = (window.API_CONFIG && window.API_CONFIG.PARAMS && window.API_CONFIG.PARAMS.LEAD_CUSTOMER_ID) || "customer";
+    const params = {};
+    params[paramKey] = customerParam;
+
     if (window.ApiService) {
       window.ApiService.get(
         endpoint,
+        params,
         function (response) {
           if (window.UIRenderer) window.UIRenderer.hideLoader("#qm-content");
           

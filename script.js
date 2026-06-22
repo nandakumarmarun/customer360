@@ -527,7 +527,8 @@ function openDetail(data) {
 
   document.getElementById('detail-model-title').textContent = data.title;
   document.getElementById('detail-model-desc').textContent = getHeaderDesc(data.title);
-  document.getElementById('detail-img').src = `assets/png/${data.hero}`;
+  const assetsPath = (window.ASSETS_CONFIG && window.ASSETS_CONFIG.DASHBOARD_ASSETS_PATH) || 'assets/png/';
+  document.getElementById('detail-img').src = `${assetsPath}${data.hero}`;
 
   // Tag Handling
   const modelTag = document.getElementById('detail-model-tag');
