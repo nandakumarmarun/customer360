@@ -676,5 +676,639 @@
     { "id": "NX-4829-0076", "name": "Charles Perez", "email": "charles.p@email.com", "phone": "+1 555-0118", "status": "Inactive", "createdDate": "2025-01-20" },
     { "id": "NX-4829-0077", "name": "Jessica Thompson", "email": "jessica.t@email.com", "phone": "+1 555-0119", "status": "Active", "createdDate": "2025-03-15" },
     { "id": "NX-4829-0078", "name": "Christopher White", "email": "christopher.w@email.com", "phone": "+1 555-0120", "status": "Active", "createdDate": "2025-05-02" }
+  ],
+  "holdings": [
+    {
+      "id": "NX-4829-0055",
+      "customer": "NX-4829-0055",
+      "assets": {
+        "subcategoriesCount": 1,
+        "accountsCount": 2,
+        "accounts": [
+          {
+            "name": "Home Loan Pro",
+            "number": "LN-701023456",
+            "amount": "₹45,20,000",
+            "status": "Active",
+            "details": {
+              "Loan Account Number": "LN-701023456",
+              "Loan Type": "Home Loan Pro",
+              "Outstanding Amount": "₹45,20,000",
+              "Monthly EMI": "₹42,500"
+            },
+            "fullDetails": {
+              "title": "Loans",
+              "hero": "rewards_hero.png",
+              "tag": "Active",
+              "tagClass": "tag-normal",
+              "sections": [
+                {
+                  "name": "Loan Structure",
+                  "fields": {
+                    "Loan Account Number": "LN-701023456",
+                    "Loan Type": "Home Loan Pro",
+                    "Outstanding Amount": "₹45,20,000",
+                    "Sanctioned Amount": "₹60,00,000",
+                    "Interest Rate Mode": "8.5% Floating Rate"
+                  }
+                },
+                {
+                  "name": "Repayment Details",
+                  "fields": {
+                    "Equated Monthly EMI": "₹42,500",
+                    "Loan Tenure": "14 Years Remaining (originally 20)",
+                    "Next Due Date": "05-Jul-2026",
+                    "Collateral Registered": "Residential Flat - Thrissur",
+                    "Co-Applicant": "Sarah Jenkins"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Car Loan",
+            "number": "LN-504098271",
+            "amount": "₹6,80,000",
+            "status": "Active",
+            "details": {
+              "Loan Account Number": "LN-504098271",
+              "Loan Type": "Car Loan",
+              "Outstanding Amount": "₹6,80,000",
+              "Monthly EMI": "₹15,200"
+            },
+            "fullDetails": {
+              "title": "Loans",
+              "hero": "rewards_hero.png",
+              "tag": "Active",
+              "tagClass": "tag-normal",
+              "sections": [
+                {
+                  "name": "Loan Structure",
+                  "fields": {
+                    "Loan Account Number": "LN-504098271",
+                    "Loan Type": "Car Loan",
+                    "Outstanding Amount": "₹6,80,000",
+                    "Sanctioned Amount": "₹9,50,000",
+                    "Interest Rate Mode": "9.2% Fixed Rate"
+                  }
+                },
+                {
+                  "name": "Repayment Details",
+                  "fields": {
+                    "Equated Monthly EMI": "₹15,200",
+                    "Loan Tenure": "3 Years Remaining",
+                    "Next Due Date": "10-Jul-2026",
+                    "Collateral Registered": "Vehicle Hypothecated - BMW 3 Series",
+                    "Co-Applicant": "None"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "liabilities": {
+        "subcategoriesCount": 3,
+        "accountsCount": 4,
+        "accounts": [
+          {
+            "name": "Savings Max Account",
+            "number": "50100123456789",
+            "amount": "₹1,85,000",
+            "status": "Active",
+            "details": {
+              "Account Number": "50100123456789",
+              "Account Type": "Savings Max Account",
+              "Account Status": "Active",
+              "Interest Rate": "3.5% p.a.",
+              "Available Balance": "₹1,85,000"
+            },
+            "fullDetails": {
+              "title": "CASA Details",
+              "hero": "personal_hero.png",
+              "tag": "Active",
+              "tagClass": "tag-normal",
+              "sections": [
+                {
+                  "name": "Account Specifications",
+                  "fields": {
+                    "Account Number": "50100123456789",
+                    "Account Type": "Savings Max Account",
+                    "Account Status": "Active",
+                    "Interest Rate": "3.5% p.a.",
+                    "Currency Code": "INR (₹)"
+                  }
+                },
+                {
+                  "name": "Balances & Limits",
+                  "fields": {
+                    "Available Balance": "₹1,85,000",
+                    "Uncleared Balance": "₹0",
+                    "Minimum Balance Required": "₹10,000"
+                  }
+                },
+                {
+                  "name": "Administrative Details",
+                  "fields": {
+                    "Home Branch": "Thrissur Main",
+                    "Opening Date": "12-Apr-2018",
+                    "Nominee Registry": "Registered"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Premium Checking Account",
+            "number": "50200987654321",
+            "amount": "$45,000",
+            "status": "Active",
+            "details": {
+              "Account Number": "50200987654321",
+              "Account Type": "Premium Checking Account",
+              "Account Status": "Active",
+              "Interest Rate": "1.25% p.a.",
+              "Available Balance": "$45,000"
+            },
+            "fullDetails": {
+              "title": "CASA Details",
+              "hero": "personal_hero.png",
+              "tag": "Active",
+              "tagClass": "tag-normal",
+              "sections": [
+                {
+                  "name": "Account Specifications",
+                  "fields": {
+                    "Account Number": "50200987654321",
+                    "Account Type": "Premium Checking Account",
+                    "Account Status": "Active",
+                    "Interest Rate": "1.25% p.a.",
+                    "Currency Code": "USD ($)"
+                  }
+                },
+                {
+                  "name": "Balances & Limits",
+                  "fields": {
+                    "Available Balance": "$45,000",
+                    "Uncleared Balance": "$1,200",
+                    "Minimum Balance Required": "$5,000"
+                  }
+                },
+                {
+                  "name": "Administrative Details",
+                  "fields": {
+                    "Home Branch": "New York Corporate",
+                    "Opening Date": "20-Jan-2020",
+                    "Nominee Registry": "Registered"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Cumulative Fixed Deposit",
+            "number": "FD-9080123456",
+            "amount": "₹5,00,000",
+            "status": "Active",
+            "details": {
+              "Deposit Number": "FD-9080123456",
+              "Deposit Type": "Cumulative Fixed Deposit",
+              "Deposit Amount": "₹5,00,000",
+              "Interest Rate": "7.1% p.a.",
+              "Maturity Date": "15-Dec-2028"
+            },
+            "fullDetails": {
+              "title": "CASA Deposits",
+              "hero": "invest_hero.png",
+              "tag": "Active",
+              "tagClass": "tag-normal",
+              "sections": [
+                {
+                  "name": "Deposit Terms",
+                  "fields": {
+                    "Deposit Number": "FD-9080123456",
+                    "Deposit Type": "Cumulative Fixed Deposit",
+                    "Deposit Amount": "₹5,00,000",
+                    "Interest Rate": "7.1% p.a.",
+                    "Maturity Date": "15-Dec-2028"
+                  }
+                },
+                {
+                  "name": "Payout & Actions",
+                  "fields": {
+                    "Maturity Amount": "₹6,85,000",
+                    "Auto Renewal Option": "Renew Principal + Interest",
+                    "Nominee Name": "Registered",
+                    "Interest Payout Freq": "At Maturity",
+                    "Current Status": "Active"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "Digital Gold Saver",
+            "number": "GL-1002003",
+            "amount": "₹16,25,000",
+            "status": "Active",
+            "details": {
+              "Account Number": "GL-1002003",
+              "Account Type": "Digital Gold Saver",
+              "Gold Weight": "250 grams",
+              "Current Value": "₹16,25,000",
+              "Storage Location": "Central Safe Vault"
+            },
+            "fullDetails": {
+              "title": "Gold Accounts",
+              "hero": "lifestyle_hero.png",
+              "tag": "Active",
+              "tagClass": "tag-normal",
+              "sections": [
+                {
+                  "name": "Metal Account Details",
+                  "fields": {
+                    "Account Number": "GL-1002003",
+                    "Account Type": "Digital Gold Saver",
+                    "Gold Weight (grams)": "250 grams",
+                    "Current Value": "₹16,25,000",
+                    "Gold Purity": "24 Karat (99.9%)"
+                  }
+                },
+                {
+                  "name": "Vault Storage & Admin",
+                  "fields": {
+                    "Storage Location": "Central Safe Vault",
+                    "Open Date": "15-Aug-2022",
+                    "Vault Fee Status": "Paid (Annual)",
+                    "Insurance Value": "₹18,00,000"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "valueAdded": {
+        "subcategoriesCount": 1,
+        "accountsCount": 1,
+        "accounts": [
+          {
+            "name": "Medium Vault Locker",
+            "number": "LK-402",
+            "amount": "Allocated",
+            "status": "Active",
+            "details": {
+              "Locker Number": "LK-402",
+              "Locker Type": "Medium Vault Locker (Type B)",
+              "Allocation Status": "Allocated & Active"
+            },
+            "fullDetails": {
+              "title": "Locker Details",
+              "hero": "security_hero.png",
+              "tag": "Active",
+              "tagClass": "tag-normal",
+              "sections": [
+                {
+                  "name": "Vault Identification",
+                  "fields": {
+                    "Locker Number": "LK-402",
+                    "Locker Type": "Medium Vault Locker (Type B)",
+                    "Allocation Status": "Allocated & Active",
+                    "Key ID Assigned": "KEY-00921-X"
+                  }
+                },
+                {
+                  "name": "Lease Specifications",
+                  "fields": {
+                    "Home Branch": "Thrissur Main Vault Room",
+                    "Rent Payment Frequency": "Annual",
+                    "Next Rent Due Date": "01-Jan-2027",
+                    "Last Safe Access Date": "12-Jun-2026 (14:35)",
+                    "Registered Nominee": "Registered"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "loans": [
+    {
+      "customer": "NX-4829-0055",
+      "type": "Loans",
+      "name": "Home Loan Pro",
+      "number": "LN-701023456",
+      "amount": "₹45,20,000",
+      "status": "Active",
+      "details": {
+        "Loan Account Number": "LN-701023456",
+        "Loan Type": "Home Loan Pro",
+        "Outstanding Amount": "₹45,20,000",
+        "Monthly EMI": "₹42,500"
+      },
+      "fullDetails": {
+        "title": "Loans",
+        "hero": "rewards_hero.png",
+        "tag": "Active",
+        "tagClass": "tag-normal",
+        "sections": [
+          {
+            "name": "Loan Structure",
+            "fields": {
+              "Loan Account Number": "LN-701023456",
+              "Loan Type": "Home Loan Pro",
+              "Outstanding Amount": "₹45,20,000",
+              "Sanctioned Amount": "₹60,00,000",
+              "Interest Rate Mode": "8.5% Floating Rate"
+            }
+          },
+          {
+            "name": "Repayment Details",
+            "fields": {
+              "Equated Monthly EMI": "₹42,500",
+              "Loan Tenure": "14 Years Remaining (originally 20)",
+              "Next Due Date": "05-Jul-2026",
+              "Collateral Registered": "Residential Flat - Thrissur",
+              "Co-Applicant": "Sarah Jenkins"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "customer": "NX-4829-0055",
+      "type": "Loans",
+      "name": "Car Loan",
+      "number": "LN-504098271",
+      "amount": "₹6,80,000",
+      "status": "Active",
+      "details": {
+        "Loan Account Number": "LN-504098271",
+        "Loan Type": "Car Loan",
+        "Outstanding Amount": "₹6,80,000",
+        "Monthly EMI": "₹15,200"
+      },
+      "fullDetails": {
+        "title": "Loans",
+        "hero": "rewards_hero.png",
+        "tag": "Active",
+        "tagClass": "tag-normal",
+        "sections": [
+          {
+            "name": "Loan Structure",
+            "fields": {
+              "Loan Account Number": "LN-504098271",
+              "Loan Type": "Car Loan",
+              "Outstanding Amount": "₹6,80,000",
+              "Sanctioned Amount": "₹9,50,000",
+              "Interest Rate Mode": "9.2% Fixed Rate"
+            }
+          },
+          {
+            "name": "Repayment Details",
+            "fields": {
+              "Equated Monthly EMI": "₹15,200",
+              "Loan Tenure": "3 Years Remaining",
+              "Next Due Date": "10-Jul-2026",
+              "Collateral Registered": "Vehicle Hypothecated - BMW 3 Series",
+              "Co-Applicant": "None"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "casaDetails": [
+    {
+      "customer": "NX-4829-0055",
+      "type": "CASA Details",
+      "name": "Savings Max Account",
+      "number": "50100123456789",
+      "amount": "₹1,85,000",
+      "status": "Active",
+      "details": {
+        "Account Number": "50100123456789",
+        "Account Type": "Savings Max Account",
+        "Account Status": "Active",
+        "Interest Rate": "3.5% p.a.",
+        "Available Balance": "₹1,85,000"
+      },
+      "fullDetails": {
+        "title": "CASA Details",
+        "hero": "personal_hero.png",
+        "tag": "Active",
+        "tagClass": "tag-normal",
+        "sections": [
+          {
+            "name": "Account Specifications",
+            "fields": {
+              "Account Number": "50100123456789",
+              "Account Type": "Savings Max Account",
+              "Account Status": "Active",
+              "Interest Rate": "3.5% p.a.",
+              "Currency Code": "INR (₹)"
+            }
+          },
+          {
+            "name": "Balances & Limits",
+            "fields": {
+              "Available Balance": "₹1,85,000",
+              "Uncleared Balance": "₹0",
+              "Minimum Balance Required": "₹10,000"
+            }
+          },
+          {
+            "name": "Administrative Details",
+            "fields": {
+              "Home Branch": "Thrissur Main",
+              "Opening Date": "12-Apr-2018",
+              "Nominee Registry": "Registered"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "customer": "NX-4829-0055",
+      "type": "CASA Details",
+      "name": "Premium Checking Account",
+      "number": "50200987654321",
+      "amount": "$45,000",
+      "status": "Active",
+      "details": {
+        "Account Number": "50200987654321",
+        "Account Type": "Premium Checking Account",
+        "Account Status": "Active",
+        "Interest Rate": "1.25% p.a.",
+        "Available Balance": "$45,000"
+      },
+      "fullDetails": {
+        "title": "CASA Details",
+        "hero": "personal_hero.png",
+        "tag": "Active",
+        "tagClass": "tag-normal",
+        "sections": [
+          {
+            "name": "Account Specifications",
+            "fields": {
+              "Account Number": "50200987654321",
+              "Account Type": "Premium Checking Account",
+              "Account Status": "Active",
+              "Interest Rate": "1.25% p.a.",
+              "Currency Code": "USD ($)"
+            }
+          },
+          {
+            "name": "Balances & Limits",
+            "fields": {
+              "Available Balance": "$45,000",
+              "Uncleared Balance": "$1,200",
+              "Minimum Balance Required": "$5,000"
+            }
+          },
+          {
+            "name": "Administrative Details",
+            "fields": {
+              "Home Branch": "New York Corporate",
+              "Opening Date": "20-Jan-2020",
+              "Nominee Registry": "Registered"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "casaDeposits": [
+    {
+      "customer": "NX-4829-0055",
+      "type": "CASA Deposits",
+      "name": "Cumulative Fixed Deposit",
+      "number": "FD-9080123456",
+      "amount": "₹5,00,000",
+      "status": "Active",
+      "details": {
+        "Deposit Number": "FD-9080123456",
+        "Deposit Type": "Cumulative Fixed Deposit",
+        "Deposit Amount": "₹5,00,000",
+        "Interest Rate": "7.1% p.a.",
+        "Maturity Date": "15-Dec-2028"
+      },
+      "fullDetails": {
+        "title": "CASA Deposits",
+        "hero": "invest_hero.png",
+        "tag": "Active",
+        "tagClass": "tag-normal",
+        "sections": [
+          {
+            "name": "Deposit Terms",
+            "fields": {
+              "Deposit Number": "FD-9080123456",
+              "Deposit Type": "Cumulative Fixed Deposit",
+              "Deposit Amount": "₹5,00,000",
+              "Interest Rate": "7.1% p.a.",
+              "Maturity Date": "15-Dec-2028"
+            }
+          },
+          {
+            "name": "Payout & Actions",
+            "fields": {
+              "Maturity Amount": "₹6,85,000",
+              "Auto Renewal Option": "Renew Principal + Interest",
+              "Nominee Name": "Registered",
+              "Interest Payout Freq": "At Maturity",
+              "Current Status": "Active"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "goldAccounts": [
+    {
+      "customer": "NX-4829-0055",
+      "type": "Gold Accounts",
+      "name": "Digital Gold Saver",
+      "number": "GL-1002003",
+      "amount": "₹16,25,000",
+      "status": "Active",
+      "details": {
+        "Account Number": "GL-1002003",
+        "Account Type": "Digital Gold Saver",
+        "Gold Weight": "250 grams",
+        "Current Value": "₹16,25,000",
+        "Storage Location": "Central Safe Vault"
+      },
+      "fullDetails": {
+        "title": "Gold Accounts",
+        "hero": "lifestyle_hero.png",
+        "tag": "Active",
+        "tagClass": "tag-normal",
+        "sections": [
+          {
+            "name": "Metal Account Details",
+            "fields": {
+              "Account Number": "GL-1002003",
+              "Account Type": "Digital Gold Saver",
+              "Gold Weight (grams)": "250 grams",
+              "Current Value": "₹16,25,000",
+              "Gold Purity": "24 Karat (99.9%)"
+            }
+          },
+          {
+            "name": "Vault Storage & Admin",
+            "fields": {
+              "Storage Location": "Central Safe Vault",
+              "Open Date": "15-Aug-2022",
+              "Vault Fee Status": "Paid (Annual)",
+              "Insurance Value": "₹18,00,000"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "locker": [
+    {
+      "customer": "NX-4829-0055",
+      "type": "Locker Details",
+      "name": "Medium Vault Locker",
+      "number": "LK-402",
+      "amount": "Allocated",
+      "status": "Active",
+      "details": {
+        "Locker Number": "LK-402",
+        "Locker Type": "Medium Vault Locker (Type B)",
+        "Allocation Status": "Allocated & Active"
+      },
+      "fullDetails": {
+        "title": "Locker Details",
+        "hero": "security_hero.png",
+        "tag": "Active",
+        "tagClass": "tag-normal",
+        "sections": [
+          {
+            "name": "Vault Identification",
+            "fields": {
+              "Locker Number": "LK-402",
+              "Locker Type": "Medium Vault Locker (Type B)",
+              "Allocation Status": "Allocated & Active",
+              "Key ID Assigned": "KEY-00921-X"
+            }
+          },
+          {
+            "name": "Lease Specifications",
+            "fields": {
+              "Home Branch": "Thrissur Main Vault Room",
+              "Rent Payment Frequency": "Annual",
+              "Next Rent Due Date": "01-Jan-2027",
+              "Last Safe Access Date": "12-Jun-2026 (14:35)",
+              "Registered Nominee": "Registered"
+            }
+          }
+        ]
+      }
+    }
   ]
 }
