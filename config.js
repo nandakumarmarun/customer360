@@ -14,7 +14,13 @@ window.API_CONFIG = {
     LEADS: "/leads",
     CASES: "/cases",
     TOUR: "/tour",
-    TOUR_TRACK: "/api/tour/track"
+    TOUR_TRACK: "/api/tour/track",
+    HOLDINGS: "/holdings",
+    HOLDINGS_LOANS: "/loans",
+    HOLDINGS_CASA: "/casaDetails",
+    HOLDINGS_DEPOSITS: "/casaDeposits",
+    HOLDINGS_GOLD: "/goldAccounts",
+    HOLDINGS_LOCKER: "/locker"
   },
 
   // Grouped Query Parameter keys used by backend APIs
@@ -61,3 +67,38 @@ window.CARD_CONFIG = {
     modalId: "modal-kyc"
   }
 };
+
+/**
+ * Maps category landing grid cards and explorer subcategory tabs for Holdings.
+ */
+window.HOLDING_CONFIG = [
+  {
+    id: "assets",
+    title: "Assets",
+    icon: "🏦",
+    apiKey: "assets",
+    tabs: [
+      { id: "loans", title: "Loans", icon: "🏠", matchType: "Loans", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOANS }
+    ]
+  },
+  {
+    id: "liabilities",
+    title: "Liabilities",
+    icon: "📉",
+    apiKey: "liabilities",
+    tabs: [
+      { id: "casaDetails", title: "CASA", icon: "💳", matchType: "CASA Details", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_CASA },
+      { id: "casaDeposits", title: "DEPOSITS", icon: "📈", matchType: "CASA Deposits", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_DEPOSITS },
+      { id: "goldAccounts", title: "Gold Accounts", icon: "🪙", matchType: "Gold Accounts", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_GOLD }
+    ]
+  },
+  {
+    id: "valueAdded",
+    title: "Value Added Services",
+    icon: "🌟",
+    apiKey: "valueAdded",
+    tabs: [
+      { id: "locker", title: "Locker", icon: "🔒", matchType: "Locker Details", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOCKER }
+    ]
+  }
+];
