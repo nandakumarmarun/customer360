@@ -10,11 +10,29 @@
   let holdingsData = null;
   let headerRestored = true;
 
-  // Get active Customer ID from dashboard header DOM
+  // Helper for dynamic field mapping fallback in case window.fieldName is not loaded
+  const fName = (window.fieldName || window.fieldName2 || function(k) { return k; });
+
+  // Get active Customer ID from dashboard header DOM or global storage
   function getCustomerID() {
+    if (window.ParamsData && window.ParamsData.customerId) {
+      return window.ParamsData.customerId;
+    }
     const headerText = $(".header-id").text() || "";
     const match = headerText.match(/CID\s*·\s*([\w-]+)/i);
     return match ? match[1].trim() : "NX-4829-0055"; // Default fallback
+  }
+
+  // Subscribe to customer ID changes
+  if (window.ParamsData) {
+    window.ParamsData.subscribe('customerId', function (newCid) {
+      currentCustomerId = newCid;
+      // If Holdings module is currently open and active in the DOM, reload holdings
+      const $header = $(".qm-header-inline");
+      if ($header.length && $header.hasClass("holdings-active")) {
+        loadHoldings();
+      }
+    });
   }
 
   // ── CUSTOM HEADER RENDERING ──
@@ -75,9 +93,10 @@
 
           // Find the customer's holdings record
           let record = null;
+          const custKey = fName("customerId");
           if (Array.isArray(response)) {
-            record = response.find(h => h.customer === currentCustomerId || h.id === currentCustomerId);
-          } else if (response && (response.customer === currentCustomerId || response.id === currentCustomerId)) {
+            record = response.find(h => h[custKey] === currentCustomerId || h.id === currentCustomerId);
+          } else if (response && (response[custKey] === currentCustomerId || response.id === currentCustomerId)) {
             record = response;
           }
 
@@ -284,7 +303,9 @@
       }
 
       const endpoint = activeTab.endpoint;
-      const params = { customer: currentCustomerId };
+      const custKey = fName("customerId");
+      const params = {};
+      params[custKey] = currentCustomerId;
 
       if (window.ApiService) {
         window.ApiService.get(
@@ -295,7 +316,7 @@
 
             let accounts = Array.isArray(response) ? response : [];
             // Filter locally just in case
-            accounts = accounts.filter(acc => acc.customer === currentCustomerId);
+            accounts = accounts.filter(acc => acc[custKey] === currentCustomerId);
             activeTabAccounts = accounts;
             renderAccounts(accounts);
           },
@@ -312,9 +333,11 @@
     }
 
     function filterActiveCategoryItems(query) {
+      const nameKey = fName("title");
+      const numberKey = fName("subtitle");
       const filtered = activeTabAccounts.filter(acc =>
-        acc.name.toLowerCase().includes(query) ||
-        acc.number.toLowerCase().includes(query)
+        (acc[nameKey] ? String(acc[nameKey]).toLowerCase().includes(query) : false) ||
+        (acc[numberKey] ? String(acc[numberKey]).toLowerCase().includes(query) : false)
       );
       selectedAccountIndex = 0;
       renderAccounts(filtered);
@@ -330,19 +353,25 @@
         return;
       }
 
+      const statusKey = fName("tag");
+      const nameKey = fName("title");
+      const numberKey = fName("subtitle");
+      const amountKey = fName("value");
+
       accountList.forEach((acc, idx) => {
         const isActive = selectedAccountIndex === idx;
-        const statusClass = acc.status.toLowerCase() === "active" ? "active" : "";
+        const statusVal = String(acc[statusKey] || "");
+        const statusClass = statusVal.toLowerCase() === "active" ? "active" : "";
 
         const $item = $(`
           <div class="account-item ${isActive ? 'active' : ''}" style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1px solid ${isActive ? 'var(--accent)' : 'var(--border)'}; border-radius: 12px; background: ${isActive ? 'var(--glass2)' : 'var(--glass)'}; transition: all 0.2s;">
             <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
-              <span class="acc-type" style="font-weight: 600; font-size: 13px; color: var(--text);">${acc.name}</span>
-              <span class="acc-num" style="font-family: monospace; font-size: 11px; color: var(--muted);">${acc.number}</span>
+              <span class="acc-type" style="font-weight: 600; font-size: 13px; color: var(--text);">${acc[nameKey] || ""}</span>
+              <span class="acc-num" style="font-family: monospace; font-size: 11px; color: var(--muted);">${acc[numberKey] || ""}</span>
             </div>
             <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
-              <span class="acc-bal" style="font-weight: 700; font-size: 13px; color: var(--text);">${acc.amount}</span>
-              <span class="acc-status ${statusClass}" style="font-size: 9px; padding: 2px 8px; border-radius: 10px; background: ${acc.status.toLowerCase() === 'active' ? 'rgba(74, 222, 128, 0.1)' : 'rgba(255, 165, 0, 0.1)'}; color: ${acc.status.toLowerCase() === 'active' ? '#4ade80' : 'orange'}; border: 1px solid ${acc.status.toLowerCase() === 'active' ? 'rgba(74, 222, 128, 0.2)' : 'rgba(255, 165, 0, 0.2)'};">${acc.status}</span>
+              <span class="acc-bal" style="font-weight: 700; font-size: 13px; color: var(--text);">${acc[amountKey] || ""}</span>
+              <span class="acc-status ${statusClass}" style="font-size: 9px; padding: 2px 8px; border-radius: 10px; background: ${statusVal.toLowerCase() === 'active' ? 'rgba(74, 222, 128, 0.1)' : 'rgba(255, 165, 0, 0.1)'}; color: ${statusVal.toLowerCase() === 'active' ? '#4ade80' : 'orange'}; border: 1px solid ${statusVal.toLowerCase() === 'active' ? 'rgba(74, 222, 128, 0.2)' : 'rgba(255, 165, 0, 0.2)'};">${statusVal}</span>
             </div>
           </div>
         `);
@@ -387,9 +416,13 @@
         return "🔹";
       }
 
+      const detailsKey = fName("details");
+      const fullDetailsKey = fName("fullDetails");
+      const fullDetails = acc[fullDetailsKey];
+
       // Check if fullDetails is available to render all sections, or fall back to single details
-      const sections = acc.fullDetails && acc.fullDetails.sections ? acc.fullDetails.sections : [
-        { name: "Account Details", fields: acc.details }
+      const sections = fullDetails && fullDetails.sections ? fullDetails.sections : [
+        { name: "Account Details", fields: acc[detailsKey] }
       ];
 
       let sectionsHtml = '';

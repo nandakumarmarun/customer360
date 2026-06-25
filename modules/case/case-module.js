@@ -464,11 +464,25 @@
     $("head").append($style);
   });
 
-  // Get current Customer ID from header
+  // Get current Customer ID from header or global storage
   function getCustomerID() {
+    if (window.ParamsData && window.ParamsData.customerId) {
+      return window.ParamsData.customerId;
+    }
     const headerText = $(".header-id").text() || "";
     const match = headerText.match(/CID\s*·\s*([\w-]+)/i);
     return match ? match[1].trim() : "NX-4829-0055"; // Default fallback
+  }
+
+  // Subscribe to customer ID changes
+  if (window.ParamsData) {
+    window.ParamsData.subscribe('customerId', function (newCid) {
+      // If Case module is currently open and active in the DOM, reload cases
+      const $header = $(".qm-header-inline");
+      if ($header.length && $header.hasClass("cases-active")) {
+        loadCases();
+      }
+    });
   }
 
   // ── CUSTOM HEADER RENDERING ──

@@ -619,6 +619,17 @@
     }
   }
 
+  // Subscribe to customer ID changes
+  if (window.ParamsData) {
+    window.ParamsData.subscribe('customerId', function (newCid) {
+      // If Leads module is currently open and active in the DOM, reload leads
+      const $header = $(".qm-header-inline");
+      if ($header.length && $header.hasClass("leads-active")) {
+        loadLeads();
+      }
+    });
+  }
+
   // ── LOAD LEADS DATA ──
   function loadLeads() {
     const $content = $("#qm-content");
@@ -631,11 +642,15 @@
       $content.html("<div style='text-align:center; padding: 40px;'>Loading...</div>");
     }
 
-    // Extract customer ID dynamically from the DOM header
+    // Extract customer ID dynamically from global storage or the DOM header
     let customerParam = "NX-4829-0055";
-    const cidText = $(".header-id").text();
-    if (cidText && cidText.includes("CID ·")) {
-      customerParam = cidText.split("CID ·")[1].trim();
+    if (window.ParamsData && window.ParamsData.customerId) {
+      customerParam = window.ParamsData.customerId;
+    } else {
+      const cidText = $(".header-id").text();
+      if (cidText && cidText.includes("CID ·")) {
+        customerParam = cidText.split("CID ·")[1].trim();
+      }
     }
 
     // Call ApiService to fetch
