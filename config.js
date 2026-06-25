@@ -6,7 +6,7 @@
 window.API_CONFIG = {
   BASE_URL: "http://localhost:3000",
   TIMEOUT_MS: 8000,
-  
+
   // Grouped Endpoints for easy modification
   ENDPOINTS: {
     CUSTOMER: "/customer",
@@ -28,6 +28,17 @@ window.API_CONFIG = {
     CUSTOMER_ID: "cid", // parameter used to identify customers in query string, e.g. ?cid=...
     CASE_CUSTOMER_ID: "customer", // parameter key cases API expects
     LEAD_CUSTOMER_ID: "customer"  // parameter key leads API expects
+  },
+
+  // Generic global layout field mapping
+  FIELD_MAPPING: {
+    customerId: "customer",
+    title: "name",
+    subtitle: "number",
+    value: "amount",
+    tag: "status",
+    details: "details",
+    fullDetails: "fullDetails"
   }
 };
 
@@ -102,3 +113,13 @@ window.HOLDING_CONFIG = [
     ]
   }
 ];
+
+// Scalable helper function to resolve any dynamic field name
+window.fieldName = function(key) {
+  const mapping = (window.API_CONFIG && window.API_CONFIG.FIELD_MAPPING) || {};
+  return mapping[key] || key;
+};
+
+// Expose alias fieldName2 for consistency/flexibility
+window.fieldName2 = window.fieldName;
+

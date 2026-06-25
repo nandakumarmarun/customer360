@@ -45,8 +45,11 @@
     };
   }
 
-  // Extract customer ID parameter from query string
-  function getCustomerIdFromUrl() {
+  // Extract customer ID parameter from global ParamsData store
+  function getCustomerId() {
+    if (window.ParamsData && window.ParamsData.customerId) {
+      return window.ParamsData.customerId;
+    }
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('cid') || 'NX-4829-0055'; // Fallback to default CID
   }
@@ -58,7 +61,7 @@
      */
     loadAll: function() {
       const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.CUSTOMER) || "/customer";
-      const cid = getCustomerIdFromUrl();
+      const cid = getCustomerId();
       const paramKey = (window.API_CONFIG && window.API_CONFIG.PARAMS && window.API_CONFIG.PARAMS.CUSTOMER_ID) || "cid";
       const params = {};
       params[paramKey] = cid;
@@ -126,5 +129,13 @@
   // Auto-init when jQuery + DOM are ready
   $(function() {
     DataLoader.loadAll();
+
+    // Subscribe to global customerId changes to reload the data reactively
+    if (window.ParamsData) {
+      window.ParamsData.subscribe('customerId', function(newCid) {
+        console.log(`[DataLoader] Customer ID changed to ${newCid}. Reloading data...`);
+        DataLoader.loadAll();
+      });
+    }
   });
 })();
