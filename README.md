@@ -70,3 +70,44 @@ window.ParamsData.myValue = "New Value";
 // Reading:
 console.log(window.ParamsData.myValue);
 ```
+
+---
+
+## 4. Dynamic Field Mapping System (Holdings Module)
+
+To decouple the UI component layer from direct database schema assumptions, the Portfolio Holdings module ([holding.js](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/modules/holding/holding.js)) uses a dynamic translation layer.
+
+### How It Works
+
+1. **Mapping Definitions**: Centralized mapping dictionaries are defined in [config.js](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/config.js) under `window.API_CONFIG.FIELD_MAPPING`:
+   ```javascript
+   FIELD_MAPPING: {
+     customerId: "customer",
+     title: "name",
+     subtitle: "number",
+     value: "amount",
+     tag: "status",
+     details: "details",
+     fullDetails: "fullDetails"
+   }
+   ```
+2. **Resolver Helper**: A globally accessible helper function is exposed:
+   ```javascript
+   window.fieldName = function(key) {
+     const mapping = (window.API_CONFIG && window.API_CONFIG.FIELD_MAPPING) || {};
+     return mapping[key] || key;
+   };
+   window.fieldName2 = window.fieldName; // Backup alias
+   ```
+3. **Usage in Module**: Inside the holdings module, a local reference `fName` is established:
+   ```javascript
+   const fName = (window.fieldName || window.fieldName2 || function(k) { return k; });
+   ```
+   All properties retrieved from the database API response are resolved via this helper before rendering or filtering:
+   - `acc[fName("title")]` resolves dynamically to `acc["name"]`
+   - `acc[fName("subtitle")]` resolves dynamically to `acc["number"]`
+   - `acc[fName("value")]` resolves dynamically to `acc["amount"]`
+   - `acc[fName("tag")]` resolves dynamically to `acc["status"]`
+   - `record[fName("customerId")]` resolves dynamically to `record["customer"]`
+
+This architecture allows backend schema key renaming to be fully handled within `config.js` without altering layout or rendering logic in the JavaScript modules.
