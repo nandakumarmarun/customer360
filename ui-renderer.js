@@ -156,7 +156,14 @@
       // Rating badge
       $('.profile-tier .rating-badge').text(`★ ${data.rating || 'A+'}`);
 
-
+      // Dynamic Profile Meta Badges
+      $('.profile-tier .meta-badge-status').html(`<strong>${data.gender || '-'}</strong>`);
+      $('.profile-tier .meta-badge-class').html(`<strong>${data.classification || '-'}</strong>`);
+      if (data.staff || data.isStaff) {
+        $('.profile-tier .meta-badge-staff').show().html(`<strong>Staff</strong>`);
+      } else {
+        $('.profile-tier .meta-badge-staff').hide();
+      }
 
       $('.pstat-row').each(function () {
         const stat = $(this).attr('data-stat');
@@ -167,9 +174,13 @@
           const colorClass = genderVal.toLowerCase() === 'male' ? 'male-color' : (genderVal.toLowerCase() === 'female' ? 'female-color' : '');
           $val.html(`<span class="gender-icon ${colorClass}">${genderIcon}</span> ${genderVal}`);
         } else if (stat === 'branch') {
-          $val.text(`${data.branchId} · ${data.branchName}`);
+          const valText = `${data.branchId} · ${data.branchName}`;
+          $val.text(valText);
+          $(this).attr('data-tooltip', `Branch: ${valText}`);
         } else if (stat === 'region') {
-          $val.text(`${data.regionId} · ${data.regionName}`);
+          const valText = `${data.regionId} · ${data.regionName}`;
+          $val.text(valText);
+          $(this).attr('data-tooltip', `Region: ${valText}`);
         } else if (stat === 'since') {
           $val.text(data.customerSince);
         } else if (stat === 'status') {
@@ -417,6 +428,60 @@
       // Force reflow
       $empty[0].offsetHeight;
       $empty.addClass('active');
+    },
+
+    /**
+     * Shows a beautiful fullscreen alert modal when no Customer ID is present.
+     */
+    showNoDataAlert: function () {
+      let $overlay = $('#no-data-modal-overlay');
+      if (!$overlay.length) {
+        // Inject custom styles if not already present
+        if (!$('#no-data-styles').length) {
+          const styles = `
+            @keyframes pulseGlow {
+              0% { transform: scale(1); box-shadow: 0 0 20px var(--glow-shadow-weak); }
+              50% { transform: scale(1.05); box-shadow: 0 0 35px var(--glow-shadow-medium); }
+              100% { transform: scale(1); box-shadow: 0 0 20px var(--glow-shadow-weak); }
+            }
+          `;
+          $('<style id="no-data-styles">').text(styles).appendTo('head');
+        }
+
+        const overlayHtml = `
+          <div id="no-data-modal-overlay" style="position: fixed; inset: 0; background: rgba(18, 20, 28, 0.88); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; align-items: center; justify-content: center; z-index: 99999; opacity: 0; pointer-events: none; transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);">
+            <div id="no-data-modal-card" style="width: 90%; max-width: 440px; background: var(--bg2); border: 1px solid var(--border); box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px var(--glow-shadow-weak); border-radius: var(--radius); padding: 40px 30px; text-align: center; transform: scale(0.8) translateY(-40px); transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;">
+              <div style="position: absolute; width: 150px; height: 150px; background: var(--accent); filter: blur(70px); top: -50px; left: calc(50% - 75px); border-radius: 50%; opacity: 0.35; z-index: 0; pointer-events: none;"></div>
+              
+              <div style="position: relative; z-index: 1;">
+                <div id="no-data-icon-wrap" style="width: 80px; height: 80px; margin: 0 auto 24px; background: rgba(170, 0, 0, 0.1); border: 2px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 38px; box-shadow: 0 0 20px var(--glow-shadow-medium); animation: pulseGlow 2s infinite ease-in-out;">
+                  📭
+                </div>
+                
+                <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 12px; color: var(--text); font-family: 'Outfit', sans-serif; letter-spacing: 0.5px; text-transform: uppercase;">
+                  No Data Present
+                </h2>
+                
+                <p style="font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 0; padding: 0 10px; font-family: 'Outfit', sans-serif;">
+                  An active customer ID was not specified. Please pass a valid customer identifier in the URL (e.g. <code>?customerId=NX-4829-0055</code>) to view profile details.
+                </p>
+              </div>
+            </div>
+          </div>
+        `;
+        $('body').append(overlayHtml);
+        $overlay = $('#no-data-modal-overlay');
+      }
+
+      // Show overlay with animation
+      setTimeout(() => {
+        $overlay.css({
+          'opacity': '1',
+          'pointer-events': 'auto'
+        });
+        $('#no-data-modal-card').css('transform', 'scale(1) translateY(0)');
+        document.body.style.overflow = 'hidden';
+      }, 100);
     }
   };
 

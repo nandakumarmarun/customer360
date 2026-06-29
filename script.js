@@ -244,21 +244,6 @@ function initStories() {
 function initThemeToggle() {
   const btn = document.getElementById('theme-toggle');
   const root = document.documentElement;
-
-  // Load saved theme, default to light
-  const savedTheme = localStorage.getItem('customer360-theme') || 'light';
-
-  // Apply light/dark mode classes on start
-  if (savedTheme === 'light') {
-    root.classList.add('light-mode');
-    document.body.classList.add('light-mode');
-  } else {
-    root.classList.remove('light-mode');
-    document.body.classList.remove('light-mode');
-  }
-
-  // Load saved color theme, default to red
-  const savedColorTheme = localStorage.getItem('customer360-color-theme') || 'red';
   const pickers = document.querySelectorAll('.theme-picker-btn');
 
   function applyColorTheme(theme) {
@@ -278,15 +263,37 @@ function initThemeToggle() {
     updateThreeTheme(root.classList.contains('light-mode'));
   }
 
-  applyColorTheme(savedColorTheme);
+  function applyThemeMode(mode) {
+    if (mode === 'light') {
+      root.classList.add('light-mode');
+      document.body.classList.add('light-mode');
+    } else {
+      root.classList.remove('light-mode');
+      document.body.classList.remove('light-mode');
+    }
+    // Update Three.js scene colors
+    updateThreeTheme(mode === 'light');
+  }
+
+  // Load theme from server via ThemeModule
+  if (window.ThemeModule) {
+    window.ThemeModule.getTheme(function (mode, color) {
+      applyThemeMode(mode);
+      applyColorTheme(color);
+    });
+  }
 
   // Bind click listeners for color theme pickers
   pickers.forEach(p => {
     p.addEventListener('click', (e) => {
       e.stopPropagation();
       const theme = p.dataset.theme;
-      localStorage.setItem('customer360-color-theme', theme);
       applyColorTheme(theme);
+      
+      const currentMode = root.classList.contains('light-mode') ? 'light' : 'dark';
+      if (window.ThemeModule) {
+        window.ThemeModule.saveTheme(currentMode, theme);
+      }
     });
   });
 
@@ -301,7 +308,12 @@ function initThemeToggle() {
   btn.addEventListener('click', () => {
     const isLight = root.classList.toggle('light-mode');
     document.body.classList.toggle('light-mode');
-    localStorage.setItem('customer360-theme', isLight ? 'light' : 'dark');
+    const currentMode = isLight ? 'light' : 'dark';
+    const currentColor = root.classList.contains('theme-neon') ? 'neon' : 'red';
+
+    if (window.ThemeModule) {
+      window.ThemeModule.saveTheme(currentMode, currentColor);
+    }
 
     // Wow Effect: Expansion Flash
     const flash = document.createElement('div');

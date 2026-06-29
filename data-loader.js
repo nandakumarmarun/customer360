@@ -45,24 +45,35 @@
     };
   }
 
-  // Extract customer ID parameter from global ParamsData store
-  function getCustomerId() {
-    if (window.ParamsData && window.ParamsData.customerId) {
-      return window.ParamsData.customerId;
-    }
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('cid') || 'NX-4829-0055'; // Fallback to default CID
-  }
-
   const DataLoader = {
     /**
      * Single API call — fetches everything at once and
      * distributes each section to the correct renderer.
      */
     loadAll: function() {
-      const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.CUSTOMER) || "/customer";
-      const cid = getCustomerId();
-      const paramKey = (window.API_CONFIG && window.API_CONFIG.PARAMS && window.API_CONFIG.PARAMS.CUSTOMER_ID) || "cid";
+      const endpoint = window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.CUSTOMER;
+      const cid = (window.ParamsData && window.ParamsData.getCustomerId) ? window.ParamsData.getCustomerId() : null;
+      if (!cid) {
+        console.warn("[DataLoader] No customer ID present. Hiding loading screen and showing error alert.");
+        const loadingScreen = document.getElementById('loading-screen');
+        if (loadingScreen) {
+          loadingScreen.style.transition = 'opacity 0.5s ease';
+          loadingScreen.style.opacity = '0';
+          setTimeout(() => {
+            loadingScreen.style.display = 'none';
+          }, 500);
+        }
+        const app = document.getElementById('app');
+        if (app) {
+          app.classList.remove('hidden');
+        }
+        if (window.UIRenderer && window.UIRenderer.showNoDataAlert) {
+          window.UIRenderer.showNoDataAlert();
+        }
+        return;
+      }
+
+      const paramKey = (window.API_CONFIG && window.API_CONFIG.PARAMS && window.API_CONFIG.PARAMS.CUSTOMER_ID) || "customerId";
       const params = {};
       params[paramKey] = cid;
 

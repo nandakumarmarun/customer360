@@ -1,6 +1,6 @@
 # Walkthrough - Customer 360 Enhancements
 
-We have successfully integrated a modern notification system and completed the visual and structural redesign of the Details Modal to match premium MNC bank standards.
+We have successfully integrated a modern notification system, redesigned the details modal to match premium MNC bank standards, consolidated the customer ID extraction logic, and implemented a fallback error modal for missing data.
 
 ---
 
@@ -43,20 +43,53 @@ The details modal features a unified layout consisting of a **Cinematic Banner H
 
 ---
 
-## 3. Verification Plan
+## 3. Consolidating Customer ID Extraction (Global `window.ParamsData.getCustomerId`)
+
+We have consolidated the `getCustomerId` logic into a single global helper within [paramsdata.js](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/paramsdata.js) and removed all local duplicates and DOM-parsing queries (`.header-id`).
+
+### Key Details:
+- **Exposed Globally**: `window.ParamsData.getCustomerId()` is the single source of truth for the active customer ID (supporting dynamic state, query parameters `?customerId=`, or returning `null` if no customer ID is specified).
+- **Removed Duplicate Code**:
+  - Removed local `getCustomerID` helper and the hardcoded fallback in [holding.js](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/modules/holding/holding.js).
+  - Removed local `getCustomerID` helper and the hardcoded fallback in [case-module.js](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/modules/case/case-module.js).
+  - Replaced the local DOM-parsing / local storage logic and the hardcoded fallback in [leads-module.js](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/modules/lead/leads-module.js).
+
+---
+
+## 4. "No Data Present" Animated Modal Alert
+
+If a user loads the application without providing a customer ID in the URL (and none is active in the state), the page will automatically display a premium, glassmorphic modal overlay instead of loading arbitrary default details.
+
+### Key Details:
+- **Backdrop and Locking**: A full-viewport backdrop (`backdrop-filter: blur(15px)`) locks the interface scroll state (`document.body.style.overflow = 'hidden'`) and overlays all scenes.
+- **Glassmorphic Card Alert**: Centered overlay dialog featuring a glowing aurora layer, a clean warning icon, and clear instructions.
+- **Entrance & Pulsating Animations**:
+  - The card animates in using a scale and slide transition (`scale(0.8) translateY(-40px)` -> `scale(1) translateY(0)`).
+  - The warning icon features a soft pulsating animation (`pulseGlow`) animating its glow shadow and scale.
+- **Clean Informational Alert**: The modal is now strictly informational, prompting the user to supply a valid `cid` parameter directly in the URL to explore the dashboard.
+
+---
+
+## 5. Spacing Optimization
+
+To improve visual balance and spacing density:
+- Reduced flex gap spacing in `.avatar-reveal-container` from `40px` to `16px`, bringing the avatar orb closer to the customer name in Scene 1.
+- Reduced flex gap spacing in `.header-left` from `16px` to `10px` for a tighter, cleaner header layout in Scene 2.
+
+---
+
+## 6. Verification Plan
 
 ### Manual Verification
 1. Ensure the mock api server is running:
    ```bash
    npx json-server --watch db.json --port 3000
    ```
-2. Open the page [index.html](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/index.html) in your browser.
-3. Click any category card (e.g., "Personal Information" or "Address Information").
-4. Verify that:
-   - The header displays the category avatar on the left, the labels in the middle, and the back button on the right.
-   - Interactive orbit particles (`#hero-particles`) float across the entire background area of the header banner.
-   - Information fields are arranged inside a structured grid separated by thin, clean dividers (vertical and horizontal borders).
-   - Emojis are inline right before labels (`👤 Full Name`). Values are rendered below labels.
-   - All cells are aligned perfectly, sharing uniform heights and paddings.
-   - Long fields span the full width of the grid.
-5. Click the "Back to Dashboard" button to dismiss the modal.
+2. Open the page [index.html](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/index.html) in your browser without any parameters (or with an empty `customerId` parameter).
+3. Verify that:
+   - The loading screen completes, then fades out.
+   - A beautiful glassmorphic modal alert "No Data Present" overlays the screen with a pulsating warning icon, indicating that a valid `customerId` query parameter must be supplied in the URL.
+   - Scrolling is locked and the user cannot interact with elements behind the backdrop.
+4. Now, navigate to [index.html?customerId=NX-4829-0055](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/index.html?customerId=NX-4829-0055) in the browser.
+5. Verify that the dashboard loads the customer data and displays the avatar close to the customer name in both the reveal screen and the header.
+6. Click any category card (e.g., "Personal Information" or "Address Information") to verify the premium grid details modal displays correctly.

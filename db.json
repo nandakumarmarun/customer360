@@ -39,7 +39,8 @@
       "rmName": "Ms. Priya Menon",
       "rmRole": "Assistant Manager",
       "rmPhone": "+91 98765 12345",
-      "tradeFinanceEnabled": true
+      "tradeFinanceEnabled": true,
+      "staff": true
     },
     "profile": {
       "card": {
@@ -1179,5 +1180,9 @@
         ]
       }
     }
-  ]
+  ],
+  "theme": {
+    "mode": "dark",
+    "color": "red"
+  }
 }

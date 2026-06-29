@@ -90,34 +90,47 @@
   function initThemeState() {
     const root = document.documentElement;
 
-    // Load saved settings
-    const savedTheme = localStorage.getItem('customer360-theme') || 'light';
-    const savedColorTheme = localStorage.getItem('customer360-color-theme') || 'red';
-
-    // Apply themes
-    if (savedTheme === 'light') {
-      root.classList.add('light-mode');
-      $('body').addClass('light-mode');
-    } else {
-      root.classList.remove('light-mode');
-      $('body').removeClass('light-mode');
+    function applyThemeMode(mode) {
+      if (mode === 'light') {
+        root.classList.add('light-mode');
+        $('body').addClass('light-mode');
+      } else {
+        root.classList.remove('light-mode');
+        $('body').removeClass('light-mode');
+      }
+      updateThreeTheme(mode === 'light');
     }
 
-    applyColorTheme(savedColorTheme);
+    // Load theme from server via ThemeModule
+    if (window.ThemeModule) {
+      window.ThemeModule.getTheme(function (mode, color) {
+        applyThemeMode(mode);
+        applyColorTheme(color);
+      });
+    }
 
     // Bind click listeners for color themes
     $('.theme-picker-btn').on('click', function(e) {
       e.stopPropagation();
       const theme = $(this).data('theme');
-      localStorage.setItem('customer360-color-theme', theme);
       applyColorTheme(theme);
+      
+      const currentMode = root.classList.contains('light-mode') ? 'light' : 'dark';
+      if (window.ThemeModule) {
+        window.ThemeModule.saveTheme(currentMode, theme);
+      }
     });
 
     // Theme light/dark toggle button click
     $('#theme-toggle').on('click', function() {
       const isLight = root.classList.toggle('light-mode');
       $('body').toggleClass('light-mode');
-      localStorage.setItem('customer360-theme', isLight ? 'light' : 'dark');
+      const currentMode = isLight ? 'light' : 'dark';
+      const currentColor = root.classList.contains('theme-neon') ? 'neon' : 'red';
+
+      if (window.ThemeModule) {
+        window.ThemeModule.saveTheme(currentMode, currentColor);
+      }
 
       // WOW effect: Expansion Flash circle matching script.js
       const btn = this;
@@ -349,7 +362,7 @@
 
     if (type === "cid") {
       // Redirect directly to Customer 360 page (index.html)
-      window.location.href = `../index.html?cid=${encodeURIComponent(inputVal)}`;
+      window.location.href = `../index.html?customerId=${encodeURIComponent(inputVal)}`;
     } else {
       // Stay on page and display results below directly
       currentSearchResults = window.CustomerSearchController.query(type, inputVal);
@@ -451,7 +464,7 @@
 
     paginatedList.forEach(item => {
       const statusClass = item.status.toLowerCase();
-      const profileUrl = `../index.html?cid=${encodeURIComponent(item.id)}`;
+      const profileUrl = `../index.html?customerId=${encodeURIComponent(item.id)}`;
       
       const rowHtml = `
         <tr>

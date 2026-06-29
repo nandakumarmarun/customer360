@@ -6,22 +6,14 @@
  */
 (function () {
   // Module State
-  let currentCustomerId = "NX-4829-0055";
+  let currentCustomerId = (window.ParamsData && window.ParamsData.getCustomerId) ? window.ParamsData.getCustomerId() : null;
   let holdingsData = null;
   let headerRestored = true;
 
   // Helper for dynamic field mapping fallback in case window.fieldName is not loaded
   const fName = (window.fieldName || window.fieldName2 || function(k) { return k; });
 
-  // Get active Customer ID from dashboard header DOM or global storage
-  function getCustomerID() {
-    if (window.ParamsData && window.ParamsData.customerId) {
-      return window.ParamsData.customerId;
-    }
-    const headerText = $(".header-id").text() || "";
-    const match = headerText.match(/CID\s*·\s*([\w-]+)/i);
-    return match ? match[1].trim() : "NX-4829-0055"; // Default fallback
-  }
+
 
   // Subscribe to customer ID changes
   if (window.ParamsData) {
@@ -67,13 +59,21 @@
     }
   }
 
-  // Fetch holdings data from API and render landing view
   function loadHoldings() {
     renderHoldingsHeader();
-    currentCustomerId = getCustomerID();
+    currentCustomerId = (window.ParamsData && window.ParamsData.getCustomerId) ? window.ParamsData.getCustomerId() : null;
 
     const $content = $("#qm-content");
     if (!$content.length) return;
+
+    if (!currentCustomerId) {
+      if (window.UIRenderer) {
+        window.UIRenderer.showEmptyState("#qm-content");
+      } else {
+        $content.html("<div style='text-align:center; padding: 40px;'>No active customer ID.</div>");
+      }
+      return;
+    }
 
     if (window.UIRenderer) {
       window.UIRenderer.showLoader("#qm-content");
@@ -81,7 +81,7 @@
       $content.html("<div style='text-align:center; padding: 40px;'>Loading Holdings...</div>");
     }
 
-    const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.HOLDINGS) || "/holdings";
+    const endpoint = window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.HOLDINGS;
     const params = { id: currentCustomerId };
 
     if (window.ApiService) {

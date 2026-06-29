@@ -28,6 +28,14 @@
     },
 
     /**
+     * Helper to retrieve active customer ID safely from store, URL parameter, or fallback default.
+     * @returns {string}
+     */
+    getCustomerId: function () {
+      return this.customerId || getQueryParam('customerId') || null;
+    },
+
+    /**
      * Set a parameter value and trigger any registered subscribers.
      * @param {string} key
      * @param {*} value
@@ -88,7 +96,7 @@
   window.ParamsData = ParamsData;
 
   // Initialize defaults and query parameters
-  const initialCustomerId = getQueryParam('cid') || 'NX-4829-0055';
+  const initialCustomerId = getQueryParam('customerId') || null;
   ParamsData.set('customerId', initialCustomerId);
 
   console.log(`[ParamsData] Global storage initialized. Customer ID: ${initialCustomerId}`);

@@ -464,15 +464,7 @@
     $("head").append($style);
   });
 
-  // Get current Customer ID from header or global storage
-  function getCustomerID() {
-    if (window.ParamsData && window.ParamsData.customerId) {
-      return window.ParamsData.customerId;
-    }
-    const headerText = $(".header-id").text() || "";
-    const match = headerText.match(/CID\s*·\s*([\w-]+)/i);
-    return match ? match[1].trim() : "NX-4829-0055"; // Default fallback
-  }
+
 
   // Subscribe to customer ID changes
   if (window.ParamsData) {
@@ -529,9 +521,17 @@
       $content.html("<div style='text-align:center; padding: 40px;'>Loading...</div>");
     }
 
-    const cid = getCustomerID();
-    const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.CASES) || "/cases";
-    const paramKey = (window.API_CONFIG && window.API_CONFIG.PARAMS && window.API_CONFIG.PARAMS.CASE_CUSTOMER_ID) || "customer";
+    const cid = (window.ParamsData && window.ParamsData.getCustomerId) ? window.ParamsData.getCustomerId() : null;
+    if (!cid) {
+      if (window.UIRenderer) {
+        window.UIRenderer.showEmptyState("#qm-content");
+      } else {
+        $content.html("<div style='text-align:center; padding: 40px;'>No active customer ID.</div>");
+      }
+      return;
+    }
+    const endpoint = window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.CASES;
+    const paramKey = (window.API_CONFIG && window.API_CONFIG.PARAMS && window.API_CONFIG.PARAMS.CUSTOMER_ID) || "customerId";
     const params = {};
     params[paramKey] = cid;
 

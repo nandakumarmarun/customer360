@@ -231,21 +231,25 @@
   <script src="../../config.js"></script>
   <script src="../../api-service.js"></script>
   <script>
-    // Adjust colors on theme load
-    const savedTheme = localStorage.getItem('customer360-theme') || 'light';
+    // Adjust colors on theme load from DB
     const root = document.documentElement;
-    if (savedTheme === 'light') {
-      root.classList.add('light-mode');
-      document.body.className = 'light-mode';
-    } else {
-      root.classList.remove('light-mode');
-      document.body.className = 'dark-mode';
-    }
-
-    const savedColorTheme = localStorage.getItem('customer360-color-theme') || 'red';
-    if (savedColorTheme === 'neon') {
-      root.classList.add('theme-neon');
-    }
+    fetch('http://localhost:3000/theme')
+      .then(res => res.json())
+      .then(data => {
+        if (data.mode === 'light') {
+          root.classList.add('light-mode');
+          document.body.className = 'light-mode';
+        } else {
+          root.classList.remove('light-mode');
+          document.body.className = 'dark-mode';
+        }
+        if (data.color === 'neon') {
+          root.classList.add('theme-neon');
+        } else {
+          root.classList.remove('theme-neon');
+        }
+      })
+      .catch(err => console.warn("Failed to fetch theme from DB on load:", err));
 
     // Get Lead ID from query parameter
     const urlParams = new URLSearchParams(window.location.search);
@@ -253,7 +257,7 @@
 
     if (leadId) {
       // Fetch data
-      const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.LEADS) || '/leads';
+      const endpoint = window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.LEADS;
       
       if (window.ApiService) {
         window.ApiService.get(

@@ -642,20 +642,20 @@
       $content.html("<div style='text-align:center; padding: 40px;'>Loading...</div>");
     }
 
-    // Extract customer ID dynamically from global storage or the DOM header
-    let customerParam = "NX-4829-0055";
-    if (window.ParamsData && window.ParamsData.customerId) {
-      customerParam = window.ParamsData.customerId;
-    } else {
-      const cidText = $(".header-id").text();
-      if (cidText && cidText.includes("CID ·")) {
-        customerParam = cidText.split("CID ·")[1].trim();
+    // Extract customer ID dynamically from global storage
+    const customerParam = (window.ParamsData && window.ParamsData.getCustomerId) ? window.ParamsData.getCustomerId() : null;
+    if (!customerParam) {
+      if (window.UIRenderer) {
+        window.UIRenderer.showEmptyState("#qm-content");
+      } else {
+        $content.html("<div style='text-align:center; padding: 40px;'>No active customer ID.</div>");
       }
+      return;
     }
 
     // Call ApiService to fetch
-    const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.LEADS) || "/leads";
-    const paramKey = (window.API_CONFIG && window.API_CONFIG.PARAMS && window.API_CONFIG.PARAMS.LEAD_CUSTOMER_ID) || "customer";
+    const endpoint = window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.LEADS;
+    const paramKey = (window.API_CONFIG && window.API_CONFIG.PARAMS && window.API_CONFIG.PARAMS.CUSTOMER_ID) || "customerId";
     const params = {};
     params[paramKey] = customerParam;
 

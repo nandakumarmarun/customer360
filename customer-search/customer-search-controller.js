@@ -8,7 +8,7 @@
   const CustomerSearchController = {
     // Load customer records via AJAX call using the ApiService integration layer
     loadCustomers: function(successCallback, errorCallback) {
-      const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.CUSTOMERS) || "/customers";
+      const endpoint = window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.CUSTOMERS;
       if (window.ApiService) {
         window.ApiService.get(
           endpoint,

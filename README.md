@@ -12,7 +12,7 @@ The global store implemented in [paramsdata.js](file:///c:/Users/Lenovo/Desktop/
 - **Set & Get**: Variables are mutated and accessed via explicit `set(key, val)` and `get(key)` methods.
 - **Reactive Subscriptions**: Other modules subscribe to parameter changes via `subscribe(key, callback)`. When a value changes, all registered callbacks for that key are executed immediately.
 - **Convenient Property Accessors**: Common parameters (like `customerId`) use ES6 getters/setters so that developers can use standard property assignments (e.g. `window.ParamsData.customerId = 'NX-4829-0056'`).
-- **URL Parameter Extraction**: Auto-extracts values from query params (e.g. `?cid=...`) at initialization to sync URL state with the application.
+- **URL Parameter Extraction**: Auto-extracts values from query params (e.g. `?customerId=...`) at initialization to sync URL state with the application.
 
 ---
 

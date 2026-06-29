@@ -4,19 +4,24 @@
 <head>
   <script>
     (function () {
-      const savedTheme = localStorage.getItem('customer360-theme') || 'light';
       const root = document.documentElement;
-      if (savedTheme === 'light') {
-        root.classList.add('light-mode');
-      } else {
-        root.classList.remove('light-mode');
-      }
-      const savedColorTheme = localStorage.getItem('customer360-color-theme') || 'red';
-      if (savedColorTheme === 'neon') {
-        root.classList.add('theme-neon');
-      } else {
-        root.classList.remove('theme-neon');
-      }
+      fetch('http://localhost:3000/theme')
+        .then(res => res.json())
+        .then(data => {
+          if (data.mode === 'light') {
+            root.classList.add('light-mode');
+            document.body && document.body.classList.add('light-mode');
+          } else {
+            root.classList.remove('light-mode');
+            document.body && document.body.classList.remove('light-mode');
+          }
+          if (data.color === 'neon') {
+            root.classList.add('theme-neon');
+          } else {
+            root.classList.remove('theme-neon');
+          }
+        })
+        .catch(err => console.warn("Failed to fetch theme from DB on load:", err));
     })();
   </script>
   <meta charset="UTF-8" />
@@ -284,7 +289,7 @@
       <div class="detail-content" style="display: none;">
         <div class="detail-header">
           <div class="detail-title-group">
-            <h1 id="detail-case-id">CS-XXXX-XX</h1>
+            <h1 id="detail-case-id">-</h1>
             <span>Detailed Investigation File</span>
           </div>
           <button onclick="closeOrBack()" class="close-btn">Close View</button>
@@ -296,19 +301,19 @@
         <div class="detail-grid">
           <div class="detail-item">
             <span class="detail-lbl">Case Type</span>
-            <span class="detail-val" id="detail-case-type">Complaint</span>
+            <span class="detail-val" id="detail-case-type">-</span>
           </div>
           <div class="detail-item">
             <span class="detail-lbl">Request Type</span>
-            <span class="detail-val" id="detail-request-type">Credit Card Dispute</span>
+            <span class="detail-val" id="detail-request-type">-</span>
           </div>
           <div class="detail-item">
             <span class="detail-lbl">Current Status</span>
-            <span class="detail-val" id="detail-status">In Progress</span>
+            <span class="detail-val" id="detail-status">-</span>
           </div>
           <div class="detail-item">
             <span class="detail-lbl">Created Date</span>
-            <span class="detail-val" id="detail-created-date">2026-06-18</span>
+            <span class="detail-val" id="detail-created-date">-</span>
           </div>
         </div>
 
@@ -372,7 +377,7 @@
       UIRenderer.showLoader('.detail-card');
       $('.detail-content').hide();
 
-      const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.CASES) || '/cases';
+      const endpoint = window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.CASES;
       ApiService.get(
         endpoint,
         function (response) {

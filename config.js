@@ -20,14 +20,13 @@ window.API_CONFIG = {
     HOLDINGS_CASA: "/casaDetails",
     HOLDINGS_DEPOSITS: "/casaDeposits",
     HOLDINGS_GOLD: "/goldAccounts",
-    HOLDINGS_LOCKER: "/locker"
+    HOLDINGS_LOCKER: "/locker",
+    THEME: "/theme"
   },
 
   // Grouped Query Parameter keys used by backend APIs
   PARAMS: {
-    CUSTOMER_ID: "cid", // parameter used to identify customers in query string, e.g. ?cid=...
-    CASE_CUSTOMER_ID: "customer", // parameter key cases API expects
-    LEAD_CUSTOMER_ID: "customer"  // parameter key leads API expects
+    CUSTOMER_ID: "customerId" // parameter key used to identify customers (in query string and API requests)
   },
 
   // Generic global layout field mapping
