@@ -3,6 +3,7 @@
  * Handles Three.js background, theme updates, UI layout actions, sorting, and pagination.
  */
 (function() {
+  console.log("customer-search.js IIFE executed");
   // Global View State
   let threeObjects = {};
   let currentSearchResults = [];
@@ -14,8 +15,15 @@
   let preloaderFinished = false;
   let loadError = null;
 
+  // Global event delegation (only runs once when the script is loaded)
+  if (!window.CustomerSearchEventsBound) {
+    window.CustomerSearchEventsBound = true;
+    bindDelegatedEvents();
+  }
+
   /* ====== INITIALIZATION ====== */
   $(function() {
+    console.log("customer-search.js document ready executed");
     initThreeBackground();
     initThemeState();
     
@@ -44,27 +52,8 @@
       }
     }
 
-    // 1. Asynchronously load the customer database from the API
-    if (window.CustomerSearchController) {
-      window.CustomerSearchController.loadCustomers(
-        function() {
-          dataLoaded = true;
-          if (preloaderFinished) {
-            onBothCompleted();
-          }
-        },
-        function(errorMsg) {
-          dataLoaded = true;
-          loadError = errorMsg;
-          if (preloaderFinished) {
-            onBothCompleted();
-          }
-        }
-      );
-    } else {
-      dataLoaded = true;
-      loadError = "Controller not loaded";
-    }
+    // Do not load all customers initially
+    dataLoaded = true;
 
     // 2. Trigger page load preloader
     if (window.Customer360Preloader) {
@@ -80,10 +69,6 @@
         onBothCompleted();
       }
     }
-
-    bindSearchEvents();
-    bindFilterEvents();
-    bindPaginationEvents();
   });
 
   /* ====== THEME & COLOR PICKER TOGGLE ====== */
@@ -103,62 +88,13 @@
 
     // Load theme from server via ThemeModule
     if (window.ThemeModule) {
+      console.log("Calling getTheme from customer-search.js");
       window.ThemeModule.getTheme(function (mode, color) {
+        console.log("getTheme callback received:", mode, color);
         applyThemeMode(mode);
         applyColorTheme(color);
       });
     }
-
-    // Bind click listeners for color themes
-    $('.theme-picker-btn').on('click', function(e) {
-      e.stopPropagation();
-      const theme = $(this).data('theme');
-      applyColorTheme(theme);
-      
-      const currentMode = root.classList.contains('light-mode') ? 'light' : 'dark';
-      if (window.ThemeModule) {
-        window.ThemeModule.saveTheme(currentMode, theme);
-      }
-    });
-
-    // Theme light/dark toggle button click
-    $('#theme-toggle').on('click', function() {
-      const isLight = root.classList.toggle('light-mode');
-      $('body').toggleClass('light-mode');
-      const currentMode = isLight ? 'light' : 'dark';
-      const currentColor = root.classList.contains('theme-neon') ? 'neon' : 'red';
-
-      if (window.ThemeModule) {
-        window.ThemeModule.saveTheme(currentMode, currentColor);
-      }
-
-      // WOW effect: Expansion Flash circle matching script.js
-      const btn = this;
-      const flash = $('<div style="position:fixed; width:10px; height:10px; background:var(--accent); border-radius:50%; z-index:10000; pointer-events:none;"></div>');
-      const rect = btn.getBoundingClientRect();
-      flash.css({
-        top: `${rect.top + 22}px`,
-        left: `${rect.left + 22}px`
-      });
-      $('body').append(flash);
-
-      if (typeof gsap !== 'undefined') {
-        gsap.to(flash[0], {
-          width: window.innerWidth * 3,
-          height: window.innerWidth * 3,
-          xPercent: -50,
-          yPercent: -50,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power2.out",
-          onComplete: () => flash.remove()
-        });
-      } else {
-        flash.remove();
-      }
-
-      updateThreeTheme(isLight);
-    });
 
     // Check Star Geo and apply colors
     const checkThree = setInterval(() => {
@@ -324,33 +260,6 @@
   }
 
   /* ====== SEARCH WORKFLOWS ====== */
-  function bindSearchEvents() {
-    // Dynamic placeholder switching based on selection
-    $('#search-type').on('change', function() {
-      const type = $(this).val();
-      const $input = $('#search-input');
-      
-      if (type === "cid") {
-        $input.attr("placeholder", "Enter Customer ID (e.g. NX-4829-0055)...");
-      } else if (type === "email") {
-        $input.attr("placeholder", "Enter Email address...");
-      } else if (type === "phone") {
-        $input.attr("placeholder", "Enter Phone Number...");
-      }
-    });
-
-    // Form submit listener
-    $('#search-btn').on('click', function() {
-      executeSearch();
-    });
-
-    $('#search-input').on('keypress', function(e) {
-      if (e.which === 13) {
-        executeSearch();
-      }
-    });
-  }
-
   function executeSearch() {
     const type = $('#search-type').val();
     const inputVal = $('#search-input').val().trim();
@@ -364,11 +273,67 @@
       // Redirect directly to Customer 360 page (index.html)
       window.location.href = `../index.html?customerId=${encodeURIComponent(inputVal)}`;
     } else {
-      // Stay on page and display results below directly
-      currentSearchResults = window.CustomerSearchController.query(type, inputVal);
-      currentPage = 1;
-      applyFiltersAndRenderTable();
-      
+      // Show loading preloader before starting the search
+      if (window.SearchPreloader) {
+        window.SearchPreloader.show(startApiQuery, 1200);
+      } else {
+        startApiQuery();
+      }
+    }
+
+    function startApiQuery() {
+      if (window.CustomerSearchController && window.CustomerSearchController.searchCustomers) {
+        // Show table container and clear previous loading error if any
+        loadError = null;
+        const $results = $('#results-card');
+        $results.addClass('visible');
+
+        // Put a loader or empty state in body during the API request
+        const $tbody = $('#results-tbody');
+        $tbody.html('<tr><td colspan="7" style="text-align: center; color: var(--muted); padding: 40px;">🔍 Fetching customer details...</td></tr>');
+        $('#table-container-div').show();
+        $('#results-overlay-div').hide();
+
+        window.CustomerSearchController.searchCustomers(
+          type,
+          inputVal,
+          function(response) {
+            // Map single details object response or array to currentSearchResults
+            if (response) {
+              const parseItem = (item) => ({
+                id: item.id || (item.summary && item.summary.cid) || "",
+                name: item.name || (item.summary && item.summary.name) || "",
+                email: item.email || (item.summary && item.summary.contactEmail) || "",
+                phone: item.phone || (item.summary && item.summary.contactPhone) || "",
+                status: item.status || (item.summary && item.summary.status) || "Active",
+                createdDate: item.createdDate || (item.summary && item.summary.customerSince) || ""
+              });
+
+              if (Array.isArray(response)) {
+                currentSearchResults = response.map(parseItem);
+              } else {
+                currentSearchResults = [parseItem(response)];
+              }
+            } else {
+              currentSearchResults = [];
+            }
+            
+            currentPage = 1;
+            applyFiltersAndRenderTable();
+            scrollToResults();
+          },
+          function(errorMsg) {
+            loadError = errorMsg;
+            currentSearchResults = [];
+            currentPage = 1;
+            applyFiltersAndRenderTable();
+            scrollToResults();
+          }
+        );
+      }
+    }
+
+    function scrollToResults() {
       // Scroll smoothly to results card
       const $results = $('#results-card');
       $results.addClass('visible');
@@ -379,32 +344,6 @@
   }
 
   /* ====== FILTERS ====== */
-  function bindFilterEvents() {
-    // Active / Inactive Status Toggles
-    $('.status-btn').on('click', function() {
-      $('.status-btn').removeClass('active');
-      $(this).addClass('active');
-      currentPage = 1;
-      applyFiltersAndRenderTable();
-    });
-
-    // Date Range inputs
-    $('.date-input').on('change', function() {
-      currentPage = 1;
-      applyFiltersAndRenderTable();
-    });
-
-    // Clear filters click
-    $('#btn-clear-filters').on('click', function() {
-      $('.status-btn').removeClass('active');
-      $('.status-btn[data-status="All"]').addClass('active');
-      $('#date-from').val('');
-      $('#date-to').val('');
-      currentPage = 1;
-      applyFiltersAndRenderTable();
-    });
-  }
-
   function applyFiltersAndRenderTable() {
     const status = $('.status-btn.active').data('status') || 'All';
     const dateFrom = $('#date-from').val();
@@ -490,23 +429,6 @@
   }
 
   /* ====== PAGINATION ====== */
-  function bindPaginationEvents() {
-    $('#prev-btn').on('click', function() {
-      if (currentPage > 1) {
-        currentPage--;
-        renderTableRows();
-      }
-    });
-
-    $('#next-btn').on('click', function() {
-      const totalPages = Math.ceil(filteredSearchResults.length / pageSize) || 1;
-      if (currentPage < totalPages) {
-        currentPage++;
-        renderTableRows();
-      }
-    });
-  }
-
   function updatePaginationControls(totalRecords) {
     const totalPages = Math.ceil(totalRecords / pageSize) || 1;
     if (currentPage > totalPages) currentPage = totalPages;
@@ -530,12 +452,145 @@
     for (let p = 1; p <= totalPages; p++) {
       const activeClass = p === currentPage ? 'active' : '';
       const $btn = $(`<button class="pagination-num-btn ${activeClass}">${p}</button>`);
-      $btn.on('click', function() {
-        currentPage = p;
-        renderTableRows();
-      });
       $nums.append($btn);
     }
+  }
+
+  /* ====== GLOBAL EVENT DELEGATION ====== */
+  function bindDelegatedEvents() {
+    const root = document.documentElement;
+
+    // 1. Theme light/dark toggle button click
+    $(document).on('click', '#theme-toggle', function() {
+      if (!document.querySelector('.customer-search-page')) return;
+      console.log("theme toggle clicked via delegation");
+      const isLight = root.classList.toggle('light-mode');
+      $('body').toggleClass('light-mode');
+      const currentMode = isLight ? 'light' : 'dark';
+      const currentColor = root.classList.contains('theme-neon') ? 'neon' : 'red';
+
+      if (window.ThemeModule) {
+        console.log("Saving theme mode and color via toggle:", currentMode, currentColor);
+        window.ThemeModule.saveTheme(currentMode, currentColor);
+      }
+
+      // WOW effect: Expansion Flash circle matching script.js
+      const btn = this;
+      const flash = $('<div style="position:fixed; width:10px; height:10px; background:var(--accent); border-radius:50%; z-index:10000; pointer-events:none;"></div>');
+      const rect = btn.getBoundingClientRect();
+      flash.css({
+        top: `${rect.top + 22}px`,
+        left: `${rect.left + 22}px`
+      });
+      $('body').append(flash);
+
+      if (typeof gsap !== 'undefined') {
+        gsap.to(flash[0], {
+          width: window.innerWidth * 3,
+          height: window.innerWidth * 3,
+          xPercent: -50,
+          yPercent: -50,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          onComplete: () => flash.remove()
+        });
+      } else {
+        flash.remove();
+      }
+
+      updateThreeTheme(isLight);
+    });
+
+    // 2. Bind click listeners for color themes
+    $(document).on('click', '.theme-picker-btn', function(e) {
+      if (!document.querySelector('.customer-search-page')) return;
+      e.stopPropagation();
+      const theme = $(this).data('theme');
+      console.log("color picker clicked via delegation, theme:", theme);
+      applyColorTheme(theme);
+      
+      const currentMode = root.classList.contains('light-mode') ? 'light' : 'dark';
+      if (window.ThemeModule) {
+        console.log("Saving theme mode and color:", currentMode, theme);
+        window.ThemeModule.saveTheme(currentMode, theme);
+      }
+    });
+
+    // 3. Dynamic placeholder switching based on selection
+    $(document).on('change', '#search-type', function() {
+      const type = $(this).val();
+      const $input = $('#search-input');
+      
+      if (type === "cid") {
+        $input.attr("placeholder", "Enter Customer ID (e.g. NX-4829-0055)...");
+      } else if (type === "email") {
+        $input.attr("placeholder", "Enter Email address...");
+      } else if (type === "phone") {
+        $input.attr("placeholder", "Enter Phone Number...");
+      }
+    });
+
+    // 4. Form submit listener
+    $(document).on('click', '#search-btn', function() {
+      executeSearch();
+    });
+
+    // 5. Keypress listener for search input
+    $(document).on('keypress', '#search-input', function(e) {
+      if (e.which === 13) {
+        executeSearch();
+      }
+    });
+
+    // 6. Active / Inactive Status Toggles
+    $(document).on('click', '.status-btn', function() {
+      $('.status-btn').removeClass('active');
+      $(this).addClass('active');
+      currentPage = 1;
+      applyFiltersAndRenderTable();
+    });
+
+    // 7. Date Range inputs
+    $(document).on('change', '.date-input', function() {
+      currentPage = 1;
+      applyFiltersAndRenderTable();
+    });
+
+    // 8. Clear filters click
+    $(document).on('click', '#btn-clear-filters', function() {
+      $('.status-btn').removeClass('active');
+      $('.status-btn[data-status="All"]').addClass('active');
+      $('#date-from').val('');
+      $('#date-to').val('');
+      currentPage = 1;
+      applyFiltersAndRenderTable();
+    });
+
+    // 9. Pagination buttons
+    $(document).on('click', '#prev-btn', function() {
+      if (currentPage > 1) {
+        currentPage--;
+        renderTableRows();
+      }
+    });
+
+    $(document).on('click', '#next-btn', function() {
+      const totalPages = Math.ceil(filteredSearchResults.length / pageSize) || 1;
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderTableRows();
+      }
+    });
+
+    // 10. Page number links
+    $(document).on('click', '.pagination-num-btn', function() {
+      const p = parseInt($(this).text(), 10);
+      if (!isNaN(p)) {
+        currentPage = p;
+        renderTableRows();
+      }
+    });
   }
 
   // HTML escaping utility

@@ -92,6 +92,28 @@
     configurable: false
   });
 
+  Object.defineProperty(ParamsData, 'inputType', {
+    get: function () {
+      return this.get('inputType');
+    },
+    set: function (value) {
+      this.set('inputType', value);
+    },
+    enumerable: true,
+    configurable: false
+  });
+
+  Object.defineProperty(ParamsData, 'inputValue', {
+    get: function () {
+      return this.get('inputValue');
+    },
+    set: function (value) {
+      this.set('inputValue', value);
+    },
+    enumerable: true,
+    configurable: false
+  });
+
   // Expose on the window global scope
   window.ParamsData = ParamsData;
 

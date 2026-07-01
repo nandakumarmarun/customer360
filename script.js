@@ -285,7 +285,8 @@ function initThemeToggle() {
 
   // Bind click listeners for color theme pickers
   pickers.forEach(p => {
-    p.addEventListener('click', (e) => {
+    p.onclick = (e) => {
+      if (!document.getElementById('scene-dashboard')) return;
       e.stopPropagation();
       const theme = p.dataset.theme;
       applyColorTheme(theme);
@@ -294,7 +295,7 @@ function initThemeToggle() {
       if (window.ThemeModule) {
         window.ThemeModule.saveTheme(currentMode, theme);
       }
-    });
+    };
   });
 
   // Ensure Three.js is ready before updating on initial load
@@ -305,7 +306,8 @@ function initThemeToggle() {
     }
   }, 100);
 
-  btn.addEventListener('click', () => {
+  btn.onclick = () => {
+    if (!document.getElementById('scene-dashboard')) return;
     const isLight = root.classList.toggle('light-mode');
     document.body.classList.toggle('light-mode');
     const currentMode = isLight ? 'light' : 'dark';
@@ -333,7 +335,7 @@ function initThemeToggle() {
     });
 
     updateThreeTheme(isLight);
-  });
+  };
 }
 
 function updateThreeTheme(isLight) {

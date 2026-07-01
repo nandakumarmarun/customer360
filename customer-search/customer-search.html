@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="light-mode">
+
 <head>
   <script src="../config.js"></script>
   <script>
@@ -30,7 +31,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CUSTOMER360 · Customer Search</title>
   <meta name="description" content="Search banking customer profile directory with interactive animation." />
-  
+
   <!-- ===== APPLICATION STYLES ===== -->
   <link rel="stylesheet" href="../fonts/fonts.css" />
   <link rel="stylesheet" href="../style.css" />
@@ -45,14 +46,14 @@
 
   <!-- ===== MAIN CUSTOMER SEARCH VIEW ===== -->
   <div class="customer-search-page hidden">
-    
+
     <!-- HEADER BAR -->
     <header class="customer-search-header" id="search-header">
       <div class="search-header-left" onclick="window.location.reload();">
         <span class="search-header-logo-icon">⬡</span>
         <span class="search-header-logo-text">CUSTOMER360</span>
       </div>
-      
+
       <div class="search-header-right">
         <!-- Reuses existing application theme picker styles -->
         <div class="theme-picker-group">
@@ -68,10 +69,10 @@
 
     <!-- CONTENT BODY -->
     <main class="customer-search-main">
-      
+
       <!-- SEARCH CONTROLS CONTAINER -->
       <section class="customer-search-experience glass-card">
-        
+
         <!-- Large Search Illustration -->
         <div class="search-illustration-container">
           <img src="assets/search-icon.svg" alt="Search Illustration" width="100%" height="100%" />
@@ -96,7 +97,8 @@
 
           <!-- Middle: Input Field -->
           <div class="search-input-wrapper">
-            <input type="text" class="search-input-field" id="search-input" placeholder="Enter Customer ID (e.g. NX-4829-0055)..." aria-label="Search Value" />
+            <input type="text" class="search-input-field" id="search-input"
+              placeholder="Enter Customer ID (e.g. NX-4829-0055)..." aria-label="Search Value" />
           </div>
 
           <!-- Right side: Button -->
@@ -187,4 +189,5 @@
   <script src="../modules/theme/theme.js"></script>
   <script src="customer-search.js"></script>
 </body>
+
 </html>
