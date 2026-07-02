@@ -90,7 +90,18 @@ We have added interactive creation action buttons directly onto the headers of t
 
 ---
 
-## 7. Verification Plan
+## 7. Dynamic Status Filter Extraction (Lead & Case Modules)
+
+Rather than hardcoding status filter categories, the Status Filter Panel now extracts unique statuses dynamically from the loaded dataset.
+
+### Key Details:
+- **Dynamic Options**: Automatically retrieves the unique values of `status` present in `allLeads` and `allCases` (filtering out blank/null values) and populates the status panel with matching clickable buttons on load.
+- **Fallback to "All"**: If a customer ID is switched and the active `statusFilter` is no longer applicable to the new customer's dataset, it gracefully defaults to `"All"`.
+- **Null Safety**: Implemented safety checks on all search inputs, status parameters, and rendering strings. If any data record lacks a status (null, undefined, or empty string), the filters and tables fallback to `"Unknown"` instead of throwing a JavaScript exception and crashing the module rendering.
+
+---
+
+## 8. Verification Plan
 
 ### Manual Verification
 1. Ensure the mock api server is running:

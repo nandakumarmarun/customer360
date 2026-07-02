@@ -714,6 +714,17 @@
     const $content = $("#qm-content");
     if (!$content.length) return;
 
+    // Extract unique status values dynamically from loaded leads
+    const uniqueStatuses = ["All", ...new Set(allLeads.map(lead => lead.status).filter(Boolean))];
+    if (!uniqueStatuses.includes(statusFilter)) {
+      statusFilter = "All";
+    }
+
+    const filterButtonsHtml = uniqueStatuses.map(status => {
+      const isActive = (status === statusFilter) ? "active" : "";
+      return `<button class="status-filter-btn ${isActive}" data-status="${status}">${status}</button>`;
+    }).join("\n");
+
     const layoutHtml = `
       <div class="leads-container">
         <!-- Controls Bar -->
@@ -741,11 +752,7 @@
         <!-- Hidden Filter Panel -->
         <div class="leads-filter-panel hidden" id="leads-filter-panel">
           <span class="filter-panel-title">Filter status:</span>
-          <button class="status-filter-btn active" data-status="All">All</button>
-          <button class="status-filter-btn" data-status="Approved">Approved</button>
-          <button class="status-filter-btn" data-status="Pending">Pending</button>
-          <button class="status-filter-btn" data-status="In Progress">In Progress</button>
-          <button class="status-filter-btn" data-status="Rejected">Rejected</button>
+          ${filterButtonsHtml}
         </div>
 
         <!-- Data Grid Table -->
@@ -838,12 +845,12 @@
     // 1. Apply Search and Status Filter
     filteredLeads = allLeads.filter(lead => {
       const matchesSearch =
-        lead.leadId.toLowerCase().includes(searchQuery) ||
-        lead.product.toLowerCase().includes(searchQuery);
+        (lead.leadId && lead.leadId.toLowerCase().includes(searchQuery)) ||
+        (lead.product && lead.product.toLowerCase().includes(searchQuery));
 
       const matchesStatus =
         statusFilter === "All" ||
-        lead.status.toLowerCase() === statusFilter.toLowerCase();
+        (lead.status && lead.status.toLowerCase() === statusFilter.toLowerCase());
 
       return matchesSearch && matchesStatus;
     });
@@ -871,7 +878,8 @@
     } else {
       const pageData = filteredLeads.slice(startIdx, endIdx);
       pageData.forEach(lead => {
-        const statusClass = lead.status.toLowerCase().replace(/\s+/g, "-");
+        const statusText = lead.status || "Unknown";
+        const statusClass = statusText.toLowerCase().replace(/\s+/g, "-");
         const rowHtml = `
           <tr>
             <td class="col-id" style="font-family: 'JetBrains Mono', monospace;">
@@ -879,7 +887,7 @@
             </td>
             <td class="col-prod" style="font-weight: 600;">${escapeHtml(lead.product)}</td>
             <td class="col-status">
-              <span class="status-badge ${statusClass}">${escapeHtml(lead.status)}</span>
+              <span class="status-badge ${statusClass}">${escapeHtml(statusText)}</span>
             </td>
             <td class="col-date" style="color: var(--muted);">${escapeHtml(lead.createdDate)}</td>
             <td class="col-action" style="text-align: center;">

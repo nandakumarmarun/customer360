@@ -592,6 +592,17 @@
     const $content = $("#qm-content");
     if (!$content.length) return;
 
+    // Extract unique status values dynamically from loaded cases
+    const uniqueStatuses = ["All", ...new Set(allCases.map(c => c.status).filter(Boolean))];
+    if (!uniqueStatuses.includes(statusFilter)) {
+      statusFilter = "All";
+    }
+
+    const filterButtonsHtml = uniqueStatuses.map(status => {
+      const isActive = (status === statusFilter) ? "active" : "";
+      return `<button class="status-filter-btn ${isActive}" data-status="${status}">${status}</button>`;
+    }).join("\n");
+
     const layoutHtml = `
       <div class="cases-container">
         <!-- Controls Bar -->
@@ -619,12 +630,7 @@
         <!-- Hidden Filter Panel -->
         <div class="cases-filter-panel hidden" id="cases-filter-panel">
           <span class="filter-panel-title">Filter status:</span>
-          <button class="status-filter-btn active" data-status="All">All</button>
-          <button class="status-filter-btn" data-status="Open">Open</button>
-          <button class="status-filter-btn" data-status="In Progress">In Progress</button>
-          <button class="status-filter-btn" data-status="Resolved">Resolved</button>
-          <button class="status-filter-btn" data-status="Closed">Closed</button>
-          <button class="status-filter-btn" data-status="Rejected">Rejected</button>
+          ${filterButtonsHtml}
         </div>
 
         <!-- Data Grid Table -->
@@ -732,11 +738,11 @@
     filteredCases = allCases.filter((item) => {
       const s = searchQuery;
       const matchesSearch =
-        item.caseId.toLowerCase().includes(s) ||
-        item.caseType.toLowerCase().includes(s) ||
-        item.requestType.toLowerCase().includes(s) ||
-        item.status.toLowerCase().includes(s) ||
-        item.createdDate.toLowerCase().includes(s);
+        (item.caseId && item.caseId.toLowerCase().includes(s)) ||
+        (item.caseType && item.caseType.toLowerCase().includes(s)) ||
+        (item.requestType && item.requestType.toLowerCase().includes(s)) ||
+        (item.status && item.status.toLowerCase().includes(s)) ||
+        (item.createdDate && item.createdDate.toLowerCase().includes(s));
 
       const matchesStatus = statusFilter === "All" || item.status === statusFilter;
       return matchesSearch && matchesStatus;
@@ -791,11 +797,13 @@
     } else {
       const pageData = filteredCases.slice(startIdx, endIdx);
       pageData.forEach((item) => {
+        const typeText = item.caseType || "Request";
         const typeClass =
-          item.caseType.toLowerCase() === "complaint" ? "complaint" : "request";
+          typeText.toLowerCase() === "complaint" ? "complaint" : "request";
 
         let statusClass = "closed";
-        const statusLower = item.status.toLowerCase();
+        const statusText = item.status || "Unknown";
+        const statusLower = statusText.toLowerCase();
         if (statusLower === "open") statusClass = "open";
         else if (statusLower === "in progress") statusClass = "in-progress";
         else if (statusLower === "resolved") statusClass = "resolved";
@@ -809,11 +817,11 @@
               <a href="${detailUrl}" target="_blank" class="case-id-link" title="Open details for ${escapeHtml(item.caseId)} in new tab">${escapeHtml(item.caseId)}</a>
             </td>
             <td class="col-type">
-              <span class="type-badge ${typeClass}">${escapeHtml(item.caseType)}</span>
+              <span class="type-badge ${typeClass}">${escapeHtml(typeText)}</span>
             </td>
-            <td class="col-req" style="font-weight: 600;">${escapeHtml(item.requestType)}</td>
+            <td class="col-req" style="font-weight: 600;">${escapeHtml(item.requestType || "")}</td>
             <td class="col-status">
-              <span class="status-badge ${statusClass}">${escapeHtml(item.status)}</span>
+              <span class="status-badge ${statusClass}">${escapeHtml(statusText)}</span>
             </td>
             <td class="col-date" style="color: var(--muted);">${escapeHtml(item.createdDate)}</td>
             <td class="col-action" style="text-align: center;">
