@@ -91,6 +91,7 @@
       gap: 5px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       user-select: none;
+      text-decoration: none;
     }
 
     .qm-action-btn:hover {
@@ -590,7 +591,7 @@
   function renderLeadsHeader() {
     const $header = $(".qm-header-inline");
     if (!$header.length || !$header.hasClass("leads-active")) {
-      $header.addClass("leads-active");
+      $header.removeClass("cases-active holdings-active").addClass("leads-active");
       $header.empty();
 
       const headerHtml = `
@@ -600,6 +601,9 @@
             <h2 id="qm-title">LEADS INFORMATION</h2>
             <p class="qm-header-subtitle">Customer leads and acquisition details</p>
           </div>
+        </div>
+        <div class="qm-header-actions">
+          <a href="modules/lead/lead-create.html" target="_blank" class="qm-action-btn" id="create-lead-btn">➕ Create Lead</a>
         </div>
       `;
       $header.append(headerHtml);

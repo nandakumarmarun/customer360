@@ -270,8 +270,8 @@
     }
 
     if (type === "cid") {
-      // Redirect directly to Customer 360 page (index.html)
-      window.location.href = `../index.html?customerId=${encodeURIComponent(inputVal)}`;
+      // Redirect directly to Customer 360 page (index.html) with Base64 masked Customer ID
+      window.location.href = `../index.html?customerId=${encodeURIComponent(btoa(inputVal))}`;
     } else {
       // Show loading preloader before starting the search
       if (window.SearchPreloader) {
@@ -403,7 +403,7 @@
 
     paginatedList.forEach(item => {
       const statusClass = item.status.toLowerCase();
-      const profileUrl = `../index.html?customerId=${encodeURIComponent(item.id)}`;
+      const profileUrl = `../index.html?customerId=${encodeURIComponent(btoa(item.id))}`;
       
       const rowHtml = `
         <tr>

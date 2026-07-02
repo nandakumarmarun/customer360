@@ -1119,6 +1119,7 @@ body::before {
 
 /* DASH BODY */
 .dash-body {
+  position: relative;
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 20px;
@@ -3108,8 +3109,8 @@ body::before {
 
 /* Quick Module Nav Dots */
 .qm-nav-dots {
-  position: absolute;
-  right: -40px;
+  position: fixed;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -3123,6 +3124,14 @@ body::before {
   padding: 10px 6px;
   border-radius: 30px;
   border: 1px solid rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.qm-nav-dots.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .qm-dot {
@@ -3826,9 +3835,8 @@ body::before {
 
 /* Quick Module Nav Dots */
 .qm-nav-dots {
-  position: absolute;
-  /* Shift to the right edge of the dashboard by overriding the 50px padding */
-  right: -40px;
+  position: fixed;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -3844,6 +3852,10 @@ body::before {
   padding: 10px 6px;
   border-radius: 30px;
   border: 1px solid rgba(255, 255, 255, 0.05);
+  
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
 .qm-dot {

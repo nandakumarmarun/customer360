@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function () {
+      const root = document.documentElement;
+      fetch('http://localhost:3000/theme')
+        .then(res => res.json())
+        .then(data => {
+          if (data.mode === 'light') {
+            root.classList.add('light-mode');
+            document.body && document.body.classList.add('light-mode');
+          } else {
+            root.classList.remove('light-mode');
+            document.body && document.body.classList.remove('light-mode');
+          }
+          if (data.color === 'neon') {
+            root.classList.add('theme-neon');
+          } else {
+            root.classList.remove('theme-neon');
+          }
+        })
+        .catch(err => console.warn("Failed to fetch theme from DB on load:", err));
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CUSTOMER360 · Create Complaint</title>
+  <link rel="stylesheet" href="../../fonts/fonts.css" />
+  <link rel="stylesheet" href="../../style.css" />
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, var(--aurora-1), transparent 50%),
+                  radial-gradient(circle at 80% 20%, var(--aurora-2), transparent 50%),
+                  radial-gradient(circle at 20% 80%, var(--aurora-3), transparent 50%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .create-card {
+      width: 100%;
+      max-width: 600px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      background: var(--glass2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      animation: scaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes scaleUp {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .form-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+
+    .form-avatar {
+      width: 64px;
+      height: 64px;
+      background: var(--glass2);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      box-shadow: 0 0 20px var(--glow-shadow-medium);
+    }
+
+    .form-header-text h1 {
+      font-size: 24px;
+      font-weight: 800;
+      margin: 0 0 4px 0;
+      background: linear-gradient(135deg, #fff, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .light-mode .form-header-text h1 {
+      background: linear-gradient(135deg, var(--text), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .form-header-text p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .form-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      border-radius: 16px;
+    }
+
+    .form-item.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-input {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 15px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .light-mode .form-input {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .form-input:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 8px var(--glow-shadow-medium);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .form-input:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      margin-top: 10px;
+    }
+
+    .btn-secondary {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+      background: var(--glass2);
+      transform: translateY(-2px);
+    }
+
+    .btn-submit {
+      background: var(--accent);
+      border: 1px solid var(--accent2);
+      color: #fff;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 5px 15px var(--glow-shadow);
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px var(--glow-shadow-strong);
+    }
+
+    /* Toast Notification styles */
+    .custom-toast {
+      position: fixed;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      border: 1px solid var(--accent2);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 15px;
+      z-index: 10000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .custom-toast.show {
+      top: 30px;
+    }
+  </style>
+</head>
+<body class="dark-mode">
+  <div class="create-card">
+    <div class="form-header">
+      <div class="form-avatar">⚠️</div>
+      <div class="form-header-text">
+        <h1>Create Complaint</h1>
+        <p>Initialize a new customer complaint record</p>
+      </div>
+    </div>
+
+    <form id="complaint-form">
+      <div class="form-grid">
+        <div class="form-item">
+          <label class="form-label" for="customer-id">Customer ID</label>
+          <input type="text" class="form-input" id="customer-id" placeholder="NX-XXXX-XXXX" required>
+        </div>
+        <div class="form-item">
+          <label class="form-label" for="case-id">Case ID</label>
+          <input type="text" class="form-input" id="case-id" placeholder="CS-XXXX-XX" readonly>
+        </div>
+        <div class="form-item">
+          <label class="form-label" for="case-type">Case Type</label>
+          <input type="text" class="form-input" id="case-type" value="Complaint" disabled>
+        </div>
+        <div class="form-item">
+          <label class="form-label" for="status">Case Status</label>
+          <input type="text" class="form-input" id="status" value="Open" disabled>
+        </div>
+        <div class="form-item full-width">
+          <label class="form-label" for="request-type">Complaint Category</label>
+          <select class="form-input" id="request-type" required style="width: 100%; height: 42px;">
+            <option value="" disabled selected>Select category...</option>
+            <option value="Credit Card Billing Dispute">Credit Card Billing Dispute</option>
+            <option value="Unauthorized Transaction ATM">Unauthorized Transaction ATM</option>
+            <option value="Mobile App Payment Failure">Mobile App Payment Failure</option>
+            <option value="Service Delay Complaint">Service Delay Complaint</option>
+            <option value="Staff Conduct Issue">Staff Conduct Issue</option>
+          </select>
+        </div>
+        <div class="form-item full-width">
+          <label class="form-label" for="description">Complaint Details & Observations</label>
+          <textarea class="form-input" id="description" rows="4" style="resize: none;" placeholder="Provide comprehensive details of customer complaint..."></textarea>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <button type="button" class="btn-secondary" onclick="window.close()">Cancel</button>
+        <button type="submit" class="btn-submit">Submit Complaint</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="toast" class="custom-toast">Complaint created successfully!</div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let customerId = urlParams.get('customerId');
+      if (!customerId && window.opener && window.opener.ParamsData && window.opener.ParamsData.getCustomerId) {
+        customerId = window.opener.ParamsData.getCustomerId();
+      }
+      if (customerId) {
+        $('#customer-id').val(customerId);
+      }
+
+      // Generate random Case ID e.g., CS-9402-A1
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const randomSuffix = chars.charAt(Math.floor(Math.random() * chars.length)) + Math.floor(1 + Math.random() * 9);
+      const randomId = 'CS-' + Math.floor(1000 + Math.random() * 9000) + '-' + randomSuffix;
+      $('#case-id').val(randomId);
+
+      $('#complaint-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        const $toast = $('#toast');
+        $toast.addClass('show');
+        
+        setTimeout(function() {
+          $toast.removeClass('show');
+          window.close();
+        }, 1500);
+      });
+    });
+  </script>
+</body>
+</html>

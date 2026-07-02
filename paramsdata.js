@@ -13,7 +13,19 @@
   // Helper to extract initial values from URL search query
   function getQueryParam(name) {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name);
+    let val = urlParams.get(name);
+    if (name === 'customerId' && val) {
+      // Decode from base64 if it's base64 encoded.
+      // Raw CIDs contain '-' which is not a valid standard base64 character.
+      if (!val.includes('-')) {
+        try {
+          val = atob(val);
+        } catch (e) {
+          // Fallback if not valid base64
+        }
+      }
+    }
+    return val;
   }
 
   // Define the Global Parameters Data object

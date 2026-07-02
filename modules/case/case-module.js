@@ -481,7 +481,7 @@
   function renderCasesHeader() {
     const $header = $(".qm-header-inline");
     if (!$header.length || !$header.hasClass("cases-active")) {
-      $header.addClass("cases-active");
+      $header.removeClass("leads-active holdings-active").addClass("cases-active");
       $header.empty();
 
       const headerHtml = `
@@ -491,6 +491,10 @@
             <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin: 0; text-transform: uppercase; font-family: 'Outfit', sans-serif;">CASE INFORMATION</h2>
             <p class="qm-header-subtitle" style="font-size: 13px; color: var(--muted); margin-top: 2px; font-weight: 400; margin-bottom: 0;">Customer complaints and service requests</p>
           </div>
+        </div>
+        <div class="qm-header-actions" style="display: flex; align-items: center; gap: 8px;">
+          <a href="modules/case/case-create.html" target="_blank" class="qm-action-btn" id="create-case-btn">📁 Create Case</a>
+          <a href="modules/case/complaint-create.html" target="_blank" class="qm-action-btn" id="create-complaint-btn">⚠️ Create Complaint</a>
         </div>
       `;
       $header.append(headerHtml);
@@ -541,7 +545,7 @@
         params,
         function (response) {
           if (window.UIRenderer) window.UIRenderer.hideLoader("#qm-content");
-          
+
           let dataList = null;
           if (response && response.data) {
             dataList = response.data;
@@ -789,7 +793,7 @@
       pageData.forEach((item) => {
         const typeClass =
           item.caseType.toLowerCase() === "complaint" ? "complaint" : "request";
-        
+
         let statusClass = "closed";
         const statusLower = item.status.toLowerCase();
         if (statusLower === "open") statusClass = "open";

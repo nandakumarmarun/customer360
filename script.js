@@ -182,6 +182,17 @@ function startApp() {
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Toggle navigation dots visibility depending on active scene (dashboard vs avatar reveal)
+    ScrollTrigger.create({
+      trigger: '#scene-dashboard',
+      start: 'top 80%',
+      end: 'bottom top',
+      onEnter: () => document.querySelector('.qm-nav-dots')?.classList.add('visible'),
+      onLeaveBack: () => document.querySelector('.qm-nav-dots')?.classList.remove('visible'),
+      onEnterBack: () => document.querySelector('.qm-nav-dots')?.classList.add('visible'),
+      onLeave: () => document.querySelector('.qm-nav-dots')?.classList.remove('visible'),
+    });
+
     // Animate alert row (Ticker Alert)
     gsap.from('.alerts-bar', {
       scrollTrigger: { trigger: '#scene-dashboard', start: 'top 80%' },
@@ -680,6 +691,23 @@ function initQuickModules() {
     isAnimating = true;
     const module = qmModules[index];
 
+    // Helper to perform smooth scrolling to an element relative to document body without parent offsets
+    function smoothScrollTo(targetElement) {
+      if (!targetElement) return;
+      const targetScrollY = targetElement.getBoundingClientRect().top + window.pageYOffset - 80;
+      
+      // If we are already extremely close to the target position, skip to avoid scroll stutter/jerk
+      if (Math.abs(window.pageYOffset - targetScrollY) < 10) return;
+
+      const scrollObj = { y: window.pageYOffset };
+      gsap.to(scrollObj, {
+        y: targetScrollY,
+        duration: 0.6,
+        ease: "power2.out",
+        onUpdate: () => window.scrollTo(0, scrollObj.y)
+      });
+    }
+
     // Going to Main Dashboard
     if (index === 0) {
       // Returning to Dashboard
@@ -691,6 +719,10 @@ function initQuickModules() {
           onComplete: () => {
             qmView.classList.add('hidden');
             cardsGrid.style.display = '';
+            
+            // Scroll to the cards grid only after it is displayed in DOM
+            smoothScrollTo(cardsGrid);
+
             gsap.fromTo(cardsGrid,
               { opacity: 0, scale: 0.9, filter: "blur(10px)" },
               { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.7, ease: 'back.out(1.2)', clearProps: 'all', onComplete: () => isAnimating = false }
@@ -700,6 +732,7 @@ function initQuickModules() {
       } else {
         qmView.classList.add('hidden');
         cardsGrid.style.display = '';
+        smoothScrollTo(cardsGrid);
         isAnimating = false;
       }
       currentQmIndex = index;
@@ -730,6 +763,10 @@ function initQuickModules() {
           onComplete: () => {
             cardsGrid.style.display = 'none';
             qmView.classList.remove('hidden');
+            
+            // Scroll to the quick module view only after it is displayed in DOM
+            smoothScrollTo(qmView);
+
             gsap.fromTo(qmView, 
               { opacity: 0, scale: 1.1, y: 50, rotateX: 15 },
               { opacity: 1, scale: 1, y: 0, rotateX: 0, duration: 0.7, ease: 'back.out(1.2)', clearProps: 'all', onComplete: () => isAnimating = false }
@@ -739,29 +776,36 @@ function initQuickModules() {
       } else {
         cardsGrid.style.display = 'none';
         qmView.classList.remove('hidden');
+        smoothScrollTo(qmView);
         isAnimating = false;
       }
     } else {
-      // Parallax transition between modules
+      // Zoom-Out & Tilt transition between modules
       if (typeof gsap !== 'undefined') {
-        const outX = direction > 0 ? -100 : 100;
-        const inX = direction > 0 ? 100 : -100;
-        
-        gsap.to(qmTitle, { opacity: 0, x: outX * 0.5, duration: 0.3, ease: 'power2.in' });
-        gsap.to(qmContent, { opacity: 0, x: outX, filter: "blur(5px)", duration: 0.4, ease: 'power2.in', onComplete: () => {
+        gsap.to(qmView, {
+          opacity: 0,
+          scale: 0.9,
+          y: -50,
+          rotateX: -15,
+          duration: 0.4,
+          ease: 'power2.in',
+          onComplete: () => {
             qmTitle.innerText = module.title + ' Module';
             qmContent.innerHTML = newHtml;
             
-            gsap.fromTo(qmTitle, { opacity: 0, x: inX * 0.5 }, { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out', clearProps: 'all' });
-            gsap.fromTo(qmContent, 
-              { opacity: 0, x: inX, filter: "blur(5px)" },
-              { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.6, ease: 'power3.out', clearProps: 'all', onComplete: () => isAnimating = false }
+            // Scroll to the quick module view to keep focus steady
+            smoothScrollTo(qmView);
+            
+            gsap.fromTo(qmView,
+              { opacity: 0, scale: 1.1, y: 50, rotateX: 15 },
+              { opacity: 1, scale: 1, y: 0, rotateX: 0, duration: 0.6, ease: 'back.out(1.2)', clearProps: 'all', onComplete: () => isAnimating = false }
             );
           }
         });
       } else {
         qmTitle.innerText = module.title + ' Module';
         qmContent.innerHTML = newHtml;
+        smoothScrollTo(qmView);
         isAnimating = false;
       }
     }

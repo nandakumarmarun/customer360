@@ -431,6 +431,37 @@
     },
 
     /**
+     * Dynamically loads the Customer 360 preloader assets and triggers the transition animation before navigating.
+     */
+    triggerSearchTransition: function (targetUrl) {
+      if (window.Customer360Preloader) {
+        window.Customer360Preloader.show(targetUrl);
+        return;
+      }
+
+      // Dynamically load CSS
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'customer-search/customer360-preloader.css';
+      document.head.appendChild(link);
+
+      // Dynamically load JS
+      const script = document.createElement('script');
+      script.src = 'customer-search/customer360-preloader.js';
+      script.onload = function () {
+        if (window.Customer360Preloader) {
+          window.Customer360Preloader.show(targetUrl);
+        } else {
+          window.location.href = targetUrl;
+        }
+      };
+      script.onerror = function () {
+        window.location.href = targetUrl;
+      };
+      document.body.appendChild(script);
+    },
+
+    /**
      * Shows a beautiful fullscreen alert modal when no Customer ID is present.
      */
     showNoDataAlert: function () {
@@ -463,8 +494,12 @@
                 </h2>
                 
                 <p style="font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 0; padding: 0 10px; font-family: 'Outfit', sans-serif;">
-                  An active customer ID was not specified. Please pass a valid customer identifier in the URL (e.g. <code>?customerId=NX-4829-0055</code>) to view profile details.
+                  An active customer ID was not specified. Please pass a valid customer identifier in the URL to view profile details.
                 </p>
+                
+                <a href="customer-search/customer-search.html" onclick="event.preventDefault(); window.UIRenderer.triggerSearchTransition('customer-search/customer-search.html');" style="display: inline-flex; align-items: center; justify-content: center; margin-top: 24px; padding: 12px 24px; background: var(--accent); color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 30px; box-shadow: 0 4px 15px var(--glow-shadow-weak); transition: all 0.3s ease; font-family: 'Outfit', sans-serif; border: 1px solid rgba(255,255,255,0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px var(--glow-shadow-medium)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px var(--glow-shadow-weak)';">
+                  🔍 Go to Customer Search
+                </a>
               </div>
             </div>
           </div>
