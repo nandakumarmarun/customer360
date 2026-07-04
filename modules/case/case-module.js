@@ -22,7 +22,13 @@
       flex-direction: column;
       gap: 8px;
       width: 100%;
+      height: 100%;
+      min-height: 400px;
       animation: casesFadeIn 0.4s ease;
+    }
+
+    #quick-module-view .qm-content-area {
+      padding: 16px 24px !important;
     }
     
     @keyframes casesFadeIn {
@@ -195,8 +201,8 @@
 
     /* Data Grid Table */
     .cases-table-container {
-      overflow-x: auto;
-      overflow-y: hidden;
+      flex: 1;
+      overflow: auto;
       border-radius: 12px;
       border: 1px solid var(--border);
       background: var(--glass);
@@ -204,6 +210,23 @@
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
       min-height: 380px;
+      max-height: calc(100vh - 275px);
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .cases-table-container::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    .cases-table-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .cases-table-container::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
     }
 
     .cases-table {
