@@ -336,6 +336,41 @@
   box-shadow: 0 2px 8px var(--glow-shadow);
 }
 
+.results-page-size-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-size-lbl {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.results-page-size-select {
+  background: var(--glass2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 5px 10px;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 11px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color-scheme: dark;
+}
+
+.light-mode .results-page-size-select {
+  background: #ffffff;
+  color: #0f172a;
+  color-scheme: light;
+}
+
+.results-page-size-select:focus {
+  border-color: var(--accent2);
+}
+
 .results-date-range {
   display: flex;
   align-items: center;

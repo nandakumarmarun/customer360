@@ -90,6 +90,15 @@ let threeObjects = {}; // To store scene, stars, etc. for theme updates
   const screen = document.getElementById('loading-screen');
   const app = document.getElementById('app');
 
+  // If none of the loader elements exist in the current DOM, bypass loading screen step
+  if (!line && !status && !percent && !screen) {
+    if (app) app.classList.remove('hidden');
+    if (typeof startApp === 'function') {
+      startApp();
+    }
+    return;
+  }
+
   const steps = [
     { pct: 15, msg: 'Initializing System' },
     { pct: 35, msg: 'Loading Neural Engine' },
@@ -103,23 +112,24 @@ let threeObjects = {}; // To store scene, stars, etc. for theme updates
     if (i >= steps.length) {
       setTimeout(() => {
         // Prepare layout and start animations behind the solid loading screen
-        app.classList.remove('hidden');
+        if (app) app.classList.remove('hidden');
         startApp();
 
         // Fade out the loading screen smoothly
-        screen.style.transition = 'opacity 0.8s ease';
-        screen.style.opacity = '0';
-        
-        setTimeout(() => {
-          screen.style.display = 'none';
-        }, 800);
+        if (screen) {
+          screen.style.transition = 'opacity 0.8s ease';
+          screen.style.opacity = '0';
+          setTimeout(() => {
+            screen.style.display = 'none';
+          }, 800);
+        }
       }, 400);
       return;
     }
     const s = steps[i++];
-    line.style.width = s.pct + '%';
-    status.textContent = s.msg;
-    percent.textContent = s.pct + '%';
+    if (line) line.style.width = s.pct + '%';
+    if (status) status.textContent = s.msg;
+    if (percent) percent.textContent = s.pct + '%';
     setTimeout(nextStep, 400 + Math.random() * 300);
   }
   setTimeout(nextStep, 300);
@@ -128,6 +138,8 @@ let threeObjects = {}; // To store scene, stars, etc. for theme updates
 /* ====== AVATAR PARTICLES ====== */
 function spawnAvatarParticles() {
   const container = document.getElementById('avatar-particles');
+  if (!container) return; // Null safety check
+
   for (let i = 0; i < 20; i++) {
     const p = document.createElement('div');
     p.style.cssText = `position:absolute;width:${2 + Math.random() * 4}px;height:${2 + Math.random() * 4}px;
@@ -150,7 +162,9 @@ function startApp() {
 
   // Avatar reveal
   const info = document.getElementById('avatar-info');
-  setTimeout(() => info.classList.add('visible'), 600);
+  if (info) {
+    setTimeout(() => info.classList.add('visible'), 600);
+  }
 
   // Immediate auto-scroll to dashboard
   const dashboard = document.getElementById('scene-dashboard');

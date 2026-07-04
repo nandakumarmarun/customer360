@@ -83,13 +83,13 @@
 
       return loadedCustomers.filter(item => {
         if (searchType === "cid") {
-          return item.id.toLowerCase().includes(val);
+          return (item.id || "").toLowerCase().includes(val);
         } else if (searchType === "email") {
-          return item.email.toLowerCase().includes(val);
+          return (item.email || "").toLowerCase().includes(val);
         } else if (searchType === "phone") {
           // Compare digits only to make phone searching more robust
           const digitsSearch = val.replace(/\D/g, "");
-          const digitsCustomer = item.phone.replace(/\D/g, "");
+          const digitsCustomer = (item.phone || "").replace(/\D/g, "");
           return digitsCustomer.includes(digitsSearch);
         }
         return false;
@@ -101,7 +101,8 @@
       return records.filter(item => {
         // Status filter
         if (statusFilter !== "All") {
-          if (item.status.toLowerCase() !== statusFilter.toLowerCase()) {
+          const itemStatus = item.status || "Unknown";
+          if (itemStatus.toLowerCase() !== statusFilter.toLowerCase()) {
             return false;
           }
         }

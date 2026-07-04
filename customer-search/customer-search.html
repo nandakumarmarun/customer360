@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="../fonts/fonts.css" />
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="customer360-preloader.css" />
+  <link rel="stylesheet" href="customer-search-preloader.css" />
   <link rel="stylesheet" href="customer-search.css" />
 </head>
 
@@ -125,11 +126,15 @@
               <button class="status-btn" data-status="Inactive">Inactive</button>
             </div>
 
-            <!-- Date Range Range Picker -->
-            <div class="results-date-range">
-              <input type="date" class="date-input" id="date-from" placeholder="From" aria-label="Created Date From" />
-              <span class="date-range-sep">to</span>
-              <input type="date" class="date-input" id="date-to" placeholder="To" aria-label="Created Date To" />
+            <!-- Page Size Wrapper -->
+            <div class="results-page-size-wrapper">
+              <span class="page-size-lbl">Show:</span>
+              <select class="results-page-size-select" id="results-page-size">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+              </select>
             </div>
 
             <!-- Clear Filters Button -->
@@ -185,6 +190,7 @@
   <script src="../lib/three.min.js"></script>
   <script src="../lib/gsap.min.js"></script>
   <script src="customer360-preloader.js"></script>
+  <script src="customer-search-preloader.js"></script>
   <script src="customer-search-controller.js"></script>
   <script src="../modules/theme/theme.js"></script>
   <script src="customer-search.js"></script>

@@ -2,7 +2,7 @@
  * Reusable Search Preloader Component
  * Scoped under window.SearchPreloader
  */
-(function() {
+(function () {
   const messages = [
     "Loading Customer 360...",
     "Verifying Credentials...",
@@ -12,7 +12,7 @@
 
   const SearchPreloader = {
     // Inject HTML elements if not already in DOM
-    init: function() {
+    init: function () {
       if ($('#search-preloader-overlay').length) return;
 
       const searchAssetsPath = (window.ASSETS_CONFIG && window.ASSETS_CONFIG.SEARCH_ASSETS_PATH) || 'assets/';
@@ -37,7 +37,7 @@
     },
 
     // Spawns decorative floating particles
-    spawnParticles: function() {
+    spawnParticles: function () {
       const $container = $('#preloader-particles');
       if (!$container.length) return;
       $container.empty();
@@ -75,20 +75,32 @@
     },
 
     // Show preloader, animate text, and run callback after duration completes
-    show: function(callback, durationMs = 1800) {
+    show: function (callback, durationMs = 1800, keepVisible = false) {
       this.init();
       const $overlay = $('#search-preloader-overlay');
       const $status = $('#preloader-status-text');
 
       $overlay.addClass('active');
-      
+
+      if (durationMs <= 200) {
+        $status.text("LOADING...");
+        setTimeout(() => {
+          if (keepVisible) {
+            if (callback) callback();
+          } else {
+            this.hide(callback);
+          }
+        }, 5000); // 500ms allows the CSS transition to complete so the preloader is fully visible before navigation starts
+        return;
+      }
+
       // Cycle status text
       let msgIndex = 0;
       $status.text(messages[0]);
-      
+
       const textInterval = setInterval(() => {
         msgIndex = (msgIndex + 1) % messages.length;
-        $status.fadeOut(150, function() {
+        $status.fadeOut(150, function () {
           $(this).text(messages[msgIndex]).fadeIn(150);
         });
       }, durationMs / 3.5);
@@ -97,18 +109,22 @@
       setTimeout(() => {
         clearInterval(textInterval);
         $status.text("READY!");
-        
+
         setTimeout(() => {
-          this.hide(callback);
+          if (keepVisible) {
+            if (callback) callback();
+          } else {
+            this.hide(callback);
+          }
         }, 200);
       }, durationMs);
     },
 
     // Hide preloader overlay and invoke callback
-    hide: function(callback) {
+    hide: function (callback) {
       const $overlay = $('#search-preloader-overlay');
       $overlay.removeClass('active');
-      
+
       setTimeout(() => {
         if (callback) callback();
       }, 500); // Wait for CSS transition fade out

@@ -101,7 +101,47 @@ Rather than hardcoding status filter categories, the Status Filter Panel now ext
 
 ---
 
-## 8. Verification Plan
+## 8. Removed Date Range Filter from Customer Search List
+
+We removed the Date Range Filter (From / To inputs) from the customer search list dashboard view.
+
+### Key Details:
+- **Cleaned UI**: Removed the `.results-date-range` elements from [customer-search.html](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/customer-search/customer-search.html).
+- **Simplified Handler**: Removed date range filtering values, change listener, and value clear reset logic inside [customer-search.js](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/customer-search/customer-search.js).
+
+---
+
+## 9. Added Search Preloader to Customer ID (CID) Search & Search UI
+
+To improve user feedback and visual continuity during database validation, we enabled the `SearchPreloader` component and integrated it into the Customer ID search workflow.
+
+### Key Details:
+- **Enabled Preloader Files**: Linked [customer-search-preloader.css](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/customer-search/customer-search-preloader.css) and [customer-search-preloader.js](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/customer-search/customer-search-preloader.js) inside [customer-search.html](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/customer-search/customer-search.html) to define the `window.SearchPreloader` component in the search context.
+- **Redirection Preloader**: When a customer ID is searched, [customer-search.js](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/customer-search/customer-search.js) now triggers the animated loading preloader for `1200ms` before redirecting the browser to `index.html`. This ensures consistent loading UX across all search types (CID, Email, Phone).
+
+---
+
+## 10. Keep Header Visible & Added Refresh Button on Empty States (Leads & Cases)
+
+To ensure creation actions are always available, empty data states no longer hide the module header. Additionally, we added a Refresh feature to fetch real-time updates without refreshing the entire browser.
+
+### Key Details:
+- **Always-Visible Action Headers**: Instead of calling `showEmptyState("#qm-content")` (which wipes out the entire module view including header buttons) when a customer has no leads or cases, the page now loads the full layout and displays a user-friendly call to action inside the table body rows.
+- **Header Refresh Buttons**: Integrated a `🔄 Refresh` button in both the Leads and Cases headers. Clicking this button dynamically triggers an API reload and table redraw, allowing the user to fetch newly added cases or leads instantly.
+
+---
+
+## 11. Table Grid Skeleton Shimmer Loading (Leads & Cases)
+
+Rather than rendering generic full-page loading indicators or spinners, we implemented a custom skeleton loader style inside the table bodies.
+
+### Key Details:
+- **Custom Shimmer Animation**: Added class definitions for `.skeleton-row` and `.skeleton-cell` at the end of [style.css](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/style.css), with custom CSS keyframes (`tableShimmerSweep`) creating a linear gradient sweep matching the theme (light and dark mode adapted).
+- **Inline Skeleton Rows**: When fetching data in [leads-module.js](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/modules/lead/leads-module.js) and [case-module.js](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/modules/case/case-module.js), the table body gets dynamically populated with shimmering skeleton rows during the API request.
+
+---
+
+## 12. Verification Plan
 
 ### Manual Verification
 1. Ensure the mock api server is running:

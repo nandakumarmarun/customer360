@@ -82,7 +82,9 @@
     }
 
     const endpoint = window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.HOLDINGS;
-    const params = { id: currentCustomerId };
+    const paramKey = (window.API_CONFIG && window.API_CONFIG.PARAMS && window.API_CONFIG.PARAMS.CUSTOMER_ID) || "customerId";
+    const params = {};
+    params[paramKey] = currentCustomerId;
 
     if (window.ApiService) {
       window.ApiService.get(

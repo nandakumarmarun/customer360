@@ -403,20 +403,22 @@
           $('#detail-case-id').text(item.caseId);
           
           // Type Badge
-          const typeClass = item.caseType.toLowerCase() === 'complaint' ? 'badge-type-complaint' : 'badge-type-request';
-          $('#detail-case-type').html(`<span class="case-badge ${typeClass}">${item.caseType}</span>`);
+          const caseType = item.caseType || 'Request';
+          const typeClass = caseType.toLowerCase() === 'complaint' ? 'badge-type-complaint' : 'badge-type-request';
+          $('#detail-case-type').html(`<span class="case-badge ${typeClass}">${caseType}</span>`);
           
           // Request Type
-          $('#detail-request-type').text(item.requestType);
+          $('#detail-request-type').text(item.requestType || '');
           
           // Status Badge
           let statusClass = 'badge-status-closed';
-          const statusLower = item.status.toLowerCase();
+          const statusText = item.status || 'Unknown';
+          const statusLower = statusText.toLowerCase();
           if (statusLower === 'open') statusClass = 'badge-status-open';
           else if (statusLower === 'in progress') statusClass = 'badge-status-inprogress';
           else if (statusLower === 'resolved') statusClass = 'badge-status-resolved';
           else if (statusLower === 'rejected') statusClass = 'badge-status-rejected';
-          $('#detail-status').html(`<span class="case-badge ${statusClass}">${item.status}</span>`);
+          $('#detail-status').html(`<span class="case-badge ${statusClass}">${statusText}</span>`);
           
           // Created Date
           $('#detail-created-date').text(item.createdDate);

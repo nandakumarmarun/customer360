@@ -98,15 +98,33 @@
       $('.header-name').text(data.name);
       $('.header-id').text(`CID · ${data.cid}`);
 
-      $('.header-stat').each(function () {
-        const label = $(this).find('.stat-label').text().trim().toLowerCase();
-        const $val = $(this).find('.stat-value');
-        if (label === 'net worth') {
-          $val.text(data.netWorth);
-        } else if (label === 'credit score') {
-          $val.text(data.creditScore);
-        } else if (label === 'risk level') {
-          $val.text(data.riskLevel);
+      const $headerCenter = $('.header-center');
+      $headerCenter.empty();
+      
+      let stats = [];
+      
+      // Support dynamic arbitrary header stats if provided as an object
+      if (data.headerStats && typeof data.headerStats === 'object') {
+        for (const [key, val] of Object.entries(data.headerStats)) {
+          stats.push({ label: key, value: val });
+        }
+      } else {
+        // Fallback: check for standard fields, only add if they exist in the JSON
+        if (data.netWorth) stats.push({ label: "Net Worth", value: data.netWorth });
+        if (data.creditScore) stats.push({ label: "Credit Score", value: data.creditScore, class: "credit-good" });
+        if (data.riskLevel) stats.push({ label: "Risk Level", value: data.riskLevel, class: "risk-low" });
+      }
+
+      // Render stats dynamically with dividers
+      stats.forEach((stat, index) => {
+        $headerCenter.append(`
+          <div class="header-stat">
+            <span class="stat-label">${escapeHtml(stat.label)}</span>
+            <span class="stat-value ${stat.class || ''}">${escapeHtml(stat.value)}</span>
+          </div>
+        `);
+        if (index < stats.length - 1) {
+          $headerCenter.append('<div class="header-divider"></div>');
         }
       });
 
@@ -206,18 +224,18 @@
         $('.rm-phone-number').text(data.rmPhone || '');
       }
 
-      // 6. Live Alerts Ticker
+      // 6. Live Alerts Ticker — Bulletproof HTML marquee for guaranteed slow constant speed
       if (data.alerts && Array.isArray(data.alerts) && data.alerts.length > 0) {
-        const $tickerContent = $('.ticker-content');
-        $tickerContent.empty();
-        data.alerts.forEach(alert => {
-          $tickerContent.append(`<span>${escapeHtml(alert)}</span>`);
-        });
+        const $alertTicker = $('.alert-ticker');
+        $alertTicker.empty();
 
-        // Ensure animation triggers smoothly by resetting the animation
-        $tickerContent.css('animation', 'none');
-        $tickerContent[0].offsetHeight; // trigger reflow
-        $tickerContent.css('animation', '');
+        const spansHtml = data.alerts.map(alert => `<span style="margin-right: 60px;">🔔 ${escapeHtml(alert)}</span>`).join('');
+        
+        $alertTicker.html(`
+          <marquee class="ticker-content" scrollamount="2" scrolldelay="10" onmouseover="this.stop();" onmouseout="this.start();" style="width: 100%;">
+            ${spansHtml}
+          </marquee>
+        `);
       }
 
       // 7. Dynamic Notifications Panel

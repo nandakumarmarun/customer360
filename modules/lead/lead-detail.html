@@ -303,9 +303,10 @@
       $('#lead-date-val').text(lead.createdDate);
       
       const $status = $('#lead-status-val');
-      $status.text(lead.status);
+      const statusVal = lead.status || 'Unknown';
+      $status.text(statusVal);
       $status.removeClass('approved pending in-progress rejected')
-             .addClass(lead.status.toLowerCase().replace(/\\s+/g, '-'));
+             .addClass(statusVal.toLowerCase().replace(/\s+/g, '-'));
     }
 
     function showError(msg) {

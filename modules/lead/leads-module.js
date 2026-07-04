@@ -106,6 +106,30 @@
       transform: translateY(0);
     }
 
+    .qm-back-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+    }
+
+    .qm-back-btn:hover {
+      background: var(--glass2);
+      border-color: var(--accent2);
+      color: var(--text);
+      transform: translateX(-2px);
+    }
+
     /* Leads Container Layout */
     .leads-container {
       display: flex;
@@ -222,6 +246,13 @@
       outline: none;
       cursor: pointer;
       transition: all 0.3s ease;
+      color-scheme: dark;
+    }
+
+    .light-mode .leads-page-size-select {
+      background: #ffffff;
+      color: #0f172a;
+      color-scheme: light;
     }
 
     .leads-page-size-select:focus {
@@ -287,6 +318,7 @@
       border-radius: 12px;
       background: var(--glass);
       box-shadow: var(--shadow);
+      min-height: 440px;
       max-height: calc(100vh - 275px);
       scrollbar-width: thin;
       scrollbar-color: var(--border) transparent;
@@ -354,6 +386,11 @@
 
     .leads-table tr:last-child td {
       border-bottom: none;
+    }
+
+    .leads-table tbody {
+      min-height: 400px;
+      display: table-row-group;
     }
 
     .leads-table-body tr {
@@ -602,11 +639,17 @@
             <p class="qm-header-subtitle">Customer leads and acquisition details</p>
           </div>
         </div>
-        <div class="qm-header-actions">
+        <div class="qm-header-actions" style="display: flex; align-items: center; gap: 8px;">
+          <button class="qm-action-btn" id="refresh-leads-btn">🔄 Refresh</button>
           <a href="modules/lead/lead-create.html" target="_blank" class="qm-action-btn" id="create-lead-btn">➕ Create Lead</a>
         </div>
       `;
       $header.append(headerHtml);
+
+      // Bind refresh handler
+      $("#refresh-leads-btn").on("click", function () {
+        loadLeads();
+      });
 
       headerRestored = false;
     }
@@ -639,11 +682,26 @@
     const $content = $("#qm-content");
     if (!$content.length) return;
 
-    // Use standard loaders from ui-renderer.js
-    if (window.UIRenderer) {
-      window.UIRenderer.showLoader("#qm-content");
-    } else {
-      $content.html("<div style='text-align:center; padding: 40px;'>Loading...</div>");
+    // Ensure layout structure is initialized so we have the table body
+    if (!$(".leads-container").length) {
+      initLeadsLayout();
+    }
+
+    // Render skeleton loading rows inside the table body
+    const $tbody = $("#leads-tbody");
+    if ($tbody.length) {
+      $tbody.empty();
+      for (let i = 0; i < 5; i++) {
+        $tbody.append(`
+          <tr class="skeleton-row">
+            <td class="col-id"><div class="skeleton-cell" style="width: 80%;"></div></td>
+            <td class="col-prod"><div class="skeleton-cell" style="width: 90%;"></div></td>
+            <td class="col-status"><div class="skeleton-cell" style="width: 60%; height: 20px; border-radius: 10px;"></div></td>
+            <td class="col-date"><div class="skeleton-cell" style="width: 70%;"></div></td>
+            <td class="col-action"><div class="skeleton-cell" style="width: 50%; margin: 0 auto;"></div></td>
+          </tr>
+        `);
+      }
     }
 
     // Extract customer ID dynamically from global storage
@@ -669,7 +727,7 @@
         params,
         function (response) {
           if (window.UIRenderer) window.UIRenderer.hideLoader("#qm-content");
-          
+
           let dataList = null;
           if (response && response.data) {
             dataList = response.data;
@@ -677,16 +735,8 @@
             dataList = response;
           }
 
-          if (dataList && dataList.length > 0) {
-            allLeads = dataList;
-            initLeadsLayout();
-          } else {
-            if (window.UIRenderer) {
-              window.UIRenderer.showEmptyState("#qm-content");
-            } else {
-              $content.html("<div style='text-align:center; padding: 40px;'>No leads data available.</div>");
-            }
-          }
+          allLeads = dataList || [];
+          initLeadsLayout();
         },
         function (error) {
           if (window.UIRenderer) {
@@ -868,10 +918,13 @@
     $tbody.empty();
 
     if (totalRecords === 0) {
+      const msg = (searchQuery || statusFilter !== "All")
+        ? "No leads match your search criteria."
+        : "No leads data available. Click 'Create Lead' above to add a new lead.";
       $tbody.append(`
         <tr>
-          <td colspan="5" style="text-align: center; color: var(--muted); font-style: italic;">
-            No leads match your search criteria.
+          <td colspan="5" style="text-align: center; color: var(--muted); padding: 40px; font-style: italic;">
+            ${msg}
           </td>
         </tr>
       `);
@@ -913,15 +966,39 @@
     const $pageNumContainer = $("#leads-page-numbers");
     $pageNumContainer.empty();
 
-    for (let p = 1; p <= maxPage; p++) {
-      const activeClass = p === currentPage ? "active" : "";
-      const $btn = $(`<button class="leads-num-btn ${activeClass}">${p}</button>`);
-      $btn.on("click", function () {
-        currentPage = p;
-        applyFiltersAndRender();
-      });
-      $pageNumContainer.append($btn);
+    getPageRange(currentPage, maxPage).forEach(function (item) {
+      if (item === "...") {
+        $pageNumContainer.append(`<span class="leads-num-ellipsis">...</span>`);
+      } else {
+        const activeClass = Number(item) === Number(currentPage) ? "active" : "";
+        const $btn = $(`<button class="leads-num-btn ${activeClass}">${item}</button>`);
+        $btn.on("click", function () {
+          currentPage = Number(item);
+          applyFiltersAndRender();
+        });
+        $pageNumContainer.append($btn);
+      }
+    });
+  }
+
+  // Helper: build page range with ellipses
+  function getPageRange(current, total) {
+    current = Number(current) || 1;
+    total = Number(total) || 1;
+    const range = [];
+    const delta = 1;
+    for (let i = 1; i <= total; i++) {
+      if (
+        i === 1 ||
+        i === total ||
+        (i >= current - delta && i <= current + delta)
+      ) {
+        range.push(i);
+      } else if (range[range.length - 1] !== "...") {
+        range.push("...");
+      }
     }
+    return range;
   }
 
   // Helper for escaping HTML strings

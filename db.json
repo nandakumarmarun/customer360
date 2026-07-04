@@ -22,9 +22,11 @@
       "accountsCount": "12",
       "tenure": "8yr",
       "kycProgress": "99%",
-      "netWorth": "$2.4M",
-      "creditScore": "842",
-      "riskLevel": "Low",
+      "headerStats": {
+        "Net Worth": "$2.4M",
+        "Credit Score": "842",
+        "Risk Level": "Low"
+      },
       "gender": "Male",
       "branchId": "8082",
       "branchName": "New York Office",
@@ -850,6 +852,7 @@
     {
       "id": "NX-4829-0055",
       "customer": "NX-4829-0055",
+      "customerId": "NX-4829-0055",
       "assets": {
         "subcategoriesCount": 1,
         "accountsCount": 2

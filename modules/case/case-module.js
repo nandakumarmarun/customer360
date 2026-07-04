@@ -118,7 +118,7 @@
     }
 
     .cases-page-size-select {
-      background: var(--glass);
+      background: var(--bg2);
       border: 1px solid var(--border);
       color: var(--text);
       padding: 5px 10px;
@@ -128,11 +128,18 @@
       outline: none;
       cursor: pointer;
       transition: all 0.3s ease;
+      color-scheme: dark;
+    }
+
+    .light-mode .cases-page-size-select {
+      background: #ffffff;
+      color: #0f172a;
+      color-scheme: light;
     }
 
     .cases-page-size-select:focus {
       border-color: var(--accent2);
-      background: var(--glass2);
+      background: var(--bg2);
     }
 
     /* Filter Panel */
@@ -189,12 +196,14 @@
     /* Data Grid Table */
     .cases-table-container {
       overflow-x: auto;
+      overflow-y: hidden;
       border-radius: 12px;
       border: 1px solid var(--border);
       background: var(--glass);
       box-shadow: var(--shadow);
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
+      min-height: 380px;
     }
 
     .cases-table {
@@ -243,6 +252,11 @@
 
     .cases-table tbody tr:last-child td {
       border-bottom: none;
+    }
+
+    .cases-table tbody {
+      min-height: 320px;
+      display: table-row-group;
     }
 
     /* Col Widths */
@@ -456,6 +470,30 @@
       font-size: 10px;
       color: var(--accent2);
     }
+
+    .qm-back-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+    }
+
+    .qm-back-btn:hover {
+      background: var(--glass2);
+      border-color: var(--accent2);
+      color: var(--text);
+      transform: translateX(-2px);
+    }
   `;
 
   // Inject Styles dynamically
@@ -493,11 +531,17 @@
           </div>
         </div>
         <div class="qm-header-actions" style="display: flex; align-items: center; gap: 8px;">
+          <button class="qm-action-btn" id="refresh-cases-btn">🔄 Refresh</button>
           <a href="modules/case/case-create.html" target="_blank" class="qm-action-btn" id="create-case-btn">📁 Create Case</a>
           <a href="modules/case/complaint-create.html" target="_blank" class="qm-action-btn" id="create-complaint-btn">⚠️ Create Complaint</a>
         </div>
       `;
       $header.append(headerHtml);
+
+      // Bind refresh handler
+      $("#refresh-cases-btn").on("click", function () {
+        loadCases();
+      });
 
       headerRestored = false;
     }
@@ -519,10 +563,27 @@
     const $content = $("#qm-content");
     if (!$content.length) return;
 
-    if (window.UIRenderer) {
-      window.UIRenderer.showLoader("#qm-content");
-    } else {
-      $content.html("<div style='text-align:center; padding: 40px;'>Loading...</div>");
+    // Ensure layout structure is initialized so we have the table body
+    if (!$(".cases-container").length) {
+      initCasesLayout();
+    }
+
+    // Render skeleton loading rows inside the table body
+    const $tbody = $("#cases-tbody");
+    if ($tbody.length) {
+      $tbody.empty();
+      for (let i = 0; i < 5; i++) {
+        $tbody.append(`
+          <tr class="skeleton-row">
+            <td class="col-id"><div class="skeleton-cell" style="width: 80%;"></div></td>
+            <td class="col-type"><div class="skeleton-cell" style="width: 70%; height: 20px; border-radius: 10px;"></div></td>
+            <td class="col-req"><div class="skeleton-cell" style="width: 90%;"></div></td>
+            <td class="col-status"><div class="skeleton-cell" style="width: 60%; height: 20px; border-radius: 10px;"></div></td>
+            <td class="col-date"><div class="skeleton-cell" style="width: 70%;"></div></td>
+            <td class="col-action"><div class="skeleton-cell" style="width: 50%; margin: 0 auto;"></div></td>
+          </tr>
+        `);
+      }
     }
 
     const cid = (window.ParamsData && window.ParamsData.getCustomerId) ? window.ParamsData.getCustomerId() : null;
@@ -553,24 +614,8 @@
             dataList = response;
           }
 
-          if (dataList && dataList.length > 0) {
-            allCases = dataList.filter(c => c.customer === cid);
-            if (allCases.length > 0) {
-              initCasesLayout();
-            } else {
-              if (window.UIRenderer) {
-                window.UIRenderer.showEmptyState("#qm-content");
-              } else {
-                $content.html("<div style='text-align:center; padding: 40px;'>No case data available.</div>");
-              }
-            }
-          } else {
-            if (window.UIRenderer) {
-              window.UIRenderer.showEmptyState("#qm-content");
-            } else {
-              $content.html("<div style='text-align:center; padding: 40px;'>No case data available.</div>");
-            }
-          }
+          allCases = (dataList || []).filter(c => c.customer === cid);
+          initCasesLayout();
         },
         function (errorMessage) {
           if (window.UIRenderer) {
@@ -787,10 +832,13 @@
     $tbody.empty();
 
     if (totalRecords === 0) {
+      const msg = (searchQuery || statusFilter !== "All")
+        ? "No cases match your search criteria."
+        : "No cases found. Click 'Create Case' or 'Create Complaint' above to add one.";
       $tbody.append(`
         <tr>
-          <td colspan="6" style="text-align: center; color: var(--muted); font-style: italic; padding: 30px;">
-            No cases match your search criteria.
+          <td colspan="6" style="text-align: center; color: var(--muted); padding: 40px; font-style: italic;">
+            ${msg}
           </td>
         </tr>
       `);
@@ -847,15 +895,39 @@
     const $pageNumContainer = $("#cases-page-numbers");
     $pageNumContainer.empty();
 
-    for (let p = 1; p <= maxPage; p++) {
-      const activeClass = p === currentPage ? "active" : "";
-      const $btn = $(`<button class="cases-num-btn ${activeClass}">${p}</button>`);
-      $btn.on("click", function () {
-        currentPage = p;
-        applyFiltersAndRender();
-      });
-      $pageNumContainer.append($btn);
+    getPageRange(currentPage, maxPage).forEach(function (item) {
+      if (item === "...") {
+        $pageNumContainer.append(`<span class="cases-num-ellipsis">...</span>`);
+      } else {
+        const activeClass = Number(item) === Number(currentPage) ? "active" : "";
+        const $btn = $(`<button class="cases-num-btn ${activeClass}">${item}</button>`);
+        $btn.on("click", function () {
+          currentPage = Number(item);
+          applyFiltersAndRender();
+        });
+        $pageNumContainer.append($btn);
+      }
+    });
+  }
+
+  // Helper: build page range with ellipses
+  function getPageRange(current, total) {
+    current = Number(current) || 1;
+    total = Number(total) || 1;
+    const range = [];
+    const delta = 1;
+    for (let i = 1; i <= total; i++) {
+      if (
+        i === 1 ||
+        i === total ||
+        (i >= current - delta && i <= current + delta)
+      ) {
+        range.push(i);
+      } else if (range[range.length - 1] !== "...") {
+        range.push("...");
+      }
     }
+    return range;
   }
 
   // Helper for escaping HTML strings

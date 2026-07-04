@@ -2,14 +2,14 @@
  * Customer Search View Module - Scoped Logic
  * Handles Three.js background, theme updates, UI layout actions, sorting, and pagination.
  */
-(function() {
+(function () {
   console.log("customer-search.js IIFE executed");
   // Global View State
   let threeObjects = {};
   let currentSearchResults = [];
   let filteredSearchResults = [];
   let currentPage = 1;
-  const pageSize = 5; // Compact listing layout
+  let pageSize = 10; // Dynamic pagination size
 
   let dataLoaded = false;
   let preloaderFinished = false;
@@ -22,15 +22,15 @@
   }
 
   /* ====== INITIALIZATION ====== */
-  $(function() {
+  $(function () {
     console.log("customer-search.js document ready executed");
     initThreeBackground();
     initThemeState();
-    
+
     // Update illustration image path from configuration if defined
     const searchAssetsPath = (window.ASSETS_CONFIG && window.ASSETS_CONFIG.SEARCH_ASSETS_PATH) || 'assets/';
     $('.search-illustration-container img').attr('src', `${searchAssetsPath}search-icon.svg`);
-    
+
     function playEntranceAnimation() {
       if (typeof gsap !== 'undefined') {
         gsap.fromTo('.customer-search-experience',
@@ -43,7 +43,7 @@
     function onBothCompleted() {
       $('.customer-search-page').removeClass('hidden');
       playEntranceAnimation();
-      
+
       // If there was a loading error, automatically show results card in error state
       if (loadError) {
         const $results = $('#results-card');
@@ -57,7 +57,7 @@
 
     // 2. Trigger page load preloader
     if (window.Customer360Preloader) {
-      window.Customer360Preloader.show(function() {
+      window.Customer360Preloader.show(function () {
         preloaderFinished = true;
         if (dataLoaded) {
           onBothCompleted();
@@ -113,7 +113,7 @@
       root.classList.remove('theme-neon');
     }
 
-    $('.theme-picker-btn').each(function() {
+    $('.theme-picker-btn').each(function () {
       if ($(this).data('theme') === theme) {
         $(this).addClass('active');
       } else {
@@ -166,7 +166,7 @@
       new THREE.OctahedronGeometry(4, 0),
       new THREE.TetrahedronGeometry(3, 0)
     ];
-    
+
     const meshes = [];
     for (let i = 0; i < 6; i++) {
       const geo = geos[i % geos.length];
@@ -204,13 +204,13 @@
       camera.position.x += (mouseX * 10 - camera.position.x) * 0.02;
       camera.position.y += (-mouseY * 6 - camera.position.y) * 0.02;
       camera.lookAt(scene.position);
-      
+
       meshes.forEach((m, i) => {
         m.rotation.x += m.userData.speed.x;
         m.rotation.y += m.userData.speed.y;
         m.position.y += Math.sin(t + i) * 0.02;
       });
-      
+
       renderer.render(scene, camera);
     }
     animate();
@@ -270,8 +270,16 @@
     }
 
     if (type === "cid") {
-      // Redirect directly to Customer 360 page (index.html) with Base64 masked Customer ID
-      window.location.href = `../index.html?customerId=${encodeURIComponent(btoa(inputVal))}`;
+      const performRedirect = function () {
+        // Redirect directly to Customer 360 page (index.html) with Base64 masked Customer ID
+        window.location.href = `../index.html?customerId=${encodeURIComponent(btoa(inputVal))}`;
+      };
+
+      if (window.SearchPreloader) {
+        window.SearchPreloader.show(performRedirect, 0, true);
+      } else {
+        performRedirect();
+      }
     } else {
       // Show loading preloader before starting the search
       if (window.SearchPreloader) {
@@ -297,7 +305,7 @@
         window.CustomerSearchController.searchCustomers(
           type,
           inputVal,
-          function(response) {
+          function (response) {
             // Map single details object response or array to currentSearchResults
             if (response) {
               const parseItem = (item) => ({
@@ -317,12 +325,12 @@
             } else {
               currentSearchResults = [];
             }
-            
+
             currentPage = 1;
             applyFiltersAndRenderTable();
             scrollToResults();
           },
-          function(errorMsg) {
+          function (errorMsg) {
             loadError = errorMsg;
             currentSearchResults = [];
             currentPage = 1;
@@ -346,15 +354,13 @@
   /* ====== FILTERS ====== */
   function applyFiltersAndRenderTable() {
     const status = $('.status-btn.active').data('status') || 'All';
-    const dateFrom = $('#date-from').val();
-    const dateTo = $('#date-to').val();
 
     // 1. Filter results via Controller layer
     filteredSearchResults = window.CustomerSearchController.filterResults(
       currentSearchResults,
       status,
-      dateFrom,
-      dateTo
+      null,
+      null
     );
 
     // 2. Update count statistics
@@ -368,19 +374,19 @@
     const $tbody = $('#results-tbody');
     const $tableContainer = $('#table-container-div');
     const $overlayContainer = $('#results-overlay-div');
-    
+
     $tbody.empty();
 
     if (filteredSearchResults.length === 0) {
       // Show empty state or error overlay inside list card
       $tableContainer.hide();
-      
+
       const errorTitle = loadError ? "Connection Error" : "No Records Found";
       const errorIcon = loadError ? "⚠️" : "📭";
-      const errorDesc = loadError 
+      const errorDesc = loadError
         ? `Failed to load customers list from database: ${escapeHtml(loadError)}. Please verify the API server is running.`
         : "We couldn't find any customers matching the criteria. Try clearing the filters.";
-        
+
       $overlayContainer.html(`
         <div class="results-overlay-container">
           <div class="results-overlay-icon">${errorIcon}</div>
@@ -388,7 +394,7 @@
           <div class="results-overlay-desc">${errorDesc}</div>
         </div>
       `).show();
-      
+
       updatePaginationControls(0);
       return;
     }
@@ -402,9 +408,10 @@
     const paginatedList = filteredSearchResults.slice(startIdx, endIdx);
 
     paginatedList.forEach(item => {
-      const statusClass = item.status.toLowerCase();
+      const statusText = item.status || "Unknown";
+      const statusClass = statusText.toLowerCase();
       const profileUrl = `../index.html?customerId=${encodeURIComponent(btoa(item.id))}`;
-      
+
       const rowHtml = `
         <tr>
           <td>
@@ -414,7 +421,7 @@
           <td>${escapeHtml(item.email)}</td>
           <td>${escapeHtml(item.phone)}</td>
           <td>
-            <span class="search-status-badge ${statusClass}">${escapeHtml(item.status)}</span>
+            <span class="search-status-badge ${statusClass}">${escapeHtml(statusText)}</span>
           </td>
           <td style="color: var(--muted);">${escapeHtml(item.createdDate)}</td>
           <td style="text-align: center;">
@@ -449,11 +456,33 @@
     const $nums = $('#pagination-page-numbers');
     $nums.empty();
 
-    for (let p = 1; p <= totalPages; p++) {
-      const activeClass = p === currentPage ? 'active' : '';
-      const $btn = $(`<button class="pagination-num-btn ${activeClass}">${p}</button>`);
-      $nums.append($btn);
+    getPageRange(currentPage, totalPages).forEach(function (item) {
+      if (item === '...') {
+        $nums.append(`<span class="pagination-ellipsis">...</span>`);
+      } else {
+        const activeClass = item === currentPage ? 'active' : '';
+        const $btn = $(`<button class="pagination-num-btn ${activeClass}">${item}</button>`);
+        $nums.append($btn);
+      }
+    });
+  }
+
+  // Helper: build page range with ellipses
+  function getPageRange(current, total) {
+    const range = [];
+    const delta = 1;
+    for (let i = 1; i <= total; i++) {
+      if (
+        i === 1 ||
+        i === total ||
+        (i >= current - delta && i <= current + delta)
+      ) {
+        range.push(i);
+      } else if (range[range.length - 1] !== '...') {
+        range.push('...');
+      }
     }
+    return range;
   }
 
   /* ====== GLOBAL EVENT DELEGATION ====== */
@@ -461,7 +490,7 @@
     const root = document.documentElement;
 
     // 1. Theme light/dark toggle button click
-    $(document).on('click', '#theme-toggle', function() {
+    $(document).on('click', '#theme-toggle', function () {
       if (!document.querySelector('.customer-search-page')) return;
       console.log("theme toggle clicked via delegation");
       const isLight = root.classList.toggle('light-mode');
@@ -503,13 +532,13 @@
     });
 
     // 2. Bind click listeners for color themes
-    $(document).on('click', '.theme-picker-btn', function(e) {
+    $(document).on('click', '.theme-picker-btn', function (e) {
       if (!document.querySelector('.customer-search-page')) return;
       e.stopPropagation();
       const theme = $(this).data('theme');
       console.log("color picker clicked via delegation, theme:", theme);
       applyColorTheme(theme);
-      
+
       const currentMode = root.classList.contains('light-mode') ? 'light' : 'dark';
       if (window.ThemeModule) {
         console.log("Saving theme mode and color:", currentMode, theme);
@@ -518,10 +547,10 @@
     });
 
     // 3. Dynamic placeholder switching based on selection
-    $(document).on('change', '#search-type', function() {
+    $(document).on('change', '#search-type', function () {
       const type = $(this).val();
       const $input = $('#search-input');
-      
+
       if (type === "cid") {
         $input.attr("placeholder", "Enter Customer ID (e.g. NX-4829-0055)...");
       } else if (type === "email") {
@@ -532,50 +561,44 @@
     });
 
     // 4. Form submit listener
-    $(document).on('click', '#search-btn', function() {
+    $(document).on('click', '#search-btn', function () {
       executeSearch();
     });
 
     // 5. Keypress listener for search input
-    $(document).on('keypress', '#search-input', function(e) {
+    $(document).on('keypress', '#search-input', function (e) {
       if (e.which === 13) {
         executeSearch();
       }
     });
 
     // 6. Active / Inactive Status Toggles
-    $(document).on('click', '.status-btn', function() {
+    $(document).on('click', '.status-btn', function () {
       $('.status-btn').removeClass('active');
       $(this).addClass('active');
       currentPage = 1;
       applyFiltersAndRenderTable();
     });
 
-    // 7. Date Range inputs
-    $(document).on('change', '.date-input', function() {
-      currentPage = 1;
-      applyFiltersAndRenderTable();
-    });
-
     // 8. Clear filters click
-    $(document).on('click', '#btn-clear-filters', function() {
+    $(document).on('click', '#btn-clear-filters', function () {
       $('.status-btn').removeClass('active');
       $('.status-btn[data-status="All"]').addClass('active');
-      $('#date-from').val('');
-      $('#date-to').val('');
+      $('#results-page-size').val(10);
+      pageSize = 10;
       currentPage = 1;
       applyFiltersAndRenderTable();
     });
 
     // 9. Pagination buttons
-    $(document).on('click', '#prev-btn', function() {
+    $(document).on('click', '#prev-btn', function () {
       if (currentPage > 1) {
         currentPage--;
         renderTableRows();
       }
     });
 
-    $(document).on('click', '#next-btn', function() {
+    $(document).on('click', '#next-btn', function () {
       const totalPages = Math.ceil(filteredSearchResults.length / pageSize) || 1;
       if (currentPage < totalPages) {
         currentPage++;
@@ -584,12 +607,32 @@
     });
 
     // 10. Page number links
-    $(document).on('click', '.pagination-num-btn', function() {
+    $(document).on('click', '.pagination-num-btn', function () {
       const p = parseInt($(this).text(), 10);
       if (!isNaN(p)) {
         currentPage = p;
         renderTableRows();
       }
+    });
+
+    // 11. Click on search results row links to redirect with preloader
+    $(document).on('click', '.results-cid-link, .action-view-btn', function (e) {
+      e.preventDefault();
+      const profileUrl = $(this).attr('href');
+      if (window.SearchPreloader) {
+        window.SearchPreloader.show(function () {
+          window.location.href = profileUrl;
+        }, 0, true);
+      } else {
+        window.location.href = profileUrl;
+      }
+    });
+
+    // 12. Page size dropdown listener
+    $(document).on('change', '#results-page-size', function () {
+      pageSize = parseInt($(this).val(), 10);
+      currentPage = 1;
+      applyFiltersAndRenderTable();
     });
   }
 
