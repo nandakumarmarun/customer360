@@ -14,6 +14,12 @@ window.API_CONFIG = {
     CREATE_COMPLAINT: "modules/case/complaint-create.html"
   },
 
+  // Complete URLs for details view
+  DETAIL_URLS: {
+    LEAD_DETAIL: "modules/lead/lead-detail.html",
+    CASE_DETAIL: "modules/case/case-detail.html"
+  },
+
   // Grouped Endpoints for easy modification
   ENDPOINTS: {
     CUSTOMER: "/customer",

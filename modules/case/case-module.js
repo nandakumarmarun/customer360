@@ -921,12 +921,10 @@
         else if (statusLower === "resolved") statusClass = "resolved";
         else if (statusLower === "rejected") statusClass = "rejected";
 
-        const detailUrl = `modules/case/case-detail.html?id=${encodeURIComponent(item.caseId)}`;
-
         const rowHtml = `
           <tr>
             <td class="col-id" style="font-family: 'JetBrains Mono', monospace;">
-              <a href="${detailUrl}" target="_blank" class="case-id-link" title="Open details for ${escapeHtml(item.caseId)} in new tab">${escapeHtml(item.caseId)}</a>
+              <a href="javascript:void(0)" class="case-id-link" data-id="${item.caseId}" title="Open details for ${escapeHtml(item.caseId)}">${escapeHtml(item.caseId)}</a>
             </td>
             <td class="col-type">
               <span class="type-badge ${typeClass}">${escapeHtml(typeText)}</span>
@@ -937,7 +935,7 @@
             </td>
             <td class="col-date" style="color: var(--muted);">${escapeHtml(item.createdDate)}</td>
             <td class="col-action" style="text-align: center;">
-              <a href="${detailUrl}" target="_blank" class="cases-table-action-btn" title="View details for ${escapeHtml(item.caseId)}">👁️ View</a>
+              <a href="javascript:void(0)" class="cases-table-action-btn" data-id="${item.caseId}" title="View details for ${escapeHtml(item.caseId)}">👁️ View</a>
             </td>
           </tr>
         `;
@@ -1007,6 +1005,16 @@
 
   // ── MUTATIONOBSERVER ON QUICK MODULE TITLES ──
   $(function () {
+    // Bind event delegation for details clicks
+    $(document).on("click", ".case-id-link, .cases-table-action-btn", function (e) {
+      e.preventDefault();
+      const id = $(this).attr("data-id");
+      if (!id) return;
+      const configUrl = (window.API_CONFIG && window.API_CONFIG.DETAIL_URLS && window.API_CONFIG.DETAIL_URLS.CASE_DETAIL) || "modules/case/case-detail.html";
+      const url = `${configUrl}?id=${encodeURIComponent(id)}`;
+      window.open(url, "_blank");
+    });
+
     const $titleNode = $("#qm-title");
     if (!$titleNode.length) return;
 

@@ -942,7 +942,7 @@
         const rowHtml = `
           <tr>
             <td class="col-id" style="font-family: 'JetBrains Mono', monospace;">
-              <a href="modules/lead/lead-detail.html?id=${lead.leadId}" target="_blank" class="lead-id-link" title="Open details for ${escapeHtml(lead.leadId)} in new tab">${escapeHtml(lead.leadId)}</a>
+              <a href="javascript:void(0)" class="lead-id-link" data-id="${lead.leadId}" title="Open details for ${escapeHtml(lead.leadId)}">${escapeHtml(lead.leadId)}</a>
             </td>
             <td class="col-prod" style="font-weight: 600;">${escapeHtml(lead.product)}</td>
             <td class="col-status">
@@ -950,7 +950,7 @@
             </td>
             <td class="col-date" style="color: var(--muted);">${escapeHtml(lead.createdDate)}</td>
             <td class="col-action" style="text-align: center;">
-              <a href="modules/lead/lead-detail.html?id=${lead.leadId}" target="_blank" class="leads-table-action-btn" title="View details for ${escapeHtml(lead.leadId)}">👁️ View</a>
+              <a href="javascript:void(0)" class="leads-table-action-btn" data-id="${lead.leadId}" title="View details for ${escapeHtml(lead.leadId)}">👁️ View</a>
             </td>
           </tr>
         `;
@@ -1020,6 +1020,16 @@
 
   // ── MUTATIONOBSERVER ON QUICK MODULE TITLES ──
   $(function () {
+    // Bind event delegation for details clicks
+    $(document).on("click", ".lead-id-link, .leads-table-action-btn", function (e) {
+      e.preventDefault();
+      const id = $(this).attr("data-id");
+      if (!id) return;
+      const configUrl = (window.API_CONFIG && window.API_CONFIG.DETAIL_URLS && window.API_CONFIG.DETAIL_URLS.LEAD_DETAIL) || "modules/lead/lead-detail.html";
+      const url = `${configUrl}?id=${encodeURIComponent(id)}`;
+      window.open(url, "_blank");
+    });
+
     const $titleNode = $("#qm-title");
     if (!$titleNode.length) return;
 
