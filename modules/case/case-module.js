@@ -27,6 +27,35 @@
       animation: casesFadeIn 0.4s ease;
     }
 
+    .qm-action-btn {
+      background: var(--accent);
+      border: 1px solid var(--accent2);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+    }
+
+    .qm-action-btn:hover {
+      background: var(--accent-hover, var(--accent2));
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px var(--glow-shadow);
+    }
+
+    .qm-action-btn:active {
+      transform: translateY(0);
+    }
+
     #quick-module-view .qm-content-area {
       padding: 16px 24px !important;
     }
@@ -555,8 +584,8 @@
         </div>
         <div class="qm-header-actions" style="display: flex; align-items: center; gap: 8px;">
           <button class="qm-action-btn" id="refresh-cases-btn">🔄 Refresh</button>
-          <a href="modules/case/case-create.html" target="_blank" class="qm-action-btn" id="create-case-btn">📁 Create Case</a>
-          <a href="modules/case/complaint-create.html" target="_blank" class="qm-action-btn" id="create-complaint-btn">⚠️ Create Complaint</a>
+          <button class="qm-action-btn" id="create-case-btn">📁 Create Case</button>
+          <button class="qm-action-btn" id="create-complaint-btn">⚠️ Create Complaint</button>
         </div>
       `;
       $header.append(headerHtml);
@@ -564,6 +593,18 @@
       // Bind refresh handler
       $("#refresh-cases-btn").on("click", function () {
         loadCases();
+      });
+
+      // Bind create case handler
+      $("#create-case-btn").on("click", function () {
+        const url = (window.API_CONFIG && window.API_CONFIG.CREATION_URLS && window.API_CONFIG.CREATION_URLS.CREATE_CASE) || "modules/case/case-create.html";
+        window.open(url, "_blank");
+      });
+
+      // Bind create complaint handler
+      $("#create-complaint-btn").on("click", function () {
+        const url = (window.API_CONFIG && window.API_CONFIG.CREATION_URLS && window.API_CONFIG.CREATION_URLS.CREATE_COMPLAINT) || "modules/case/complaint-create.html";
+        window.open(url, "_blank");
       });
 
       headerRestored = false;

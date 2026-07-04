@@ -7,6 +7,13 @@ window.API_CONFIG = {
   BASE_URL: "http://localhost:3000",
   TIMEOUT_MS: 8000,
 
+  // Complete URLs for creation forms
+  CREATION_URLS: {
+    CREATE_LEAD: "modules/lead/lead-create.html",
+    CREATE_CASE: "modules/case/case-create.html",
+    CREATE_COMPLAINT: "modules/case/complaint-create.html"
+  },
+
   // Grouped Endpoints for easy modification
   ENDPOINTS: {
     CUSTOMER: "/customer",

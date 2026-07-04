@@ -641,7 +641,7 @@
         </div>
         <div class="qm-header-actions" style="display: flex; align-items: center; gap: 8px;">
           <button class="qm-action-btn" id="refresh-leads-btn">🔄 Refresh</button>
-          <a href="modules/lead/lead-create.html" target="_blank" class="qm-action-btn" id="create-lead-btn">➕ Create Lead</a>
+          <button class="qm-action-btn" id="create-lead-btn">➕ Create Lead</button>
         </div>
       `;
       $header.append(headerHtml);
@@ -649,6 +649,12 @@
       // Bind refresh handler
       $("#refresh-leads-btn").on("click", function () {
         loadLeads();
+      });
+
+      // Bind create lead handler
+      $("#create-lead-btn").on("click", function () {
+        const url = (window.API_CONFIG && window.API_CONFIG.CREATION_URLS && window.API_CONFIG.CREATION_URLS.CREATE_LEAD) || "modules/lead/lead-create.html";
+        window.open(url, "_blank");
       });
 
       headerRestored = false;
