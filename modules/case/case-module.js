@@ -23,7 +23,8 @@
       gap: 8px;
       width: 100%;
       height: 100%;
-      min-height: 400px;
+      min-height: 0;
+      overflow: hidden;
       animation: casesFadeIn 0.4s ease;
     }
 
@@ -56,8 +57,13 @@
       transform: translateY(0);
     }
 
+
+
     #quick-module-view .qm-content-area {
       padding: 16px 24px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
     }
     
     @keyframes casesFadeIn {
@@ -238,8 +244,8 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
-      min-height: 380px;
-      max-height: calc(100vh - 275px);
+      min-height: 0;
+      max-height: none;
       scrollbar-width: thin;
       scrollbar-color: var(--border) transparent;
     }
@@ -838,6 +844,36 @@
     applyFiltersAndRender();
   }
 
+  // Helper to dynamically generate a premium, theme-appropriate HSL color scheme based on status text hash
+  function getStatusBadgeStyle(status) {
+    const s = (status || "").trim();
+    if (!s) return "";
+    
+    // Hash function
+    let hash = 0;
+    for (let i = 0; i < s.length; i++) {
+      hash = s.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    
+    // Map to a hue (0 - 360)
+    const hue = Math.abs(hash) % 360;
+    
+    // Check if we are in light mode
+    const isLightMode = document.documentElement.classList.contains("light-mode") || document.body.classList.contains("light-mode");
+    
+    if (isLightMode) {
+      const bg = `hsl(${hue}, 85%, 96%)`;
+      const color = `hsl(${hue}, 80%, 30%)`;
+      const border = `hsl(${hue}, 50%, 85%)`;
+      return `background: ${bg} !important; color: ${color} !important; border: 1px solid ${border} !important; box-shadow: 0 0 10px hsl(${hue}, 85%, 95%) !important;`;
+    } else {
+      const bg = `hsl(${hue}, 45%, 11%)`;
+      const color = `hsl(${hue}, 90%, 65%)`;
+      const border = `hsl(${hue}, 40%, 22%)`;
+      return `background: ${bg} !important; color: ${color} !important; border: 1px solid ${border} !important; box-shadow: 0 0 10px hsl(${hue}, 45%, 8%) !important;`;
+    }
+  }
+
   // Filter, Sort, and Render cases
   function applyFiltersAndRender() {
     const $tbody = $("#cases-tbody");
@@ -913,29 +949,24 @@
         const typeClass =
           typeText.toLowerCase() === "complaint" ? "complaint" : "request";
 
-        let statusClass = "closed";
         const statusText = item.status || "Unknown";
-        const statusLower = statusText.toLowerCase();
-        if (statusLower === "open") statusClass = "open";
-        else if (statusLower === "in progress") statusClass = "in-progress";
-        else if (statusLower === "resolved") statusClass = "resolved";
-        else if (statusLower === "rejected") statusClass = "rejected";
+        const statusStyle = getStatusBadgeStyle(statusText);
 
         const rowHtml = `
           <tr>
             <td class="col-id" style="font-family: 'JetBrains Mono', monospace;">
-              <a href="javascript:void(0)" class="case-id-link" data-id="${item.caseId}" title="Open details for ${escapeHtml(item.caseId)}">${escapeHtml(item.caseId)}</a>
+              <a href="javascript:void(0)" class="case-id-link" data-id="${item.caseId}" data-type="${typeClass}" title="Open details for ${escapeHtml(item.caseId)}">${escapeHtml(item.caseId)}</a>
             </td>
             <td class="col-type">
               <span class="type-badge ${typeClass}">${escapeHtml(typeText)}</span>
             </td>
             <td class="col-req" style="font-weight: 600;">${escapeHtml(item.requestType || "")}</td>
             <td class="col-status">
-              <span class="status-badge ${statusClass}">${escapeHtml(statusText)}</span>
+              <span class="status-badge" style="${statusStyle}">${escapeHtml(statusText)}</span>
             </td>
             <td class="col-date" style="color: var(--muted);">${escapeHtml(item.createdDate)}</td>
             <td class="col-action" style="text-align: center;">
-              <a href="javascript:void(0)" class="cases-table-action-btn" data-id="${item.caseId}" title="View details for ${escapeHtml(item.caseId)}">👁️ View</a>
+              <a href="javascript:void(0)" class="cases-table-action-btn" data-id="${item.caseId}" data-type="${typeClass}" title="View details for ${escapeHtml(item.caseId)}">👁️ View</a>
             </td>
           </tr>
         `;
@@ -1009,8 +1040,16 @@
     $(document).on("click", ".case-id-link, .cases-table-action-btn", function (e) {
       e.preventDefault();
       const id = $(this).attr("data-id");
+      const type = $(this).attr("data-type") || "";
       if (!id) return;
-      const configUrl = (window.API_CONFIG && window.API_CONFIG.DETAIL_URLS && window.API_CONFIG.DETAIL_URLS.CASE_DETAIL) || "modules/case/case-detail.html";
+
+      let configUrl = "";
+      if (type === "complaint") {
+        configUrl = (window.API_CONFIG && window.API_CONFIG.DETAIL_URLS && window.API_CONFIG.DETAIL_URLS.COMPLAINT_DETAIL) || "modules/case/complaint-detail.html";
+      } else {
+        configUrl = (window.API_CONFIG && window.API_CONFIG.DETAIL_URLS && window.API_CONFIG.DETAIL_URLS.CASE_DETAIL) || "modules/case/case-detail.html";
+      }
+
       const url = `${configUrl}?id=${encodeURIComponent(id)}`;
       window.open(url, "_blank");
     });

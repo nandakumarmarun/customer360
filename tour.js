@@ -20,6 +20,19 @@ class DashboardTour {
     this.nextStep = this.nextStep.bind(this);
     this.prevStep = this.prevStep.bind(this);
     this.endTour = this.endTour.bind(this);
+
+    // Capture phase event listener to intercept and block clicks on non-highlighted items during the tour
+    document.addEventListener('click', (e) => {
+      if (this.isActive) {
+        const isInsideTooltip = e.target.closest('.tour-tooltip');
+        const isInsideHighlight = e.target.closest('.tour-highlight');
+        if (!isInsideTooltip && !isInsideHighlight) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        }
+      }
+    }, true);
   }
 
   init() {
@@ -178,20 +191,7 @@ class DashboardTour {
       this._actionHandler = null;
     }
     
-    // Reset all highlights and positions
-    document.querySelectorAll('.tour-highlight').forEach(el => {
-      el.classList.remove('tour-highlight');
-      if (el.dataset.tourPositionSet === 'true') {
-        el.style.position = '';
-        delete el.dataset.tourPositionSet;
-      }
-    });
-    
-    // Reset all parent z-indexes
-    document.querySelectorAll('[data-tour-orig-z]').forEach(el => {
-      el.style.zIndex = el.dataset.tourOrigZ === 'auto' ? '' : el.dataset.tourOrigZ;
-      delete el.dataset.tourOrigZ;
-    });
+    this.clearHighlights();
     
     // Handle Center Welcome Card
     if (step.target === 'center') {
@@ -282,9 +282,28 @@ class DashboardTour {
       this._actionHandler = () => {
         targetElement.removeEventListener('click', this._actionHandler);
         this._actionHandler = null;
+        this.clearHighlights(); // Reset highlights immediately so modal animations render on top of the card
         setTimeout(() => this.nextStep(), 800); // Wait 800ms for heavy layout animations
       };
       targetElement.addEventListener('click', this._actionHandler);
+
+      // Create animated neon circular pulse helper
+      const rect = targetElement.getBoundingClientRect();
+      const pointer = document.createElement('div');
+      pointer.className = 'tour-pointer-helper';
+      pointer.innerHTML = `
+        <div class="tour-pulse-ring"></div>
+        <div class="tour-pulse-dot"></div>
+      `;
+      document.body.appendChild(pointer);
+
+      const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+      // Position helper exactly at the top-right corner of the target element
+      pointer.style.top = `${rect.top + scrollY - 10}px`;
+      pointer.style.left = `${rect.right + scrollX - 10}px`;
+      this.pointerHelper = pointer;
     }
   }
 
@@ -337,19 +356,7 @@ class DashboardTour {
 
   endTour(status = 'completed') {
     this.isActive = false;
-    document.querySelectorAll('.tour-highlight').forEach(el => {
-      el.classList.remove('tour-highlight');
-      if (el.dataset.tourPositionSet === 'true') {
-        el.style.position = '';
-        delete el.dataset.tourPositionSet;
-      }
-    });
-    
-    // Reset all parent z-indexes
-    document.querySelectorAll('[data-tour-orig-z]').forEach(el => {
-      el.style.zIndex = el.dataset.tourOrigZ === 'auto' ? '' : el.dataset.tourOrigZ;
-      delete el.dataset.tourOrigZ;
-    });
+    this.clearHighlights();
     
     if (this.overlay) {
       this.overlay.remove();
@@ -365,6 +372,28 @@ class DashboardTour {
     if (status === 'completed') {
       localStorage.setItem('dashboard_tour_completed', 'true');
     }
+  }
+
+  clearHighlights() {
+    if (this.pointerHelper) {
+      this.pointerHelper.remove();
+      this.pointerHelper = null;
+    }
+
+    // Reset all highlights and positions
+    document.querySelectorAll('.tour-highlight').forEach(el => {
+      el.classList.remove('tour-highlight');
+      if (el.dataset.tourPositionSet === 'true') {
+        el.style.position = '';
+        delete el.dataset.tourPositionSet;
+      }
+    });
+    
+    // Reset all parent z-indexes
+    document.querySelectorAll('[data-tour-orig-z]').forEach(el => {
+      el.style.zIndex = el.dataset.tourOrigZ === 'auto' ? '' : el.dataset.tourOrigZ;
+      delete el.dataset.tourOrigZ;
+    });
   }
 }
 

@@ -27,7 +27,7 @@
 }
 
 .light-mode .customer360-preloader-overlay.active {
-  background: rgba(253, 244, 244, 0.96);
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.98), rgba(253, 244, 244, 0.96));
 }
 
 /* Background Dashboard Preview */
@@ -44,6 +44,10 @@
   z-index: 1;
 }
 
+.light-mode .preloader-dashboard-preview {
+  opacity: 0.55; /* Higher opacity in light mode for visible skeleton layout */
+}
+
 .skeleton-card {
   position: relative;
   background: rgba(255, 255, 255, 0.03);
@@ -57,7 +61,9 @@
 }
 
 .light-mode .skeleton-card {
-  background: rgba(170, 0, 0, 0.02);
+  background: rgba(255, 255, 255, 0.75); /* Clean semi-transparent card matching light-mode theme */
+  border-color: rgba(170, 0, 0, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(170, 0, 0, 0.03);
 }
 
 /* Sweep Shimmer Effect */
@@ -73,7 +79,7 @@
 }
 
 .light-mode .skeleton-card .shimmer {
-  background: linear-gradient(90deg, transparent, rgba(170, 0, 0, 0.03), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
 }
 
 @keyframes preloaderShimmerSweep {
@@ -88,7 +94,7 @@
 }
 
 .light-mode .skeleton-header {
-  background: rgba(170, 0, 0, 0.05);
+  background: rgba(170, 0, 0, 0.09); /* More visible skeleton content in light mode */
 }
 
 .skeleton-body {
@@ -106,7 +112,7 @@
 }
 
 .light-mode .skeleton-line {
-  background: rgba(170, 0, 0, 0.03);
+  background: rgba(170, 0, 0, 0.05); /* More visible skeleton content in light mode */
 }
 
 .skeleton-line:nth-child(2) { width: 85%; }
@@ -154,6 +160,19 @@
   filter: drop-shadow(0 0 5px var(--accent2));
 }
 
+.light-mode .network-line {
+  stroke: rgba(170, 0, 0, 0.12);
+  stroke-width: 1.2;
+}
+
+.light-mode .network-line.active {
+  stroke: var(--accent2, #ff4444);
+  stroke-width: 2.5;
+  stroke-dasharray: 6 4;
+  animation: lightModeLineFlow 0.8s linear infinite;
+  filter: drop-shadow(0 2px 4px rgba(170, 0, 0, 0.15));
+}
+
 /* Center Orb */
 .center-orb-wrapper {
   position: absolute;
@@ -164,6 +183,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.light-mode .center-orb-wrapper::before,
+.light-mode .center-orb-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--border, rgba(170, 0, 0, 0.25));
+  animation: lightModeRipple 2.4s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.light-mode .center-orb-wrapper::after {
+  animation-delay: 1.2s;
 }
 
 /* Continuous 360 rotating ring */
@@ -177,6 +212,13 @@
   border-bottom: 3px solid var(--accent, #aa0000);
   animation: preloaderRotateRing 6s linear infinite;
   box-shadow: 0 0 15px var(--glow-shadow-medium);
+}
+
+.light-mode .rotating-ring-360 {
+  border: 1.5px dashed rgba(170, 0, 0, 0.18);
+  border-top: 2.5px solid var(--accent2, #ff4444);
+  border-bottom: 2.5px solid var(--accent, #aa0000);
+  box-shadow: 0 0 20px rgba(170, 0, 0, 0.05);
 }
 
 /* Pulsing Customer Orb */
@@ -193,6 +235,13 @@
   z-index: 3;
   animation: preloaderCustomerPulse 1.6s ease-in-out infinite;
   box-shadow: 0 0 20px var(--glow-shadow-strong);
+}
+
+.light-mode .center-customer-orb {
+  background: #ffffff;
+  border: 1.5px solid var(--border, rgba(170, 0, 0, 0.15));
+  box-shadow: 0 10px 30px rgba(170, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02);
+  animation: lightModeCustomerPulse 2s ease-in-out infinite;
 }
 
 .orb-icon {
@@ -220,7 +269,12 @@
 }
 
 .light-mode .network-node {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(170, 0, 0, 0.12);
+  box-shadow: 0 6px 20px rgba(170, 0, 0, 0.05);
+  opacity: 0.45;
+  transform: scale(0.92);
+  color: #1e293b;
 }
 
 .network-node.active {
@@ -228,6 +282,14 @@
   transform: scale(1.05);
   border-color: var(--accent2, #ff4444);
   box-shadow: 0 0 15px var(--glow-shadow);
+}
+
+.light-mode .network-node.active {
+  opacity: 1;
+  transform: scale(1.02);
+  border-color: var(--accent2, #ff4444);
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(170, 0, 0, 0.12);
 }
 
 .node-icon {
@@ -312,6 +374,34 @@
   50% {
     transform: scale(1.08);
     box-shadow: 0 0 35px var(--glow-shadow-strong);
+  }
+}
+
+@keyframes lightModeRipple {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+    filter: blur(0px);
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+    filter: blur(3px);
+  }
+}
+
+@keyframes lightModeCustomerPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes lightModeLineFlow {
+  to {
+    stroke-dashoffset: -20;
   }
 }
 

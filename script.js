@@ -705,14 +705,25 @@ function initQuickModules() {
     isAnimating = true;
     const module = qmModules[index];
 
-    // Helper to perform smooth scrolling to an element relative to document body without parent offsets
+    // Helper to perform smooth scrolling to an element only if it is outside or poorly aligned in the viewport
     function smoothScrollTo(targetElement) {
       if (!targetElement) return;
-      const targetScrollY = targetElement.getBoundingClientRect().top + window.pageYOffset - 80;
-      
-      // If we are already extremely close to the target position, skip to avoid scroll stutter/jerk
-      if (Math.abs(window.pageYOffset - targetScrollY) < 10) return;
 
+      const rect = targetElement.getBoundingClientRect();
+      const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+
+      // Check if the element is already comfortably visible in the viewport (with 50px boundary buffer)
+      const isComfortablyVisible = rect.top >= 50 && rect.bottom <= (viewHeight - 50);
+
+      // If the element is taller than the viewport, check if the top is already aligned near the offset
+      const isAlreadyTopAligned = Math.abs(rect.top - 80) < 60;
+
+      // Avoid scrolling if the target is already visible or aligned, preventing unnecessary page jumps/jerks
+      if (isComfortablyVisible || (rect.height > viewHeight && isAlreadyTopAligned)) {
+        return;
+      }
+
+      const targetScrollY = rect.top + window.pageYOffset - 80;
       const scrollObj = { y: window.pageYOffset };
       gsap.to(scrollObj, {
         y: targetScrollY,
@@ -861,6 +872,14 @@ function initQuickModules() {
       setQuickModule(0, -1);
     });
   }
+
+  // Dynamic Header Back Button click delegation
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('#qm-header-back-btn');
+    if (btn) {
+      setQuickModule(0, -1);
+    }
+  });
 }
 
 /* ====== NOTIFICATIONS PANEL INITS ====== */

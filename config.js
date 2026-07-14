@@ -17,7 +17,8 @@ window.API_CONFIG = {
   // Complete URLs for details view
   DETAIL_URLS: {
     LEAD_DETAIL: "modules/lead/lead-detail.html",
-    CASE_DETAIL: "modules/case/case-detail.html"
+    CASE_DETAIL: "modules/case/case-detail.html",
+    COMPLAINT_DETAIL: "modules/case/complaint-detail.html"
   },
 
   // Grouped Endpoints for easy modification

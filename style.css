@@ -2479,9 +2479,57 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 30px;
+  padding: 24px 30px 24px 68px !important;
   border-bottom: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.02);
+}
+
+.qm-header-back-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%) !important; /* Theme integration gradient */
+  color: #ffffff !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 24px 8px 32px 8px !important; /* Blends with container, smooths transitions on top and left borders */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 1000 !important;
+  padding: 0 4px 4px 0 !important; /* Visual offset to center content inside organic corner shape */
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  box-shadow: 0 4px 15px var(--glow-shadow, rgba(239, 68, 68, 0.25)) !important;
+}
+
+.light-mode .qm-header-back-btn {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.qm-header-back-btn svg {
+  width: 16px;
+  height: 16px;
+  color: #ffffff !important;
+  transition: transform 0.25s ease !important;
+  pointer-events: none;
+}
+
+.qm-header-back-btn:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 20px var(--glow-shadow-medium, rgba(239, 68, 68, 0.4)) !important;
+}
+
+.qm-header-back-btn:hover svg {
+  transform: translateX(-2px) scale(1.05);
+}
+
+.qm-header-back-btn:active {
+  transform: scale(0.95) !important;
 }
 
 .qm-header-inline h2 {
@@ -3216,6 +3264,52 @@ body::before {
   box-shadow: 0 0 0 4px var(--accent), 0 0 20px rgba(108, 99, 255, 0.5) !important;
   border-radius: 12px;
   transition: all 0.3s ease;
+}
+
+/* Animated Tour Pointer Helper - Simple Circular Pulse */
+.tour-pointer-helper {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  z-index: 2002;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tour-pulse-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent);
+  z-index: 2;
+}
+
+.tour-pulse-ring {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  animation: tourPulseRing 1.5s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+  opacity: 0;
+  z-index: 1;
+}
+
+@keyframes tourPulseRing {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.8;
+  }
+  80% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .tour-welcome-card {
@@ -4141,4 +4235,9 @@ body::before {
   color: var(--muted);
   user-select: none;
   letter-spacing: 1px;
+}
+
+/* Hide floating close button to prevent overlapping pagination/content */
+.qm-floating-close {
+  display: none !important;
 }

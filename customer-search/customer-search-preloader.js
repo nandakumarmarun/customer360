@@ -24,7 +24,23 @@
             <div class="search-preloader-ring-wrapper">
               <div class="search-preloader-ring"></div>
               <div class="search-preloader-icon">
-                <img src="${searchAssetsPath}customer360-loader.svg" alt="Logo" width="100%" height="100%" />
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+                  <defs>
+                    <linearGradient id="hexagon-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="var(--accent, #aa0000)" />
+                      <stop offset="100%" stop-color="var(--accent2, #ff4444)" />
+                    </linearGradient>
+                    <filter id="hex-glow" x="-30%" y="-30%" width="160%" height="160%">
+                      <feGaussianBlur stdDeviation="5" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  <polygon points="50,15 85,35 85,75 50,95 15,75 15,35" fill="none" stroke="url(#hexagon-gradient)" stroke-width="6.5" stroke-linejoin="round" filter="url(#hex-glow)" />
+                  <polygon points="50,33 65,42 65,58 50,67 35,58 35,42" fill="url(#hexagon-gradient)" opacity="0.8" />
+                </svg>
               </div>
             </div>
             <div class="search-preloader-status" id="preloader-status-text">INITIALIZING...</div>

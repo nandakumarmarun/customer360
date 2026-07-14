@@ -528,10 +528,10 @@
       "position": "center"
     },
     {
-      "target": "#qm-back-to-dash",
-      "title": "Floating Action Button",
-      "content": "Click the floating button to return to your main profile view.",
-      "position": "left",
+      "target": "#qm-header-back-btn",
+      "title": "Corner Back Button",
+      "content": "Click the corner back button to return to your main profile view.",
+      "position": "right",
       "actionRequired": true
     },
     {
@@ -1185,7 +1185,7 @@
     }
   ],
   "theme": {
-    "mode": "dark",
+    "mode": "light",
     "color": "red"
   }
 }

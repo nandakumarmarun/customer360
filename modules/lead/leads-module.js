@@ -130,17 +130,22 @@
       transform: translateX(-2px);
     }
 
+
     /* Leads Container Layout */
     .leads-container {
       display: flex;
       flex-direction: column;
       gap: 12px;
       height: 100%;
-      min-height: 400px;
+      min-height: 0;
+      overflow: hidden;
     }
 
     #quick-module-view .qm-content-area {
       padding: 16px 24px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
     }
 
     /* Controls Bar */
@@ -318,8 +323,8 @@
       border-radius: 12px;
       background: var(--glass);
       box-shadow: var(--shadow);
-      min-height: 440px;
-      max-height: calc(100vh - 275px);
+      min-height: 0;
+      max-height: none;
       scrollbar-width: thin;
       scrollbar-color: var(--border) transparent;
     }
@@ -893,6 +898,36 @@
     applyFiltersAndRender();
   }
 
+  // Helper to dynamically generate a premium, theme-appropriate HSL color scheme based on status text hash
+  function getStatusBadgeStyle(status) {
+    const s = (status || "").trim();
+    if (!s) return "";
+    
+    // Hash function
+    let hash = 0;
+    for (let i = 0; i < s.length; i++) {
+      hash = s.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    
+    // Map to a hue (0 - 360)
+    const hue = Math.abs(hash) % 360;
+    
+    // Check if we are in light mode
+    const isLightMode = document.documentElement.classList.contains("light-mode") || document.body.classList.contains("light-mode");
+    
+    if (isLightMode) {
+      const bg = `hsl(${hue}, 85%, 96%)`;
+      const color = `hsl(${hue}, 80%, 30%)`;
+      const border = `hsl(${hue}, 50%, 85%)`;
+      return `background: ${bg} !important; color: ${color} !important; border: 1px solid ${border} !important; box-shadow: 0 0 10px hsl(${hue}, 85%, 95%) !important;`;
+    } else {
+      const bg = `hsl(${hue}, 45%, 11%)`;
+      const color = `hsl(${hue}, 90%, 65%)`;
+      const border = `hsl(${hue}, 40%, 22%)`;
+      return `background: ${bg} !important; color: ${color} !important; border: 1px solid ${border} !important; box-shadow: 0 0 10px hsl(${hue}, 45%, 8%) !important;`;
+    }
+  }
+
   // ── FILTER DATA AND RENDER THE GRID ──
   function applyFiltersAndRender() {
     const $tbody = $("#leads-tbody");
@@ -938,7 +973,7 @@
       const pageData = filteredLeads.slice(startIdx, endIdx);
       pageData.forEach(lead => {
         const statusText = lead.status || "Unknown";
-        const statusClass = statusText.toLowerCase().replace(/\s+/g, "-");
+        const statusStyle = getStatusBadgeStyle(statusText);
         const rowHtml = `
           <tr>
             <td class="col-id" style="font-family: 'JetBrains Mono', monospace;">
@@ -946,7 +981,7 @@
             </td>
             <td class="col-prod" style="font-weight: 600;">${escapeHtml(lead.product)}</td>
             <td class="col-status">
-              <span class="status-badge ${statusClass}">${escapeHtml(statusText)}</span>
+              <span class="status-badge" style="${statusStyle}">${escapeHtml(statusText)}</span>
             </td>
             <td class="col-date" style="color: var(--muted);">${escapeHtml(lead.createdDate)}</td>
             <td class="col-action" style="text-align: center;">
