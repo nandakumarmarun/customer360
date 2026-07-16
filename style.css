@@ -29,6 +29,29 @@
   --aurora-1: rgba(170, 0, 0, 0.04);
   --aurora-2: rgba(244, 63, 94, 0.03);
   --aurora-3: rgba(185, 28, 28, 0.03);
+
+  /* ── Tour indicator: amber works on dark + light and never clashes with red/neon ── */
+  --tour-highlight:      #f59e0b;
+  --tour-highlight-glow: rgba(245, 158, 11, 0.32);
+  --tour-highlight-ring: rgba(245, 158, 11, 0.18);
+  --tour-pulse:          #f59e0b;
+  --tour-pulse-glow:     rgba(245, 158, 11, 0.75);
+  --tour-pulse-ring:     rgba(245, 158, 11, 0.3);
+  --tour-action-color:   #f59e0b;
+  --tour-action-bg:      rgba(245, 158, 11, 0.08);
+  --tour-action-border:  rgba(245, 158, 11, 0.28);
+  --tour-next-bg:        var(--accent);
+  --tour-next-bg-hover:  var(--accent3);
+  --tour-next-shadow:    var(--glow-shadow);
+  --tour-prev-bg:        rgba(255,255,255,0.07);
+  --tour-prev-bg-hover:  rgba(255,255,255,0.13);
+  --tour-prev-color:     rgba(255,255,255,0.85);
+  --tour-skip-bg:        rgba(239, 68, 68, 0.1);
+  --tour-skip-border:    rgba(239, 68, 68, 0.28);
+  --tour-skip-color:     #f87171;
+  --tour-skip-bg-hover:  #ef4444;
+  --tour-overlay-bg:     rgba(0, 0, 0, 0.58);
+  --tour-tooltip-border: rgba(245, 158, 11, 0.2);
 }
 
 :root.light-mode {
@@ -52,6 +75,29 @@
   --aurora-1: rgba(170, 0, 0, 0.02);
   --aurora-2: rgba(244, 63, 94, 0.01);
   --aurora-3: rgba(185, 28, 28, 0.01);
+
+  /* Tour: slightly deeper amber on white for better contrast */
+  --tour-highlight:      #d97706;
+  --tour-highlight-glow: rgba(217, 119, 6, 0.28);
+  --tour-highlight-ring: rgba(217, 119, 6, 0.14);
+  --tour-pulse:          #d97706;
+  --tour-pulse-glow:     rgba(217, 119, 6, 0.65);
+  --tour-pulse-ring:     rgba(217, 119, 6, 0.25);
+  --tour-action-color:   #92400e;
+  --tour-action-bg:      rgba(217, 119, 6, 0.07);
+  --tour-action-border:  rgba(217, 119, 6, 0.25);
+  --tour-next-bg:        var(--accent);
+  --tour-next-bg-hover:  var(--accent3);
+  --tour-next-shadow:    var(--glow-shadow);
+  --tour-prev-bg:        rgba(15, 23, 42, 0.07);
+  --tour-prev-bg-hover:  rgba(15, 23, 42, 0.13);
+  --tour-prev-color:     #374151;
+  --tour-skip-bg:        rgba(220, 38, 38, 0.07);
+  --tour-skip-border:    rgba(220, 38, 38, 0.22);
+  --tour-skip-color:     #dc2626;
+  --tour-skip-bg-hover:  #dc2626;
+  --tour-overlay-bg:     rgba(0, 0, 0, 0.35);
+  --tour-tooltip-border: rgba(217, 119, 6, 0.25);
 }
 
 :root.theme-neon {
@@ -67,6 +113,17 @@
   --aurora-1: rgba(108, 99, 255, 0.04);
   --aurora-2: rgba(0, 212, 255, 0.03);
   --aurora-3: rgba(255, 107, 157, 0.03);
+
+  /* Tour: cyan complements neon purple accent without clashing */
+  --tour-highlight:      #00d4ff;
+  --tour-highlight-glow: rgba(0, 212, 255, 0.28);
+  --tour-highlight-ring: rgba(0, 212, 255, 0.15);
+  --tour-pulse:          #00d4ff;
+  --tour-pulse-glow:     rgba(0, 212, 255, 0.75);
+  --tour-pulse-ring:     rgba(0, 212, 255, 0.3);
+  --tour-action-color:   #00d4ff;
+  --tour-action-bg:      rgba(0, 212, 255, 0.07);
+  --tour-action-border:  rgba(0, 212, 255, 0.25);
 }
 
 :root.theme-neon.light-mode {
@@ -85,6 +142,25 @@
   --aurora-1: rgba(79, 70, 229, 0.02);
   --aurora-2: rgba(14, 165, 233, 0.01);
   --aurora-3: rgba(244, 63, 94, 0.01);
+
+  /* Tour: sky blue is light-mode-safe and contrasts neon indigo accent */
+  --tour-highlight:      #0ea5e9;
+  --tour-highlight-glow: rgba(14, 165, 233, 0.22);
+  --tour-highlight-ring: rgba(14, 165, 233, 0.12);
+  --tour-pulse:          #0ea5e9;
+  --tour-pulse-glow:     rgba(14, 165, 233, 0.65);
+  --tour-pulse-ring:     rgba(14, 165, 233, 0.22);
+  --tour-action-color:   #0369a1;
+  --tour-action-bg:      rgba(14, 165, 233, 0.07);
+  --tour-action-border:  rgba(14, 165, 233, 0.22);
+  --tour-overlay-bg:     rgba(0, 0, 0, 0.32);
+  --tour-prev-bg:        rgba(15, 23, 42, 0.07);
+  --tour-prev-bg-hover:  rgba(15, 23, 42, 0.12);
+  --tour-prev-color:     #334155;
+  --tour-skip-bg:        rgba(244, 63, 94, 0.07);
+  --tour-skip-border:    rgba(244, 63, 94, 0.2);
+  --tour-skip-color:     #f43f5e;
+  --tour-skip-bg-hover:  #f43f5e;
 }
 
 html {
@@ -2479,58 +2555,11 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 30px 24px 68px !important;
+  padding: 24px 30px;
   border-bottom: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.02);
 }
 
-.qm-header-back-btn {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 52px;
-  height: 52px;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%) !important; /* Theme integration gradient */
-  color: #ffffff !important;
-  border: none !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.15) !important;
-  border-radius: 24px 8px 32px 8px !important; /* Blends with container, smooths transitions on top and left borders */
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  cursor: pointer !important;
-  z-index: 1000 !important;
-  padding: 0 4px 4px 0 !important; /* Visual offset to center content inside organic corner shape */
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-  box-shadow: 0 4px 15px var(--glow-shadow, rgba(239, 68, 68, 0.25)) !important;
-}
-
-.light-mode .qm-header-back-btn {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
-  border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
-}
-
-.qm-header-back-btn svg {
-  width: 16px;
-  height: 16px;
-  color: #ffffff !important;
-  transition: transform 0.25s ease !important;
-  pointer-events: none;
-}
-
-.qm-header-back-btn:hover {
-  transform: scale(1.05) !important;
-  box-shadow: 0 6px 20px var(--glow-shadow-medium, rgba(239, 68, 68, 0.4)) !important;
-}
-
-.qm-header-back-btn:hover svg {
-  transform: translateX(-2px) scale(1.05);
-}
-
-.qm-header-back-btn:active {
-  transform: scale(0.95) !important;
-}
 
 .qm-header-inline h2 {
   font-size: 24px;
@@ -3255,131 +3284,171 @@ body::before {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--tour-overlay-bg);
+  backdrop-filter: blur(2px);
   z-index: 2000;
 }
 
+/* --- Highlight ring around the targeted element --- */
 .tour-highlight {
   z-index: 2001 !important;
-  box-shadow: 0 0 0 4px var(--accent), 0 0 20px rgba(108, 99, 255, 0.5) !important;
+  box-shadow:
+    0 0 0 3px var(--tour-highlight),
+    0 0 0 7px var(--tour-highlight-ring),
+    0 0 28px var(--tour-highlight-glow) !important;
   border-radius: 12px;
-  transition: all 0.3s ease;
+  transition: box-shadow 0.3s ease;
 }
 
-/* Animated Tour Pointer Helper - Simple Circular Pulse */
+/* ─── Pulse Pointer Helper ─────────────────────────────────── */
 .tour-pointer-helper {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  z-index: 2002;
+  width: 32px;
+  height: 32px;
+  z-index: 2010;
   pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* Centre solid dot */
 .tour-pulse-dot {
-  width: 10px;
-  height: 10px;
-  background: var(--accent);
+  width: 14px;
+  height: 14px;
+  background: var(--tour-pulse);
   border-radius: 50%;
-  box-shadow: 0 0 8px var(--accent);
+  box-shadow: 0 0 12px 4px var(--tour-pulse-glow);
   z-index: 2;
+  animation: tourDotBeat 1s ease-in-out infinite;
 }
 
+@keyframes tourDotBeat {
+  0%, 100% { transform: scale(1);    box-shadow: 0 0 12px 4px var(--tour-pulse-glow); }
+  50%       { transform: scale(1.28); box-shadow: 0 0 22px 8px var(--tour-pulse-ring); }
+}
+
+/* Outer expanding ring */
 .tour-pulse-ring {
   position: absolute;
-  width: 30px;
-  height: 30px;
-  border: 2px solid var(--accent);
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--tour-pulse);
   border-radius: 50%;
-  animation: tourPulseRing 1.5s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
   opacity: 0;
   z-index: 1;
+  animation: tourPulseRing 1.4s ease-out infinite;
+}
+
+/* Second ring with delay for a double-ring effect */
+.tour-pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 2px solid var(--tour-pulse-ring);
+  border-radius: 50%;
+  animation: tourPulseRing 1.4s ease-out 0.5s infinite;
 }
 
 @keyframes tourPulseRing {
-  0% {
-    transform: scale(0.3);
-    opacity: 0.8;
-  }
-  80% {
-    transform: scale(2.2);
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-  }
+  0%   { transform: scale(0.5); opacity: 0.9; }
+  70%  { transform: scale(2.4); opacity: 0;   }
+  100% { transform: scale(2.4); opacity: 0;   }
 }
 
+/* ─── Welcome / Center Card ────────────────────────────────── */
 .tour-welcome-card {
   width: 400px;
   text-align: center;
-  border: 1px solid var(--accent);
-  box-shadow: 0 20px 50px rgba(108, 99, 255, 0.4);
+  border: 1px solid var(--tour-tooltip-border);
+  box-shadow: 0 24px 60px var(--tour-highlight-glow);
   animation: tourWelcomePop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 @keyframes tourWelcomePop {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -40%) scale(0.8);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
+  0%   { opacity: 0; transform: translate(-50%, -40%) scale(0.8); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1);   }
 }
 
+/* ─── Tooltip Card ──────────────────────────────────────────── */
 .tour-tooltip {
   position: fixed;
   z-index: 2005;
-  width: 320px;
-  padding: 24px;
+  width: 330px;
+  padding: 22px 22px 18px;
   opacity: 0;
-  transition: opacity 0.3s ease, top 0.4s ease, left 0.4s ease;
-  border: 1px solid rgba(108, 99, 255, 0.3);
+  transition: opacity 0.3s ease, top 0.35s cubic-bezier(0.4,0,0.2,1), left 0.35s cubic-bezier(0.4,0,0.2,1);
+  border: 1px solid var(--tour-tooltip-border);
   background: var(--bg2);
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255,255,255,0.04);
 }
 
+/* ─── Tooltip Header ────────────────────────────────────────── */
 .tour-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
-  border-bottom: 1px solid var(--border);
   padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
 }
 
 .tour-header h3 {
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 700;
   margin: 0;
   color: var(--text);
+  letter-spacing: 0.2px;
 }
 
 .tour-progress {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--muted);
-  font-weight: 600;
+  font-weight: 700;
   background: var(--glass2);
-  padding: 4px 8px;
-  border-radius: 12px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  border: 1px solid var(--border);
 }
 
+/* ─── Tooltip Body ──────────────────────────────────────────── */
 .tour-body p {
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--text);
-  line-height: 1.5;
-  margin: 0 0 20px 0;
+  line-height: 1.6;
+  margin: 0 0 18px 0;
+  opacity: 0.9;
 }
 
+.tour-action-msg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px !important;
+  color: var(--tour-action-color) !important;
+  background: var(--tour-action-bg);
+  border: 1px solid var(--tour-action-border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+/* ─── Tooltip Footer ────────────────────────────────────────── */
 .tour-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.tour-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .tour-nav {
@@ -3387,32 +3456,83 @@ body::before {
   gap: 8px;
 }
 
+/* ── Base button reset ── */
 .tour-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 6px 12px;
-  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  border-radius: 50px;
   cursor: pointer;
   font-size: 12px;
-  font-weight: 600;
-  transition: all 0.2s ease;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  padding: 7px 16px;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+  outline: none;
+  white-space: nowrap;
 }
 
-.tour-btn:hover {
-  background: var(--glass2);
+.tour-btn:active { transform: scale(0.96); }
+
+/* ── Previous button — theme-aware glass ── */
+.tour-btn.secondary {
+  background: var(--tour-prev-bg);
+  border: 1px solid var(--border);
+  color: var(--tour-prev-color);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-.tour-btn-next {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
+.tour-btn.secondary:hover:not(:disabled) {
+  background: var(--tour-prev-bg-hover);
+  color: var(--text);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.tour-btn.secondary:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ── Next / Finish — uses app accent color ── */
+#tour-next-btn {
+  background: var(--tour-next-bg);
   color: #fff;
   border: none;
+  box-shadow: 0 3px 12px var(--tour-next-shadow);
+  padding: 8px 20px;
+  font-weight: 700;
 }
 
-.tour-btn-next:hover {
-  opacity: 0.9;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
+#tour-next-btn:hover {
+  background: var(--tour-next-bg-hover);
+  box-shadow: 0 5px 18px var(--tour-next-shadow);
+  transform: translateY(-1px);
 }
+
+#tour-next-btn:active { transform: translateY(0) scale(0.96); }
+
+/* ── Skip button — theme-aware muted red ── */
+.tour-btn.skip {
+  background: var(--tour-skip-bg);
+  border: 1px solid var(--tour-skip-border);
+  color: var(--tour-skip-color);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 13px;
+  border-radius: 50px;
+  opacity: 0.85;
+  letter-spacing: 0.2px;
+}
+
+.tour-btn.skip:hover {
+  background: var(--tour-skip-bg-hover);
+  border-color: var(--tour-skip-bg-hover);
+  color: #fff;
+  opacity: 1;
+  box-shadow: 0 3px 10px rgba(239, 68, 68, 0.35);
+}
+
 
 /* ===== NOTIFICATION PANEL ===== */
 .notif-backdrop {
@@ -4030,31 +4150,32 @@ body::before {
   display: flex !important;
 }
 
-/* ====== GUIDED TOUR ====== */
+/* ====== GUIDED TOUR (override block) ====== */
 .tour-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
-  /* Decreased opacity */
+  background: var(--tour-overlay-bg);
   z-index: 2000;
-  /* Removed backdrop-filter blur so components are clearer */
 }
 
 .tour-highlight {
   z-index: 2001 !important;
-  box-shadow: 0 0 0 4px var(--accent), 0 0 20px rgba(108, 99, 255, 0.5) !important;
+  box-shadow:
+    0 0 0 3px var(--tour-highlight),
+    0 0 0 7px var(--tour-highlight-ring),
+    0 0 28px var(--tour-highlight-glow) !important;
   border-radius: 12px;
-  transition: all 0.3s ease;
+  transition: box-shadow 0.3s ease;
 }
 
 .tour-welcome-card {
   width: 400px;
   text-align: center;
-  border: 1px solid var(--accent);
-  box-shadow: 0 20px 50px rgba(108, 99, 255, 0.4);
+  border: 1px solid var(--tour-tooltip-border);
+  box-shadow: 0 20px 50px var(--tour-highlight-glow);
   animation: tourWelcomePop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
@@ -4074,7 +4195,7 @@ body::before {
   font-family: inherit;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(108, 99, 255, 0.4);
+  box-shadow: 0 10px 30px var(--glow-shadow);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   opacity: 1;
   transform: translateY(0) scale(1);
@@ -4088,28 +4209,21 @@ body::before {
 }
 
 @keyframes tourWelcomePop {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -40%) scale(0.8);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
+  0%   { opacity: 0; transform: translate(-50%, -40%) scale(0.8); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1);   }
 }
 
 .tour-tooltip {
   position: fixed;
   z-index: 2005;
-  width: 320px;
-  padding: 24px;
+  width: 330px;
+  padding: 22px 22px 18px;
   opacity: 0;
-  transition: opacity 0.3s ease, top 0.4s ease, left 0.4s ease;
-  border: 1px solid rgba(108, 99, 255, 0.3);
+  transition: opacity 0.3s ease, top 0.35s cubic-bezier(0.4,0,0.2,1), left 0.35s cubic-bezier(0.4,0,0.2,1);
+  border: 1px solid var(--tour-tooltip-border);
   background: var(--bg2);
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255,255,255,0.04);
 }
 
 .tour-header {
@@ -4122,25 +4236,27 @@ body::before {
 }
 
 .tour-header h3 {
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 700;
   margin: 0;
   color: var(--text);
 }
 
 .tour-progress {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--muted);
-  font-weight: 600;
+  font-weight: 700;
   background: var(--glass2);
-  padding: 4px 8px;
-  border-radius: 12px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
 }
 
 .tour-body p {
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--text);
-  line-height: 1.5;
-  margin: 0 0 20px 0;
+  line-height: 1.6;
+  margin: 0 0 18px 0;
 }
 
 .tour-footer {
@@ -4155,31 +4271,33 @@ body::before {
 }
 
 .tour-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 6px 12px;
-  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  border-radius: 50px;
   cursor: pointer;
   font-size: 12px;
-  font-weight: 600;
-  transition: all 0.2s ease;
+  font-weight: 700;
+  padding: 7px 16px;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+  outline: none;
 }
 
 .tour-btn:hover {
-  background: var(--glass2);
+  background: var(--tour-prev-bg-hover);
 }
 
 .tour-btn-next {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  background: var(--tour-next-bg);
   color: #fff;
   border: none;
 }
 
 .tour-btn-next:hover {
-  opacity: 0.9;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  background: var(--tour-next-bg-hover);
 }
+
 
 /* Table Grid Skeleton Loading Animation */
 .skeleton-row td {
@@ -4237,7 +4355,11 @@ body::before {
   letter-spacing: 1px;
 }
 
-/* Hide floating close button to prevent overlapping pagination/content */
-.qm-floating-close {
-  display: none !important;
+/* Card image styles */
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
+

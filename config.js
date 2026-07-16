@@ -29,12 +29,16 @@ window.API_CONFIG = {
     CASES: "/cases",
     TOUR: "/tour",
     TOUR_TRACK: "/api/tour/track",
+    TOUR_PROGRESS: "/tourProgress",
     HOLDINGS: "/holdings",
     HOLDINGS_LOANS: "/loans",
+    HOLDINGS_LOANS_DETAILS: "/loanDetails",
     HOLDINGS_CASA: "/casaDetails",
+    HOLDINGS_CASA_CARDS: "/casaCards",
     HOLDINGS_DEPOSITS: "/casaDeposits",
     HOLDINGS_GOLD: "/goldAccounts",
     HOLDINGS_LOCKER: "/locker",
+    HOLDINGS_INVESTMENTS: "/investments",
     THEME: "/theme",
     SEARCH: "/search"
   },
@@ -105,7 +109,7 @@ window.HOLDING_CONFIG = [
     icon: "🏦",
     apiKey: "assets",
     tabs: [
-      { id: "loans", title: "Loans", icon: "🏠", matchType: "Loans", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOANS }
+      { id: "loans", title: "Loans", icon: "🏠", matchType: "Loans", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOANS, detailsEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOANS_DETAILS, detailsParams: { idKey: "loanId" } }
     ]
   },
   {
@@ -114,7 +118,17 @@ window.HOLDING_CONFIG = [
     icon: "📉",
     apiKey: "liabilities",
     tabs: [
-      { id: "casaDetails", title: "CASA", icon: "💳", matchType: "CASA Details", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_CASA },
+      {
+        id: "casaDetails",
+        title: "CASA",
+        icon: "💳",
+        matchType: "CASA Details",
+        endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_CASA,
+        rightTabs: [
+          { id: "details", title: "Details" },
+          { id: "debitCards", title: "Debit Cards", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_CASA_CARDS, paramKey: "casaId", idField: "number" }
+        ]
+      },
       { id: "casaDeposits", title: "DEPOSITS", icon: "📈", matchType: "CASA Deposits", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_DEPOSITS },
       { id: "goldAccounts", title: "Gold Accounts", icon: "🪙", matchType: "Gold Accounts", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_GOLD }
     ]
@@ -127,11 +141,20 @@ window.HOLDING_CONFIG = [
     tabs: [
       { id: "locker", title: "Locker", icon: "🔒", matchType: "Locker Details", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOCKER }
     ]
+  },
+  {
+    id: "investments",
+    title: "Investments",
+    icon: "📊",
+    apiKey: "investments",
+    tabs: [
+      { id: "investmentDetails", title: "Investments", icon: "📈", matchType: "Investment Details", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_INVESTMENTS }
+    ]
   }
 ];
 
 // Scalable helper function to resolve any dynamic field name
-window.fieldName = function(key) {
+window.fieldName = function (key) {
   const mapping = (window.API_CONFIG && window.API_CONFIG.FIELD_MAPPING) || {};
   return mapping[key] || key;
 };

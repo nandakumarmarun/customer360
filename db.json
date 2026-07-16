@@ -467,78 +467,90 @@
       "target": "center",
       "title": "Welcome to Customer 360",
       "content": "Let's take a quick tour to explore your new dashboard features and capabilities.",
-      "position": "center"
+      "position": "center",
+      "id": "aAVV45dVTIA"
     },
     {
       "target": ".header-left",
       "title": "Customer Profile",
       "content": "Here is the customer profile overview.",
-      "position": "bottom"
+      "position": "bottom",
+      "id": "Xh9XYgNwwBk"
     },
     {
       "target": ".header-center",
       "title": "Key Statistics",
       "content": "Quick insights like Net Worth and AI scores are displayed here.",
-      "position": "bottom"
+      "position": "bottom",
+      "id": "HqO1Qko7kpU"
     },
     {
       "target": "#card-personal",
       "title": "Detailed Interactions",
       "content": "Click this card to trigger a cinematic 3D detailed view of the customer data.",
       "position": "bottom",
-      "actionRequired": true
+      "actionRequired": true,
+      "id": "aByFn8iMals"
     },
     {
       "target": "#detail-view",
       "title": "Cinematic Detailed View",
       "content": "This immersive view provides deep insights into the customer profile.",
-      "position": "center"
+      "position": "center",
+      "id": "UJmBSNCsvI0"
     },
     {
       "target": "#detail-next",
       "title": "Data Navigation",
       "content": "If a section has a lot of data, it will be paginated. Click this arrow to slide to the next data card.",
       "position": "left",
-      "actionRequired": true
+      "actionRequired": true,
+      "id": "jUDUawYgLKg"
     },
     {
       "target": "#back-to-dash",
       "title": "Return to Dashboard",
       "content": "Click here to close the detailed view and return to the main dashboard.",
       "position": "bottom",
-      "actionRequired": true
+      "actionRequired": true,
+      "id": "LXS8p43CUPQ"
     },
     {
       "target": ".qm-nav-dots",
       "title": "Quick Module Navigation",
       "content": "Use these dots to quickly jump between different modules.",
-      "position": "left"
+      "position": "left",
+      "id": "Gwr2Yp0NFZw"
     },
     {
       "target": "#mod-case",
       "title": "Quick Access Modules",
       "content": "Click this module card to open the quick view and explore further.",
       "position": "right",
-      "actionRequired": true
+      "actionRequired": true,
+      "id": "Z3unzFTL85M"
     },
     {
       "target": "#quick-module-view",
       "title": "Quick Module Layout",
       "content": "This interface allows you to view detailed lists or forms without losing your dashboard context.",
-      "position": "center"
+      "position": "center",
+      "id": "VHWiydz3XdU"
     },
     {
       "target": "#qm-header-back-btn",
       "title": "Corner Back Button",
       "content": "Click the corner back button to return to your main profile view.",
       "position": "right",
-      "actionRequired": true
+      "actionRequired": true,
+      "id": "W5Vmz4ngnXE"
     },
     {
       "target": "center",
       "title": "Thank you please explore your self",
       "content": "Let's take a quick tour to explore your new dashboard features and capabilities.",
-      "position": "center"
+      "position": "center",
+      "id": "si1hwhryRM4"
     }
   ],
   "cases": {
@@ -864,6 +876,10 @@
       "valueAdded": {
         "subcategoriesCount": 1,
         "accountsCount": 1
+      },
+      "investments": {
+        "subcategoriesCount": 1,
+        "accountsCount": 2
       }
     }
   ],
@@ -875,40 +891,8 @@
       "number": "LN-701023456",
       "amount": "₹45,20,000",
       "status": "Active",
-      "details": {
-        "Loan Account Number": "LN-701023456",
-        "Loan Type": "Home Loan Pro",
-        "Outstanding Amount": "₹45,20,000",
-        "Monthly EMI": "₹42,500"
-      },
-      "fullDetails": {
-        "title": "Loans",
-        "hero": "rewards_hero.png",
-        "tag": "Active",
-        "tagClass": "tag-normal",
-        "sections": [
-          {
-            "name": "Loan Structure",
-            "fields": {
-              "Loan Account Number": "LN-701023456",
-              "Loan Type": "Home Loan Pro",
-              "Outstanding Amount": "₹45,20,000",
-              "Sanctioned Amount": "₹60,00,000",
-              "Interest Rate Mode": "8.5% Floating Rate"
-            }
-          },
-          {
-            "name": "Repayment Details",
-            "fields": {
-              "Equated Monthly EMI": "₹42,500",
-              "Loan Tenure": "14 Years Remaining (originally 20)",
-              "Next Due Date": "05-Jul-2026",
-              "Collateral Registered": "Residential Flat - Thrissur",
-              "Co-Applicant": "Sarah Jenkins"
-            }
-          }
-        ]
-      }
+      "id": "loan1",
+      "customerId": "NX-4829-0055"
     },
     {
       "customer": "NX-4829-0055",
@@ -917,40 +901,8 @@
       "number": "LN-504098271",
       "amount": "₹6,80,000",
       "status": "Active",
-      "details": {
-        "Loan Account Number": "LN-504098271",
-        "Loan Type": "Car Loan",
-        "Outstanding Amount": "₹6,80,000",
-        "Monthly EMI": "₹15,200"
-      },
-      "fullDetails": {
-        "title": "Loans",
-        "hero": "rewards_hero.png",
-        "tag": "Active",
-        "tagClass": "tag-normal",
-        "sections": [
-          {
-            "name": "Loan Structure",
-            "fields": {
-              "Loan Account Number": "LN-504098271",
-              "Loan Type": "Car Loan",
-              "Outstanding Amount": "₹6,80,000",
-              "Sanctioned Amount": "₹9,50,000",
-              "Interest Rate Mode": "9.2% Fixed Rate"
-            }
-          },
-          {
-            "name": "Repayment Details",
-            "fields": {
-              "Equated Monthly EMI": "₹15,200",
-              "Loan Tenure": "3 Years Remaining",
-              "Next Due Date": "10-Jul-2026",
-              "Collateral Registered": "Vehicle Hypothecated - BMW 3 Series",
-              "Co-Applicant": "None"
-            }
-          }
-        ]
-      }
+      "id": "loan2",
+      "customerId": "NX-4829-0055"
     }
   ],
   "casaDetails": [
@@ -958,16 +910,9 @@
       "customer": "NX-4829-0055",
       "type": "CASA Details",
       "name": "Savings Max Account",
-      "number": "50100123456789",
+      "number": "5D0100123456789",
       "amount": "₹1,85,000",
       "status": "Active",
-      "details": {
-        "Account Number": "50100123456789",
-        "Account Type": "Savings Max Account",
-        "Account Status": "Active",
-        "Interest Rate": "3.5% p.a.",
-        "Available Balance": "₹1,85,000"
-      },
       "fullDetails": {
         "title": "CASA Details",
         "hero": "personal_hero.png",
@@ -1001,22 +946,16 @@
             }
           }
         ]
-      }
+      },
+      "id": "CyNvbV12y1Q"
     },
     {
       "customer": "NX-4829-0055",
       "type": "CASA Details",
       "name": "Premium Checking Account",
-      "number": "50200987654321",
+      "number": "5D0100123456789",
       "amount": "$45,000",
       "status": "Active",
-      "details": {
-        "Account Number": "50200987654321",
-        "Account Type": "Premium Checking Account",
-        "Account Status": "Active",
-        "Interest Rate": "1.25% p.a.",
-        "Available Balance": "$45,000"
-      },
       "fullDetails": {
         "title": "CASA Details",
         "hero": "personal_hero.png",
@@ -1050,7 +989,8 @@
             }
           }
         ]
-      }
+      },
+      "id": "E4X45Sd09zg"
     }
   ],
   "casaDeposits": [
@@ -1061,13 +1001,6 @@
       "number": "FD-9080123456",
       "amount": "₹5,00,000",
       "status": "Active",
-      "details": {
-        "Deposit Number": "FD-9080123456",
-        "Deposit Type": "Cumulative Fixed Deposit",
-        "Deposit Amount": "₹5,00,000",
-        "Interest Rate": "7.1% p.a.",
-        "Maturity Date": "15-Dec-2028"
-      },
       "fullDetails": {
         "title": "CASA Deposits",
         "hero": "invest_hero.png",
@@ -1095,7 +1028,8 @@
             }
           }
         ]
-      }
+      },
+      "id": "0vgh2bms5co"
     }
   ],
   "goldAccounts": [
@@ -1106,13 +1040,6 @@
       "number": "GL-1002003",
       "amount": "₹16,25,000",
       "status": "Active",
-      "details": {
-        "Account Number": "GL-1002003",
-        "Account Type": "Digital Gold Saver",
-        "Gold Weight": "250 grams",
-        "Current Value": "₹16,25,000",
-        "Storage Location": "Central Safe Vault"
-      },
       "fullDetails": {
         "title": "Gold Accounts",
         "hero": "lifestyle_hero.png",
@@ -1139,7 +1066,8 @@
             }
           }
         ]
-      }
+      },
+      "id": "Ms0wc7odp2Y"
     }
   ],
   "locker": [
@@ -1150,11 +1078,6 @@
       "number": "LK-402",
       "amount": "Allocated",
       "status": "Active",
-      "details": {
-        "Locker Number": "LK-402",
-        "Locker Type": "Medium Vault Locker (Type B)",
-        "Allocation Status": "Allocated & Active"
-      },
       "fullDetails": {
         "title": "Locker Details",
         "hero": "security_hero.png",
@@ -1181,11 +1104,452 @@
             }
           }
         ]
-      }
+      },
+      "id": "wxFeIIKFyzc"
     }
   ],
   "theme": {
     "mode": "light",
     "color": "red"
-  }
+  },
+  "loanDetails": [
+    {
+      "customer": "NX-4829-0055",
+      "loanId": "loan1",
+      "fullDetails": {
+        "title": "Loans",
+        "hero": "rewards_hero.png",
+        "tag": "Active",
+        "tagClass": "tag-normal",
+        "sections": [
+          {
+            "name": "Loan Structure",
+            "fields": {
+              "Loan Account Number": "LN-701023456",
+              "Loan Type": "Home Loan Pro",
+              "Outstanding Amount": "₹45,20,000",
+              "Sanctioned Amount": "₹60,00,000",
+              "Interest Rate Mode": "8.5% Floating Rate"
+            }
+          },
+          {
+            "name": "Repayment Details",
+            "fields": {
+              "Equated Monthly EMI": "₹42,500",
+              "Loan Tenure": "14 Years Remaining (originally 20)",
+              "Next Due Date": "05-Jul-2026",
+              "Collateral Registered": "Residential Flat - Thrissur",
+              "Co-Applicant": "Sarah Jenkins"
+            }
+          }
+        ]
+      },
+      "id": "JK3ysWirnKY"
+    },
+    {
+      "customer": "NX-4829-0055",
+      "loanId": "loan2",
+      "fullDetails": {
+        "title": "Loans",
+        "hero": "rewards_hero.png",
+        "tag": "Active",
+        "tagClass": "tag-normal",
+        "sections": [
+          {
+            "name": "Loan Structure",
+            "fields": {
+              "Loan Account Number": "LN-504098271",
+              "Loan Type": "Car Loan",
+              "Outstanding Amount": "₹6,80,000",
+              "Sanctioned Amount": "₹9,50,000",
+              "Interest Rate Mode": "9.2% Fixed Rate"
+            }
+          },
+          {
+            "name": "Repayment Details",
+            "fields": {
+              "Equated Monthly EMI": "₹15,200",
+              "Loan Tenure": "3 Years Remaining",
+              "Next Due Date": "10-Jul-2026",
+              "Collateral Registered": "Vehicle Hypothecated - BMW 3 Series",
+              "Co-Applicant": "None"
+            }
+          }
+        ]
+      },
+      "id": "Pg3wO948dEU"
+    }
+  ],
+  "casaCards": [
+    {
+      "id": "card1",
+      "customer": "NX-4829-0055",
+      "casaId": "5D0100123456789",
+      "title": "Visa Signature Debit",
+      "subtitle": "Active — Domestic",
+      "image": {
+        "href": "assets/png/card.png",
+        "alt": "Visa Card"
+      },
+      "fields": {
+        "Card Number": "4532-XXXX-XXXX-8921",
+        "Card Type": "Visa Signature Debit",
+        "Card Holder": "Arjun Menon",
+        "Expiry Date": "08 / 2028",
+        "Daily ATM Limit": "₹50,000",
+        "Daily POS Limit": "₹2,00,000",
+        "Status": "Active"
+      }
+    },
+    {
+      "id": "card2",
+      "customer": "NX-4829-0055",
+      "casaId": "5D0100123456789",
+      "title": "Millennia Savings Card",
+      "subtitle": "Active — Virtual",
+      "image": {
+        "base64": "iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAALElEQVR42u3PMQEAAAgEIDfcP7S2mIGD5dIE2i9wECBAgAABAgQIECBAgAABbgX7C/l4X/X/AAAAAElFTkSuQmCC",
+        "alt": "RuPay Card"
+      },
+      "fields": {
+        "Card Type": "RuPay Platinum",
+        "Card Holder": "Arjun Menon",
+        "Expiry Date": "10 / 2029",
+        "Daily ATM Limit": "₹25,000",
+        "Daily POS Limit": "₹1,00,000",
+        "Status": "Active"
+      }
+    },
+    {
+      "id": "card3",
+      "customer": "NX-4829-0055",
+      "casaId": "5D0100123456789",
+      "title": "Mastercard Business Debit",
+      "subtitle": "Active — International",
+      "image": {
+        "bytes": [
+          137,
+          80,
+          78,
+          71,
+          13,
+          10,
+          26,
+          10,
+          0,
+          0,
+          0,
+          13,
+          73,
+          72,
+          68,
+          82,
+          0,
+          0,
+          0,
+          50,
+          0,
+          0,
+          0,
+          50,
+          8,
+          6,
+          0,
+          0,
+          0,
+          227,
+          227,
+          168,
+          252,
+          0,
+          0,
+          0,
+          11,
+          73,
+          68,
+          65,
+          84,
+          120,
+          156,
+          179,
+          243,
+          240,
+          4,
+          3,
+          0,
+          0,
+          132,
+          3,
+          2,
+          6,
+          11,
+          233,
+          44,
+          13,
+          0,
+          0,
+          0,
+          0,
+          73,
+          69,
+          78,
+          68,
+          174,
+          66,
+          96,
+          132
+        ],
+        "alt": "Mastercard Card"
+      },
+      "fields": {
+        "Card Number": "5122-XXXX-XXXX-3029",
+        "Card Type": "Mastercard Business Debit",
+        "Card Holder": "Arjun Menon",
+        "Expiry Date": "03 / 2027",
+        "Daily ATM Limit": ",000",
+        "Daily POS Limit": ",000",
+        "Status": "Active"
+      }
+    }
+  ],
+  "investments": [
+    {
+      "customer": "NX-4829-0055",
+      "customerId": "NX-4829-0055",
+      "type": "Investment Details",
+      "name": "Growth Mutual Fund",
+      "number": "MF-8012934",
+      "amount": "₹12,40,000",
+      "status": "Active",
+      "fullDetails": {
+        "title": "Investment Details",
+        "hero": "invest_hero.png",
+        "tag": "Active",
+        "tagClass": "tag-green",
+        "sections": [
+          {
+            "name": "Fund Information",
+            "fields": {
+              "Folio Number": "MF-8012934",
+              "Fund Name": "Growth Mutual Fund - Direct",
+              "Asset Class": "Equity - Large Cap",
+              "Current NAV": "₹124.50",
+              "Risk Profile": "High Risk"
+            }
+          },
+          {
+            "name": "Portfolio Value",
+            "fields": {
+              "Units Held": "9,959.839 Units",
+              "Invested Value": "₹10,00,000",
+              "Current Value": "₹12,40,000",
+              "Total Return": "+24.0% (₹2,40,000)"
+            }
+          }
+        ]
+      },
+      "id": "5dbBwVpOC3c"
+    },
+    {
+      "customer": "NX-4829-0055",
+      "customerId": "NX-4829-0055",
+      "type": "Investment Details",
+      "name": "Equity Portfolio Acc",
+      "number": "EQ-209384",
+      "amount": "₹8,50,000",
+      "status": "Active",
+      "fullDetails": {
+        "title": "Investment Details",
+        "hero": "invest_hero.png",
+        "tag": "Active",
+        "tagClass": "tag-green",
+        "sections": [
+          {
+            "name": "Demat Account Details",
+            "fields": {
+              "Demat Account": "EQ-209384",
+              "DP Name": "Customer 360 Broking",
+              "Trading Status": "Active",
+              "Exchange Access": "NSE & BSE"
+            }
+          },
+          {
+            "name": "Valuation Summary",
+            "fields": {
+              "Cash Balance": "₹50,000",
+              "Stock Holdings Value": "₹8,00,000",
+              "Total Portfolio Value": "₹8,50,000",
+              "Day Return": "+1.2% (₹10,200)"
+            }
+          }
+        ]
+      },
+      "id": "0PRmeh6opJI"
+    }
+  ],
+  "tourProgress": [
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-07-16T09:03:54.009Z",
+      "id": "5PWm0SbKOcM"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-07-16T09:03:55.768Z",
+      "id": "XEKNWxMYMJQ"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-07-16T09:04:29.245Z",
+      "id": "SQGPcNsU-Ks"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-07-16T09:04:31.946Z",
+      "id": "6ojiNrTO2SY"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-07-16T10:29:41.164Z",
+      "id": "rxhDq70pCA0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-07-16T10:29:41.993Z",
+      "id": "AzBIfHaPqMo"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 2,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-07-16T10:29:43.097Z",
+      "id": "3cSRhCV8Dd8"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 3,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-07-16T10:29:44.062Z",
+      "id": "KrS9NJS3bYE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 4,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-07-16T10:29:45.940Z",
+      "id": "yquqZ8fLfWc"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 5,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-07-16T10:29:46.785Z",
+      "id": "ZewNlalIN1s"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 6,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-07-16T10:29:46.786Z",
+      "id": "a8tvv5maYPw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 7,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-07-16T10:29:48.448Z",
+      "id": "dS0xouMn4ys"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 8,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-07-16T10:29:49.182Z",
+      "id": "cX88_a5SSNk"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 9,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-07-16T10:29:51.087Z",
+      "id": "2HJwm-RsjYA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 10,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-07-16T10:29:52.257Z",
+      "id": "J6NHjI98Buw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 11,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-07-16T10:29:52.258Z",
+      "id": "I8Iv3F1eOMk"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 12,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-07-16T10:29:53.135Z",
+      "id": "5B-YlgwlU-o"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 13,
+      "totalSteps": 12,
+      "status": "completed",
+      "timestamp": "2026-07-16T10:29:53.137Z",
+      "id": "gqJU4LWWfMY"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

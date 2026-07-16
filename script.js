@@ -873,13 +873,7 @@ function initQuickModules() {
     });
   }
 
-  // Dynamic Header Back Button click delegation
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('#qm-header-back-btn');
-    if (btn) {
-      setQuickModule(0, -1);
-    }
-  });
+
 }
 
 /* ====== NOTIFICATIONS PANEL INITS ====== */

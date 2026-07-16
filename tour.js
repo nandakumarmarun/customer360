@@ -1,9 +1,25 @@
 /* tour.js - Guided Tour functionality */
 
 const TourAPI = {
-  endpoint: window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.TOUR_TRACK,
-  userId: 'user_123', // Placeholder
-  viewId: 'DASHBOARD_VIEW'
+  userId: 'user_123', // Placeholder – replace with actual session user
+  viewId: 'DASHBOARD_VIEW',
+
+  /**
+   * POST a progress record to /tourProgress via json-server.
+   * json-server automatically assigns an `id` and persists to db.json.
+   */
+  saveProgress: function(payload) {
+    const endpoint = window.API_CONFIG &&
+                     window.API_CONFIG.ENDPOINTS &&
+                     window.API_CONFIG.ENDPOINTS.TOUR_PROGRESS;
+    if (!endpoint || !window.ApiService) return; // silently skip
+    window.ApiService.post(
+      endpoint,
+      payload,
+      () => { /* saved silently */ },
+      () => { /* error silently ignored */ }
+    );
+  }
 };
 
 class DashboardTour {
@@ -15,16 +31,17 @@ class DashboardTour {
     this.overlay = null;
     this.tooltip = null;
     this._actionHandler = null;
-    
-    // Bind methods
-    this.nextStep = this.nextStep.bind(this);
-    this.prevStep = this.prevStep.bind(this);
-    this.endTour = this.endTour.bind(this);
 
-    // Capture phase event listener to intercept and block clicks on non-highlighted items during the tour
+    // Bind methods
+    this.nextStep  = this.nextStep.bind(this);
+    this.prevStep  = this.prevStep.bind(this);
+    this.skipTour  = this.skipTour.bind(this);
+    this.endTour   = this.endTour.bind(this);
+
+    // Capture phase: block clicks on non-highlighted items during tour
     document.addEventListener('click', (e) => {
       if (this.isActive) {
-        const isInsideTooltip = e.target.closest('.tour-tooltip');
+        const isInsideTooltip   = e.target.closest('.tour-tooltip');
         const isInsideHighlight = e.target.closest('.tour-highlight');
         if (!isInsideTooltip && !isInsideHighlight) {
           e.preventDefault();
@@ -35,67 +52,66 @@ class DashboardTour {
     }, true);
   }
 
+  /* ── Initialisation ───────────────────────────────────────────────── */
+
   init() {
-    // Fetch tour data from the backend
     if (window.ApiService) {
-      const endpoint = window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.TOUR;
-      window.ApiService.get(endpoint, 
+      const endpoint = window.API_CONFIG &&
+                       window.API_CONFIG.ENDPOINTS &&
+                       window.API_CONFIG.ENDPOINTS.TOUR;
+      window.ApiService.get(
+        endpoint,
         (response) => {
-          if (response && Array.isArray(response)) {
+          // Only proceed if the API returns a non-empty array of steps
+          if (response && Array.isArray(response) && response.length > 0) {
             this.steps = response;
             this.isReady = true;
             this.checkAutoStart();
-          } else {
-            console.error('Invalid tour data format received.');
           }
+          // If empty array or invalid format — silently do nothing, tour won't show
         },
-        (error) => {
-          console.error('Failed to fetch tour data:', error);
+        () => {
+          // API error — silently do nothing, tour won't show
         }
       );
-    } else {
-      console.error('ApiService not available for tour data fetch.');
     }
-    
-    // Initialize three-dot menu listener
+    // If ApiService not available — silently do nothing
+
     this.initMenu();
   }
 
   checkAutoStart() {
-    // Check if tour was already completed
-    if (!localStorage.getItem('dashboard_tour_completed')) {
-      // Use IntersectionObserver to only auto-start when dashboard is visible
-      const dashboard = document.getElementById('scene-dashboard');
-      if (dashboard) {
-        const observer = new IntersectionObserver((entries) => {
-          if (entries[0].isIntersecting) {
-            this.startTour();
-            observer.disconnect();
-          }
-        }, { threshold: 0.5 });
-        observer.observe(dashboard);
-      }
+    // Auto-start is controlled purely by whether the API returned steps.
+    // No localStorage check — the server decides if the tour should show.
+    const dashboard = document.getElementById('scene-dashboard');
+    if (dashboard) {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          this.startTour();
+          observer.disconnect();
+        }
+      }, { threshold: 0.5 });
+      observer.observe(dashboard);
+    } else {
+      // Dashboard element not ready yet — try after a short delay
+      setTimeout(() => this.startTour(), 500);
     }
   }
-  
+
   initMenu() {
-    const menuBtn = document.getElementById('tour-menu-btn');
-    const dropdown = document.getElementById('tour-dropdown');
+    const menuBtn     = document.getElementById('tour-menu-btn');
+    const dropdown    = document.getElementById('tour-dropdown');
     const startTourBtn = document.getElementById('start-tour-btn');
-    
+
     if (menuBtn && dropdown) {
       menuBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         dropdown.classList.toggle('show');
       });
-      
-      document.addEventListener('click', () => {
-        dropdown.classList.remove('show');
-      });
-      
+      document.addEventListener('click', () => dropdown.classList.remove('show'));
       dropdown.addEventListener('click', (e) => e.stopPropagation());
     }
-    
+
     if (startTourBtn) {
       startTourBtn.addEventListener('click', () => {
         dropdown.classList.remove('show');
@@ -104,50 +120,43 @@ class DashboardTour {
     }
   }
 
-  async trackProgress(stepIndex, status = 'in_progress') {
+  /* ── Progress Tracking (API + local) ─────────────────────────────── */
+
+  trackProgress(stepIndex, status) {
     const payload = {
-      userId: TourAPI.userId,
-      viewId: TourAPI.viewId,
-      step: stepIndex + 1,
+      userId:     TourAPI.userId,
+      viewId:     TourAPI.viewId,
+      step:       stepIndex + 1,
       totalSteps: this.steps.length,
-      status: status,
-      time: new Date().toISOString()
+      status:     status,
+      timestamp:  new Date().toISOString()
     };
-    
-    console.log('Tracking Tour Progress:', payload);
-    
-    try {
-      // Mock AJAX call (replace with actual fetch later)
-      // await fetch(TourAPI.endpoint, {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(payload)
-      // });
-    } catch (e) {
-      console.error('Failed to track tour progress', e);
-    }
+
+    // Silently save to API — errors are suppressed
+    TourAPI.saveProgress(payload);
   }
+
+  /* ── Tour Lifecycle ───────────────────────────────────────────────── */
 
   startTour() {
     if (!this.isReady || this.steps.length === 0) {
-      console.warn('Tour data is not loaded yet.');
+      console.warn('[Tour] Data not loaded yet.');
       return;
     }
-    
+
     let delay = 0;
-    
-    // Safely reset the application to the main dashboard if it was deeply nested
+
     const detailBack = document.getElementById('back-to-dash');
     const detailView = document.getElementById('detail-view');
     if (detailBack && detailView && !detailView.classList.contains('hidden')) {
       detailBack.click();
-      delay = 800; // Allow transition
+      delay = 800;
     }
-    
+
     const qmBack = document.getElementById('qm-back-to-dash');
     if (qmBack && !qmBack.classList.contains('hidden')) {
       qmBack.click();
-      delay = 800; // Allow transition
+      delay = 800;
     }
 
     if (delay > 0) {
@@ -169,7 +178,7 @@ class DashboardTour {
     this.overlay = document.createElement('div');
     this.overlay.className = 'tour-overlay';
     document.body.appendChild(this.overlay);
-    
+
     this.tooltip = document.createElement('div');
     this.tooltip.className = 'tour-tooltip glass-card';
     document.body.appendChild(this.tooltip);
@@ -181,28 +190,26 @@ class DashboardTour {
       return;
     }
 
-    const step = this.steps[this.currentStepIndex];
+    const step          = this.steps[this.currentStepIndex];
     const targetElement = document.querySelector(step.target);
-    
-    // Clean up any lingering action handlers
+
+    // Clean up lingering action handler from previous step
     if (this._actionHandler && this.steps[this.currentStepIndex - 1]) {
       const prevTarget = document.querySelector(this.steps[this.currentStepIndex - 1].target);
       if (prevTarget) prevTarget.removeEventListener('click', this._actionHandler);
       this._actionHandler = null;
     }
-    
+
     this.clearHighlights();
-    
-    // Handle Center Welcome Card
+
+    // ── Welcome / center card ────────────────────────────────────────
     if (step.target === 'center') {
       this.tooltip.classList.add('tour-welcome-card');
       this.renderTooltipHtml(step);
-      
-      this.tooltip.style.top = '50%';
-      this.tooltip.style.left = '50%';
+      this.tooltip.style.top       = '50%';
+      this.tooltip.style.left      = '50%';
       this.tooltip.style.transform = 'translate(-50%, -50%)';
-      this.tooltip.style.opacity = '1';
-      
+      this.tooltip.style.opacity   = '1';
       this.bindTooltipEvents();
       return;
     }
@@ -211,20 +218,20 @@ class DashboardTour {
     this.tooltip.style.transform = 'none';
 
     if (!targetElement) {
-      console.warn('Tour target not found:', step.target);
+      console.warn('[Tour] Target not found:', step.target);
       this.nextStep();
       return;
     }
 
-    // Handle position for highlight z-index
+    // Ensure relative positioning for z-index elevation
     if (window.getComputedStyle(targetElement).position === 'static') {
       targetElement.style.position = 'relative';
       targetElement.dataset.tourPositionSet = 'true';
     }
-    
-    // Elevate parent stacking contexts to ensure element sits above overlay
+
+    // Elevate parent stacking contexts
     let parent = targetElement.parentElement;
-    while(parent && parent !== document.body && parent !== document.documentElement) {
+    while (parent && parent !== document.body && parent !== document.documentElement) {
       const style = window.getComputedStyle(parent);
       if (style.position !== 'static' && style.zIndex !== 'auto') {
         parent.dataset.tourOrigZ = style.zIndex;
@@ -233,62 +240,61 @@ class DashboardTour {
       parent = parent.parentElement;
     }
 
-    // Highlight target
     targetElement.classList.add('tour-highlight');
-    
-    // Instantly jump to target so we can accurately calculate bounds for fixed positioning
+
     if (step.target !== '#detail-view' && step.target !== '#quick-module-view') {
       targetElement.scrollIntoView({ behavior: 'auto', block: 'center' });
     }
 
     this.renderTooltipHtml(step);
 
-    // Position tooltip using actual dynamic dimensions
-    const rect = targetElement.getBoundingClientRect();
-    const tWidth = this.tooltip.offsetWidth || 300;
+    // Position tooltip
+    const rect   = targetElement.getBoundingClientRect();
+    const tWidth  = this.tooltip.offsetWidth  || 300;
     const tHeight = this.tooltip.offsetHeight || 150;
     let top = 0, left = 0;
 
     if (step.position === 'bottom') {
-      top = rect.bottom + 20;
-      left = rect.left + (rect.width / 2) - (tWidth / 2);
+      top  = rect.bottom + 20;
+      left = rect.left + rect.width / 2 - tWidth / 2;
     } else if (step.position === 'top') {
-      top = rect.top - tHeight - 20;
-      left = rect.left + (rect.width / 2) - (tWidth / 2);
+      top  = rect.top - tHeight - 20;
+      left = rect.left + rect.width / 2 - tWidth / 2;
     } else if (step.position === 'left') {
-      top = rect.top + (rect.height / 2) - (tHeight / 2);
+      top  = rect.top + rect.height / 2 - tHeight / 2;
       left = rect.left - tWidth - 20;
     } else if (step.position === 'right') {
-      top = rect.top + (rect.height / 2) - (tHeight / 2);
+      top  = rect.top + rect.height / 2 - tHeight / 2;
       left = rect.right + 20;
     } else if (step.position === 'center') {
-      top = rect.top + (rect.height / 2) - (tHeight / 2);
-      left = rect.left + (rect.width / 2) - (tWidth / 2);
+      top  = rect.top + rect.height / 2 - tHeight / 2;
+      left = rect.left + rect.width / 2 - tWidth / 2;
     }
-    
-    // Robust bounds checking to ensure tooltip NEVER goes offscreen
-    if (left < 20) left = 20;
-    if (left + tWidth > window.innerWidth) left = window.innerWidth - tWidth - 20;
-    if (top < 20) top = 20;
-    if (top + tHeight > window.innerHeight) top = window.innerHeight - tHeight - 20;
 
-    this.tooltip.style.top = `${top}px`;
-    this.tooltip.style.left = `${left}px`;
+    // Clamp to viewport
+    if (left < 20)                          left = 20;
+    if (left + tWidth  > window.innerWidth) left = window.innerWidth  - tWidth  - 20;
+    if (top  < 20)                          top  = 20;
+    if (top  + tHeight > window.innerHeight) top = window.innerHeight - tHeight - 20;
+
+    this.tooltip.style.top     = `${top}px`;
+    this.tooltip.style.left    = `${left}px`;
     this.tooltip.style.opacity = '1';
 
     this.bindTooltipEvents();
 
+    // Action-required step: wait for user to click the highlighted element
     if (step.actionRequired) {
       this._actionHandler = () => {
         targetElement.removeEventListener('click', this._actionHandler);
         this._actionHandler = null;
-        this.clearHighlights(); // Reset highlights immediately so modal animations render on top of the card
-        setTimeout(() => this.nextStep(), 800); // Wait 800ms for heavy layout animations
+        this.clearHighlights();
+        setTimeout(() => this.nextStep(), 800);
       };
       targetElement.addEventListener('click', this._actionHandler);
 
-      // Create animated neon circular pulse helper
-      const rect = targetElement.getBoundingClientRect();
+      // Animated pulse helper
+      const pRect   = targetElement.getBoundingClientRect();
       const pointer = document.createElement('div');
       pointer.className = 'tour-pointer-helper';
       pointer.innerHTML = `
@@ -299,23 +305,37 @@ class DashboardTour {
 
       const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
       const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-      // Position helper exactly at the top-right corner of the target element
-      pointer.style.top = `${rect.top + scrollY - 10}px`;
-      pointer.style.left = `${rect.right + scrollX - 10}px`;
+      pointer.style.top  = `${pRect.top  + scrollY - 10}px`;
+      pointer.style.left = `${pRect.right + scrollX - 10}px`;
       this.pointerHelper = pointer;
     }
   }
 
+  /* ── Tooltip Rendering ────────────────────────────────────────────── */
+
+
   renderTooltipHtml(step) {
-    let actionHtml = '';
-    let nextBtnHtml = '';
-    
-    if (step.actionRequired) {
-      actionHtml = '<p class="tour-action-msg" style="color:var(--accent); font-weight:bold; margin-top:8px;">👉 Please click the highlighted component to continue.</p>';
-    } else {
-      nextBtnHtml = `<button class="tour-btn" id="tour-next-btn">${this.currentStepIndex === this.steps.length - 1 ? 'Finish' : 'Next'}</button>`;
-    }
+    const isLast  = this.currentStepIndex === this.steps.length - 1;
+    const isFirst = this.currentStepIndex === 0;
+
+    // Modern SVG chevron icons
+    const iconPrev   = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>`;
+    const iconNext   = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`;
+    const iconFinish = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    const iconSkip   = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+
+    const actionHtml = step.actionRequired
+      ? `<p class="tour-action-msg">
+           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+           Click the highlighted element to continue
+         </p>`
+      : '';
+
+    const nextBtnHtml = !step.actionRequired
+      ? `<button class="tour-btn" id="tour-next-btn">
+           ${isLast ? iconFinish + ' Finish' : 'Next ' + iconNext}
+         </button>`
+      : '';
 
     this.tooltip.innerHTML = `
       <div class="tour-header">
@@ -327,20 +347,31 @@ class DashboardTour {
         ${actionHtml}
       </div>
       <div class="tour-footer">
-        <button class="tour-btn secondary" id="tour-prev-btn" ${this.currentStepIndex === 0 ? 'disabled' : ''}>Previous</button>
+        <div class="tour-footer-left">
+          <button class="tour-btn secondary" id="tour-prev-btn" ${isFirst ? 'disabled' : ''}>
+            ${iconPrev} Prev
+          </button>
+          <button class="tour-btn skip" id="tour-skip-btn" title="Skip tour">
+            ${iconSkip} Skip
+          </button>
+        </div>
         ${nextBtnHtml}
       </div>
     `;
   }
 
+
   bindTooltipEvents() {
-    // Event listeners
     const nextBtn = document.getElementById('tour-next-btn');
     const prevBtn = document.getElementById('tour-prev-btn');
-    
+    const skipBtn = document.getElementById('tour-skip-btn');
+
     if (nextBtn) nextBtn.addEventListener('click', this.nextStep);
     if (prevBtn) prevBtn.addEventListener('click', this.prevStep);
+    if (skipBtn) skipBtn.addEventListener('click', this.skipTour);
   }
+
+  /* ── Navigation ───────────────────────────────────────────────────── */
 
   nextStep() {
     this.trackProgress(this.currentStepIndex, 'next_clicked');
@@ -354,33 +385,29 @@ class DashboardTour {
     this.showStep();
   }
 
+  skipTour() {
+    // Track skip with the step where the user bailed out
+    this.trackProgress(this.currentStepIndex, 'skipped');
+    this.endTour('skipped');
+  }
+
   endTour(status = 'completed') {
     this.isActive = false;
     this.clearHighlights();
-    
-    if (this.overlay) {
-      this.overlay.remove();
-      this.overlay = null;
-    }
-    if (this.tooltip) {
-      this.tooltip.remove();
-      this.tooltip = null;
-    }
-    
-    this.trackProgress(this.currentStepIndex, status);
-    
+
+    if (this.overlay) { this.overlay.remove(); this.overlay = null; }
+    if (this.tooltip) { this.tooltip.remove(); this.tooltip = null; }
+
     if (status === 'completed') {
-      localStorage.setItem('dashboard_tour_completed', 'true');
+      this.trackProgress(this.currentStepIndex, 'completed');
     }
+    // For skip: progress already tracked in skipTour()
+    // No localStorage — server controls whether the tour shows again
   }
 
   clearHighlights() {
-    if (this.pointerHelper) {
-      this.pointerHelper.remove();
-      this.pointerHelper = null;
-    }
+    if (this.pointerHelper) { this.pointerHelper.remove(); this.pointerHelper = null; }
 
-    // Reset all highlights and positions
     document.querySelectorAll('.tour-highlight').forEach(el => {
       el.classList.remove('tour-highlight');
       if (el.dataset.tourPositionSet === 'true') {
@@ -388,8 +415,7 @@ class DashboardTour {
         delete el.dataset.tourPositionSet;
       }
     });
-    
-    // Reset all parent z-indexes
+
     document.querySelectorAll('[data-tour-orig-z]').forEach(el => {
       el.style.zIndex = el.dataset.tourOrigZ === 'auto' ? '' : el.dataset.tourOrigZ;
       delete el.dataset.tourOrigZ;
@@ -397,7 +423,7 @@ class DashboardTour {
   }
 }
 
-// Initialize on load
+// Initialise on load
 document.addEventListener('DOMContentLoaded', () => {
   window.appTour = new DashboardTour();
   window.appTour.init();

@@ -11,7 +11,90 @@
   let headerRestored = true;
 
   // Helper for dynamic field mapping fallback in case window.fieldName is not loaded
-  const fName = (window.fieldName || window.fieldName2 || function(k) { return k; });
+  const fName = (window.fieldName || window.fieldName2 || function (k) { return k; });
+
+  // Helper to convert byte array to base64
+  function byteArrayToBase64(arr) {
+    let binary = '';
+    const len = arr.length;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(arr[i]);
+    }
+    return window.btoa(binary);
+  }
+
+  // Helper to convert ArrayBuffer/TypedArray to base64
+  function arrayBufferToBase64(buffer) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  }
+
+  // Resolve image source dynamically (supports URL, base64, raw bytes)
+  function resolveImageSrc(image) {
+    if (!image) return '';
+    
+    // If image is a string directly
+    if (typeof image === 'string') {
+      const trimmed = image.trim();
+      const isPathOrUrl = trimmed.startsWith('http') || 
+                          trimmed.startsWith('data:') || 
+                          trimmed.startsWith('/') || 
+                          trimmed.startsWith('.') ||
+                          /\.(png|jpe?g|gif|svg|webp|bmp)(?:\?.*)?$/i.test(trimmed);
+      if (isPathOrUrl) {
+        return trimmed;
+      }
+      return 'data:image/png;base64,' + trimmed;
+    }
+    
+    // If image is a Blob or File
+    if (image instanceof Blob || image instanceof File) {
+      return URL.createObjectURL(image);
+    }
+    
+    // If image is an Array or Array-like
+    if (Array.isArray(image)) {
+      try {
+        return 'data:image/png;base64,' + byteArrayToBase64(image);
+      } catch (e) {
+        console.error("Error converting array to base64:", e);
+        return '';
+      }
+    }
+    
+    if (image.buffer || image.byteLength) { // TypedArray/ArrayBuffer
+      try {
+        return 'data:image/png;base64,' + arrayBufferToBase64(image);
+      } catch (e) {
+        console.error("Error converting buffer to base64:", e);
+        return '';
+      }
+    }
+    
+    // If image is an object
+    if (typeof image === 'object') {
+      const srcVal = image.href || image.base64 || image.data || image.bytes;
+      if (srcVal) {
+        return resolveImageSrc(srcVal);
+      }
+    }
+    
+    return '';
+  }
+
+  // Render image for a card (supports href, base64, or raw bytes)
+  function renderCardImage(image) {
+    if (!image) return '';
+    const src = resolveImageSrc(image);
+    if (!src) return '';
+    const alt = (image && image.alt) || 'Card image';
+    return `<img class="card-image" src="${src}" alt="${alt}" loading="lazy" />`;
+  }
 
 
 
@@ -194,6 +277,8 @@
       heroImg = "card.svg";
     } else if (categoryCfg.id === "valueAdded") {
       heroImg = "shield.svg";
+    } else if (categoryCfg.id === "investments") {
+      heroImg = "chart.svg";
     }
     $("#detail-img").attr("src", `${assetsPath}${heroImg}`);
 
@@ -248,6 +333,8 @@
 
     let activeTabId = categoryCfg.tabs && categoryCfg.tabs.length > 0 ? categoryCfg.tabs[0].id : "";
     let selectedAccountIndex = 0;
+    let activePreviewTabId = "details";
+    let activeTab = null;
     let activeTabAccounts = []; // Stores fetched accounts for searching
 
     // Render tabs and initial accounts list
@@ -283,6 +370,7 @@
           if (activeTabId !== tab.id) {
             activeTabId = tab.id;
             selectedAccountIndex = 0;
+            activePreviewTabId = "details";
             $contentArea.find("#explorer-search-input").val(""); // reset search on tab swap
             renderTabs();
             loadActiveCategoryItems();
@@ -294,7 +382,7 @@
     }
 
     function loadActiveCategoryItems() {
-      const activeTab = categoryCfg.tabs.find(t => t.id === activeTabId);
+      activeTab = categoryCfg.tabs.find(t => t.id === activeTabId);
       const $list = $contentArea.find("#explorer-account-list");
       $list.empty();
 
@@ -382,13 +470,62 @@
           selectedAccountIndex = idx;
           $list.find(".account-item").css({ "border-color": "var(--border)", "background": "var(--glass)" }).removeClass("active");
           $(this).css({ "border-color": "var(--accent)", "background": "var(--glass2)" }).addClass("active");
-          renderPreview(acc);
+          selectAccount(acc);
         });
 
         $list.append($item);
       });
 
-      renderPreview(accountList[selectedAccountIndex]);
+      selectAccount(accountList[selectedAccountIndex]);
+    }
+
+    function selectAccount(acc) {
+      if (!acc) {
+        renderPreview(null);
+        return;
+      }
+
+      if (activeTab && activeTab.detailsEndpoint) {
+        // Multi-Endpoint Flow: Fetch details from activeTab.detailsEndpoint
+        const params = {};
+        if (activeTab.detailsParams) {
+          // const customerParam = activeTab.detailsParams.customerKey || "customerId";
+          const idParam = activeTab.detailsParams.idKey || "id";
+          // params[customerParam] = currentCustomerId;
+          params[idParam] = acc.id;
+        }
+
+        if (window.UIRenderer) {
+          window.UIRenderer.showLoader("#explorer-detail-preview");
+        } else {
+          $contentArea.find("#explorer-detail-preview").html(`<div style="text-align: center; color: var(--muted); padding: 50px 10px;">Loading details...</div>`);
+        }
+
+        if (window.ApiService) {
+          window.ApiService.get(
+            activeTab.detailsEndpoint,
+            params,
+            function (response) {
+              if (window.UIRenderer) window.UIRenderer.hideLoader("#explorer-detail-preview");
+              const resData = Array.isArray(response) ? response[0] : response;
+              acc.fullDetails = resData ? (resData.fullDetails || resData) : null;
+              renderPreview(acc);
+            },
+            function (error) {
+              if (window.UIRenderer) window.UIRenderer.hideLoader("#explorer-detail-preview");
+              console.warn("Failed to load details:", error);
+              $contentArea.find("#explorer-detail-preview").html(
+                `<div style="text-align: center; color: #ef4444; padding: 100px 10px; font-size: 13px;">Error loading details: ${error}</div>`
+              );
+            }
+          );
+        } else {
+          renderPreview(acc);
+        }
+      } else {
+        // Single-Endpoint Flow: Render pre-loaded details directly
+        renderPreview(acc);
+      }
     }
 
     function renderPreview(acc) {
@@ -418,36 +555,28 @@
         return "🔹";
       }
 
-      const detailsKey = fName("details");
-      const fullDetailsKey = fName("fullDetails");
-      const fullDetails = acc[fullDetailsKey];
-
-      // Check if fullDetails is available to render all sections, or fall back to single details
-      const sections = fullDetails && fullDetails.sections ? fullDetails.sections : [
-        { name: "Account Details", fields: acc[detailsKey] }
-      ];
-
-      let sectionsHtml = '';
-      sections.forEach(sec => {
+      function renderSectionBlock(sec) {
         let fieldsHtml = '';
-        Object.entries(sec.fields).forEach(([key, val]) => {
-          const valStr = String(val);
-          const icon = getLocalFieldIcon(key);
-          const isFullWidth = valStr.length > 20 || key.toLowerCase().includes("address") || key.toLowerCase().includes("details") || key.toLowerCase().includes("remarks");
+        if (sec.fields) {
+          Object.entries(sec.fields).forEach(([key, val]) => {
+            const valStr = String(val);
+            const icon = getLocalFieldIcon(key);
+            const isFullWidth = valStr.length > 20 || key.toLowerCase().includes("address") || key.toLowerCase().includes("details") || key.toLowerCase().includes("remarks");
 
-          fieldsHtml += `
-            <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="padding: 10px; border-bottom: 1px solid var(--border);">
-              <div class="df-info">
-                <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px;">
-                  <span class="df-icon-inline">${icon}</span> ${key}
-                </label>
-                <span class="df-value" style="display: block; font-size: 13px; font-weight: 600; color: var(--text);">${valStr}</span>
+            fieldsHtml += `
+              <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="padding: 10px; border-bottom: 1px solid var(--border);">
+                <div class="df-info">
+                  <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px;">
+                    <span class="df-icon-inline">${icon}</span> ${key}
+                  </label>
+                  <span class="df-value" style="display: block; font-size: 13px; font-weight: 600; color: var(--text);">${valStr}</span>
+                </div>
               </div>
-            </div>
-          `;
-        });
+            `;
+          });
+        }
 
-        sectionsHtml += `
+        return `
           <div class="detail-section-block glass-card" style="padding: 16px; border-radius: 14px; margin-bottom: 16px;">
             <h3 style="margin-top: 0; margin-bottom: 12px; font-size: 11.5px; text-transform: uppercase; color: var(--accent2); letter-spacing: 2px; font-weight: 800; border-bottom: 1px solid var(--border); padding-bottom: 5px;">${sec.name}</h3>
             <div class="detail-fields-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; gap: 1px;">
@@ -455,15 +584,180 @@
             </div>
           </div>
         `;
-      });
+      }
 
-      const previewHtml = `
-        <div class="preview-content" style="display: flex; flex-direction: column; gap: 16px; height: 100%; overflow-y: auto; padding-right: 5px;">
-          ${sectionsHtml}
-        </div>
-      `;
+      function renderSubTabContent(acc, subTabId, $container) {
+        if (subTabId === "details") {
+          const fullDetailsKey = fName("fullDetails");
+          const fullDetails = acc[fullDetailsKey];
+          const sections = fullDetails && fullDetails.sections ? fullDetails.sections : [];
 
-      $preview.html(previewHtml);
+          if (sections.length === 0) {
+            $container.html(`<div style="text-align: center; color: var(--muted); padding: 50px 10px; font-style: italic; font-size: 13px;">No details available for this account.</div>`);
+            return;
+          }
+
+          let sectionsHtml = '';
+          sections.forEach(sec => {
+            sectionsHtml += renderSectionBlock(sec);
+          });
+          $container.html(sectionsHtml);
+        } else {
+          // Find configuration of this sub-tab
+          const rtConfig = activeTab.rightTabs.find(rt => rt.id === subTabId);
+          if (!rtConfig || !rtConfig.endpoint) {
+            $container.html(`<div style="text-align: center; color: var(--muted); padding: 50px 10px; font-style: italic;">Configuration error.</div>`);
+            return;
+          }
+
+          // Fetch cards from details API
+          const params = {};
+          const paramKey = rtConfig.paramKey || "casaId";
+          const valField = rtConfig.idField || "number";
+          params[paramKey] = acc[valField];
+
+          if (window.UIRenderer) {
+            window.UIRenderer.showLoader("#preview-tab-content-area");
+          } else {
+            $container.html(`<div style="text-align: center; color: var(--muted); padding: 30px 10px;">Loading...</div>`);
+          }
+
+          if (window.ApiService) {
+            window.ApiService.get(
+              rtConfig.endpoint,
+              params,
+              function (response) {
+                if (window.UIRenderer) window.UIRenderer.hideLoader("#preview-tab-content-area");
+                let cards = Array.isArray(response) ? response : [];
+                if (cards.length === 0) {
+                  $container.html(`<div style="text-align: center; color: var(--muted); padding: 50px 10px; font-style: italic; font-size: 13px;">No cards linked to this account.</div>`);
+                  return;
+                }
+
+                let cardsHtml = '<div style="display: flex; flex-direction: column; gap: 12px; padding: 4px;">';
+                cards.forEach(card => {
+                  let cardFieldsHtml = '';
+                  
+                  // Render card image inside a cell of the detail fields grid
+                  if (card.image) {
+                    const imgTag = renderCardImage(card.image);
+                    if (imgTag) {
+                      cardFieldsHtml += `
+                        <div class="detail-field-card full-width" style="padding: 10px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px;">
+                          <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-bottom: 4px;">
+                            <span class="df-icon-inline">🖼️</span> Card Design
+                          </label>
+                          <div class="card-img-container" style="width: 100%; max-width: 100%; height: 180px; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); margin: 4px 0;">
+                            ${imgTag}
+                          </div>
+                        </div>
+                      `;
+                    }
+                  }
+
+                  if (card.fields) {
+                    Object.entries(card.fields).forEach(([k, v]) => {
+                      const valStr = String(v);
+                      const icon = getLocalFieldIcon(k);
+                      const isFullWidth = valStr.length > 20 || k.toLowerCase().includes("address") || k.toLowerCase().includes("details") || k.toLowerCase().includes("remarks");
+                      
+                      cardFieldsHtml += `
+                        <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="padding: 10px; border-bottom: 1px solid var(--border);">
+                          <div class="df-info">
+                            <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-bottom: 4px;">
+                              <span class="df-icon-inline">${icon}</span> ${k}
+                            </label>
+                            <span class="df-value" style="display: block; font-size: 13px; font-weight: 600; color: var(--text);">${valStr}</span>
+                          </div>
+                        </div>
+                      `;
+                    });
+                  }
+
+                  cardsHtml += `
+                    <div class="detail-section-block glass-card" style="padding: 16px; border-radius: 14px; margin-bottom: 16px;">
+                      <div style="display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px;">
+                        <span style="font-size: 20px;">💳</span>
+                        <div style="display: flex; flex-direction: column; text-align: left;">
+                          <h3 style="margin: 0; font-size: 13px; font-weight: 800; color: var(--accent2); text-transform: uppercase; letter-spacing: 1px;">${card.title || card.name || ""}</h3>
+                          <span style="font-size: 11px; color: var(--muted);">${card.subtitle || card.number || ""}</span>
+                        </div>
+                      </div>
+                      <div class="detail-fields-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; gap: 1px;">
+                        ${cardFieldsHtml}
+                      </div>
+                    </div>
+                  `;
+                });
+                cardsHtml += '</div>';
+                $container.html(cardsHtml);
+              },
+              function (error) {
+                if (window.UIRenderer) window.UIRenderer.hideLoader("#preview-tab-content-area");
+                $container.html(`<div style="text-align: center; color: #ef4444; padding: 50px 10px; font-size: 13px;">Error loading cards: ${error}</div>`);
+              }
+            );
+          } else {
+            $container.html(`<div style="text-align: center; color: #ef4444; padding: 50px 10px;">API Service is unavailable.</div>`);
+          }
+        }
+      }
+
+      if (activeTab && activeTab.rightTabs) {
+        // Render sub-tabs container
+        let tabsHtml = `
+          <div class="preview-tabs-bar" style="display: flex; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 14px; flex-shrink: 0;">
+        `;
+        activeTab.rightTabs.forEach(rt => {
+          const isRtActive = rt.id === activePreviewTabId;
+          tabsHtml += `
+            <button class="preview-tab-btn ${isRtActive ? 'active' : ''}" data-rt-id="${rt.id}" style="background: ${isRtActive ? 'var(--accent)' : 'var(--glass2)'}; color: ${isRtActive ? '#fff' : 'var(--text)'}; border: 1px solid ${isRtActive ? 'var(--accent2)' : 'var(--border)'}; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 11.5px; font-weight: 600; transition: all 0.2s; font-family: inherit;">
+              ${rt.title}
+            </button>
+          `;
+        });
+        tabsHtml += `
+          </div>
+          <div class="preview-tab-content" id="preview-tab-content-area" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; min-height: 0;">
+          </div>
+        `;
+
+        $preview.html(tabsHtml);
+
+        // Bind clicks to preview tab buttons
+        $preview.find(".preview-tab-btn").on("click", function () {
+          const rtId = $(this).attr("data-rt-id");
+          if (activePreviewTabId !== rtId) {
+            activePreviewTabId = rtId;
+            renderPreview(acc); // Re-render preview with the new active tab
+          }
+        });
+
+        // Resolve the content container
+        const $content = $preview.find("#preview-tab-content-area");
+        renderSubTabContent(acc, activePreviewTabId, $content);
+      } else {
+        // Directly render details sections (Original Flow)
+        const fullDetailsKey = fName("fullDetails");
+        const fullDetails = acc[fullDetailsKey];
+        const sections = fullDetails && fullDetails.sections ? fullDetails.sections : [];
+
+        if (sections.length === 0) {
+          $preview.html(`<div style="text-align: center; color: var(--muted); padding: 100px 10px; font-style: italic; font-size: 13px;">No details available for this account.</div>`);
+          return;
+        }
+
+        let sectionsHtml = '';
+        sections.forEach(sec => {
+          sectionsHtml += renderSectionBlock(sec);
+        });
+
+        $preview.html(`
+          <div class="preview-content" style="display: flex; flex-direction: column; gap: 16px; height: 100%; overflow-y: auto; padding-right: 5px;">
+            ${sectionsHtml}
+          </div>
+        `);
+      }
     }
   }
 

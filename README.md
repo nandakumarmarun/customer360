@@ -111,3 +111,35 @@ To decouple the UI component layer from direct database schema assumptions, the 
    - `record[fName("customerId")]` resolves dynamically to `record["customer"]`
 
 This architecture allows backend schema key renaming to be fully handled within `config.js` without altering layout or rendering logic in the JavaScript modules.
+
+---
+
+## 5. Recent Feature Additions (For Beginners)
+
+If you are new to the project, here is a complete explanation of the features and fixes we recently integrated:
+
+### 📊 A. New "Investments" Category on Holdings Dashboard
+We added a brand new **Investments** card to the Holdings landing page.
+- **What it does**: It lists the customer's financial investments (like Mutual Funds or Demat/Stock portfolios) in the holdings tree explorer.
+- **How it works**: 
+  - We added the category card configuration in [config.js](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/config.js).
+  - We set up a single API endpoint `/investments` mapped to customer portfolios.
+  - In [db.json](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/db.json), we added sample investments data with folio details, Demat structures, and asset valuations.
+  - When you click the card in the UI, it fetches this data using the ApiService and renders it beautifully inside a detail preview panel with a custom icon (`chart.svg`).
+
+### 💳 B. Advanced Image Rendering for Debit Cards
+The dashboard has a sub-tab under CASA accounts displaying linked **Debit Cards**. We upgraded this list to support high-fidelity design:
+- **Table-Cell Layout**: The debit cards are displayed as unified table-like grids (matching the main account details table structure) instead of old list items.
+- **Multiple Image Format Support**: Different APIs and databases return card images in various formats. We created a smart converter function `resolveImageSrc` inside the holdings logic that dynamically processes:
+  - **Local file URLs** (like `assets/png/card.png`).
+  - **Base64-encoded strings** (long text strings representing images).
+  - **Raw Byte Arrays** (arrays of numbers representing the binary content of the image).
+- **Fitting Guarantee (`object-fit: contain`)**: We set the image CSS styles in [style.css](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/style.css) to `contain` so that full card details (logos, card numbers) fit nicely inside the cell and never get cropped.
+
+### 🚀 C. Dashboard Tour Progress Tracking
+The guided walkthrough tour (`tour.js`) now successfully records user interaction progress.
+- **What was fixed**: The tour script was trying to POST progress logs (e.g. `started`, `skipped`, `completed`) to a missing configuration key.
+- **How it works**:
+  - We mapped the `TOUR_PROGRESS` key to `"/tourProgress"` in the global endpoints dictionary.
+  - We initialized the `"tourProgress": []` table in [db.json](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/db.json).
+  - Now, whenever a user goes through the tour steps or clicks "Skip", json-server automatically stores their progress logs in the database.
