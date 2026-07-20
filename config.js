@@ -9,6 +9,7 @@ window.API_CONFIG = {
 
   // Customer Search URL for easy modification
   CUSTOMER_SEARCH_URL: "customer-search/customer-search.html",
+  HOME_PAGE_URL: "index.html",
 
   // Complete URLs for creation forms
   CREATION_URLS: {

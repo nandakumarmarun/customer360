@@ -56,6 +56,11 @@
       </div>
 
       <div class="search-header-right">
+        <!-- Go Home Button -->
+        <a href="#" id="go-home-btn" class="go-home-btn" onclick="event.preventDefault(); window.location.href = (window.API_CONFIG && window.API_CONFIG.HOME_PAGE_URL) ? '../' + window.API_CONFIG.HOME_PAGE_URL : '../index.html';">
+          🏠 Go Home
+        </a>
+
         <!-- Reuses existing application theme picker styles -->
         <div class="theme-picker-group">
           <button class="theme-picker-btn red-theme-picker active" data-theme="red" title="Crimson Red Theme"></button>
@@ -151,7 +156,7 @@
           <!-- Middle: Input Field -->
           <div class="search-input-wrapper">
             <input type="text" class="search-input-field" id="search-input"
-              placeholder="Enter Customer ID (e.g. NX-4829-0055)..." aria-label="Search Value" />
+              placeholder="Enter Customer ID (e.g. NX-4829-0055)..." aria-label="Search Value" autocomplete="off" />
           </div>
 
           <!-- Right side: Button -->

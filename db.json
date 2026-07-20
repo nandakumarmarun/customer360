@@ -1812,6 +1812,15 @@
       "status": "started",
       "timestamp": "2026-07-20T06:10:48.643Z",
       "id": "-2x3MBM4oDU"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-07-20T07:24:02.051Z",
+      "id": "MkMIxTWjAh4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
