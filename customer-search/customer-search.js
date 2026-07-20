@@ -557,6 +557,8 @@
         $input.attr("placeholder", "Enter Email address...");
       } else if (type === "phone") {
         $input.attr("placeholder", "Enter Phone Number...");
+      } else if (type === "account") {
+        $input.attr("placeholder", "Enter Account Number (e.g. 50100123456789)...");
       }
     });
 

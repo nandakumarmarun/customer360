@@ -4362,4 +4362,100 @@ body::before {
   object-fit: contain;
   display: block;
 }
+
+/* Floating Action Button (FAB) for Customer Search */
+.floating-search-btn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  background: var(--accent);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 8px 30px var(--glow-shadow-medium), 0 0 0 0px var(--glow-shadow-strong);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Continuous Pulse Ripple (makes it super noticeable) */
+.floating-search-btn::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 2px solid var(--accent);
+  border-radius: 50px;
+  opacity: 0;
+  pointer-events: none;
+  animation: fabPulse 2s infinite ease-out;
+}
+
+@keyframes fabPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+.floating-search-btn:hover {
+  width: 220px; /* Expands to show text */
+  padding-left: 18px;
+  padding-right: 18px;
+  background: var(--accent2);
+  box-shadow: 0 12px 35px var(--glow-shadow-strong);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.floating-search-btn .btn-icon {
+  font-size: 20px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.4s ease, width 0.4s ease;
+}
+
+.floating-search-btn:hover .btn-icon {
+  transform: rotate(-15deg) scale(1.15);
+  width: 24px; /* Collapse icon area to align nicely with text */
+  margin-right: 8px;
+}
+
+.floating-search-btn .btn-text {
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.floating-search-btn:hover .btn-text {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.15s;
+}
+
+/* Align floating search button in the same row (to the left of the back button) when the back button is active */
+body:has(#qm-back-to-dash:not(.hidden)) .floating-search-btn {
+  right: 236px;
+  bottom: 35px;
+}
 

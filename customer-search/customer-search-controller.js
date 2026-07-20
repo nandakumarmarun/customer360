@@ -30,7 +30,13 @@
     // Search customers dynamically via backend /search endpoint
     searchCustomers: function(searchType, searchValue, successCallback, errorCallback) {
       const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.SEARCH) || "/search";
-      const inputType = searchType === "email" ? "EMAIL" : "PHONE";
+      
+      let inputType = "EMAIL";
+      if (searchType === "phone") {
+        inputType = "PHONE";
+      } else if (searchType === "account") {
+        inputType = "ACCOUNT";
+      }
 
       // Update global ParamsData state
       if (window.ParamsData) {
@@ -76,7 +82,7 @@
       return [...loadedCustomers];
     },
 
-    // Search function mapping ID, Email, and Phone selections
+    // Search function mapping ID, Email, Phone, and Account selections
     query: function(searchType, searchValue) {
       const val = (searchValue || "").toLowerCase().trim();
       if (!val) return [...loadedCustomers];
@@ -91,6 +97,8 @@
           const digitsSearch = val.replace(/\D/g, "");
           const digitsCustomer = (item.phone || "").replace(/\D/g, "");
           return digitsCustomer.includes(digitsSearch);
+        } else if (searchType === "account") {
+          return (item.account || "").toLowerCase().includes(val);
         }
         return false;
       });
