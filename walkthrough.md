@@ -84,7 +84,7 @@ We have added interactive creation action buttons directly onto the headers of t
 
 ### Key Details:
 - **Lead Module Header**: Includes a `➕ Create Lead` action button linking directly to [lead-create.html](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/modules/lead/lead-create.html).
-- **Case Module Header**: Includes `📁 Create Case` and `⚠️ Create Complaint` buttons linking directly to [case-create.html](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/modules/case/case-create.html) and [complaint-create.html](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/modules/case/complaint-create.html) respectively.
+- **Case Module Header**: Includes `⚖️ Create Case` and `⚠️ Create Complaint` buttons linking directly to [case-create.html](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/modules/case/case-create.html) and [complaint-create.html](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/modules/case/complaint-create.html) respectively.
 - **Standalone Form Windows**: Form templates open in new tabs (`target="_blank"`), utilizing standard browser window openers to dynamically fetch the active Customer ID from the parent dashboard (`window.opener.ParamsData.getCustomerId()`) on load.
 - **Transition Robustness**: Each quick module renders its custom header by clearing the other modules' active flags (e.g., `cases-active`, `leads-active`, `holdings-active`), preventing MutationObserver cleanup races from wiping out the newly loaded header.
 

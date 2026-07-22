@@ -92,6 +92,7 @@
 
           // 1. Render sidebar / header summary
           if (response.summary) {
+            window.currentCustomerSummary = response.summary;
             window.UIRenderer.renderSummary(response.summary);
           }
 
@@ -140,6 +141,17 @@
   // Auto-init when jQuery + DOM are ready
   $(function() {
     DataLoader.loadAll();
+
+    // Bind Edit Profile click handler based on customerType
+    $('#edit-profile-btn').on('click', function() {
+      const summary = window.currentCustomerSummary || {};
+      const type = summary.customerType || 'default';
+      const urls = (window.API_CONFIG && window.API_CONFIG.EDIT_PROFILE_URLS) || {};
+      const targetUrl = urls[type] || urls['default'] || 'edit-profile-default.html';
+      
+      console.log(`[Edit Profile] Redirecting to ${targetUrl} for customer type: ${type}`);
+      window.location.href = targetUrl;
+    });
 
     // Subscribe to global customerId changes to reload the data reactively
     if (window.ParamsData) {

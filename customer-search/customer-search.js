@@ -280,14 +280,16 @@
       } else {
         performRedirect();
       }
-    } else {
-      // Show loading preloader before starting the search
-      if (window.SearchPreloader) {
-        window.SearchPreloader.show(startApiQuery, 1200);
-      } else {
-        startApiQuery();
-      }
+      return;
     }
+
+    // Show the search preloader immediately in keep-visible mode
+    if (window.SearchPreloader) {
+      window.SearchPreloader.show(null, 0, true);
+    }
+
+    // Trigger the AJAX call immediately
+    startApiQuery();
 
     function startApiQuery() {
       if (window.CustomerSearchController && window.CustomerSearchController.searchCustomers) {
@@ -326,16 +328,43 @@
               currentSearchResults = [];
             }
 
-            currentPage = 1;
-            applyFiltersAndRenderTable();
-            scrollToResults();
+            if (currentSearchResults.length === 1) {
+              const singleItem = currentSearchResults[0];
+              const profileUrl = `../index.html?customerId=${encodeURIComponent(btoa(singleItem.id))}`;
+              // Redirect directly and keep preloader visible
+              window.location.href = profileUrl;
+              return;
+            }
+
+            // Multiple or no results found: hide preloader and update table UI
+            if (window.SearchPreloader) {
+              window.SearchPreloader.hide(function () {
+                currentPage = 1;
+                applyFiltersAndRenderTable();
+                scrollToResults();
+              });
+            } else {
+              currentPage = 1;
+              applyFiltersAndRenderTable();
+              scrollToResults();
+            }
           },
           function (errorMsg) {
             loadError = errorMsg;
             currentSearchResults = [];
-            currentPage = 1;
-            applyFiltersAndRenderTable();
-            scrollToResults();
+
+            // Hide preloader and update table UI with error state
+            if (window.SearchPreloader) {
+              window.SearchPreloader.hide(function () {
+                currentPage = 1;
+                applyFiltersAndRenderTable();
+                scrollToResults();
+              });
+            } else {
+              currentPage = 1;
+              applyFiltersAndRenderTable();
+              scrollToResults();
+            }
           }
         );
       }

@@ -25,6 +25,13 @@ window.API_CONFIG = {
     COMPLAINT_DETAIL: "modules/case/complaint-detail.html"
   },
 
+  // Edit Profile URLs based on customer type
+  EDIT_PROFILE_URLS: {
+    Corporate: "edit-profile-corporate.html",
+    Retail: "edit-profile-retail.html",
+    default: "edit-profile-default.html"
+  },
+
   // Grouped Endpoints for easy modification
   ENDPOINTS: {
     CUSTOMER: "/customer",
@@ -35,8 +42,10 @@ window.API_CONFIG = {
     TOUR_TRACK: "/api/tour/track",
     TOUR_PROGRESS: "/tourProgress",
     HOLDINGS: "/holdings",
+    HOLDINGS_ASSETS: "/assets",
     HOLDINGS_LOANS: "/loans",
     HOLDINGS_LOANS_DETAILS: "/loanDetails",
+    HOLDINGS_GOLD_LOANS_DETAILS: "/goldLoanDetails",
     HOLDINGS_CASA: "/casaDetails",
     HOLDINGS_CASA_CARDS: "/casaCards",
     HOLDINGS_DEPOSITS: "/casaDeposits",
@@ -112,8 +121,10 @@ window.HOLDING_CONFIG = [
     title: "Assets",
     icon: "🏦",
     apiKey: "assets",
+    endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_ASSETS,
     tabs: [
-      { id: "loans", title: "Loans", icon: "🏠", matchType: "Loans", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOANS, detailsEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOANS_DETAILS, detailsParams: { idKey: "loanId" } }
+      { id: "loans", title: "Asset Loans", icon: "🏠", matchType: "Asset Loans", detailsEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOANS_DETAILS, detailsParams: { idKey: "loanId" } },
+      { id: "goldLoans", title: "Gold Loans", icon: "🪙", matchType: "Gold Loans", detailsEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_GOLD_LOANS_DETAILS, detailsParams: { idKey: "goldLoanId" } }
     ]
   },
   {

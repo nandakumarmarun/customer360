@@ -297,60 +297,102 @@
       "flex-direction": "column"
     });
 
-    // 5. Build holdings explorer UI structure
-    const explorerHtml = `
-      <div class="holdings-explorer-layout" style="display: flex; flex-direction: column; height: 100%; gap: 16px; min-height: 0; flex: 1;">
-        <!-- SUB-CATEGORY TABS BAR (At the top of the detail view area) -->
-        <div class="modal-tabs-bar" id="explorer-tabs-container" style="display: flex; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 12px; background: transparent; flex-shrink: 0; flex-wrap: wrap;">
-          <!-- subcategory tabs dynamically generated -->
-        </div>
-
-        <div class="explorer-body" style="display: flex; gap: 20px; overflow: hidden; height: 100%; flex: 1; min-height: 0;">
-          <!-- LEFT SECTION: Account List -->
-          <div class="explorer-left" style="width: 45%; display: flex; flex-direction: column; gap: 16px; border-right: 1px solid var(--border); padding-right: 20px; height: 100%; overflow: hidden;">
-            <div class="explorer-search-wrap" style="position: relative; flex-shrink: 0;">
-              <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px;">🔍</span>
-              <input type="text" id="explorer-search-input" style="width: 100%; padding: 8px 12px 8px 34px; border-radius: 20px; background: var(--glass2); border: 1px solid var(--border); color: var(--text); outline: none; font-size: 13px;" placeholder="Search accounts..." />
-            </div>
-            <div class="account-list" id="explorer-account-list" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-bottom: 20px;">
-              <!-- Dynamically rendered accounts -->
-            </div>
-          </div>
-          <!-- RIGHT SECTION: Account Detail Preview -->
-          <div class="explorer-right" id="explorer-detail-preview" style="width: 55%; display: flex; flex-direction: column; height: 100%; padding-left: 10px; overflow: hidden;">
-            <!-- Dynamic details preview -->
-          </div>
-        </div>
-      </div>
-    `;
-
-    $contentArea.html(explorerHtml);
-
-    // 6. Open the detail view
+    // Open the detail view modal first so the user sees it opening
     $detailView.removeClass("hidden");
     setTimeout(() => $detailView.addClass("visible"), 10);
     document.body.style.overflow = 'hidden';
 
-    let activeTabId = categoryCfg.tabs && categoryCfg.tabs.length > 0 ? categoryCfg.tabs[0].id : "";
+    let activeTabId = "";
     let selectedAccountIndex = 0;
     let activePreviewTabId = "details";
     let activeTab = null;
     let activeTabAccounts = []; // Stores fetched accounts for searching
+    let categoryData = null;    // Cache for single API response
 
-    // Render tabs and initial accounts list
-    renderTabs();
-    loadActiveCategoryItems();
+    // Handle single category API vs standard individual tab loading
+    if (categoryCfg.endpoint) {
+      if (window.UIRenderer) {
+        window.UIRenderer.showLoader($contentArea);
+      } else {
+        $contentArea.html("<div style='text-align:center; padding: 40px;'>Loading Portfolio Items...</div>");
+      }
 
-    // Bind search input filter
-    $contentArea.find("#explorer-search-input").on("input", function () {
-      const query = $(this).val().toLowerCase().trim();
-      filterActiveCategoryItems(query);
-    });
+      const custKey = fName("customerId");
+      const params = {};
+      params[custKey] = currentCustomerId;
 
-    // Back button cleanups and restore styles on exit
-    $("#back-to-dash").off("click.holdings").on("click.holdings", function () {
-      $contentArea.css({ "overflow-y": "", "height": "", "display": "", "flex-direction": "" });
-    });
+      if (window.ApiService) {
+        window.ApiService.get(
+          categoryCfg.endpoint,
+          params,
+          function (response) {
+            if (window.UIRenderer) window.UIRenderer.hideLoader($contentArea);
+            categoryData = response;
+            
+            // Set first tab as active
+            activeTabId = categoryCfg.tabs && categoryCfg.tabs.length > 0 ? categoryCfg.tabs[0].id : "";
+            initLayout();
+          },
+          function (error) {
+            if (window.UIRenderer) window.UIRenderer.hideLoader($contentArea);
+            $contentArea.html(`<div style="text-align: center; color: #ef4444; padding: 40px;">Error loading data: ${error}</div>`);
+          }
+        );
+      } else {
+        if (window.UIRenderer) window.UIRenderer.hideLoader($contentArea);
+        $contentArea.html("<div style='text-align: center; color: #ef4444; padding: 40px;'>API Service is unavailable.</div>");
+      }
+    } else {
+      // Standard flow: tabs are loaded individually on click/active
+      activeTabId = categoryCfg.tabs && categoryCfg.tabs.length > 0 ? categoryCfg.tabs[0].id : "";
+      initLayout();
+    }
+
+    function initLayout() {
+      // 5. Build holdings explorer UI structure
+      const explorerHtml = `
+        <div class="holdings-explorer-layout" style="display: flex; flex-direction: column; height: 100%; gap: 16px; min-height: 0; flex: 1;">
+          <!-- SUB-CATEGORY TABS BAR (At the top of the detail view area) -->
+          <div class="modal-tabs-bar" id="explorer-tabs-container" style="display: flex; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 12px; background: transparent; flex-shrink: 0; flex-wrap: wrap;">
+            <!-- subcategory tabs dynamically generated -->
+          </div>
+
+          <div class="explorer-body" style="display: flex; gap: 20px; overflow: hidden; height: 100%; flex: 1; min-height: 0;">
+            <!-- LEFT SECTION: Account List -->
+            <div class="explorer-left" style="width: 45%; display: flex; flex-direction: column; gap: 16px; border-right: 1px solid var(--border); padding-right: 20px; height: 100%; overflow: hidden;">
+              <div class="explorer-search-wrap" style="position: relative; flex-shrink: 0;">
+                <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px;">🔍</span>
+                <input type="text" id="explorer-search-input" style="width: 100%; padding: 8px 12px 8px 34px; border-radius: 20px; background: var(--glass2); border: 1px solid var(--border); color: var(--text); outline: none; font-size: 13px;" placeholder="Search accounts..." />
+              </div>
+              <div class="account-list" id="explorer-account-list" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-bottom: 20px;">
+                <!-- Dynamically rendered accounts -->
+              </div>
+            </div>
+            <!-- RIGHT SECTION: Account Detail Preview -->
+            <div class="explorer-right" id="explorer-detail-preview" style="width: 55%; display: flex; flex-direction: column; height: 100%; padding-left: 10px; overflow: hidden;">
+              <!-- Dynamic details preview -->
+            </div>
+          </div>
+        </div>
+      `;
+
+      $contentArea.html(explorerHtml);
+
+      // Render tabs and initial accounts list
+      renderTabs();
+      loadActiveCategoryItems();
+
+      // Bind search input filter
+      $contentArea.find("#explorer-search-input").on("input", function () {
+        const query = $(this).val().toLowerCase().trim();
+        filterActiveCategoryItems(query);
+      });
+
+      // Back button cleanups and restore styles on exit
+      $("#back-to-dash").off("click.holdings").on("click.holdings", function () {
+        $contentArea.css({ "overflow-y": "", "height": "", "display": "", "flex-direction": "" });
+      });
+    }
 
     function renderTabs() {
       const $container = $contentArea.find("#explorer-tabs-container");
@@ -392,33 +434,54 @@
         $list.html(`<div style="text-align: center; color: var(--muted); padding: 20px;">Loading accounts...</div>`);
       }
 
-      const endpoint = activeTab.endpoint;
       const custKey = fName("customerId");
-      const params = {};
-      params[custKey] = currentCustomerId;
 
-      if (window.ApiService) {
-        window.ApiService.get(
-          endpoint,
-          params,
-          function (response) {
-            if (window.UIRenderer) window.UIRenderer.hideLoader("#explorer-account-list");
+      if (categoryCfg.endpoint && categoryData) {
+        // Shared Category API Flow (In-memory cached data)
+        if (window.UIRenderer) window.UIRenderer.hideLoader("#explorer-account-list");
 
-            let accounts = Array.isArray(response) ? response : [];
-            // Filter locally just in case
-            accounts = accounts.filter(acc => acc[custKey] === currentCustomerId);
-            activeTabAccounts = accounts;
-            renderAccounts(accounts);
-          },
-          function (error) {
-            if (window.UIRenderer) window.UIRenderer.hideLoader("#explorer-account-list");
-            $list.html(`<div style="text-align: center; color: #ef4444; padding: 20px; font-size: 13px;">Error loading accounts: ${error}</div>`);
-            renderPreview(null);
-          }
-        );
+        let accounts = [];
+        const tabMatchType = activeTab.matchType || activeTab.title || activeTab.id;
+
+        if (Array.isArray(categoryData)) {
+          accounts = categoryData.filter(acc => {
+            const customerMatch = acc[custKey] === currentCustomerId;
+            const typeMatch = String(acc.type || acc.matchType || acc.category || "").toLowerCase() === tabMatchType.toLowerCase();
+            return customerMatch && typeMatch;
+          });
+        }
+
+        activeTabAccounts = accounts;
+        renderAccounts(accounts);
       } else {
-        $list.html(`<div style="text-align: center; color: #ef4444; padding: 20px; font-size: 13px;">API Service is unavailable.</div>`);
-        renderPreview(null);
+        // Tab-Specific Endpoint Flow (Original Logic)
+        const endpoint = activeTab.endpoint;
+        const params = {};
+        params[custKey] = currentCustomerId;
+
+        if (window.ApiService) {
+          window.ApiService.get(
+            endpoint,
+            params,
+            function (response) {
+              if (window.UIRenderer) window.UIRenderer.hideLoader("#explorer-account-list");
+
+              let accounts = Array.isArray(response) ? response : [];
+              // Filter locally just in case
+              accounts = accounts.filter(acc => acc[custKey] === currentCustomerId);
+              activeTabAccounts = accounts;
+              renderAccounts(accounts);
+            },
+            function (error) {
+              if (window.UIRenderer) window.UIRenderer.hideLoader("#explorer-account-list");
+              $list.html(`<div style="text-align: center; color: #ef4444; padding: 20px; font-size: 13px;">Error loading accounts: ${error}</div>`);
+              renderPreview(null);
+            }
+          );
+        } else {
+          $list.html(`<div style="text-align: center; color: #ef4444; padding: 20px; font-size: 13px;">API Service is unavailable.</div>`);
+          renderPreview(null);
+        }
       }
     }
 

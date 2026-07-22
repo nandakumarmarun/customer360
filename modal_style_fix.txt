@@ -1,0 +1,94 @@
+MODAL STYLING OVERRIDE & DYNAMIC NAVIGATION FIXES FOR UI-RENDERER.JS
+=============================================================
+
+Below are the changes applied inside `ui-renderer.js` to fix two issues in the embedded Lenovo Vantage container widget:
+1. Fullscreen 'No Data Present' overlay modal styles breaking and displaying as ellipsis (...).
+2. Navigation failure when clicking the 'Go to Customer Search' button.
+
+FILE: ui-renderer.js
+
+
+1. STYLING FIX:
+--------------
+Inline styles for the modal overlay/card elements are updated with `!important` attributes and explicit text-wrapping rules (`white-space: normal !important; overflow: visible !important; text-overflow: clip !important;`) to prevent host stylesheet bleed.
+
+2. DYNAMIC NAVIGATION & CONFIG MATCH:
+------------------------------------
+- Defined `const searchUrl = (window.API_CONFIG && window.API_CONFIG.CUSTOMER_SEARCH_URL) || 'customer-search/customer-search.html';` in `showNoDataAlert`.
+- Replaced the hardcoded href/onclick handler URL with `${searchUrl}` so the modal button dynamically reads from `CUSTOMER_SEARCH_URL` in `config.js`.
+- Configured `triggerSearchTransition` to navigate directly using `window.location.href = targetUrl;` because dynamically loading preloader scripts is blocked/fails in host Vantage widget environments.
+
+
+GIT DIFF OF CHANGES:
+--------------------
+diff --git a/ui-renderer.js b/ui-renderer.js
+index 3b917be..80294a1 100644
+--- a/ui-renderer.js
++++ b/ui-renderer.js
+@@ -448,35 +448,9 @@
+       $empty.addClass('active');
+     },
+ 
+-    /**
+-     * Dynamically loads the Customer 360 preloader assets and triggers the transition animation before navigating.
+-     */
+     triggerSearchTransition: function (targetUrl) {
+-      if (window.Customer360Preloader) {
+-        window.Customer360Preloader.show(targetUrl);
+-        return;
+-      }
+-
+-      // Dynamically load CSS
+-      const link = document.createElement('link');
+-      link.rel = 'stylesheet';
+-      link.href = 'customer-search/customer360-preloader.css';
+-      document.head.appendChild(link);
+-
+-      // Dynamically load JS
+-      const script = document.createElement('script');
+-      script.src = 'customer-search/customer360-preloader.js';
+-      script.onload = function () {
+-        if (window.Customer360Preloader) {
+-          window.Customer360Preloader.show(targetUrl);
+-        } else {
+-          window.location.href = targetUrl;
+-        }
+-      };
+-      script.onerror = function () {
+-        window.location.href = targetUrl;
+-      };
+-      document.body.appendChild(script);
++      // Navigate directly to the search page and let its entry preloader handle the loading screen
++      window.location.href = targetUrl;
+     },
+ 
+     /**
+@@ -499,23 +473,25 @@
+ 
+         const overlayHtml = `
+           <div id="no-data-modal-overlay" style="position: fixed; inset: 0; background: rgba(18, 20, 28, 0.88); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; align-items: center; justify-content: center; z-index: 99999; opacity: 0; pointer-events: none; transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);">
+-            <div id="no-data-modal-card" style="width: 90%; max-width: 440px; background: var(--bg2); border: 1px solid var(--border); box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px var(--glow-shadow-weak); border-radius: var(--radius); padding: 40px 30px; text-align: center; transform: scale(0.8) translateY(-40px); transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;">
++            <div id="no-data-modal-card" style="width: 90% !important; max-width: 440px !important; background: var(--bg2) !important; border: 1px solid var(--border) !important; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px var(--glow-shadow-weak) !important; border-radius: var(--radius) !important; padding: 40px 30px !important; text-align: center !important; transform: scale(0.8) translateY(-40px); transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden !important; white-space: normal !important;">
+               <div style="position: absolute; width: 150px; height: 150px; background: var(--accent); filter: blur(70px); top: -50px; left: calc(50% - 75px); border-radius: 50%; opacity: 0.35; z-index: 0; pointer-events: none;"></div>
+               
+               <div style="position: relative; z-index: 1;">
+-                <div id="no-data-icon-wrap" style="width: 80px; height: 80px; margin: 0 auto 24px; background: rgba(170, 0, 0, 0.1); border: 2px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 38px; box-shadow: 0 0 20px var(--glow-shadow-medium); animation: pulseGlow 2s infinite ease-in-out;">
++                <div id="no-data-icon-wrap" style="width: 80px !important; height: 80px !important; margin: 0 auto 24px !important; background: rgba(170, 0, 0, 0.1) !important; border: 2px solid var(--accent) !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 38px !important; box-shadow: 0 0 20px var(--glow-shadow-medium) !important; animation: pulseGlow 2s infinite ease-in-out !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important;">
+                   📭
+                 </div>
+                 
+-                <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 12px; color: var(--text); font-family: 'Outfit', sans-serif; letter-spacing: 0.5px; text-transform: uppercase;">
++                <h2 style="font-size: 22px !important; font-weight: 800 !important; margin-bottom: 12px !important; color: var(--text) !important; font-family: 'Outfit', sans-serif !important; letter-spacing: 0.5px !important; text-transform: uppercase !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important;">
+                   No Data Present
+                 </h2>
+                 
+-                <p style="font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 0; padding: 0 10px; font-family: 'Outfit', sans-serif;">
++                <p style="font-size: 14px !important; color: var(--muted) !important; line-height: 1.6 !important; margin-bottom: 0 !important; padding: 0 10px !important; font-family: 'Outfit', sans-serif !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important;">
+                   An active customer ID was not specified. Please pass a valid customer identifier in the URL to view profile details.
+                 </p>
+                 
+-                <a href="customer-search/customer-search.html" onclick="event.preventDefault(); window.UIRenderer.triggerSearchTransition('customer-search/customer-search.html');" style="display: inline-flex; align-items: center; justify-content: center; margin-top: 24px; padding: 12px 24px; background: var(--accent); color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 30px; box-shadow: 0 4px 15px var(--glow-shadow-weak); transition: all 0.3s ease; font-family: 'Outfit', sans-serif; border: 1px solid rgba(255,255,255,0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px var(--glow-shadow-medium)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px var(--glow-shadow-weak)';">
++                <a href="${searchUrl}" onclick="event.preventDefault(); window.UIRenderer.triggerSearchTransition('${searchUrl}');" style="display: inline-flex !important; align-items: center !important; justify-content: center !important; margin-top: 24px !important; padding: 12px 24px !important; background: var(--accent) !important; color: #fff !important; font-size: 14px !important; font-weight: 600 !important; text-decoration: none !important; border-radius: 30px !important; box-shadow: 0 4px 15px var(--glow-shadow-weak) !important; transition: all 0.3s ease !important; font-family: 'Outfit', sans-serif !important; border: 1px solid rgba(255,255,255,0.1) !important; white-space: nowrap !important;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px var(--glow-shadow-medium)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px var(--glow-shadow-weak)';">
+                   🔍 Go to Customer Search
+                 </a>
+               </div>

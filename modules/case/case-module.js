@@ -582,7 +582,7 @@
 
       const headerHtml = `
         <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 15px;">
-          <div class="qm-header-avatar" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); border: 1px solid var(--border); box-shadow: 0 0 10px var(--glow-shadow); font-size: 22px;">📁</div>
+          <div class="qm-header-avatar" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); border: 1px solid var(--border); box-shadow: 0 0 10px var(--glow-shadow); font-size: 22px;">⚖️</div>
           <div class="qm-header-titles" style="display: flex; flex-direction: column;">
             <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin: 0; text-transform: uppercase; font-family: 'Outfit', sans-serif;">CASE INFORMATION</h2>
             <p class="qm-header-subtitle" style="font-size: 13px; color: var(--muted); margin-top: 2px; font-weight: 400; margin-bottom: 0;">Customer complaints and service requests</p>
@@ -590,7 +590,7 @@
         </div>
         <div class="qm-header-actions" style="display: flex; align-items: center; gap: 8px;">
           <button class="qm-action-btn" id="refresh-cases-btn">🔄 Refresh</button>
-          <button class="qm-action-btn" id="create-case-btn">📁 Create Case</button>
+          <button class="qm-action-btn" id="create-case-btn">⚖️ Create Case</button>
           <button class="qm-action-btn" id="create-complaint-btn">⚠️ Create Complaint</button>
         </div>
       `;

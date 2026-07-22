@@ -1,6 +1,7 @@
 {
   "customer": {
     "summary": {
+      "customerType": "Corporate",
       "alerts": [
         "🚀 Kyc Update required Security Reminder: Change your transaction PIN every 90 days for maximum safety.Security Reminder: Change your transaction PIN every 90 days for maximum safety.Security Reminder: Change your transaction PIN every 90 days for maximum safety.",
         "🔒 Security Reminder: Change your transaction PIN every 90 days for maximum safety.",
@@ -907,6 +908,38 @@
       "customerId": "NX-4829-0055"
     }
   ],
+  "assets": [
+    {
+      "customer": "NX-4829-0055",
+      "type": "Asset Loans",
+      "name": "Home Loan Pro",
+      "number": "LN-701023456",
+      "amount": "₹45,20,000",
+      "status": "Active",
+      "id": "loan1",
+      "customerId": "NX-4829-0055"
+    },
+    {
+      "customer": "NX-4829-0055",
+      "type": "Asset Loans",
+      "name": "Car Loan",
+      "number": "LN-504098271",
+      "amount": "₹6,80,000",
+      "status": "Active",
+      "id": "loan2",
+      "customerId": "NX-4829-0055"
+    },
+    {
+      "customer": "NX-4829-0055",
+      "type": "Gold Loans",
+      "name": "Gold Loan Value Plus",
+      "number": "GL-908070",
+      "amount": "₹12,00,000",
+      "status": "Active",
+      "id": "goldLoan1",
+      "customerId": "NX-4829-0055"
+    }
+  ],
   "casaDetails": [
     {
       "customer": "NX-4829-0055",
@@ -1180,6 +1213,32 @@
         ]
       },
       "id": "Pg3wO948dEU"
+    }
+  ],
+  "goldLoanDetails": [
+    {
+      "goldLoanId": "goldLoan1",
+      "id": "goldLoan1",
+      "sections": [
+        {
+          "name": "Gold Loan Structure",
+          "fields": {
+            "Account Number": "GL-908070",
+            "Loan Type": "Gold Loan Value Plus",
+            "Collateral Weight": "200 grams Gold",
+            "Purity": "22 Karat",
+            "Interest Rate": "7.9% p.a."
+          }
+        },
+        {
+          "name": "Financials",
+          "fields": {
+            "Sanctioned Amount": "₹12,00,000",
+            "Maturity Date": "15-Aug-2027",
+            "Vault Fee": "Waived"
+          }
+        }
+      ]
     }
   ],
   "casaCards": [
@@ -1821,6 +1880,60 @@
       "status": "started",
       "timestamp": "2026-07-20T07:24:02.051Z",
       "id": "MkMIxTWjAh4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-07-21T05:33:10.103Z",
+      "id": "pywCI660A2A"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-07-21T05:33:11.291Z",
+      "id": "bqic428UEjA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-07-21T05:37:20.293Z",
+      "id": "dPcvCSlpNlw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-07-21T05:37:21.674Z",
+      "id": "lV1KYDFI6cI"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-07-22T05:52:08.966Z",
+      "id": "P1DY4prXk9Q"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-07-22T06:13:27.972Z",
+      "id": "Lnbg_Equj4k"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

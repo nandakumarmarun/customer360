@@ -73,7 +73,7 @@
                 <span class="node-label">KYC</span>
               </div>
               <div class="network-node" id="node-cases" style="top: 225px; left: 295px;">
-                <span class="node-icon">📁</span>
+                <span class="node-icon">⚖️</span>
                 <span class="node-label">Cases</span>
               </div>
               <div class="network-node" id="node-interactions" style="top: 285px; left: 138px;">

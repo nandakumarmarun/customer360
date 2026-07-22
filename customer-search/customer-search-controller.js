@@ -2,21 +2,21 @@
  * Customer Search Controller - Decoupled Controller Layer
  * Fetches banking customer records via ApiService and performs query filtering.
  */
-(function() {
+(function () {
   let loadedCustomers = [];
 
   const CustomerSearchController = {
     // Load customer records via AJAX call using the ApiService integration layer
-    loadCustomers: function(successCallback, errorCallback) {
+    loadCustomers: function (successCallback, errorCallback) {
       const endpoint = window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.CUSTOMERS;
       if (window.ApiService) {
         window.ApiService.get(
           endpoint,
-          function(response) {
+          function (response) {
             loadedCustomers = response || [];
             if (successCallback) successCallback(loadedCustomers);
           },
-          function(errorMsg) {
+          function (errorMsg) {
             console.error("Failed to load customer list via ApiService:", errorMsg);
             if (errorCallback) errorCallback(errorMsg);
           }
@@ -28,9 +28,9 @@
     },
 
     // Search customers dynamically via backend /search endpoint
-    searchCustomers: function(searchType, searchValue, successCallback, errorCallback) {
+    searchCustomers: function (searchType, searchValue, successCallback, errorCallback) {
       const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.SEARCH) || "/search";
-      
+
       let inputType = "EMAIL";
       if (searchType === "phone") {
         inputType = "PHONE";
@@ -55,10 +55,10 @@
         window.ApiService.get(
           endpoint,
           params,
-          function(response) {
+          function (response) {
             if (successCallback) successCallback(response);
           },
-          function(errorMsg) {
+          function (errorMsg) {
             console.error("Search failed via ApiService:", errorMsg);
             if (errorCallback) errorCallback(errorMsg);
           }
@@ -78,12 +78,12 @@
     },
 
     // Expose loaded customer database
-    getAllCustomers: function() {
+    getAllCustomers: function () {
       return [...loadedCustomers];
     },
 
     // Search function mapping ID, Email, Phone, and Account selections
-    query: function(searchType, searchValue) {
+    query: function (searchType, searchValue) {
       const val = (searchValue || "").toLowerCase().trim();
       if (!val) return [...loadedCustomers];
 
@@ -105,7 +105,7 @@
     },
 
     // Refine results based on active filters and date ranges
-    filterResults: function(records, statusFilter, startDate, endDate) {
+    filterResults: function (records, statusFilter, startDate, endDate) {
       return records.filter(item => {
         // Status filter
         if (statusFilter !== "All") {

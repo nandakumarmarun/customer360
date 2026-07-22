@@ -106,7 +106,7 @@
           } else {
             this.hide(callback);
           }
-        }, 5000); // 500ms allows the CSS transition to complete so the preloader is fully visible before navigation starts
+        }, 500); // 500ms allows the CSS transition to complete so the preloader is fully visible before navigation starts
         return;
       }
 
