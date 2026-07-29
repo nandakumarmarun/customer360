@@ -15,14 +15,16 @@ window.API_CONFIG = {
   CREATION_URLS: {
     CREATE_LEAD: "modules/lead/lead-create.html",
     CREATE_CASE: "modules/case/case-create.html",
-    CREATE_COMPLAINT: "modules/case/complaint-create.html"
+    CREATE_COMPLAINT: "modules/case/complaint-create.html",
+    CREATE_APPOINTMENT: "modules/activities/appointment-create.html"
   },
 
   // Complete URLs for details view
   DETAIL_URLS: {
     LEAD_DETAIL: "modules/lead/lead-detail.html",
     CASE_DETAIL: "modules/case/case-detail.html",
-    COMPLAINT_DETAIL: "modules/case/complaint-detail.html"
+    COMPLAINT_DETAIL: "modules/case/complaint-detail.html",
+    ACTIVITY_DETAIL: "modules/activities/activity-detail.html"
   },
 
   // Edit Profile URLs based on customer type
@@ -53,7 +55,11 @@ window.API_CONFIG = {
     HOLDINGS_LOCKER: "/locker",
     HOLDINGS_INVESTMENTS: "/investments",
     THEME: "/theme",
-    SEARCH: "/search"
+    SEARCH: "/search",
+    ACTIVITIES: "/activities",
+    ACTIVITY_TYPES: "/activityTypes",
+    ACTIVITY_CONFIG: "/activitiesConfig",
+    QUICK_MODULES: "/quickModules"
   },
 
   // Grouped Query Parameter keys used by backend APIs
@@ -77,7 +83,12 @@ window.API_CONFIG = {
 
 window.ASSETS_CONFIG = {
   DASHBOARD_ASSETS_PATH: "assets/png/",
-  SEARCH_ASSETS_PATH: "assets/"
+  SEARCH_ASSETS_PATH: "assets/",
+  ANIMATIONS: {
+    EMPTY: "assets/animations/empty.svg",
+    ERROR: "assets/animations/error.svg",
+    NO_CUSTOMER: "assets/animations/no-customer.svg"
+  }
 };
 
 /**
@@ -166,6 +177,22 @@ window.HOLDING_CONFIG = [
       { id: "investmentDetails", title: "Investments", icon: "📈", matchType: "Investment Details", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_INVESTMENTS }
     ]
   }
+];
+
+/**
+ * Quick Access Modules configuration.
+ * Allows enabling/disabling and reordering the navigation grid at the bottom.
+ */
+window.QUICK_MODULES_CONFIG = [
+  { id: "case", title: "Case", icon: "⚖️", enabled: true, order: 1 },
+  { id: "lead", title: "Lead", icon: "🎯", enabled: true, order: 2 },
+  { id: "activities", title: "Activities", icon: "📅", enabled: true, order: 3 },
+  { id: "contacts", title: "Related Contacts", icon: "👥", enabled: true, order: 4 },
+  { id: "group", title: "Group", icon: "🏢", enabled: true, order: 5 },
+  { id: "attachments", title: "Attachments", icon: "📎", enabled: true, order: 6 },
+  { id: "holding", title: "Holding", icon: "📊", enabled: true, order: 7 },
+  { id: "profiler", title: "Profiler", icon: "👤", enabled: true, order: 8 },
+  { id: "offers", title: "Offers", icon: "🏷️", enabled: true, order: 9 }
 ];
 
 // Scalable helper function to resolve any dynamic field name

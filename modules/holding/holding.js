@@ -192,7 +192,13 @@
             if (window.UIRenderer) {
               window.UIRenderer.showEmptyState("#qm-content", "No holdings accounts mapped for this customer profile.");
             } else {
-              $content.html("<div style='text-align:center; padding: 40px;'>No holdings accounts mapped for this customer profile.</div>");
+              const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('EMPTY')) || (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS && window.ASSETS_CONFIG.ANIMATIONS.EMPTY) || '';
+              $content.html(`
+                <div style="text-align:center; padding: 40px;">
+                  <img src="${animPath}" style="width: 120px; height: 120px; margin-bottom: 12px;" />
+                  <div style="color:var(--muted); font-size:14px; font-weight:600;">No holdings accounts mapped for this customer profile.</div>
+                </div>
+              `);
             }
           }
         },
@@ -202,12 +208,24 @@
               loadHoldings();
             });
           } else {
-            $content.html("<div style='text-align:center; padding: 40px; color:#ef4444;'>Failed to load holdings: " + error + "</div>");
+            const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('ERROR')) || (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS && window.ASSETS_CONFIG.ANIMATIONS.ERROR) || '';
+            $content.html(`
+              <div style="text-align:center; padding: 40px;">
+                <img src="${animPath}" style="width: 120px; height: 120px; margin-bottom: 12px;" />
+                <div style="color:#ef4444; font-weight:600; font-size:14px;">Failed to load holdings: ${escapeHtml(error)}</div>
+              </div>
+            `);
           }
         }
       );
     } else {
-      $content.html("<div style='text-align:center; padding: 40px; color:#ef4444;'>API Service is unavailable.</div>");
+      const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('ERROR')) || (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS && window.ASSETS_CONFIG.ANIMATIONS.ERROR) || '';
+      $content.html(`
+        <div style="text-align:center; padding: 40px;">
+          <img src="${animPath}" style="width: 120px; height: 120px; margin-bottom: 12px;" />
+          <div style="color:#ef4444; font-weight:600; font-size:14px;">API Service is unavailable.</div>
+        </div>
+      `);
     }
   }
 
@@ -474,12 +492,26 @@
             },
             function (error) {
               if (window.UIRenderer) window.UIRenderer.hideLoader("#explorer-account-list");
-              $list.html(`<div style="text-align: center; color: #ef4444; padding: 20px; font-size: 13px;">Error loading accounts: ${error}</div>`);
+              const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('ERROR')) || (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS && window.ASSETS_CONFIG.ANIMATIONS.ERROR) || '';
+              $list.html(`
+                <div style="text-align: center; padding: 30px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;">
+                  <img src="${animPath}" style="width: 180px; height: 180px; margin-bottom: 16px;" alt="Error Animation" />
+                  <div style="font-size: 14px; font-weight: 700; color: var(--text); margin-top: 8px; font-family: 'Outfit', sans-serif;">Error Loading Accounts</div>
+                  <div style="font-size: 12px; color: #ef4444; line-height: 1.5; font-family: inherit; max-width: 200px; margin: 0 auto;">${escapeHtml(error)}</div>
+                </div>
+              `);
               renderPreview(null);
             }
           );
         } else {
-          $list.html(`<div style="text-align: center; color: #ef4444; padding: 20px; font-size: 13px;">API Service is unavailable.</div>`);
+          const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('ERROR')) || (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS && window.ASSETS_CONFIG.ANIMATIONS.ERROR) || '';
+          $list.html(`
+            <div style="text-align: center; padding: 30px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;">
+              <img src="${animPath}" style="width: 180px; height: 180px; margin-bottom: 16px;" alt="Error Animation" />
+              <div style="font-size: 14px; font-weight: 700; color: var(--text); margin-top: 8px; font-family: 'Outfit', sans-serif;">Service Unavailable</div>
+              <div style="font-size: 12px; color: #ef4444; line-height: 1.5; font-family: inherit; max-width: 200px; margin: 0 auto;">API Service is offline.</div>
+            </div>
+          `);
           renderPreview(null);
         }
       }
@@ -501,7 +533,19 @@
       $list.empty();
 
       if (accountList.length === 0) {
-        $list.html(`<div style="text-align: center; color: var(--muted); padding: 30px 10px; font-style: italic; font-size: 13px;">No accounts available.</div>`);
+        const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('EMPTY')) || (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS && window.ASSETS_CONFIG.ANIMATIONS.EMPTY) || '';
+        const searchInputVal = $contentArea.find("#explorer-search-input").val() || "";
+        const msg = searchInputVal.trim()
+          ? "No accounts match your search query."
+          : "No accounts available under this holdings category.";
+        
+        $list.html(`
+          <div style="text-align: center; padding: 30px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;">
+            <img src="${animPath}" style="width: 180px; height: 180px; margin-bottom: 16px;" alt="Empty State Animation" />
+            <div style="font-size: 14px; font-weight: 700; color: var(--text); margin-top: 8px; font-family: 'Outfit', sans-serif;">No Accounts Mapped</div>
+            <div style="font-size: 12px; color: var(--muted); line-height: 1.5; font-family: inherit; max-width: 200px; margin: 0 auto;">${msg}</div>
+          </div>
+        `);
         renderPreview(null);
         return;
       }

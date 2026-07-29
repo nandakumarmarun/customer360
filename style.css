@@ -163,6 +163,319 @@
   --tour-skip-bg-hover:  #f43f5e;
 }
 
+/* ── Modern Custom Scrollbars (Global) ── */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 20px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent2);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Firefox scrollbar compatibility */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* ── Custom iOS-Theme Flatpickr Calendar ── */
+.flatpickr-calendar {
+  background: #1c1c1e !important;
+  border: 1px solid #2c2c2e !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+  border-radius: 13px !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  color: #ffffff !important;
+  width: 282px !important;
+  padding: 8px 0 !important;
+}
+
+.light-mode .flatpickr-calendar {
+  background: #ffffff !important;
+  border: 1px solid #e5e5ea !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+  color: #000000 !important;
+}
+
+/* Month and Year Header */
+.flatpickr-months {
+  padding: 4px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.flatpickr-months .flatpickr-month {
+  color: currentColor !important;
+  fill: currentColor !important;
+  height: 34px !important;
+}
+
+.flatpickr-current-month {
+  padding: 4px 0 0 0 !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: currentColor !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: currentColor !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 4px !important;
+  margin: 0 !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month {
+  background-color: #1c1c1e !important;
+  color: #ffffff !important;
+}
+
+.light-mode .flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.flatpickr-current-month input.cur-year {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: currentColor !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 55px !important;
+}
+
+.flatpickr-current-month .numInputWrapper span {
+  display: none !important; /* Hide year adjust arrows for iOS look */
+}
+
+/* Chevrons (Prev/Next Month) */
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+  color: #0a84ff !important; /* iOS active blue */
+  fill: #0a84ff !important;
+  padding: 8px 12px !important;
+  top: 4px !important;
+}
+
+.light-mode .flatpickr-months .flatpickr-prev-month,
+.light-mode .flatpickr-months .flatpickr-next-month {
+  color: #007aff !important; /* iOS light blue */
+  fill: #007aff !important;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover,
+.flatpickr-months .flatpickr-next-month:hover {
+  opacity: 0.7 !important;
+  background: transparent !important;
+}
+
+.flatpickr-months .flatpickr-prev-month svg,
+.flatpickr-months .flatpickr-next-month svg {
+  fill: currentColor !important;
+}
+
+/* Weekday Headings */
+.flatpickr-weekdays {
+  width: 280px !important;
+  max-width: 280px !important;
+  margin: 0 auto !important;
+  height: 28px !important;
+}
+
+.flatpickr-weekday {
+  color: #8e8e93 !important; /* iOS gray */
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px;
+}
+
+/* Days Container */
+.flatpickr-days, .dayContainer {
+  width: 280px !important;
+  min-width: 280px !important;
+  max-width: 280px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+
+.flatpickr-day {
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  border-radius: 50% !important; /* iOS perfect circle */
+  margin: 2px !important;
+  height: 36px !important;
+  line-height: 34px !important;
+  width: 36px !important;
+  max-width: 36px !important;
+  border: 1px solid transparent !important;
+  transition: background-color 0.15s ease, color 0.15s ease !important;
+}
+
+.light-mode .flatpickr-day {
+  color: #000000 !important;
+}
+
+/* Hover and Focus States */
+.flatpickr-day:hover,
+.flatpickr-day:focus {
+  background: #2c2c2e !important; /* iOS dark cell hover */
+  border-color: transparent !important;
+  color: #ffffff !important;
+}
+
+.light-mode .flatpickr-day:hover,
+.light-mode .flatpickr-day:focus {
+  background: #e5e5ea !important; /* iOS light cell hover */
+  color: #000000 !important;
+}
+
+/* Selected Date */
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover,
+.flatpickr-day.selected:focus,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+  background: #0a84ff !important; /* iOS system blue selected */
+  border-color: #0a84ff !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+.light-mode .flatpickr-day.selected,
+.light-mode .flatpickr-day.selected:hover,
+.light-mode .flatpickr-day.selected:focus,
+.light-mode .flatpickr-day.startRange,
+.light-mode .flatpickr-day.endRange {
+  background: #007aff !important;
+  border-color: #007aff !important;
+  color: #ffffff !important;
+}
+
+/* Today's Date */
+.flatpickr-day.today {
+  color: #0a84ff !important; /* Highlight today with blue text */
+  font-weight: 700 !important;
+  border: none !important;
+}
+
+.light-mode .flatpickr-day.today {
+  color: #007aff !important;
+}
+
+.flatpickr-day.today:hover {
+  background: #2c2c2e !important;
+}
+
+.light-mode .flatpickr-day.today:hover {
+  background: #e5e5ea !important;
+}
+
+.flatpickr-day.today.selected {
+  color: #ffffff !important;
+}
+
+/* Disabled Days */
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover {
+  color: #48484a !important;
+  opacity: 0.3 !important;
+  cursor: not-allowed !important;
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+.light-mode .flatpickr-day.flatpickr-disabled,
+.light-mode .flatpickr-day.flatpickr-disabled:hover {
+  color: #aeaeb2 !important;
+}
+
+/* Out of Month Days */
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay {
+  color: #48484a !important;
+}
+
+.light-mode .flatpickr-day.prevMonthDay,
+.light-mode .flatpickr-day.nextMonthDay {
+  color: #aeaeb2 !important;
+}
+
+/* Time Picker Section */
+.flatpickr-time {
+  border-top: 1px solid #2c2c2e !important;
+  padding: 8px 0 !important;
+  height: 40px !important;
+}
+
+.light-mode .flatpickr-time {
+  border-top: 1px solid #e5e5ea !important;
+}
+
+.flatpickr-time input {
+  color: currentColor !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+.flatpickr-time input:hover,
+.flatpickr-time input:focus {
+  background: #2c2c2e !important;
+  border-radius: 6px !important;
+}
+
+.light-mode .flatpickr-time input:hover,
+.light-mode .flatpickr-time input:focus {
+  background: #e5e5ea !important;
+}
+
+.flatpickr-time .flatpickr-am-pm {
+  color: currentColor !important;
+  font-weight: 600 !important;
+}
+
+.flatpickr-time .flatpickr-am-pm:hover {
+  background: #2c2c2e !important;
+  border-radius: 6px !important;
+}
+
+.light-mode .flatpickr-time .flatpickr-am-pm:hover {
+  background: #e5e5ea !important;
+}
+
+.flatpickr-time .numInputWrapper span.arrowUp:after {
+  border-bottom-color: currentColor !important;
+}
+.flatpickr-time .numInputWrapper span.arrowDown:after {
+  border-top-color: currentColor !important;
+}
+
+
 html {
   scroll-behavior: smooth
 }
@@ -177,21 +490,43 @@ body {
   position: relative;
 }
 
-/* ── Global Select / Dropdown Reset ── */
-select {
-  background: var(--bg2);
-  color: var(--text);
-  border: 1px solid var(--border);
-  font-family: inherit;
-  outline: none;
-  cursor: pointer;
-  color-scheme: dark;
+/* ── Global Select / Dropdown Reset (iOS Theme) ── */
+select:not(.flatpickr-monthDropdown-months) {
+  background-color: #2c2c2e !important;
+  color: #ffffff !important;
+  border: 1px solid #3a3a3c !important;
+  border-radius: 10px !important;
+  padding: 8px 30px 8px 12px !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  font-family: inherit !important;
+  outline: none !important;
+  cursor: pointer !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  background-size: 14px !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
-:root.light-mode select {
-  background: #ffffff;
-  color: #0f172a;
-  color-scheme: light;
+select:not(.flatpickr-monthDropdown-months):hover, select:not(.flatpickr-monthDropdown-months):focus {
+  background-color: #3a3a3c !important;
+  border-color: #0a84ff !important;
+}
+
+:root.light-mode select:not(.flatpickr-monthDropdown-months) {
+  background-color: #f2f2f7 !important;
+  color: #000000 !important;
+  border: 1px solid #e5e5ea !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555559' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+}
+
+:root.light-mode select:not(.flatpickr-monthDropdown-months):hover, :root.light-mode select:not(.flatpickr-monthDropdown-months):focus {
+  background-color: #e5e5ea !important;
+  border-color: #007aff !important;
 }
 
 body::before {
@@ -2733,15 +3068,17 @@ body::before {
   margin: 0;
 }
 
-.back-btn {
-  margin-left: auto;
-  /* Push to far right */
-  position: relative;
-  z-index: 1100;
-  background: rgba(255, 255, 255, 0.08);
+.back-btn-floating {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 1200;
+  background: rgba(28, 31, 43, 0.7);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border: 1px solid var(--border);
   color: var(--text);
-  padding: 8px 16px;
+  padding: 10px 20px;
   border-radius: 30px;
   display: flex;
   align-items: center;
@@ -2749,16 +3086,22 @@ body::before {
   cursor: pointer;
   font-family: inherit;
   font-weight: 600;
-  transition: all 0.3s ease;
-  font-size: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 13px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-shadow-weak);
 }
 
-.back-btn:hover {
+.light-mode .back-btn-floating {
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 8px 32px rgba(170, 0, 0, 0.05), 0 0 15px var(--glow-shadow-weak);
+}
+
+.back-btn-floating:hover {
   background: var(--accent);
   border-color: var(--accent);
   color: #ffffff;
-  transform: translateX(-4px);
-  box-shadow: 0 0 30px var(--glow-shadow);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 25px var(--glow-shadow-strong);
 }
 
 /* Detail Scrollable Content Area */
@@ -2951,9 +3294,7 @@ body::before {
     gap: 20px;
   }
 
-  .back-btn {
-    margin-left: 0;
-  }
+
 
   .detail-content-area {
     padding: 20px;
@@ -2985,6 +3326,18 @@ body::before {
 
   .detail-section-block {
     padding: 16px;
+  }
+
+  .back-btn-floating {
+    position: fixed;
+    top: auto;
+    bottom: 20px;
+    right: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px var(--glow-shadow-strong) !important;
+    background-color: rgba(28, 31, 43, 0.9) !important;
+  }
+  .light-mode .back-btn-floating {
+    background-color: rgba(255, 255, 255, 0.95) !important;
   }
 }
 

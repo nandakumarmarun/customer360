@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" width="100%" height="100%">
+  <defs>
+    <!-- Monochrome Gradients -->
+    <linearGradient id="cardBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1" />
+      <stop offset="100%" stop-color="#64748b" />
+    </linearGradient>
+    <linearGradient id="glowSilver" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+    <linearGradient id="scanBarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(148, 163, 184, 0)" />
+      <stop offset="50%" stop-color="rgba(148, 163, 184, 0.6)" />
+      <stop offset="100%" stop-color="rgba(148, 163, 184, 0)" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    /* Float card animation */
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-7px); }
+    }
+
+    /* Radar scan bar sweeping up/down */
+    @keyframes scanSweep {
+      0% { transform: translateY(0px); opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { transform: translateY(86px); opacity: 0; }
+    }
+
+    /* Expanding target ring */
+    @keyframes radarPulse {
+      0% { r: 15px; opacity: 0.8; }
+      100% { r: 52px; opacity: 0; }
+    }
+
+    /* Swaying leaves */
+    @keyframes swayLeaf {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(3deg); }
+    }
+
+    .card-group { animation: floatCard 4.5s ease-in-out infinite; transform-origin: 150px 95px; }
+
+    .radar-ring { animation: radarPulse 2.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; transform-origin: 150px 95px; }
+
+    .scanner-line { animation: scanSweep 3.5s linear infinite; }
+
+    .leaf-1 { animation: swayLeaf 6s ease-in-out infinite; transform-origin: 40px 220px; }
+    .leaf-2 { animation: swayLeaf 5s ease-in-out infinite 1s; transform-origin: 260px 220px; }
+  </style>
+
+  <!-- Background Decorative Grid Lines -->
+  <line x1="0" y1="40" x2="300" y2="40" stroke="#f1f5f9" stroke-width="1" />
+  <line x1="0" y1="80" x2="300" y2="80" stroke="#f1f5f9" stroke-width="1" />
+  <line x1="0" y1="120" x2="300" y2="120" stroke="#f1f5f9" stroke-width="1" />
+  <line x1="0" y1="160" x2="300" y2="160" stroke="#f1f5f9" stroke-width="1" />
+  <line x1="0" y1="200" x2="300" y2="200" stroke="#f1f5f9" stroke-width="1" />
+  
+  <line x1="50" y1="0" x2="50" y2="240" stroke="#f1f5f9" stroke-width="1" />
+  <line x1="100" y1="0" x2="100" y2="240" stroke="#f1f5f9" stroke-width="1" />
+  <line x1="150" y1="0" x2="150" y2="240" stroke="#f1f5f9" stroke-width="1" />
+  <line x1="200" y1="0" x2="200" y2="240" stroke="#f1f5f9" stroke-width="1" />
+  <line x1="250" y1="0" x2="250" y2="240" stroke="#f1f5f9" stroke-width="1" />
+
+  <!-- Floor line -->
+  <line x1="20" y1="200" x2="280" y2="200" stroke="#cbd5e1" stroke-width="1.5" />
+
+  <!-- Ambient Glow (Silver) -->
+  <circle cx="150" cy="95" r="60" fill="url(#glowSilver)" opacity="0.2" filter="blur(25px)" />
+
+  <!-- Target Rings (Radar scan grid behind card) -->
+  <circle class="radar-ring" cx="150" cy="95" r="20" fill="none" stroke="#94a3b8" stroke-width="1.5" />
+  <line x1="150" y1="35" x2="150" y2="155" stroke="#cbd5e1" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.4" />
+  <line x1="80" y1="95" x2="220" y2="95" stroke="#cbd5e1" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.4" />
+
+  <!-- Subject 1: Premium Bank Customer Card (Floating & Centered) -->
+  <g class="card-group">
+    <!-- Card Shadow -->
+    <rect x="84" y="54" width="132" height="92" rx="8" fill="rgba(0,0,0,0.25)" filter="blur(4px)" />
+    
+    <!-- Main Card Body -->
+    <rect x="80" y="50" width="132" height="92" rx="8" fill="url(#cardBgGrad)" stroke="url(#silverGrad)" stroke-width="2" />
+    
+    <!-- Gold Microchip on Card (Now Silver) -->
+    <rect x="94" y="62" width="18" height="14" rx="2" fill="url(#silverGrad)" />
+    <line x1="100" y1="62" x2="100" y2="76" stroke="#475569" stroke-width="0.5" />
+    <line x1="106" y1="62" x2="106" y2="76" stroke="#475569" stroke-width="0.5" />
+    <line x1="94" y1="69" x2="112" y2="69" stroke="#475569" stroke-width="0.5" />
+
+    <!-- Card Brand Indicator / Bank Badge -->
+    <circle cx="184" cy="68" r="8" fill="#94a3b8" opacity="0.85" />
+    <circle cx="192" cy="68" r="8" fill="#475569" opacity="0.85" />
+
+    <!-- Empty Profile Picture Silhouette -->
+    <circle cx="106" cy="108" r="11" fill="#1e293b" stroke="#475569" stroke-width="1" />
+    <path d="M 100 123 C 100 119 102 117 106 117 C 110 117 112 119 112 123 Z" fill="#475569" />
+    <circle cx="106" cy="107" r="3.5" fill="#475569" />
+    
+    <!-- Select Customer Tag / Placeholder -->
+    <rect x="126" y="94" width="74" height="12" rx="3" fill="rgba(148, 163, 184, 0.15)" stroke="#94a3b8" stroke-width="0.5" />
+    <text x="163" y="102" text-anchor="middle" fill="#94a3b8" font-size="5.5" font-family="'Outfit', sans-serif" font-weight="bold">NO CUSTOMER</text>
+
+    <!-- Mock Card Number Fields -->
+    <line x1="126" y1="114" x2="198" y2="114" stroke="#475569" stroke-width="2" stroke-linecap="round" />
+    <line x1="126" y1="122" x2="178" y2="122" stroke="#475569" stroke-width="2" stroke-linecap="round" />
+
+    <!-- Scanner Glow Sweep Line -->
+    <rect class="scanner-line" x="81" y="52" width="130" height="6" fill="url(#scanBarGrad)" pointer-events="none" />
+  </g>
+
+  <!-- Botanical Base Ornaments (Monochrome Muted Grays) -->
+  <g class="leaf-1" id="plant-left">
+    <path d="M 15 200 C 15 180 35 175 45 182 C 55 178 70 185 68 200 Z" fill="#cbd5e1" opacity="0.4" />
+    <path d="M 28 200 C 28 185 45 180 52 188 C 60 184 72 190 70 200 Z" fill="#94a3b8" opacity="0.5" />
+  </g>
+  <g class="leaf-2" id="plant-right">
+    <path d="M 225 200 C 225 185 242 180 250 188 C 258 184 270 190 268 200 Z" fill="#cbd5e1" opacity="0.4" />
+    <path d="M 240 200 C 240 180 260 175 270 182 C 280 178 295 185 293 200 Z" fill="#94a3b8" opacity="0.5" />
+    <path d="M 260 200 C 265 170 278 165 275 200" fill="none" stroke="#64748b" stroke-width="3" stroke-linecap="round" />
+  </g>
+</svg>

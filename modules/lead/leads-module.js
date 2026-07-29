@@ -755,7 +755,13 @@
               loadLeads();
             });
           } else {
-            $content.html(`<div style='text-align:center; padding: 40px; color:#ef4444;'>Failed to load leads: ${error}</div>`);
+            const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('ERROR')) || (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS && window.ASSETS_CONFIG.ANIMATIONS.ERROR) || '';
+            $content.html(`
+              <div style="text-align:center; padding: 40px;">
+                <img src="${animPath}" style="width: 180px; height: 180px; margin-bottom: 16px;" />
+                <div style="color:#ef4444; font-weight:600; font-size:14px;">Failed to load leads: ${escapeHtml(error)}</div>
+              </div>
+            `);
           }
         }
       );
@@ -765,7 +771,13 @@
           loadLeads();
         });
       } else {
-        $content.html("<div style='text-align:center; padding: 40px; color:#ef4444;'>API Service unavailable</div>");
+        const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('ERROR')) || (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS && window.ASSETS_CONFIG.ANIMATIONS.ERROR) || '';
+        $content.html(`
+          <div style="text-align:center; padding: 40px;">
+            <img src="${animPath}" style="width: 120px; height: 120px; margin-bottom: 12px;" />
+            <div style="color:#ef4444; font-weight:600; font-size:14px;">API Service unavailable</div>
+          </div>
+        `);
       }
     }
   }
@@ -962,10 +974,15 @@
       const msg = (searchQuery || statusFilter !== "All")
         ? "No leads match your search criteria."
         : "No leads data available. Click 'Create Lead' above to add a new lead.";
+      const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('EMPTY')) || (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS && window.ASSETS_CONFIG.ANIMATIONS.EMPTY) || '';
       $tbody.append(`
         <tr>
-          <td colspan="5" style="text-align: center; color: var(--muted); padding: 40px; font-style: italic;">
-            ${msg}
+          <td colspan="5" style="text-align: center; padding: 40px;">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;">
+              <img src="${animPath}" style="width: 180px; height: 180px; margin-bottom: 16px;" alt="Empty State Animation" />
+              <div style="font-size: 15px; font-weight: 700; color: var(--text); margin-top: 8px; font-family: 'Outfit', sans-serif;">No Leads Found</div>
+              <div style="font-size: 12.5px; color: var(--muted); line-height: 1.5; max-width: 280px; margin: 0 auto; font-family: inherit;">${msg}</div>
+            </div>
           </td>
         </tr>
       `);

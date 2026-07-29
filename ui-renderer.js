@@ -32,6 +32,28 @@
   }
 
   const UIRenderer = {
+    _getAssetsPath: function () {
+      const scripts = document.getElementsByTagName('script');
+      for (let i = 0; i < scripts.length; i++) {
+        const src = scripts[i].src;
+        if (src && src.indexOf('ui-renderer.js') !== -1) {
+          const attrSrc = scripts[i].getAttribute('src');
+          if (attrSrc) {
+            const idx = attrSrc.indexOf('ui-renderer.js');
+            if (idx !== -1) {
+              return attrSrc.substring(0, idx);
+            }
+          }
+        }
+      }
+      return '';
+    },
+
+    getAnimationPath: function (key) {
+      const relativePath = (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS && window.ASSETS_CONFIG.ANIMATIONS[key]) || '';
+      return this._getAssetsPath() + relativePath;
+    },
+
     /**
      * Renders the common customer summary details across the sidebar, header, and avatar panel.
      */
@@ -394,9 +416,10 @@
         $container.css('position', 'relative');
       }
 
+      const animPath = this.getAnimationPath('ERROR');
       const $error = $(`
         <div class="card-error-overlay">
-          <div class="card-error-icon">⚠️</div>
+          <img class="card-error-img" src="${animPath}" style="width: 180px; height: 180px; margin-bottom: 16px;" alt="Error Animation" />
           <div class="card-error-msg">${escapeHtml(message)}</div>
           <button class="card-retry-btn">Retry</button>
         </div>
@@ -434,9 +457,10 @@
         $container.css('position', 'relative');
       }
 
+      const animPath = this.getAnimationPath('EMPTY');
       const $empty = $(`
         <div class="card-empty-overlay">
-          <div class="card-empty-icon">📭</div>
+          <img class="card-empty-img" src="${animPath}" style="width: 180px; height: 180px; margin-bottom: 16px;" alt="Empty State Animation" />
           <div class="card-empty-msg">No data available</div>
         </div>
       `);
@@ -472,6 +496,7 @@
         }
 
         const searchUrl = (window.API_CONFIG && window.API_CONFIG.CUSTOMER_SEARCH_URL) || 'customer-search/customer-search.html';
+        const animPath = this.getAnimationPath('NO_CUSTOMER');
 
         const overlayHtml = `
           <div id="no-data-modal-overlay" style="position: fixed; inset: 0; background: rgba(18, 20, 28, 0.88); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; align-items: center; justify-content: center; z-index: 99999; opacity: 0; pointer-events: none; transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);">
@@ -479,16 +504,16 @@
               <div style="position: absolute; width: 150px; height: 150px; background: var(--accent); filter: blur(70px); top: -50px; left: calc(50% - 75px); border-radius: 50%; opacity: 0.35; z-index: 0; pointer-events: none;"></div>
               
               <div style="position: relative; z-index: 1;">
-                <div id="no-data-icon-wrap" style="width: 80px !important; height: 80px !important; margin: 0 auto 24px !important; background: rgba(170, 0, 0, 0.1) !important; border: 2px solid var(--accent) !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 38px !important; box-shadow: 0 0 20px var(--glow-shadow-medium) !important; animation: pulseGlow 2s infinite ease-in-out !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important;">
-                  📭
+                <div id="no-data-icon-wrap" style="width: 260px !important; height: 260px !important; margin: 0 auto 24px !important; display: flex !important; align-items: center !important; justify-content: center !important; overflow: visible !important;">
+                  <img src="${animPath}" style="width: 100%; height: 100%;" alt="Warning Animation" />
                 </div>
                 
                 <h2 style="font-size: 22px !important; font-weight: 800 !important; margin-bottom: 12px !important; color: var(--text) !important; font-family: 'Outfit', sans-serif !important; letter-spacing: 0.5px !important; text-transform: uppercase !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important;">
-                  No Data Present
+                  No Customer Selected
                 </h2>
                 
                 <p style="font-size: 14px !important; color: var(--muted) !important; line-height: 1.6 !important; margin-bottom: 0 !important; padding: 0 10px !important; font-family: 'Outfit', sans-serif !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important;">
-                  An active customer ID was not specified. Please pass a valid customer identifier in the URL to view profile details.
+                  An active customer profile was not selected. Please choose a customer in search or pass a valid identifier in the URL to view dashboard details.
                 </p>
                 
                 <a href="${searchUrl}" onclick="event.preventDefault(); window.UIRenderer.triggerSearchTransition('${searchUrl}');" style="display: inline-flex !important; align-items: center !important; justify-content: center !important; margin-top: 24px !important; padding: 12px 24px !important; background: var(--accent) !important; color: #fff !important; font-size: 14px !important; font-weight: 600 !important; text-decoration: none !important; border-radius: 30px !important; box-shadow: 0 4px 15px var(--glow-shadow-weak) !important; transition: all 0.3s ease !important; font-family: 'Outfit', sans-serif !important; border: 1px solid rgba(255,255,255,0.1) !important; white-space: nowrap !important;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px var(--glow-shadow-medium)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 15px var(--glow-shadow-weak)';">

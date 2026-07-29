@@ -29,8 +29,8 @@
   <title>CUSTOMER360 · Customer Intelligence</title>
   <meta name="description"
     content="Premium AI-powered banking customer profile dashboard with cinematic 3D experience." />
-  <!-- ===== LOCAL FONTS ===== -->
   <link rel="stylesheet" href="fonts/fonts.css" />
+  <link rel="stylesheet" href="lib/flatpickr.min.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -436,42 +436,7 @@
       <section class="bottom-modules" id="bottom-modules">
         <h2 class="modules-title">Quick Access Modules</h2>
         <div class="modules-grid">
-          <div class="module-card" id="mod-case">
-            <div class="mod-icon">⚖️</div>
-            <span>Case</span>
-          </div>
-          <div class="module-card" id="mod-lead">
-            <div class="mod-icon">🎯</div>
-            <span>Lead</span>
-          </div>
-          <div class="module-card" id="mod-activities">
-            <div class="mod-icon">📅</div>
-            <span>Activities</span>
-          </div>
-          <div class="module-card" id="mod-contacts">
-            <div class="mod-icon">👥</div>
-            <span>Related Contacts</span>
-          </div>
-          <div class="module-card" id="mod-group">
-            <div class="mod-icon">🏢</div>
-            <span>Group</span>
-          </div>
-          <div class="module-card" id="mod-attachments">
-            <div class="mod-icon">📎</div>
-            <span>Attachments</span>
-          </div>
-          <div class="module-card" id="mod-holding">
-            <div class="mod-icon">📊</div>
-            <span>Holding</span>
-          </div>
-          <div class="module-card" id="mod-profiler">
-            <div class="mod-icon">👤</div>
-            <span>Profiler</span>
-          </div>
-          <div class="module-card" id="mod-offers">
-            <div class="mod-icon">🏷️</div>
-            <span>Offers</span>
-          </div>
+          <!-- Loaded Dynamically from QUICK_MODULES_CONFIG in config.js -->
         </div>
       </section>
 
@@ -480,6 +445,10 @@
 
   <!-- ===== CINEMATIC DETAIL VIEW (Replaces Modals) ===== -->
   <div id="detail-view" class="hidden">
+    <button class="back-btn-floating" id="back-to-dash" title="Back to Dashboard">
+      <span class="back-icon">←</span>
+      <span class="back-text">Back to Dashboard</span>
+    </button>
     <div class="detail-header">
       <div class="hero-particles" id="hero-particles"></div>
       <div class="detail-image-wrap">
@@ -493,10 +462,6 @@
         </div>
         <p id="detail-model-desc" style="margin-top: 0;">Premium Visualization</p>
       </div>
-      <button class="back-btn" id="back-to-dash">
-        <span class="back-icon">←</span>
-        <span>Back to Dashboard</span>
-      </button>
     </div>
     <div class="detail-content-area" id="detail-content-area">
       <!-- Dynamic sections injected by JS -->
@@ -529,6 +494,7 @@
 
   <!-- SCRIPTS -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="lib/flatpickr.min.js"></script>
   <script src="lib/three.min.js"></script>
   <script src="lib/OrbitControls.js"></script>
   <script src="lib/GLTFLoader.js"></script>
@@ -546,6 +512,7 @@
   <script src="modules/lead/leads-module.js"></script>
   <script src="modules/case/case-module.js"></script>
   <script src="modules/holding/holding.js"></script>
+  <script src="modules/activities/activities-module.js"></script>
 </body>
 
 </html>

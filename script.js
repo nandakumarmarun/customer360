@@ -315,7 +315,7 @@ function initThemeToggle() {
       e.stopPropagation();
       const theme = p.dataset.theme;
       applyColorTheme(theme);
-      
+
       const currentMode = root.classList.contains('light-mode') ? 'light' : 'dark';
       if (window.ThemeModule) {
         window.ThemeModule.saveTheme(currentMode, theme);
@@ -607,7 +607,7 @@ function openDetail(data) {
       }
 
       const icon = getFieldIcon(label);
-      
+
       // Dynamically calculate the column span based on data length:
       // - span 1: short text (value length <= 15)
       // - span 2: medium text (value length > 15 && value length <= 35)
@@ -678,18 +678,20 @@ function initQuickModules() {
 
   let isAnimating = false;
 
-  const moduleCards = document.querySelectorAll('.module-card');
-  qmModules = [{ title: 'Main Dashboard', isMain: true, index: 0, element: null, icon: '🏠' }];
-  Array.from(moduleCards).forEach((card, i) => {
-    const iconEl = card.querySelector('.mod-icon');
-    qmModules.push({
-      title: card.querySelector('span').innerText,
-      isMain: false,
-      index: i + 1,
-      element: card,
-      icon: iconEl ? iconEl.innerText.trim() : '🔹'
+  // Load modules configuration from API endpoint
+  const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.QUICK_MODULES) || "/quickModules";
+
+  if (window.ApiService && typeof window.ApiService.get === 'function') {
+    window.ApiService.get(endpoint, function (response) {
+      const config = Array.isArray(response) ? response : window.QUICK_MODULES_CONFIG || [];
+      renderAndInitialize(config);
+    }, function (error) {
+      console.warn("Failed to load quick access modules from API, falling back to static config:", error);
+      renderAndInitialize(window.QUICK_MODULES_CONFIG || []);
     });
-  });
+  } else {
+    renderAndInitialize(window.QUICK_MODULES_CONFIG || []);
+  }
 
   function updateDots(index) {
     if (!qmNavDots) return;
@@ -701,7 +703,7 @@ function initQuickModules() {
   function setQuickModule(index, direction = 1) {
     if (isAnimating) return;
     if (index < 0 || index >= qmModules.length || index === currentQmIndex) return;
-    
+
     isAnimating = true;
     const module = qmModules[index];
 
@@ -737,14 +739,14 @@ function initQuickModules() {
     if (index === 0) {
       // Returning to Dashboard
       if (backBtn) backBtn.classList.add('hidden');
-      
+
       if (typeof gsap !== 'undefined') {
         gsap.to(qmView, {
           opacity: 0, scale: 1.1, y: 50, rotateX: -15, duration: 0.5, ease: 'power3.inOut',
           onComplete: () => {
             qmView.classList.add('hidden');
             cardsGrid.style.display = '';
-            
+
             // Scroll to the cards grid only after it is displayed in DOM
             smoothScrollTo(cardsGrid);
 
@@ -778,21 +780,21 @@ function initQuickModules() {
       if (backBtn) {
         setTimeout(() => backBtn.classList.remove('hidden'), 300);
       }
-      
+
       qmTitle.innerText = module.title + ' Module';
       qmContent.innerHTML = newHtml;
-      
+
       if (typeof gsap !== 'undefined') {
         gsap.to(cardsGrid, {
           opacity: 0, scale: 0.9, filter: "blur(10px)", duration: 0.5, ease: 'power3.inOut',
           onComplete: () => {
             cardsGrid.style.display = 'none';
             qmView.classList.remove('hidden');
-            
+
             // Scroll to the quick module view only after it is displayed in DOM
             smoothScrollTo(qmView);
 
-            gsap.fromTo(qmView, 
+            gsap.fromTo(qmView,
               { opacity: 0, scale: 1.1, y: 50, rotateX: 15 },
               { opacity: 1, scale: 1, y: 0, rotateX: 0, duration: 0.7, ease: 'back.out(1.2)', clearProps: 'all', onComplete: () => isAnimating = false }
             );
@@ -817,10 +819,10 @@ function initQuickModules() {
           onComplete: () => {
             qmTitle.innerText = module.title + ' Module';
             qmContent.innerHTML = newHtml;
-            
+
             // Scroll to the quick module view to keep focus steady
             smoothScrollTo(qmView);
-            
+
             gsap.fromTo(qmView,
               { opacity: 0, scale: 1.1, y: 50, rotateX: 15 },
               { opacity: 1, scale: 1, y: 0, rotateX: 0, duration: 0.6, ease: 'back.out(1.2)', clearProps: 'all', onComplete: () => isAnimating = false }
@@ -834,46 +836,84 @@ function initQuickModules() {
         isAnimating = false;
       }
     }
-    
+
     currentQmIndex = index;
     updateDots(index);
   }
 
-  // Generate Navigation Dots
-  if (qmNavDots) {
-    qmNavDots.innerHTML = '';
-    qmModules.forEach((m, i) => {
-      const dot = document.createElement('div');
-      dot.className = 'qm-dot';
-      dot.setAttribute('data-title', m.title);
-      dot.innerHTML = `<span class="qm-dot-icon">${m.icon}</span>`;
-      if (i === 0) dot.classList.add('active'); // Dashboard is initially active
-      dot.addEventListener('click', () => {
-        if (!isAnimating && i !== currentQmIndex) {
-          setQuickModule(i, i > currentQmIndex ? 1 : -1);
-        }
+  function renderAndInitialize(config) {
+    const modulesGrid = document.querySelector('.modules-grid');
+    if (modulesGrid) {
+      modulesGrid.innerHTML = '';
+      // Filter out disabled modules, sort them by the 'order' property, and limit to the first 9 items
+      const activeConfig = config
+        .filter(module => module.enabled !== false)
+        .sort((a, b) => (a.order || 999) - (b.order || 999))
+        .slice(0, 9);
+
+      activeConfig.forEach(module => {
+        const cardHtml = `
+          <div class="module-card" id="mod-${module.id}">
+            <div class="mod-icon">${module.icon}</div>
+            <span>${module.title}</span>
+          </div>
+        `;
+        modulesGrid.insertAdjacentHTML('beforeend', cardHtml);
       });
-      qmNavDots.appendChild(dot);
+    }
+
+    const moduleCards = document.querySelectorAll('.module-card');
+    qmModules = [{ title: 'Main Dashboard', isMain: true, index: 0, element: null, icon: '🏠' }];
+    Array.from(moduleCards).forEach((card, i) => {
+      const iconEl = card.querySelector('.mod-icon');
+      qmModules.push({
+        title: card.querySelector('span').innerText,
+        isMain: false,
+        index: i + 1,
+        element: card,
+        icon: iconEl ? iconEl.innerText.trim() : '🔹'
+      });
     });
+
+    // Generate Navigation Dots
+    if (qmNavDots) {
+      qmNavDots.innerHTML = '';
+      qmModules.forEach((m, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'qm-dot';
+        dot.setAttribute('data-title', m.title);
+        dot.innerHTML = `<span class="qm-dot-icon">${m.icon}</span>`;
+        if (i === 0) dot.classList.add('active'); // Dashboard is initially active
+        dot.addEventListener('click', () => {
+          if (!isAnimating && i !== currentQmIndex) {
+            setQuickModule(i, i > currentQmIndex ? 1 : -1);
+          }
+        });
+        qmNavDots.appendChild(dot);
+      });
+    }
+
+    // Card Clicks
+    qmModules.forEach((m, i) => {
+      if (m.isMain || !m.element) return;
+      m.element.addEventListener('click', () => {
+        if (isAnimating || !cardsGrid || !qmView) return;
+        setQuickModule(i, 1);
+      });
+    });
+
+    // Refresh ScrollTriggers for GSAP slide-in entry
+    if (typeof ScrollTrigger !== 'undefined') {
+      ScrollTrigger.refresh();
+    }
   }
 
-  // Card Clicks
-  qmModules.forEach((m, i) => {
-    if (m.isMain || !m.element) return;
-    m.element.addEventListener('click', () => {
-      if (isAnimating || !cardsGrid || !qmView) return;
-      setQuickModule(i, 1);
-    });
-  });
-
-  // Back Button
+  // Back Button click handler (registered once on the stable DOM element)
   if (backBtn) {
     backBtn.addEventListener('click', () => {
       setQuickModule(0, -1);
     });
   }
-
-
 }
 
 /* ====== NOTIFICATIONS PANEL INITS ====== */

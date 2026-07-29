@@ -411,14 +411,19 @@
       $tableContainer.hide();
 
       const errorTitle = loadError ? "Connection Error" : "No Records Found";
-      const errorIcon = loadError ? "⚠️" : "📭";
       const errorDesc = loadError
         ? `Failed to load customers list from database: ${escapeHtml(loadError)}. Please verify the API server is running.`
         : "We couldn't find any customers matching the criteria. Try clearing the filters.";
+      
+      const configAnimations = (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS) || {};
+      const configKey = loadError ? "ERROR" : "EMPTY";
+      const animPath = "../" + (configAnimations[configKey] || "");
 
       $overlayContainer.html(`
         <div class="results-overlay-container">
-          <div class="results-overlay-icon">${errorIcon}</div>
+          <div class="results-overlay-icon" style="width: 260px; height: 260px; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; overflow: visible;">
+            <img src="${animPath}" style="width: 100%; height: 100%;" alt="Status Animation" />
+          </div>
           <div class="results-overlay-title">${errorTitle}</div>
           <div class="results-overlay-desc">${errorDesc}</div>
         </div>
