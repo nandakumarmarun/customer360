@@ -577,11 +577,16 @@
   function renderCasesHeader() {
     const $header = $(".qm-header-inline");
     if (!$header.length || !$header.hasClass("cases-active")) {
-      $header.removeClass("leads-active holdings-active").addClass("cases-active");
+      $header.removeClass("leads-active holdings-active activities-active").addClass("cases-active");
       $header.empty();
 
       const headerHtml = `
         <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 15px;">
+          <button class="qm-back-btn" title="Back to Profile">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+          </button>
           <div class="qm-header-avatar" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); border: 1px solid var(--border); box-shadow: 0 0 10px var(--glow-shadow); font-size: 22px;">⚖️</div>
           <div class="qm-header-titles" style="display: flex; flex-direction: column;">
             <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin: 0; text-transform: uppercase; font-family: 'Outfit', sans-serif;">CASE INFORMATION</h2>

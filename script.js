@@ -920,12 +920,10 @@ function initQuickModules() {
     }
   }
 
-  // Back Button click handler (registered once on the stable DOM element)
-  if (backBtn) {
-    backBtn.addEventListener('click', () => {
-      setQuickModule(0, -1);
-    });
-  }
+  // Back Button click handler (delegated for dynamic buttons inside module headers)
+  $(document).on('click', '.qm-back-btn', function () {
+    setQuickModule(0, -1);
+  });
 }
 
 /* ====== NOTIFICATIONS PANEL INITS ====== */

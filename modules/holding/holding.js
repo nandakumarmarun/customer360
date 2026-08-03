@@ -114,11 +114,16 @@
   function renderHoldingsHeader() {
     const $header = $(".qm-header-inline");
     if (!$header.length || !$header.hasClass("holdings-active")) {
-      $header.removeClass("leads-active cases-active").addClass("holdings-active");
+      $header.removeClass("leads-active cases-active activities-active").addClass("holdings-active");
       $header.empty();
 
       const headerHtml = `
         <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 12px;">
+          <button class="qm-back-btn" title="Back to Profile">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+          </button>
           <div class="qm-header-avatar" style="width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); border: 1px solid var(--border); box-shadow: 0 0 15px var(--glow-shadow-weak); font-size: 18px;">📊</div>
           <div class="qm-header-titles" style="display: flex; flex-direction: column; gap: 2px;">
             <h2 id="qm-title" style="font-size: 18px !important; font-weight: 800 !important; letter-spacing: 0.5px !important; margin: 0 !important; background: linear-gradient(135deg, #fff, var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PORTFOLIO HOLDINGS</h2>

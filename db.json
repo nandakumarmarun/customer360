@@ -3225,6 +3225,24 @@
       "status": "skipped",
       "timestamp": "2026-08-03T05:34:18.052Z",
       "id": "YmXbF_bLaCA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-03T06:01:43.929Z",
+      "id": "4qb-cJuhBK8"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-03T06:01:45.051Z",
+      "id": "g_euhOo45-o"
     }
   ],
   "activities": {
