@@ -695,8 +695,10 @@ function initQuickModules() {
 
   function updateDots(index) {
     if (!qmNavDots) return;
-    Array.from(qmNavDots.children).forEach((dot, i) => {
-      dot.classList.toggle('active', i === index);
+    const dotsArray = Array.from(qmNavDots.children);
+    dotsArray.forEach((dot) => {
+      const dotIndex = parseInt(dot.getAttribute('data-index'), 10);
+      dot.classList.toggle('active', dotIndex === index);
     });
   }
 
@@ -852,10 +854,15 @@ function initQuickModules() {
         .slice(0, 9);
 
       activeConfig.forEach(module => {
+        const isComingSoon = !module.id || String(module.id).trim() === '' || module.comingSoon === true;
+        const comingSoonClass = isComingSoon ? 'coming-soon' : '';
+        const cardIdAttr = isComingSoon ? '' : `id="mod-${module.id}"`;
+        const displayIcon = module.icon || '🔹';
+        const displayTitle = module.title || 'Coming Soon';
         const cardHtml = `
-          <div class="module-card" id="mod-${module.id}">
-            <div class="mod-icon">${module.icon}</div>
-            <span>${module.title}</span>
+          <div class="module-card ${comingSoonClass}" ${cardIdAttr} ${isComingSoon ? 'data-coming-soon="true"' : ''}>
+            <div class="mod-icon">${displayIcon}</div>
+            <span>${displayTitle}</span>
           </div>
         `;
         modulesGrid.insertAdjacentHTML('beforeend', cardHtml);
@@ -863,15 +870,17 @@ function initQuickModules() {
     }
 
     const moduleCards = document.querySelectorAll('.module-card');
-    qmModules = [{ title: 'Main Dashboard', isMain: true, index: 0, element: null, icon: '🏠' }];
+    qmModules = [{ title: 'Main Dashboard', isMain: true, index: 0, element: null, icon: '🏠', comingSoon: false }];
     Array.from(moduleCards).forEach((card, i) => {
       const iconEl = card.querySelector('.mod-icon');
+      const isComingSoon = card.getAttribute('data-coming-soon') === 'true' || card.classList.contains('coming-soon');
       qmModules.push({
         title: card.querySelector('span').innerText,
         isMain: false,
         index: i + 1,
         element: card,
-        icon: iconEl ? iconEl.innerText.trim() : '🔹'
+        icon: iconEl ? iconEl.innerText.trim() : '🔹',
+        comingSoon: isComingSoon
       });
     });
 
@@ -879,9 +888,12 @@ function initQuickModules() {
     if (qmNavDots) {
       qmNavDots.innerHTML = '';
       qmModules.forEach((m, i) => {
+        if (m.comingSoon) return; // Skip coming soon modules!
+
         const dot = document.createElement('div');
         dot.className = 'qm-dot';
         dot.setAttribute('data-title', m.title);
+        dot.setAttribute('data-index', i);
         dot.innerHTML = `<span class="qm-dot-icon">${m.icon}</span>`;
         if (i === 0) dot.classList.add('active'); // Dashboard is initially active
         dot.addEventListener('click', () => {
@@ -895,7 +907,7 @@ function initQuickModules() {
 
     // Card Clicks
     qmModules.forEach((m, i) => {
-      if (m.isMain || !m.element) return;
+      if (m.isMain || !m.element || m.comingSoon) return;
       m.element.addEventListener('click', () => {
         if (isAnimating || !cardsGrid || !qmView) return;
         setQuickModule(i, 1);

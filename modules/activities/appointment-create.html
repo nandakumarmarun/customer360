@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script>
     (function () {
@@ -48,8 +49,8 @@
       position: fixed;
       inset: 0;
       background: radial-gradient(circle at 50% 50%, var(--aurora-1), transparent 50%),
-                  radial-gradient(circle at 80% 20%, var(--aurora-2), transparent 50%),
-                  radial-gradient(circle at 20% 80%, var(--aurora-3), transparent 50%);
+        radial-gradient(circle at 80% 20%, var(--aurora-2), transparent 50%),
+        radial-gradient(circle at 20% 80%, var(--aurora-3), transparent 50%);
       z-index: -1;
       pointer-events: none;
     }
@@ -73,8 +74,15 @@
     }
 
     @keyframes scaleUp {
-      from { transform: scale(0.92); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from {
+        transform: scale(0.92);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     .form-header {
@@ -239,11 +247,13 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
       transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+
     .custom-toast.show {
       top: 30px;
     }
   </style>
 </head>
+
 <body class="dark-mode">
   <div class="create-card">
     <div class="form-header">
@@ -285,11 +295,13 @@
         </div>
         <div class="form-item full-width">
           <label class="form-label" for="location">Location / Channel</label>
-          <input type="text" class="form-input" id="location" placeholder="e.g. Thrissur Main Branch / Zoom Video Call" required>
+          <input type="text" class="form-input" id="location" placeholder="e.g. Thrissur Main Branch / Zoom Video Call"
+            required>
         </div>
         <div class="form-item full-width">
           <label class="form-label" for="notes">Special Notes & Requirements</label>
-          <textarea class="form-input" id="notes" rows="4" style="resize: none;" placeholder="Provide brief details on agenda or customer request..."></textarea>
+          <textarea class="form-input" id="notes" rows="4" style="resize: none;"
+            placeholder="Provide brief details on agenda or customer request..."></textarea>
         </div>
       </div>
 
@@ -305,7 +317,7 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="../../lib/flatpickr.min.js"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       const urlParams = new URLSearchParams(window.location.search);
       let customerId = urlParams.get('customerId');
       if (!customerId && window.opener && window.opener.ParamsData && window.opener.ParamsData.getCustomerId) {
@@ -334,13 +346,13 @@
       const randomId = 'APT-' + Math.floor(1000 + Math.random() * 9000) + '-' + randomSuffix;
       $('#appointment-id').val(randomId);
 
-      $('#appointment-form').on('submit', function(e) {
+      $('#appointment-form').on('submit', function (e) {
         e.preventDefault();
-        
+
         const $toast = $('#toast');
         $toast.addClass('show');
-        
-        setTimeout(function() {
+
+        setTimeout(function () {
           $toast.removeClass('show');
           window.close();
         }, 1500);
@@ -348,4 +360,5 @@
     });
   </script>
 </body>
+
 </html>

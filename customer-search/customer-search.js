@@ -596,6 +596,36 @@
       }
     });
 
+    // Custom iOS Dropdown Toggle and Selection Delegation
+    $(document).on('click', '.ios-select-trigger', function (e) {
+      e.stopPropagation();
+      const $select = $(this).parent('.ios-select');
+      $('.ios-select').not($select).removeClass('open');
+      $select.toggleClass('open');
+    });
+
+    $(document).on('click', function () {
+      $('.ios-select').removeClass('open');
+    });
+
+    $(document).on('click', '.ios-option', function (e) {
+      e.stopPropagation();
+      const $this = $(this);
+      const val = $this.data('value');
+      const text = $this.text();
+      
+      const $select = $this.closest('.ios-select');
+      $select.find('.ios-select-label').text(text);
+      $select.find('.ios-option').removeClass('active');
+      $this.addClass('active');
+      $select.removeClass('open');
+      
+      const $nativeSelect = $('#search-type');
+      if ($nativeSelect.length) {
+        $nativeSelect.val(val).trigger('change');
+      }
+    });
+
     // 4. Form submit listener
     $(document).on('click', '#search-btn', function () {
       executeSearch();

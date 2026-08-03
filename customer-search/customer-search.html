@@ -144,13 +144,31 @@
         <div class="search-bar-container">
           <!-- Left side: Dropdown -->
           <div class="search-select-wrapper">
-            <select class="search-type-selector" id="search-type" aria-label="Search Type">
+            <!-- Hidden native select for JS controller compatibility -->
+            <select class="search-type-selector" id="search-type" aria-label="Search Type" style="display: none !important;">
               <option value="cid">🆔 Customer ID</option>
               <option value="email">✉️ Email</option>
               <option value="phone">📞 Phone Number</option>
               <option value="account">🏦 Account Number</option>
             </select>
-            <span class="search-select-arrow">▼</span>
+            
+            <!-- Stylish Custom iOS Dropdown -->
+            <div class="ios-select" id="ios-search-type">
+              <div class="ios-select-trigger">
+                <span class="ios-select-label">🆔 Customer ID</span>
+                <span class="ios-select-arrow">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span>
+              </div>
+              <div class="ios-select-options">
+                <div class="ios-option active" data-value="cid">🆔 Customer ID</div>
+                <div class="ios-option" data-value="email">✉️ Email</div>
+                <div class="ios-option" data-value="phone">📞 Phone Number</div>
+                <div class="ios-option" data-value="account">🏦 Account Number</div>
+              </div>
+            </div>
           </div>
 
           <!-- Middle: Input Field -->

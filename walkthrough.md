@@ -156,3 +156,15 @@ Rather than rendering generic full-page loading indicators or spinners, we imple
 4. Now, navigate to [index.html?customerId=NX-4829-0055](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/index.html?customerId=NX-4829-0055) in the browser.
 5. Verify that the dashboard loads the customer data and displays the avatar close to the customer name in both the reveal screen and the header.
 6. Click any category card (e.g., "Personal Information" or "Address Information") to verify the premium grid details modal displays correctly.
+
+## 13. Removed QUICK_MODULES_CONFIG & API-Driven Coming Soon Cards
+
+- **Removed Static Config**: Completely removed the static `window.QUICK_MODULES_CONFIG` array from [config.js](file:///c:/Users/Lenovo/Desktop/works/Attendence/customer%20360/customer360/config.js), as all modules are loaded dynamically from the backend database/API.
+- **API-Driven Coming Soon Cards**: Cleaned up the frontend logic in `script.js` so it does not hardcode Coming Soon content. Instead, the backend API configuration directly supplies the title and icon for inactive or coming soon modules.
+  - In [db.json](file:///c:/Users/Lenovo/Desktop/works/Attendence/customer%20360/customer360/db.json), the coming-soon modules are configured with `"title": "Coming Soon"` and `"icon": "⏳"` directly.
+  - The frontend dynamically renders the supplied `module.title` and `module.icon` from the API without overriding them, while the bottom badge has been completely removed from the HTML output.
+- **Graceful Script Fallback**: Handled correctly in `script.js` which defaults to `[]` when `window.QUICK_MODULES_CONFIG` is not defined.
+
+
+
+

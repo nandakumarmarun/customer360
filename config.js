@@ -179,21 +179,7 @@ window.HOLDING_CONFIG = [
   }
 ];
 
-/**
- * Quick Access Modules configuration.
- * Allows enabling/disabling and reordering the navigation grid at the bottom.
- */
-window.QUICK_MODULES_CONFIG = [
-  { id: "case", title: "Case", icon: "⚖️", enabled: true, order: 1 },
-  { id: "lead", title: "Lead", icon: "🎯", enabled: true, order: 2 },
-  { id: "activities", title: "Activities", icon: "📅", enabled: true, order: 3 },
-  { id: "contacts", title: "Related Contacts", icon: "👥", enabled: true, order: 4 },
-  { id: "group", title: "Group", icon: "🏢", enabled: true, order: 5 },
-  { id: "attachments", title: "Attachments", icon: "📎", enabled: true, order: 6 },
-  { id: "holding", title: "Holding", icon: "📊", enabled: true, order: 7 },
-  { id: "profiler", title: "Profiler", icon: "👤", enabled: true, order: 8 },
-  { id: "offers", title: "Offers", icon: "🏷️", enabled: true, order: 9 }
-];
+
 
 // Scalable helper function to resolve any dynamic field name
 window.fieldName = function (key) {
