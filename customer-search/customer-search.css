@@ -1,5 +1,13 @@
 /* Customer Search Stylesheet - Scoped under namespace */
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .customer-search-page {
   position: relative;
   z-index: 1;
@@ -80,6 +88,9 @@
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .go-home-btn:hover {
@@ -87,7 +98,28 @@
   color: #ffffff;
   border-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 12px var(--glow-shadow-medium);
-  transform: translateY(-1px);
+  transform: translate3d(0, -1px, 0);
+}
+
+.home-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.go-home-btn:hover .home-icon {
+  animation: home-bounce 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes home-bounce {
+  0% {
+    transform: translateY(0) scale(1) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translateY(-3px) scale(1.1) translate3d(0, 0, 0);
+  }
 }
 
 /* Centered Search Layout */
@@ -105,6 +137,8 @@
 }
 
 .customer-search-experience {
+  position: relative;
+  z-index: 10;
   width: 100%;
   max-width: 800px;
   display: flex;
@@ -391,16 +425,19 @@
   justify-content: center;
   letter-spacing: 0.5px;
   box-shadow: 0 4px 12px var(--glow-shadow-weak);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .search-submit-btn:hover {
-  transform: translateY(-1px);
+  transform: translate3d(0, -1px, 0);
   box-shadow: 0 6px 16px var(--glow-shadow-strong);
   filter: brightness(1.1);
 }
 
 .search-submit-btn:active {
-  transform: translateY(1px);
+  transform: translate3d(0, 1px, 0);
 }
 
 /* Results Section - Grid Card */
@@ -659,6 +696,9 @@
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s ease;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .action-view-btn:hover {
@@ -666,7 +706,7 @@
   border-color: var(--accent2);
   color: #ffffff;
   box-shadow: 0 0 8px var(--glow-shadow-medium);
-  transform: translateY(-1px);
+  transform: translate3d(0, -1px, 0);
 }
 
 /* Status Badges */
@@ -750,13 +790,16 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .pagination-btn:hover:not(:disabled) {
   background: var(--accent);
   border-color: var(--accent2);
   color: #ffffff;
-  transform: translateY(-1px);
+  transform: translate3d(0, -1px, 0);
 }
 
 .pagination-btn:disabled {

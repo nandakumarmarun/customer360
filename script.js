@@ -200,11 +200,8 @@ function startApp() {
     ScrollTrigger.create({
       trigger: '#scene-dashboard',
       start: 'top 80%',
-      end: 'bottom top',
       onEnter: () => document.querySelector('.qm-nav-dots')?.classList.add('visible'),
       onLeaveBack: () => document.querySelector('.qm-nav-dots')?.classList.remove('visible'),
-      onEnterBack: () => document.querySelector('.qm-nav-dots')?.classList.add('visible'),
-      onLeave: () => document.querySelector('.qm-nav-dots')?.classList.remove('visible'),
     });
 
     // Animate alert row (Ticker Alert)
@@ -564,6 +561,9 @@ function openDetail(data) {
   setTimeout(() => detailView.classList.add('visible'), 10);
   document.body.style.overflow = 'hidden';
 
+  // Hide nav dots when detail view modal is open
+  document.querySelector('.qm-nav-dots')?.classList.remove('visible');
+
   document.getElementById('detail-model-title').textContent = data.title;
   document.getElementById('detail-model-desc').textContent = getHeaderDesc(data.title);
   const assetsPath = (window.ASSETS_CONFIG && window.ASSETS_CONFIG.DASHBOARD_ASSETS_PATH) || 'assets/png/';
@@ -649,6 +649,12 @@ function closeDetail() {
   detailView.classList.remove('visible');
   document.body.style.overflow = '';
   setTimeout(() => detailView.classList.add('hidden'), 800);
+
+  // Restore nav dots visibility if we are scrolled to the dashboard section
+  const dashboard = document.getElementById('scene-dashboard');
+  if (dashboard && window.pageYOffset >= dashboard.offsetTop - 300) {
+    document.querySelector('.qm-nav-dots')?.classList.add('visible');
+  }
 }
 
 /* ====== CARD HOVER TILT ====== */
@@ -741,6 +747,17 @@ function initQuickModules() {
     if (index === 0) {
       // Returning to Dashboard
       if (backBtn) backBtn.classList.add('hidden');
+      const $breadcrumbsBar = $("#qm-breadcrumbs-bar");
+      if ($breadcrumbsBar.length) {
+        $breadcrumbsBar.addClass("hidden").empty();
+      }
+      if (qmTitle) {
+        qmTitle.innerText = "";
+      }
+      const $header = $(".qm-header-inline");
+      if ($header.length) {
+        $header.removeClass("leads-active cases-active holdings-active activities-active");
+      }
 
       if (typeof gsap !== 'undefined') {
         gsap.to(qmView, {
@@ -924,6 +941,15 @@ function initQuickModules() {
   $(document).on('click', '.qm-back-btn', function () {
     setQuickModule(0, -1);
   });
+
+  // Breadcrumb click handler (delegated for breadcrumb navigation links)
+  $(document).on('click', '.qm-breadcrumb-link', function (e) {
+    e.preventDefault();
+    const action = $(this).attr('data-action');
+    if (action === 'home') {
+      setQuickModule(0, -1);
+    }
+  });
 }
 
 /* ====== NOTIFICATIONS PANEL INITS ====== */
@@ -992,6 +1018,76 @@ function initNotifications() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Split card action button texts into individual characters for letter-by-letter hover animations
+  document.querySelectorAll('.card-action-btn .btn-text').forEach(btnTextEl => {
+    const text = btnTextEl.textContent.trim();
+    btnTextEl.innerHTML = '';
+    [...text].forEach((char, index) => {
+      const span = document.createElement('span');
+      if (char === ' ') {
+        span.className = 'char-space';
+        span.innerHTML = '&nbsp;';
+      } else {
+        span.className = 'char';
+        span.textContent = char;
+        span.style.setProperty('--char-index', index);
+      }
+      btnTextEl.appendChild(span);
+    });
+  });
+
+  // Lock browser back and forward navigations silently
+  function lockHistory() {
+    history.pushState(null, null, window.location.href);
+  }
+  
+  lockHistory();
+  
+  window.addEventListener('popstate', () => {
+    lockHistory();
+  });
+
+  // Activate history lock trap as soon as the user interacts with the page (required by modern browsers)
+  const initHistoryTrap = () => {
+    lockHistory();
+    window.removeEventListener('click', initHistoryTrap);
+    window.removeEventListener('keydown', initHistoryTrap);
+  };
+  window.addEventListener('click', initHistoryTrap);
+  window.addEventListener('keydown', initHistoryTrap);
+  
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.history.pushState(null, null, window.parent.location.href);
+      window.parent.addEventListener('popstate', () => {
+        window.parent.history.pushState(null, null, window.parent.location.href);
+      });
+      
+      const initParentTrap = () => {
+        try {
+          window.parent.history.pushState(null, null, window.parent.location.href);
+        } catch(err) {}
+        window.parent.removeEventListener('click', initParentTrap);
+        window.parent.removeEventListener('keydown', initParentTrap);
+      };
+      window.parent.addEventListener('click', initParentTrap);
+      window.parent.addEventListener('keydown', initParentTrap);
+    }
+  } catch (e) {}
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace') {
+      const tag = e.target.tagName.toUpperCase();
+      const isEditable = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || e.target.isContentEditable;
+      if (!isEditable || e.target.disabled || e.target.readOnly) {
+        e.preventDefault();
+      }
+    }
+    if (e.altKey && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+      e.preventDefault();
+    }
+  });
+
   initThemeToggle();
   initQuickModules();
   initNotifications();
@@ -1003,3 +1099,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+

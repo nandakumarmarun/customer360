@@ -15,18 +15,18 @@
       ],
       "avatarUrl": "",
       "name": "Anderson",
-      "initials": "NM",
+      "initials": "A",
       "subtitle": "Cooporate Customer Insight",
       "cid": "NX-4829-0055",
-      "status": "Active Customer",
+      "status": "Active",
       "tier": "prime platinum",
       "accountsCount": "12",
       "tenure": "8yr",
       "kycProgress": "99%",
       "headerStats": {
-        "Net Worth": "$2.4M",
-        "Credit Score": "842",
-        "Risk Level": "Low"
+        "Reward points Redeemed": "1245 pts",
+        "Reward points Balance": "1245 pts",
+        "Reward Points Expiry": "1245 pts"
       },
       "gender": "Male",
       "branchId": "8082",
@@ -34,7 +34,6 @@
       "regionId": "US-EAST",
       "regionName": "North America",
       "customerSince": "Jan 2017",
-      "customerStatus": "Active",
       "classification": "Major",
       "rating": "A+",
       "contactEmail": "arun.chacko@email.com",
@@ -42,13 +41,12 @@
       "rmName": "Ms. Priya Menon",
       "rmRole": "Assistant Manager",
       "rmPhone": "+91 98765 12345",
-      "tradeFinanceEnabled": true,
       "staff": true
     },
     "profile": {
       "card": {
         "title": "Personal Information",
-        "tag": "Verified",
+        "tag": "Overview",
         "tagClass": "tag-normal",
         "icon": "👤",
         "data": {
@@ -106,7 +104,7 @@
     "contact": {
       "card": {
         "title": "Contact Information",
-        "tag": "Active",
+        "tag": "Info ",
         "tagClass": "tag-normal",
         "icon": "📡",
         "data": {
@@ -143,7 +141,7 @@
     "address": {
       "card": {
         "title": "Address Information",
-        "tag": "Verified",
+        "tag": "Primary ",
         "tagClass": "tag-gold",
         "icon": "📍",
         "data": {
@@ -1513,44 +1511,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-16T09:03:54.009Z",
-      "id": "5PWm0SbKOcM"
-    },
-    {
-      "userId": "user_123",
-      "viewId": "DASHBOARD_VIEW",
-      "step": 1,
-      "totalSteps": 12,
-      "status": "skipped",
-      "timestamp": "2026-07-16T09:03:55.768Z",
-      "id": "XEKNWxMYMJQ"
-    },
-    {
-      "userId": "user_123",
-      "viewId": "DASHBOARD_VIEW",
-      "step": 1,
-      "totalSteps": 12,
-      "status": "started",
-      "timestamp": "2026-07-16T09:04:29.245Z",
-      "id": "SQGPcNsU-Ks"
-    },
-    {
-      "userId": "user_123",
-      "viewId": "DASHBOARD_VIEW",
-      "step": 1,
-      "totalSteps": 12,
-      "status": "skipped",
-      "timestamp": "2026-07-16T09:04:31.946Z",
-      "id": "6ojiNrTO2SY"
-    },
-    {
-      "userId": "user_123",
-      "viewId": "DASHBOARD_VIEW",
-      "step": 1,
-      "totalSteps": 12,
-      "status": "started",
-      "timestamp": "2026-07-16T10:29:41.164Z",
-      "id": "rxhDq70pCA0"
+      "timestamp": "2026-08-03T15:10:58.514Z",
+      "id": "E-8-PmP3pLI"
     },
     {
       "userId": "user_123",
@@ -1558,8 +1520,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "next_clicked",
-      "timestamp": "2026-07-16T10:29:41.993Z",
-      "id": "AzBIfHaPqMo"
+      "timestamp": "2026-08-03T15:11:01.509Z",
+      "id": "hOOpNJUb4rQ"
     },
     {
       "userId": "user_123",
@@ -1567,8 +1529,8 @@
       "step": 2,
       "totalSteps": 12,
       "status": "next_clicked",
-      "timestamp": "2026-07-16T10:29:43.097Z",
-      "id": "3cSRhCV8Dd8"
+      "timestamp": "2026-08-03T15:11:02.709Z",
+      "id": "5WUvi3h4Ch4"
     },
     {
       "userId": "user_123",
@@ -1576,8 +1538,8 @@
       "step": 3,
       "totalSteps": 12,
       "status": "next_clicked",
-      "timestamp": "2026-07-16T10:29:44.062Z",
-      "id": "KrS9NJS3bYE"
+      "timestamp": "2026-08-03T15:11:03.702Z",
+      "id": "XS2Igp6wHfQ"
     },
     {
       "userId": "user_123",
@@ -1585,8 +1547,8 @@
       "step": 4,
       "totalSteps": 12,
       "status": "next_clicked",
-      "timestamp": "2026-07-16T10:29:45.940Z",
-      "id": "yquqZ8fLfWc"
+      "timestamp": "2026-08-03T15:11:11.277Z",
+      "id": "KuIUSVtFJmk"
     },
     {
       "userId": "user_123",
@@ -1594,8 +1556,8 @@
       "step": 5,
       "totalSteps": 12,
       "status": "next_clicked",
-      "timestamp": "2026-07-16T10:29:46.785Z",
-      "id": "ZewNlalIN1s"
+      "timestamp": "2026-08-03T15:11:13.111Z",
+      "id": "LN5pLvU0YRo"
     },
     {
       "userId": "user_123",
@@ -1603,8 +1565,8 @@
       "step": 6,
       "totalSteps": 12,
       "status": "next_clicked",
-      "timestamp": "2026-07-16T10:29:46.786Z",
-      "id": "a8tvv5maYPw"
+      "timestamp": "2026-08-03T15:11:13.112Z",
+      "id": "Je4iLXkQbTI"
     },
     {
       "userId": "user_123",
@@ -1612,8 +1574,8 @@
       "step": 7,
       "totalSteps": 12,
       "status": "next_clicked",
-      "timestamp": "2026-07-16T10:29:48.448Z",
-      "id": "dS0xouMn4ys"
+      "timestamp": "2026-08-03T15:11:15.375Z",
+      "id": "BO1lWY65GLg"
     },
     {
       "userId": "user_123",
@@ -1621,8 +1583,8 @@
       "step": 8,
       "totalSteps": 12,
       "status": "next_clicked",
-      "timestamp": "2026-07-16T10:29:49.182Z",
-      "id": "cX88_a5SSNk"
+      "timestamp": "2026-08-03T15:11:16.397Z",
+      "id": "JPcWPmD3V6U"
     },
     {
       "userId": "user_123",
@@ -1630,8 +1592,8 @@
       "step": 9,
       "totalSteps": 12,
       "status": "next_clicked",
-      "timestamp": "2026-07-16T10:29:51.087Z",
-      "id": "2HJwm-RsjYA"
+      "timestamp": "2026-08-03T15:11:18.785Z",
+      "id": "WQ7aUJNMrLA"
     },
     {
       "userId": "user_123",
@@ -1639,8 +1601,8 @@
       "step": 10,
       "totalSteps": 12,
       "status": "next_clicked",
-      "timestamp": "2026-07-16T10:29:52.257Z",
-      "id": "J6NHjI98Buw"
+      "timestamp": "2026-08-03T15:11:20.150Z",
+      "id": "R3NtGvpo3rA"
     },
     {
       "userId": "user_123",
@@ -1648,8 +1610,8 @@
       "step": 11,
       "totalSteps": 12,
       "status": "next_clicked",
-      "timestamp": "2026-07-16T10:29:52.258Z",
-      "id": "I8Iv3F1eOMk"
+      "timestamp": "2026-08-03T15:11:20.151Z",
+      "id": "-HBvfRGVb_E"
     },
     {
       "userId": "user_123",
@@ -1657,8 +1619,8 @@
       "step": 12,
       "totalSteps": 12,
       "status": "next_clicked",
-      "timestamp": "2026-07-16T10:29:53.135Z",
-      "id": "5B-YlgwlU-o"
+      "timestamp": "2026-08-03T15:11:21.638Z",
+      "id": "iPnUHktgyrs"
     },
     {
       "userId": "user_123",
@@ -1666,8 +1628,8 @@
       "step": 13,
       "totalSteps": 12,
       "status": "completed",
-      "timestamp": "2026-07-16T10:29:53.137Z",
-      "id": "gqJU4LWWfMY"
+      "timestamp": "2026-08-03T15:11:21.640Z",
+      "id": "t8FcoCJSG8A"
     },
     {
       "userId": "user_123",
@@ -1675,8 +1637,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-18T07:26:37.829Z",
-      "id": "uKQEh1qT5tY"
+      "timestamp": "2026-08-03T15:11:52.389Z",
+      "id": "G05jLMFOQ2c"
     },
     {
       "userId": "user_123",
@@ -1684,8 +1646,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-18T07:26:39.365Z",
-      "id": "KRHMZBrTrQE"
+      "timestamp": "2026-08-03T15:11:55.591Z",
+      "id": "0n6JkNqHP5Y"
     },
     {
       "userId": "user_123",
@@ -1693,8 +1655,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-18T07:27:03.634Z",
-      "id": "bqlmVvyEiW4"
+      "timestamp": "2026-08-03T15:28:28.829Z",
+      "id": "veB8x151b8Q"
     },
     {
       "userId": "user_123",
@@ -1702,8 +1664,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-18T07:27:05.205Z",
-      "id": "Tu-S8zcOeDg"
+      "timestamp": "2026-08-03T15:28:30.114Z",
+      "id": "7tIBZK_4XhQ"
     },
     {
       "userId": "user_123",
@@ -1711,8 +1673,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-18T08:51:29.424Z",
-      "id": "hl59yQq9ld8"
+      "timestamp": "2026-08-03T15:37:52.664Z",
+      "id": "0okGtn32yb0"
     },
     {
       "userId": "user_123",
@@ -1720,8 +1682,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-18T08:51:30.987Z",
-      "id": "r6sN5ab4204"
+      "timestamp": "2026-08-03T15:37:54.401Z",
+      "id": "HAWTaczlR2Y"
     },
     {
       "userId": "user_123",
@@ -1729,8 +1691,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-18T08:54:59.986Z",
-      "id": "dbuU5Y8J9NY"
+      "timestamp": "2026-08-03T15:40:29.905Z",
+      "id": "OSbgsXxDL5o"
     },
     {
       "userId": "user_123",
@@ -1738,8 +1700,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-18T08:55:01.409Z",
-      "id": "ApA5hOApvLo"
+      "timestamp": "2026-08-03T15:40:30.926Z",
+      "id": "Crb_pGI-804"
     },
     {
       "userId": "user_123",
@@ -1747,8 +1709,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-18T08:56:40.659Z",
-      "id": "VA9aurepyH8"
+      "timestamp": "2026-08-03T15:46:19.711Z",
+      "id": "72Ra6Sk5J1A"
     },
     {
       "userId": "user_123",
@@ -1756,8 +1718,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-18T08:56:41.891Z",
-      "id": "DtAOltu0oxg"
+      "timestamp": "2026-08-03T15:46:22.319Z",
+      "id": "MUNd4W_VtdA"
     },
     {
       "userId": "user_123",
@@ -1765,8 +1727,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-18T09:50:19.541Z",
-      "id": "p6ZuKw3abdU"
+      "timestamp": "2026-08-03T15:51:01.123Z",
+      "id": "RJgLajoY_90"
     },
     {
       "userId": "user_123",
@@ -1774,8 +1736,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-18T09:50:20.734Z",
-      "id": "j4O9V-Md8Is"
+      "timestamp": "2026-08-03T15:51:02.448Z",
+      "id": "YrVxm5QYSQ4"
     },
     {
       "userId": "user_123",
@@ -1783,8 +1745,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-18T09:51:45.279Z",
-      "id": "j3GPBWePdFw"
+      "timestamp": "2026-08-03T16:03:11.859Z",
+      "id": "Iggr5_YiuQM"
     },
     {
       "userId": "user_123",
@@ -1792,8 +1754,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-18T09:51:46.471Z",
-      "id": "JrDNmvUSJrI"
+      "timestamp": "2026-08-03T16:03:13.202Z",
+      "id": "D0EE4x6C-8w"
     },
     {
       "userId": "user_123",
@@ -1801,8 +1763,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-18T09:52:39.207Z",
-      "id": "C7rQNcfnXUc"
+      "timestamp": "2026-08-03T16:03:24.451Z",
+      "id": "y1vUs7UxVWw"
     },
     {
       "userId": "user_123",
@@ -1810,8 +1772,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-18T09:58:25.531Z",
-      "id": "s0OFsPXDQRQ"
+      "timestamp": "2026-08-03T16:03:25.507Z",
+      "id": "AAf4atSRcfQ"
     },
     {
       "userId": "user_123",
@@ -1819,8 +1781,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-18T09:59:02.799Z",
-      "id": "le-mMWxoIso"
+      "timestamp": "2026-08-03T16:07:35.398Z",
+      "id": "x1UnCMMG_jM"
     },
     {
       "userId": "user_123",
@@ -1828,8 +1790,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-18T09:59:04.117Z",
-      "id": "NvtOnqkR190"
+      "timestamp": "2026-08-03T16:07:36.673Z",
+      "id": "bwzfnCjnJA4"
     },
     {
       "userId": "user_123",
@@ -1837,8 +1799,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-18T10:05:18.508Z",
-      "id": "T0fWeOtKo2k"
+      "timestamp": "2026-08-03T16:10:10.936Z",
+      "id": "RLQT-TF_v_8"
     },
     {
       "userId": "user_123",
@@ -1846,8 +1808,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-18T10:05:19.799Z",
-      "id": "QLqgr2NeNeU"
+      "timestamp": "2026-08-03T16:10:12.022Z",
+      "id": "8YpuPVHFDOA"
     },
     {
       "userId": "user_123",
@@ -1855,8 +1817,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-18T10:05:46.056Z",
-      "id": "hlnB-zHLYF8"
+      "timestamp": "2026-08-03T16:16:55.985Z",
+      "id": "et3LJT3oORw"
     },
     {
       "userId": "user_123",
@@ -1864,8 +1826,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-18T10:05:47.175Z",
-      "id": "fE-jBhzh8OY"
+      "timestamp": "2026-08-03T16:16:58.386Z",
+      "id": "AV-Qr_pLmP4"
     },
     {
       "userId": "user_123",
@@ -1873,8 +1835,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-18T10:59:15.504Z",
-      "id": "5ExvTGwK4B8"
+      "timestamp": "2026-08-03T16:21:19.444Z",
+      "id": "JgsNINe1xaw"
     },
     {
       "userId": "user_123",
@@ -1882,8 +1844,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-18T10:59:26.296Z",
-      "id": "foQKhKoaxjw"
+      "timestamp": "2026-08-03T16:21:20.936Z",
+      "id": "wHz5A_v1g6M"
     },
     {
       "userId": "user_123",
@@ -1891,17 +1853,152 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-20T06:06:49.896Z",
-      "id": "mw5hm2SZfx0"
+      "timestamp": "2026-08-03T16:21:57.470Z",
+      "id": "Iy3JVXk3fvg"
     },
     {
       "userId": "user_123",
       "viewId": "DASHBOARD_VIEW",
       "step": 1,
       "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-03T16:21:58.673Z",
+      "id": "iei406WE1jY"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-03T16:22:29.367Z",
+      "id": "q5UMoiqMX40"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-03T16:22:30.666Z",
+      "id": "ZCKTcwb_wDE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-03T16:23:16.520Z",
+      "id": "8mQjtYYVJ4I"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-03T16:23:18.075Z",
+      "id": "FOVilbk1xBo"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-03T16:26:17.007Z",
+      "id": "Hj85tRZdu4Y"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-03T16:26:18.464Z",
+      "id": "iAOuDzLF5Qo"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-03T16:28:40.694Z",
+      "id": "Cvvp8gR9PXo"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-03T16:28:41.988Z",
+      "id": "OeoSiR2yy5U"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-03T16:32:04.007Z",
+      "id": "3if1UwUoJnE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-03T16:32:05.562Z",
+      "id": "WCdC9rOz4ls"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-03T16:32:15.374Z",
+      "id": "uMJ882dsBeA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-03T16:32:16.388Z",
+      "id": "ALBhsOYnEas"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-03T16:36:34.840Z",
+      "id": "xEavudYvwZk"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-03T16:36:36.793Z",
+      "id": "5gPfPY1EKm0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-20T06:07:15.347Z",
-      "id": "lbmU7GIpkps"
+      "timestamp": "2026-08-03T16:37:27.168Z",
+      "id": "riudQlPt0Cg"
     },
     {
       "userId": "user_123",
@@ -1909,8 +2006,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-20T06:07:16.632Z",
-      "id": "4WCnf2U7y08"
+      "timestamp": "2026-08-03T16:37:32.010Z",
+      "id": "t0yP06s5QPU"
     },
     {
       "userId": "user_123",
@@ -1918,8 +2015,17 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-20T06:09:12.021Z",
-      "id": "LiCWdhkgUY0"
+      "timestamp": "2026-08-03T16:45:03.675Z",
+      "id": "g71C-T68drc"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-03T16:45:04.926Z",
+      "id": "AnNihkQOibM"
     },
     {
       "userId": "user_123",
@@ -1927,8 +2033,17 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-20T06:10:48.643Z",
-      "id": "-2x3MBM4oDU"
+      "timestamp": "2026-08-03T16:47:25.453Z",
+      "id": "XMn1Oio_Qq4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-03T16:47:26.812Z",
+      "id": "U9047-seOMQ"
     },
     {
       "userId": "user_123",
@@ -1936,8 +2051,17 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-20T07:24:02.051Z",
-      "id": "MkMIxTWjAh4"
+      "timestamp": "2026-08-03T16:50:17.384Z",
+      "id": "8NCxRdJ9d1I"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-03T16:50:18.855Z",
+      "id": "hRGT0hHj_P8"
     },
     {
       "userId": "user_123",
@@ -1945,8 +2069,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-21T05:33:10.103Z",
-      "id": "pywCI660A2A"
+      "timestamp": "2026-08-03T16:52:26.752Z",
+      "id": "eMGou4T2FWw"
     },
     {
       "userId": "user_123",
@@ -1954,8 +2078,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-21T05:33:11.291Z",
-      "id": "bqic428UEjA"
+      "timestamp": "2026-08-03T16:52:27.870Z",
+      "id": "wNbuuuRDbZQ"
     },
     {
       "userId": "user_123",
@@ -1963,8 +2087,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-21T05:37:20.293Z",
-      "id": "dPcvCSlpNlw"
+      "timestamp": "2026-08-03T16:54:22.024Z",
+      "id": "vjSXZt3iE70"
     },
     {
       "userId": "user_123",
@@ -1972,8 +2096,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-21T05:37:21.674Z",
-      "id": "lV1KYDFI6cI"
+      "timestamp": "2026-08-03T16:54:23.253Z",
+      "id": "6DY31XvZw_c"
     },
     {
       "userId": "user_123",
@@ -1981,8 +2105,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T05:52:08.966Z",
-      "id": "P1DY4prXk9Q"
+      "timestamp": "2026-08-03T16:55:26.751Z",
+      "id": "pFENIAleYrA"
     },
     {
       "userId": "user_123",
@@ -1990,8 +2114,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T06:13:27.972Z",
-      "id": "Lnbg_Equj4k"
+      "timestamp": "2026-08-03T16:55:28.079Z",
+      "id": "TjEH0DRksp8"
     },
     {
       "userId": "user_123",
@@ -1999,8 +2123,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:04:11.668Z",
-      "id": "mcltsSY_c3I"
+      "timestamp": "2026-08-03T16:57:25.071Z",
+      "id": "VSWkiGJ2LCM"
     },
     {
       "userId": "user_123",
@@ -2008,8 +2132,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:04:13.412Z",
-      "id": "JrWKRLbeStQ"
+      "timestamp": "2026-08-03T16:57:26.163Z",
+      "id": "F7AJd9_aW1I"
     },
     {
       "userId": "user_123",
@@ -2017,8 +2141,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:07:19.515Z",
-      "id": "Fnt6DKa5ceI"
+      "timestamp": "2026-08-03T16:58:50.008Z",
+      "id": "gih2DQVTjdY"
     },
     {
       "userId": "user_123",
@@ -2026,8 +2150,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:07:20.601Z",
-      "id": "HI452LGpEYw"
+      "timestamp": "2026-08-03T16:58:51.279Z",
+      "id": "0I3KGMnip8M"
     },
     {
       "userId": "user_123",
@@ -2035,8 +2159,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:10:19.723Z",
-      "id": "m_9VImfMnhs"
+      "timestamp": "2026-08-03T17:00:21.245Z",
+      "id": "l2tptUtflio"
     },
     {
       "userId": "user_123",
@@ -2044,8 +2168,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:10:20.710Z",
-      "id": "WkzAHl-hg54"
+      "timestamp": "2026-08-03T17:00:23.738Z",
+      "id": "GGz5yaHoYE4"
     },
     {
       "userId": "user_123",
@@ -2053,8 +2177,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:12:42.758Z",
-      "id": "YsDgxAbPda8"
+      "timestamp": "2026-08-03T17:08:20.857Z",
+      "id": "EzcPR1Jte6A"
     },
     {
       "userId": "user_123",
@@ -2062,8 +2186,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:12:43.723Z",
-      "id": "ecmFkt5OLFc"
+      "timestamp": "2026-08-03T17:08:22.372Z",
+      "id": "-RPgRHnww7o"
     },
     {
       "userId": "user_123",
@@ -2071,8 +2195,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:12:56.917Z",
-      "id": "UWUIiS5WZRU"
+      "timestamp": "2026-08-03T17:09:17.690Z",
+      "id": "zXUancIR6e8"
     },
     {
       "userId": "user_123",
@@ -2080,8 +2204,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:12:57.938Z",
-      "id": "xzZWZife07Q"
+      "timestamp": "2026-08-03T17:09:19.158Z",
+      "id": "T5y2phFIWNc"
     },
     {
       "userId": "user_123",
@@ -2089,8 +2213,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:14:33.167Z",
-      "id": "_n8YOdV4eR8"
+      "timestamp": "2026-08-03T17:14:12.426Z",
+      "id": "bf15rmU-BvI"
     },
     {
       "userId": "user_123",
@@ -2098,8 +2222,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:14:34.167Z",
-      "id": "surGsMgWhF4"
+      "timestamp": "2026-08-03T17:14:14.470Z",
+      "id": "dhkSDvmDGe0"
     },
     {
       "userId": "user_123",
@@ -2107,8 +2231,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:16:01.000Z",
-      "id": "TNoY-JiTyrw"
+      "timestamp": "2026-08-03T17:19:12.350Z",
+      "id": "1fjXxHB0gIc"
     },
     {
       "userId": "user_123",
@@ -2116,8 +2240,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:16:02.216Z",
-      "id": "aj9ECRGOYTM"
+      "timestamp": "2026-08-03T17:19:13.503Z",
+      "id": "ptD2QWoNPHM"
     },
     {
       "userId": "user_123",
@@ -2125,8 +2249,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:16:17.833Z",
-      "id": "FQRd0xNl_dM"
+      "timestamp": "2026-08-03T17:20:51.142Z",
+      "id": "rOmGwiN1Csw"
     },
     {
       "userId": "user_123",
@@ -2134,8 +2258,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:16:19.224Z",
-      "id": "XlzksG4ejYw"
+      "timestamp": "2026-08-03T17:20:52.417Z",
+      "id": "i1LHC2Prnuo"
     },
     {
       "userId": "user_123",
@@ -2143,8 +2267,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:19:50.765Z",
-      "id": "9nH3dlBx2iQ"
+      "timestamp": "2026-08-03T17:22:10.538Z",
+      "id": "h23MlpPunt4"
     },
     {
       "userId": "user_123",
@@ -2152,8 +2276,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:19:51.773Z",
-      "id": "HL6DM6mTPN4"
+      "timestamp": "2026-08-03T17:22:12.115Z",
+      "id": "G9LSPGMxsRs"
     },
     {
       "userId": "user_123",
@@ -2161,8 +2285,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:20:42.590Z",
-      "id": "h6WZOMuR4rI"
+      "timestamp": "2026-08-03T17:23:10.357Z",
+      "id": "XRCJO4rfe9c"
     },
     {
       "userId": "user_123",
@@ -2170,8 +2294,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:20:43.577Z",
-      "id": "UsIdVjQDlZs"
+      "timestamp": "2026-08-03T17:23:12.700Z",
+      "id": "Vxdol2lrssI"
     },
     {
       "userId": "user_123",
@@ -2179,8 +2303,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:25:39.743Z",
-      "id": "FXrcQfmBClc"
+      "timestamp": "2026-08-03T17:24:59.284Z",
+      "id": "fGrYvJqA0k0"
     },
     {
       "userId": "user_123",
@@ -2188,8 +2312,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:25:41.071Z",
-      "id": "AtUxU9MBO-A"
+      "timestamp": "2026-08-03T17:25:01.207Z",
+      "id": "ZLZ1euVUBJM"
     },
     {
       "userId": "user_123",
@@ -2197,8 +2321,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:26:23.639Z",
-      "id": "PWjt3bnmt9M"
+      "timestamp": "2026-08-03T17:26:14.282Z",
+      "id": "YtiSI4wyKmI"
     },
     {
       "userId": "user_123",
@@ -2206,8 +2330,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:26:24.514Z",
-      "id": "DUptMRFRN4I"
+      "timestamp": "2026-08-03T17:26:15.642Z",
+      "id": "UmA5Ao72LHQ"
     },
     {
       "userId": "user_123",
@@ -2215,8 +2339,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:29:32.265Z",
-      "id": "XXyjbOjiF6I"
+      "timestamp": "2026-08-03T17:26:31.206Z",
+      "id": "rpFPHbfMiSc"
     },
     {
       "userId": "user_123",
@@ -2224,8 +2348,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:29:33.285Z",
-      "id": "Qsc4OzC1r7c"
+      "timestamp": "2026-08-03T17:26:32.420Z",
+      "id": "HbLiNFYWwc4"
     },
     {
       "userId": "user_123",
@@ -2233,8 +2357,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-22T12:44:53.812Z",
-      "id": "NaskR4cqe4E"
+      "timestamp": "2026-08-03T17:28:24.789Z",
+      "id": "InWShTOJMfM"
     },
     {
       "userId": "user_123",
@@ -2242,8 +2366,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-22T12:44:54.847Z",
-      "id": "Wuw6Rg9S9zA"
+      "timestamp": "2026-08-03T17:28:26.137Z",
+      "id": "Txg8AqjDbXo"
     },
     {
       "userId": "user_123",
@@ -2251,8 +2375,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T04:44:36.456Z",
-      "id": "zRI_NJChGSo"
+      "timestamp": "2026-08-03T17:31:18.705Z",
+      "id": "L5GavlDu6gk"
     },
     {
       "userId": "user_123",
@@ -2260,8 +2384,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T04:44:37.506Z",
-      "id": "zYrzEPOd-ds"
+      "timestamp": "2026-08-03T17:31:20.371Z",
+      "id": "PBvKcM1JIpw"
     },
     {
       "userId": "user_123",
@@ -2269,8 +2393,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T04:53:14.778Z",
-      "id": "Rz3tiU6_P4w"
+      "timestamp": "2026-08-03T17:34:12.313Z",
+      "id": "ZrEr8F0I4OM"
     },
     {
       "userId": "user_123",
@@ -2278,8 +2402,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T04:53:15.936Z",
-      "id": "hEwdLHzyI4Y"
+      "timestamp": "2026-08-03T17:34:16.318Z",
+      "id": "p0pgHlR1qdQ"
     },
     {
       "userId": "user_123",
@@ -2287,8 +2411,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T05:11:05.487Z",
-      "id": "3EW1KYhxQLo"
+      "timestamp": "2026-08-03T17:37:45.331Z",
+      "id": "46gyl2292fo"
     },
     {
       "userId": "user_123",
@@ -2296,8 +2420,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T05:11:06.973Z",
-      "id": "E6sc_HaHWfU"
+      "timestamp": "2026-08-03T17:37:46.622Z",
+      "id": "eo749HLWBWk"
     },
     {
       "userId": "user_123",
@@ -2305,8 +2429,17 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T05:25:44.849Z",
-      "id": "dcJsX2Iwau8"
+      "timestamp": "2026-08-03T17:39:38.332Z",
+      "id": "5O_0T3ECxr8"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-03T17:39:40.263Z",
+      "id": "RayFkigxRew"
     },
     {
       "userId": "user_123",
@@ -2314,17 +2447,98 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T05:26:53.606Z",
-      "id": "wxWEHfmuPFY"
+      "timestamp": "2026-08-03T17:40:29.334Z",
+      "id": "fWfgHGuNAdU"
     },
     {
       "userId": "user_123",
       "viewId": "DASHBOARD_VIEW",
       "step": 1,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-03T17:40:31.227Z",
+      "id": "SV_zSbCzrv8"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 2,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-03T17:40:33.747Z",
+      "id": "FN3FQFygDPw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 3,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-03T17:40:35.178Z",
+      "id": "EqKvdTDLujM"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 4,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-03T17:40:37.519Z",
+      "id": "VrIW4oTM6-s"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 5,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-03T17:40:39.339Z",
+      "id": "GprBkXcVrPg"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 6,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-03T17:40:39.340Z",
+      "id": "aJvmWBndj5k"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 7,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-03T17:40:42.222Z",
+      "id": "HOiSGBy3DgY"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 8,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-03T17:40:44.265Z",
+      "id": "enorLDJeo1s"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 9,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-03T17:40:46.573Z",
+      "id": "MLg2nGQv7qs"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 10,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T05:26:54.878Z",
-      "id": "--GlpS431_E"
+      "timestamp": "2026-08-03T17:40:47.699Z",
+      "id": "T0WASEoXu6w"
     },
     {
       "userId": "user_123",
@@ -2332,8 +2546,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T05:27:54.064Z",
-      "id": "dfVC_CQewfc"
+      "timestamp": "2026-08-04T04:51:57.177Z",
+      "id": "w88kEyU7rlg"
     },
     {
       "userId": "user_123",
@@ -2341,8 +2555,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T05:27:55.186Z",
-      "id": "PBU8goKQ5Wo"
+      "timestamp": "2026-08-04T04:51:58.477Z",
+      "id": "eFhqUkZJ82c"
     },
     {
       "userId": "user_123",
@@ -2350,8 +2564,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T05:28:09.545Z",
-      "id": "AHuF_KEumkk"
+      "timestamp": "2026-08-04T05:04:02.104Z",
+      "id": "BcMSL2Kymd4"
     },
     {
       "userId": "user_123",
@@ -2359,8 +2573,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T05:28:10.824Z",
-      "id": "HecLXJP18Jk"
+      "timestamp": "2026-08-04T05:04:03.105Z",
+      "id": "fgA0gfZm_jM"
     },
     {
       "userId": "user_123",
@@ -2368,8 +2582,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T05:29:56.578Z",
-      "id": "G4ueED04DdM"
+      "timestamp": "2026-08-04T05:04:32.559Z",
+      "id": "0ymfRSojOBw"
     },
     {
       "userId": "user_123",
@@ -2377,8 +2591,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T05:29:57.620Z",
-      "id": "5_VbUsX3QXM"
+      "timestamp": "2026-08-04T05:04:33.895Z",
+      "id": "foT49cpSd14"
     },
     {
       "userId": "user_123",
@@ -2386,8 +2600,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T05:41:33.635Z",
-      "id": "V8xTeJ3pp_Q"
+      "timestamp": "2026-08-04T05:05:24.612Z",
+      "id": "zls9V0jayv4"
     },
     {
       "userId": "user_123",
@@ -2395,8 +2609,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T05:41:34.865Z",
-      "id": "-mwNkyw9nf8"
+      "timestamp": "2026-08-04T05:05:25.678Z",
+      "id": "4wKonRdmIbw"
     },
     {
       "userId": "user_123",
@@ -2404,8 +2618,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T05:42:12.322Z",
-      "id": "B4xC1RTgZmY"
+      "timestamp": "2026-08-04T05:07:15.630Z",
+      "id": "t-FEHvVENCE"
     },
     {
       "userId": "user_123",
@@ -2413,8 +2627,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T05:42:15.983Z",
-      "id": "5AWwZp1MP7M"
+      "timestamp": "2026-08-04T05:07:17.110Z",
+      "id": "dyEsXZS2cQM"
     },
     {
       "userId": "user_123",
@@ -2422,8 +2636,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T05:57:30.594Z",
-      "id": "0MtT5kQ3Y9k"
+      "timestamp": "2026-08-04T05:08:25.457Z",
+      "id": "mfUGyrjLlUg"
     },
     {
       "userId": "user_123",
@@ -2431,8 +2645,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T05:57:32.782Z",
-      "id": "wIqF18GmRgk"
+      "timestamp": "2026-08-04T05:08:27.066Z",
+      "id": "DY-yqzPlzBM"
     },
     {
       "userId": "user_123",
@@ -2440,8 +2654,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T05:57:44.595Z",
-      "id": "WJ2L-hvOIOo"
+      "timestamp": "2026-08-04T05:09:57.152Z",
+      "id": "73gISkFGn9w"
     },
     {
       "userId": "user_123",
@@ -2449,8 +2663,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T05:58:05.081Z",
-      "id": "N1lG2KZ0gM8"
+      "timestamp": "2026-08-04T05:09:58.435Z",
+      "id": "j1E5qAfx9rU"
     },
     {
       "userId": "user_123",
@@ -2458,8 +2672,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T12:13:12.298Z",
-      "id": "Mzjsx2GkGeM"
+      "timestamp": "2026-08-04T05:10:11.089Z",
+      "id": "DQ3yCMwZVnw"
     },
     {
       "userId": "user_123",
@@ -2467,8 +2681,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T12:13:13.394Z",
-      "id": "gR9a9Eyykpc"
+      "timestamp": "2026-08-04T05:10:12.525Z",
+      "id": "G9122Z2giEc"
     },
     {
       "userId": "user_123",
@@ -2476,8 +2690,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T12:13:27.400Z",
-      "id": "sVIQeKEfe0c"
+      "timestamp": "2026-08-04T05:11:10.590Z",
+      "id": "1WKfnLFZIkM"
     },
     {
       "userId": "user_123",
@@ -2485,8 +2699,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T12:13:28.561Z",
-      "id": "U22EV6CZJLk"
+      "timestamp": "2026-08-04T05:11:11.862Z",
+      "id": "rHBPAfFS8-M"
     },
     {
       "userId": "user_123",
@@ -2494,8 +2708,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T12:15:45.748Z",
-      "id": "Dech-T7xNdU"
+      "timestamp": "2026-08-04T05:13:03.528Z",
+      "id": "FGOWx6Dd3I0"
     },
     {
       "userId": "user_123",
@@ -2503,8 +2717,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T12:15:46.644Z",
-      "id": "NYGhh_upegw"
+      "timestamp": "2026-08-04T05:13:04.744Z",
+      "id": "KvMQYVkKwRE"
     },
     {
       "userId": "user_123",
@@ -2512,8 +2726,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-23T12:17:06.561Z",
-      "id": "Y_81QmaaVyE"
+      "timestamp": "2026-08-04T06:19:47.593Z",
+      "id": "9KiJUzz1PAg"
     },
     {
       "userId": "user_123",
@@ -2521,8 +2735,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-23T12:17:08.143Z",
-      "id": "WeTA1T-w1VI"
+      "timestamp": "2026-08-04T06:19:48.878Z",
+      "id": "CrsWkn4sK2Y"
     },
     {
       "userId": "user_123",
@@ -2530,8 +2744,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T04:51:20.969Z",
-      "id": "uqe-ZQHDwP8"
+      "timestamp": "2026-08-04T06:21:03.771Z",
+      "id": "3UAZmArJZ6c"
     },
     {
       "userId": "user_123",
@@ -2539,8 +2753,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T04:51:22.065Z",
-      "id": "Fz7QZt52zkk"
+      "timestamp": "2026-08-04T06:21:04.824Z",
+      "id": "yAVGBvMxBF8"
     },
     {
       "userId": "user_123",
@@ -2548,8 +2762,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T05:35:20.057Z",
-      "id": "KkE8cVYzAj8"
+      "timestamp": "2026-08-04T06:22:44.525Z",
+      "id": "0k9-9NszHOs"
     },
     {
       "userId": "user_123",
@@ -2557,8 +2771,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T05:35:21.105Z",
-      "id": "fUyUq5AJoI0"
+      "timestamp": "2026-08-04T06:22:45.761Z",
+      "id": "NvWLx-fGSvM"
     },
     {
       "userId": "user_123",
@@ -2566,8 +2780,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T05:36:24.344Z",
-      "id": "d0yjb82WVJI"
+      "timestamp": "2026-08-04T06:23:13.880Z",
+      "id": "A1e0J2_ciuc"
     },
     {
       "userId": "user_123",
@@ -2575,8 +2789,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T05:36:25.578Z",
-      "id": "dPR-OCjZj30"
+      "timestamp": "2026-08-04T06:23:14.844Z",
+      "id": "sadh5dgc5HI"
     },
     {
       "userId": "user_123",
@@ -2584,8 +2798,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T05:38:48.341Z",
-      "id": "FdgawUpGlYo"
+      "timestamp": "2026-08-04T06:24:58.519Z",
+      "id": "sJXpkVNuHn0"
     },
     {
       "userId": "user_123",
@@ -2593,8 +2807,17 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T05:39:36.278Z",
-      "id": "jqJW3BpHS9k"
+      "timestamp": "2026-08-04T06:24:59.797Z",
+      "id": "BcdcIHOGX1w"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-04T06:27:20.983Z",
+      "id": "zjQ-VhyOt24"
     },
     {
       "userId": "user_123",
@@ -2602,8 +2825,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T05:42:34.739Z",
-      "id": "fJX4l0xzvuk"
+      "timestamp": "2026-08-04T06:27:30.566Z",
+      "id": "Ml67a30ldHA"
     },
     {
       "userId": "user_123",
@@ -2611,8 +2834,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T05:42:35.958Z",
-      "id": "CDk1HUyWeU0"
+      "timestamp": "2026-08-04T06:27:31.788Z",
+      "id": "3Gw1kpR_jv0"
     },
     {
       "userId": "user_123",
@@ -2620,8 +2843,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T05:45:03.897Z",
-      "id": "3O2R4srpHi8"
+      "timestamp": "2026-08-04T06:28:52.862Z",
+      "id": "qQTCHSC8UpA"
     },
     {
       "userId": "user_123",
@@ -2629,8 +2852,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T05:45:05.327Z",
-      "id": "CMJeV4utLc4"
+      "timestamp": "2026-08-04T06:28:54.083Z",
+      "id": "zQ05CT37EmU"
     },
     {
       "userId": "user_123",
@@ -2638,8 +2861,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T06:01:21.816Z",
-      "id": "_rDE8ji0qK0"
+      "timestamp": "2026-08-04T06:39:27.652Z",
+      "id": "umwn4z2GZTM"
     },
     {
       "userId": "user_123",
@@ -2647,8 +2870,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T06:01:22.898Z",
-      "id": "4a5vLGSdZT8"
+      "timestamp": "2026-08-04T06:39:28.797Z",
+      "id": "Ha_NZre-Dig"
     },
     {
       "userId": "user_123",
@@ -2656,8 +2879,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T06:03:11.954Z",
-      "id": "51htoR_4rDY"
+      "timestamp": "2026-08-04T06:46:41.888Z",
+      "id": "fmqO4eR9aDc"
     },
     {
       "userId": "user_123",
@@ -2665,8 +2888,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T06:03:13.269Z",
-      "id": "JVr_BjeJnqU"
+      "timestamp": "2026-08-04T06:46:43.193Z",
+      "id": "syqJz82WVoc"
     },
     {
       "userId": "user_123",
@@ -2674,8 +2897,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T06:11:18.595Z",
-      "id": "1skkeqX72U4"
+      "timestamp": "2026-08-04T06:51:09.108Z",
+      "id": "FDjHQGeS6qQ"
     },
     {
       "userId": "user_123",
@@ -2683,8 +2906,26 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T06:11:19.706Z",
-      "id": "cyIcj13hnxw"
+      "timestamp": "2026-08-04T06:51:10.290Z",
+      "id": "j4QxRkICdIk"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-04T06:54:39.840Z",
+      "id": "wOE9xIXOtuU"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-04T06:55:09.798Z",
+      "id": "V5kAhFRwqOw"
     },
     {
       "userId": "user_123",
@@ -2692,8 +2933,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T06:11:49.871Z",
-      "id": "irtU3w2hgHQ"
+      "timestamp": "2026-08-04T06:56:12.387Z",
+      "id": "rqZJg04WPWc"
     },
     {
       "userId": "user_123",
@@ -2701,8 +2942,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T06:11:51.765Z",
-      "id": "bJgmMyMBelQ"
+      "timestamp": "2026-08-04T06:56:14.921Z",
+      "id": "nrbeLF_YE6w"
     },
     {
       "userId": "user_123",
@@ -2710,8 +2951,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T06:12:20.235Z",
-      "id": "Mvo0Xife5pY"
+      "timestamp": "2026-08-04T06:58:27.055Z",
+      "id": "yvmN91SA0w8"
     },
     {
       "userId": "user_123",
@@ -2719,8 +2960,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T06:12:21.628Z",
-      "id": "yuEJNDAgKrE"
+      "timestamp": "2026-08-04T06:58:28.619Z",
+      "id": "MjBQZa3T6d8"
     },
     {
       "userId": "user_123",
@@ -2728,8 +2969,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T06:28:36.256Z",
-      "id": "szkWX0krBU4"
+      "timestamp": "2026-08-04T06:58:39.465Z",
+      "id": "w2O4O4uIzLo"
     },
     {
       "userId": "user_123",
@@ -2737,8 +2978,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T06:28:37.486Z",
-      "id": "5Kcie9lklt0"
+      "timestamp": "2026-08-04T06:59:17.493Z",
+      "id": "ELvl1wM02Us"
     },
     {
       "userId": "user_123",
@@ -2746,8 +2987,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T06:30:12.692Z",
-      "id": "OhWGDu5MVVA"
+      "timestamp": "2026-08-04T06:59:37.251Z",
+      "id": "Y7ec1Zx7J-U"
     },
     {
       "userId": "user_123",
@@ -2755,8 +2996,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T06:30:13.921Z",
-      "id": "DswUOwH1VzU"
+      "timestamp": "2026-08-04T06:59:39.264Z",
+      "id": "ZT9Aa8v6eBA"
     },
     {
       "userId": "user_123",
@@ -2764,8 +3005,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T07:26:14.031Z",
-      "id": "zG8spyOU4ms"
+      "timestamp": "2026-08-04T07:04:54.667Z",
+      "id": "h0nBQ9lipeo"
     },
     {
       "userId": "user_123",
@@ -2773,8 +3014,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T07:26:15.238Z",
-      "id": "CFszGkM6FQA"
+      "timestamp": "2026-08-04T07:04:57.534Z",
+      "id": "mBPykycwJyU"
     },
     {
       "userId": "user_123",
@@ -2782,8 +3023,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T07:27:03.864Z",
-      "id": "_GYtfW93jeQ"
+      "timestamp": "2026-08-04T07:11:08.542Z",
+      "id": "UOZ75KeM1hk"
     },
     {
       "userId": "user_123",
@@ -2791,8 +3032,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T07:27:05.487Z",
-      "id": "6HqzNXPwkFY"
+      "timestamp": "2026-08-04T07:11:09.584Z",
+      "id": "5W1FNvIv2co"
     },
     {
       "userId": "user_123",
@@ -2800,8 +3041,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T07:28:03.080Z",
-      "id": "csmyMp_VGm0"
+      "timestamp": "2026-08-04T07:14:48.254Z",
+      "id": "tABhRpMOoBs"
     },
     {
       "userId": "user_123",
@@ -2809,8 +3050,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T07:28:04.967Z",
-      "id": "LpDDNliPH3M"
+      "timestamp": "2026-08-04T07:14:49.398Z",
+      "id": "TduCjIjYzPo"
     },
     {
       "userId": "user_123",
@@ -2818,8 +3059,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T07:28:34.780Z",
-      "id": "5ZkAUuS56Sc"
+      "timestamp": "2026-08-04T07:19:50.778Z",
+      "id": "neTMIsw5iA4"
     },
     {
       "userId": "user_123",
@@ -2827,8 +3068,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T07:28:35.992Z",
-      "id": "d88YHp7CJcA"
+      "timestamp": "2026-08-04T07:19:51.959Z",
+      "id": "OK5gh99aEUo"
     },
     {
       "userId": "user_123",
@@ -2836,8 +3077,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T07:29:29.198Z",
-      "id": "6X8s_Ru-KXo"
+      "timestamp": "2026-08-04T07:22:58.682Z",
+      "id": "FNgS6peDRZY"
     },
     {
       "userId": "user_123",
@@ -2845,8 +3086,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T07:29:45.346Z",
-      "id": "GnDnJ6He-sM"
+      "timestamp": "2026-08-04T07:22:59.556Z",
+      "id": "UtUxY5XimOQ"
     },
     {
       "userId": "user_123",
@@ -2854,8 +3095,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T07:30:46.843Z",
-      "id": "oErfUT9OE0I"
+      "timestamp": "2026-08-04T10:41:02.370Z",
+      "id": "0MyQ4_scmHo"
     },
     {
       "userId": "user_123",
@@ -2863,8 +3104,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T07:30:51.245Z",
-      "id": "YJFlf7HvH7Y"
+      "timestamp": "2026-08-04T10:41:03.406Z",
+      "id": "i3Obl6G1I5I"
     },
     {
       "userId": "user_123",
@@ -2872,8 +3113,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T09:16:33.706Z",
-      "id": "Ya8xSTccF24"
+      "timestamp": "2026-08-04T11:14:55.469Z",
+      "id": "wIVHVBMprLQ"
     },
     {
       "userId": "user_123",
@@ -2881,8 +3122,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T09:16:36.584Z",
-      "id": "Sb4Ocdzxmp8"
+      "timestamp": "2026-08-04T11:14:56.517Z",
+      "id": "h6hBdaCXb4M"
     },
     {
       "userId": "user_123",
@@ -2890,8 +3131,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T09:39:05.871Z",
-      "id": "2u4Ouc-i1O4"
+      "timestamp": "2026-08-04T11:49:49.229Z",
+      "id": "9CpR1hEBM9I"
     },
     {
       "userId": "user_123",
@@ -2899,8 +3140,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T09:39:07.325Z",
-      "id": "fC_7KH2-uYQ"
+      "timestamp": "2026-08-04T11:49:50.527Z",
+      "id": "muyi-kAIo8o"
     },
     {
       "userId": "user_123",
@@ -2908,8 +3149,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T09:48:48.482Z",
-      "id": "tcYzgVm1suY"
+      "timestamp": "2026-08-04T12:05:25.389Z",
+      "id": "IKGL9hwrx14"
     },
     {
       "userId": "user_123",
@@ -2917,8 +3158,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T09:48:49.669Z",
-      "id": "QROVNGuvYVk"
+      "timestamp": "2026-08-04T12:05:26.458Z",
+      "id": "9AFlkqX47Es"
     },
     {
       "userId": "user_123",
@@ -2926,8 +3167,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-24T10:35:46.353Z",
-      "id": "A08me3SGX2I"
+      "timestamp": "2026-08-04T12:06:22.216Z",
+      "id": "BSCDiYun3A0"
     },
     {
       "userId": "user_123",
@@ -2935,8 +3176,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-24T10:35:47.810Z",
-      "id": "byTJ4pSxCpw"
+      "timestamp": "2026-08-04T12:06:23.673Z",
+      "id": "cVALIs3zNDU"
     },
     {
       "userId": "user_123",
@@ -2944,8 +3185,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-30T06:01:42.790Z",
-      "id": "AYIZOiAP9ZM"
+      "timestamp": "2026-08-05T05:52:22.942Z",
+      "id": "30BjtzHOsOY"
     },
     {
       "userId": "user_123",
@@ -2953,8 +3194,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-30T06:01:43.741Z",
-      "id": "QY0n8HJOgZ8"
+      "timestamp": "2026-08-05T05:52:33.393Z",
+      "id": "JY5cUxVB9qc"
     },
     {
       "userId": "user_123",
@@ -2962,8 +3203,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-30T06:07:42.749Z",
-      "id": "GkLH9novLJY"
+      "timestamp": "2026-08-05T05:54:42.592Z",
+      "id": "zjOpeH7ex-A"
     },
     {
       "userId": "user_123",
@@ -2971,8 +3212,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-30T06:07:43.935Z",
-      "id": "FmAlpcn12ds"
+      "timestamp": "2026-08-05T05:54:43.766Z",
+      "id": "5E064p9MDOQ"
     },
     {
       "userId": "user_123",
@@ -2980,8 +3221,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-30T06:10:55.263Z",
-      "id": "K8cEXQ2TssI"
+      "timestamp": "2026-08-05T05:58:09.790Z",
+      "id": "QkX_gkNRWtA"
     },
     {
       "userId": "user_123",
@@ -2989,8 +3230,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-30T06:10:56.222Z",
-      "id": "s2skuqDcssE"
+      "timestamp": "2026-08-05T05:58:11.226Z",
+      "id": "br16tqPovUw"
     },
     {
       "userId": "user_123",
@@ -2998,8 +3239,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-30T06:11:25.680Z",
-      "id": "PxJUBkmIxHs"
+      "timestamp": "2026-08-05T06:05:08.240Z",
+      "id": "wJeZ0075Y9s"
     },
     {
       "userId": "user_123",
@@ -3007,8 +3248,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-30T06:11:26.541Z",
-      "id": "86d0F2JviDg"
+      "timestamp": "2026-08-05T06:05:09.623Z",
+      "id": "WCXrnMahAR8"
     },
     {
       "userId": "user_123",
@@ -3016,8 +3257,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-30T06:44:49.802Z",
-      "id": "wUIP50B-rWU"
+      "timestamp": "2026-08-05T06:14:00.963Z",
+      "id": "yDNjAkLnmdI"
     },
     {
       "userId": "user_123",
@@ -3025,8 +3266,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-30T06:44:51.003Z",
-      "id": "VbNmhRfH47I"
+      "timestamp": "2026-08-05T06:14:02.193Z",
+      "id": "bWT_1qtbcY4"
     },
     {
       "userId": "user_123",
@@ -3034,8 +3275,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-30T09:13:19.060Z",
-      "id": "KcvBL1sZNlg"
+      "timestamp": "2026-08-05T06:16:08.041Z",
+      "id": "7NQXYMHLXhU"
     },
     {
       "userId": "user_123",
@@ -3043,8 +3284,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-30T09:13:20.421Z",
-      "id": "RbNgSWkQTEA"
+      "timestamp": "2026-08-05T06:16:10.415Z",
+      "id": "XL1G9ugOsT0"
     },
     {
       "userId": "user_123",
@@ -3052,8 +3293,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-30T09:37:25.623Z",
-      "id": "p5fndRljTxM"
+      "timestamp": "2026-08-05T06:20:02.569Z",
+      "id": "YuoT_BJzWL4"
     },
     {
       "userId": "user_123",
@@ -3061,8 +3302,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-30T09:37:28.333Z",
-      "id": "_8N2y07U_-k"
+      "timestamp": "2026-08-05T06:20:06.318Z",
+      "id": "TFnNfg4iFxg"
     },
     {
       "userId": "user_123",
@@ -3070,8 +3311,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-30T09:37:58.762Z",
-      "id": "6O9D4S8o1fU"
+      "timestamp": "2026-08-05T06:22:53.114Z",
+      "id": "nZiUdLJaAuI"
     },
     {
       "userId": "user_123",
@@ -3079,8 +3320,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-30T09:38:00.902Z",
-      "id": "QK_XzqVujDE"
+      "timestamp": "2026-08-05T06:22:54.490Z",
+      "id": "y7PuTgjYj00"
     },
     {
       "userId": "user_123",
@@ -3088,8 +3329,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-31T05:04:05.031Z",
-      "id": "bhCPIXkraPk"
+      "timestamp": "2026-08-05T06:28:34.068Z",
+      "id": "2Hcb8nossYA"
     },
     {
       "userId": "user_123",
@@ -3097,8 +3338,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-31T05:04:07.217Z",
-      "id": "bkBrq8vs8_s"
+      "timestamp": "2026-08-05T06:28:36.187Z",
+      "id": "MMVFMfZUPm0"
     },
     {
       "userId": "user_123",
@@ -3106,8 +3347,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-31T05:04:32.816Z",
-      "id": "GK2Qi0U8how"
+      "timestamp": "2026-08-05T06:29:56.797Z",
+      "id": "gBVqYop1WPk"
     },
     {
       "userId": "user_123",
@@ -3115,8 +3356,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-31T05:04:33.794Z",
-      "id": "8in0d2eNLNc"
+      "timestamp": "2026-08-05T06:30:07.471Z",
+      "id": "kyfPmmbxzps"
     },
     {
       "userId": "user_123",
@@ -3124,8 +3365,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-31T05:07:35.225Z",
-      "id": "WR_aOvKx2ac"
+      "timestamp": "2026-08-05T06:41:45.495Z",
+      "id": "AQSYYvKnmhc"
     },
     {
       "userId": "user_123",
@@ -3133,8 +3374,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-31T05:07:46.167Z",
-      "id": "xtZe29zU-jE"
+      "timestamp": "2026-08-05T06:41:46.730Z",
+      "id": "ER5XzDOwU3Q"
     },
     {
       "userId": "user_123",
@@ -3142,8 +3383,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-31T05:24:00.277Z",
-      "id": "aFsFfefAnbk"
+      "timestamp": "2026-08-05T06:43:43.136Z",
+      "id": "ymT-vcHTJBY"
     },
     {
       "userId": "user_123",
@@ -3151,8 +3392,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-31T05:24:01.713Z",
-      "id": "xDMdPwax0tc"
+      "timestamp": "2026-08-05T06:43:46.236Z",
+      "id": "jNZ8cOQIw3I"
     },
     {
       "userId": "user_123",
@@ -3160,8 +3401,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-31T05:36:48.852Z",
-      "id": "AS8MZtSY9Og"
+      "timestamp": "2026-08-05T06:44:10.707Z",
+      "id": "DQYAhVG5U9w"
     },
     {
       "userId": "user_123",
@@ -3169,8 +3410,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-31T05:36:50.575Z",
-      "id": "dK9crpV6x2w"
+      "timestamp": "2026-08-05T06:44:11.805Z",
+      "id": "OZBvTKjzcj8"
     },
     {
       "userId": "user_123",
@@ -3178,8 +3419,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-31T05:37:19.957Z",
-      "id": "GzUJuBBBqTg"
+      "timestamp": "2026-08-05T06:53:24.748Z",
+      "id": "t8sf001EVHA"
     },
     {
       "userId": "user_123",
@@ -3187,8 +3428,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-31T05:37:21.137Z",
-      "id": "y6a-Bi80A90"
+      "timestamp": "2026-08-05T06:53:28.112Z",
+      "id": "q6Hsm9G8MHk"
     },
     {
       "userId": "user_123",
@@ -3196,8 +3437,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-07-31T06:59:29.276Z",
-      "id": "B_tmn1xHcX8"
+      "timestamp": "2026-08-05T06:57:30.063Z",
+      "id": "d-e_AHv3li0"
     },
     {
       "userId": "user_123",
@@ -3205,8 +3446,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-07-31T06:59:31.517Z",
-      "id": "4XFB368OwIk"
+      "timestamp": "2026-08-05T06:57:31.876Z",
+      "id": "ZpuIaj6c-LI"
     },
     {
       "userId": "user_123",
@@ -3214,8 +3455,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-08-03T05:34:16.777Z",
-      "id": "RmNsF4lpsQw"
+      "timestamp": "2026-08-05T07:16:57.184Z",
+      "id": "hmqG3oCbWxI"
     },
     {
       "userId": "user_123",
@@ -3223,8 +3464,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-08-03T05:34:18.052Z",
-      "id": "YmXbF_bLaCA"
+      "timestamp": "2026-08-05T07:16:58.100Z",
+      "id": "y5ANgD3Hfss"
     },
     {
       "userId": "user_123",
@@ -3232,8 +3473,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "started",
-      "timestamp": "2026-08-03T06:01:43.929Z",
-      "id": "4qb-cJuhBK8"
+      "timestamp": "2026-08-05T08:59:50.880Z",
+      "id": "HY7aY6SzcvM"
     },
     {
       "userId": "user_123",
@@ -3241,8 +3482,8 @@
       "step": 1,
       "totalSteps": 12,
       "status": "skipped",
-      "timestamp": "2026-08-03T06:01:45.051Z",
-      "id": "g_euhOo45-o"
+      "timestamp": "2026-08-05T08:59:52.014Z",
+      "id": "CSYv7IZ0MRk"
     }
   ],
   "activities": {
@@ -3260,7 +3501,8 @@
           "Rahul Kumar (RM)",
           "Sarah Jenkins"
         ],
-        "location": "Thrissur Main Branch"
+        "location": "Thrissur Main Branch",
+        "status": "scheduled"
       },
       {
         "id": 2,
@@ -3273,7 +3515,8 @@
         "assignedUsers": [
           "Rahul Kumar (RM)"
         ],
-        "location": "N/A"
+        "location": "N/A",
+        "status": "completed"
       },
       {
         "id": 3,
@@ -3286,7 +3529,8 @@
         "assignedUsers": [
           "Rahul Kumar (RM)"
         ],
-        "location": "N/A"
+        "location": "N/A",
+        "status": "canceled"
       },
       {
         "id": 4,
@@ -3299,7 +3543,8 @@
         "assignedUsers": [
           "Sarah Jenkins"
         ],
-        "location": "Global Media Trade Hall"
+        "location": "Global Media Trade Hall",
+        "status": "rescheduled"
       },
       {
         "id": 5,
@@ -3312,7 +3557,8 @@
         "assignedUsers": [
           "Rahul Kumar (RM)"
         ],
-        "location": "N/A"
+        "location": "N/A",
+        "status": "overdue"
       },
       {
         "id": 6,
@@ -3326,7 +3572,8 @@
           "Priya Sharma",
           "Amit Patel (Agent)"
         ],
-        "location": "Zoom Video Call"
+        "location": "Zoom Video Call",
+        "status": "scheduled"
       },
       {
         "id": 7,
@@ -3339,7 +3586,8 @@
         "assignedUsers": [
           "System Scheduler"
         ],
-        "location": "N/A"
+        "location": "N/A",
+        "status": "scheduled"
       },
       {
         "id": 8,
@@ -3352,7 +3600,8 @@
         "assignedUsers": [
           "Rahul Kumar (RM)"
         ],
-        "location": "Conference Room 2"
+        "location": "Conference Room 2",
+        "status": "completed"
       },
       {
         "id": 9,
@@ -3365,7 +3614,8 @@
         "assignedUsers": [
           "Sarah Jenkins"
         ],
-        "location": "N/A"
+        "location": "N/A",
+        "status": "completed"
       },
       {
         "id": 10,
@@ -3378,7 +3628,8 @@
         "assignedUsers": [
           "Sarah Jenkins"
         ],
-        "location": "N/A"
+        "location": "N/A",
+        "status": "completed"
       },
       {
         "id": 11,
@@ -3391,7 +3642,8 @@
         "assignedUsers": [
           "Priya Sharma"
         ],
-        "location": "N/A"
+        "location": "N/A",
+        "status": "completed"
       },
       {
         "id": 12,
@@ -3404,7 +3656,8 @@
         "assignedUsers": [
           "Amit Patel (Agent)"
         ],
-        "location": "Customer Site"
+        "location": "Customer Site",
+        "status": "completed"
       },
       {
         "id": 13,
@@ -3417,7 +3670,8 @@
         "assignedUsers": [
           "Amit Patel (Agent)"
         ],
-        "location": "Customer Home Office"
+        "location": "Customer Home Office",
+        "status": "completed"
       },
       {
         "id": 14,
@@ -3430,7 +3684,8 @@
         "assignedUsers": [
           "System Dialer"
         ],
-        "location": "N/A"
+        "location": "N/A",
+        "status": "completed"
       }
     ]
   },

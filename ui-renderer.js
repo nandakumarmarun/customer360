@@ -122,9 +122,9 @@
 
       const $headerCenter = $('.header-center');
       $headerCenter.empty();
-      
+
       let stats = [];
-      
+
       // Support dynamic arbitrary header stats if provided as an object
       if (data.headerStats && typeof data.headerStats === 'object') {
         for (const [key, val] of Object.entries(data.headerStats)) {
@@ -156,7 +156,7 @@
       $('.profile-cid').text(data.cid);
 
       // Simple dot + label status indicator
-      const isActive = (data.customerStatus || data.status || '').toLowerCase() === 'active';
+      const isActive = (data.status).toLowerCase() === 'active';
       const $statusEl = $('#profile-status-pill');
       $statusEl
         .removeClass('active suspended')
@@ -182,7 +182,7 @@
       } else if (tierVal === 'prime') {
         $tierBadge.html('★ PRIME').show();
         $sidebarCrown.hide();
-        $avatarCrown.show();
+        $avatarCrown.hide();
       } else {
         $tierBadge.hide();
         $sidebarCrown.hide();
@@ -192,6 +192,24 @@
       // Trade Finance badge — shown only when tradeFinanceEnabled is true
       const $tradeBadge = $('#cb-trade-badge');
       data.tradeFinanceEnabled ? $tradeBadge.show() : $tradeBadge.hide();
+
+      // Dynamic spacing adjustment based on badge presence
+      const $badgeRow = $('#customer-badge-row');
+      const $storiesRow = $('.stories-row');
+      const hasTier = (tierVal === 'prime platinum' || tierVal === 'prime');
+      const hasTrade = !!data.tradeFinanceEnabled;
+
+      if (hasTier || hasTrade) {
+        $badgeRow.css({
+          'display': 'inline-flex',
+          'margin-top': '4px',
+          'margin-bottom': '8px'
+        }).show();
+        $storiesRow.css('margin-top', '12px');
+      } else {
+        $badgeRow.hide();
+        $storiesRow.css('margin-top', '0px');
+      }
 
       // Rating badge
       $('.profile-tier .rating-badge').text(`★ ${data.rating || 'A+'}`);
@@ -252,7 +270,7 @@
         $alertTicker.empty();
 
         const spansHtml = data.alerts.map(alert => `<span style="margin-right: 60px;">🔔 ${escapeHtml(alert)}</span>`).join('');
-        
+
         $alertTicker.html(`
           <marquee class="ticker-content" scrollamount="2" scrolldelay="10" onmouseover="this.stop();" onmouseout="this.start();" style="width: 100%;">
             ${spansHtml}
@@ -263,15 +281,16 @@
       // 7. Dynamic Notifications Panel
       const $notifList = $('#notif-list');
       const $notifCount = $('#notif-count-badge');
-      const $notifDot = $('.notif-dot');
-      
+      const $notifBadge = $('.notif-count');
+
       if ($notifList.length) {
         $notifList.empty();
         const alerts = data.alerts || [];
         $notifCount.text(alerts.length);
-        
+
         if (alerts.length > 0) {
-          $notifDot.show();
+          // Show count badge on the bell with the real number
+          $notifBadge.text(alerts.length > 99 ? '99+' : alerts.length).show();
           alerts.forEach(alertText => {
             const parsed = parseAlert(alertText);
             const cardHtml = `
@@ -289,7 +308,7 @@
             $notifList.append(cardHtml);
           });
         } else {
-          $notifDot.hide();
+          $notifBadge.hide();
           $notifList.html('<div class="notif-empty-state">No Alerts Available</div>');
         }
       }
@@ -334,7 +353,7 @@
           const isCheck = valStr.startsWith('✔');
           const checkClass = isCheck ? 'check' : '';
           const cleanVal = isCheck ? valStr.substring(1).trim() : valStr;
-          
+
           // Apply scroll logic for long text on small cards
           const isScrollable = cleanVal.length > 80;
           const scrollStyle = isScrollable ? 'max-height: 60px; overflow-y: auto; padding-right: 4px; display: block; white-space: pre-wrap; word-break: break-word;' : '';

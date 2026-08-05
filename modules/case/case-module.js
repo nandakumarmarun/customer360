@@ -581,25 +581,36 @@
       $header.empty();
 
       const headerHtml = `
-        <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 15px;">
-          <button class="qm-back-btn" title="Back to Profile">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <div class="qm-header-avatar" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); border: 1px solid var(--border); box-shadow: 0 0 10px var(--glow-shadow); font-size: 22px;">⚖️</div>
-          <div class="qm-header-titles" style="display: flex; flex-direction: column;">
-            <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin: 0; text-transform: uppercase; font-family: 'Outfit', sans-serif;">CASE INFORMATION</h2>
-            <p class="qm-header-subtitle" style="font-size: 13px; color: var(--muted); margin-top: 2px; font-weight: 400; margin-bottom: 0;">Customer complaints and service requests</p>
+        <div class="qm-header-main-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 15px;">
+            <button class="qm-back-btn" title="Back to Profile">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6" class="arrow-chevron" />
+              </svg>
+              <span>Go Back</span>
+            </button>
+            <div class="qm-header-avatar" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); border: 1px solid var(--border); box-shadow: 0 0 10px var(--glow-shadow); font-size: 22px;">⚖️</div>
+            <div class="qm-header-titles" style="display: flex; flex-direction: column;">
+              <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin: 0; text-transform: uppercase; font-family: 'Outfit', sans-serif;">CASE INFORMATION</h2>
+              <p class="qm-header-subtitle" style="font-size: 13px; color: var(--muted); margin-top: 2px; font-weight: 400; margin-bottom: 0;">Customer complaints and service requests</p>
+            </div>
           </div>
-        </div>
-        <div class="qm-header-actions" style="display: flex; align-items: center; gap: 8px;">
-          <button class="qm-action-btn" id="refresh-cases-btn">🔄 Refresh</button>
-          <button class="qm-action-btn" id="create-case-btn">⚖️ Create Case</button>
-          <button class="qm-action-btn" id="create-complaint-btn">⚠️ Create Complaint</button>
+          <div class="qm-header-actions" style="display: flex; align-items: center; gap: 8px;">
+            <button class="qm-action-btn" id="refresh-cases-btn">🔄 Refresh</button>
+            <button class="qm-action-btn" id="create-case-btn">⚖️ Create Case</button>
+            <button class="qm-action-btn" id="create-complaint-btn">⚠️ Create Complaint</button>
+          </div>
         </div>
       `;
       $header.append(headerHtml);
+
+      $("#qm-breadcrumbs-bar").removeClass("hidden").html(`
+        <div class="qm-header-breadcrumbs">
+          <a href="#" class="qm-breadcrumb-link" data-action="home">Profile</a>
+          <span class="qm-breadcrumb-separator">/</span>
+          <span class="qm-breadcrumb-current">Cases</span>
+        </div>
+      `);
 
       // Bind refresh handler
       $("#refresh-cases-btn").on("click", function () {
@@ -689,7 +700,7 @@
             dataList = response;
           }
 
-          allCases = (dataList || []).filter(c => c.customer === cid);
+          allCases = dataList;
           initCasesLayout();
         },
         function (errorMessage) {
@@ -859,19 +870,19 @@
   function getStatusBadgeStyle(status) {
     const s = (status || "").trim();
     if (!s) return "";
-    
+
     // Hash function
     let hash = 0;
     for (let i = 0; i < s.length; i++) {
       hash = s.charCodeAt(i) + ((hash << 5) - hash);
     }
-    
+
     // Map to a hue (0 - 360)
     const hue = Math.abs(hash) % 360;
-    
+
     // Check if we are in light mode
     const isLightMode = document.documentElement.classList.contains("light-mode") || document.body.classList.contains("light-mode");
-    
+
     if (isLightMode) {
       const bg = `hsl(${hue}, 85%, 96%)`;
       const color = `hsl(${hue}, 80%, 30%)`;

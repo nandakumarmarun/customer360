@@ -37,26 +37,26 @@
   // Resolve image source dynamically (supports URL, base64, raw bytes)
   function resolveImageSrc(image) {
     if (!image) return '';
-    
+
     // If image is a string directly
     if (typeof image === 'string') {
       const trimmed = image.trim();
-      const isPathOrUrl = trimmed.startsWith('http') || 
-                          trimmed.startsWith('data:') || 
-                          trimmed.startsWith('/') || 
-                          trimmed.startsWith('.') ||
-                          /\.(png|jpe?g|gif|svg|webp|bmp)(?:\?.*)?$/i.test(trimmed);
+      const isPathOrUrl = trimmed.startsWith('http') ||
+        trimmed.startsWith('data:') ||
+        trimmed.startsWith('/') ||
+        trimmed.startsWith('.') ||
+        /\.(png|jpe?g|gif|svg|webp|bmp)(?:\?.*)?$/i.test(trimmed);
       if (isPathOrUrl) {
         return trimmed;
       }
       return 'data:image/png;base64,' + trimmed;
     }
-    
+
     // If image is a Blob or File
     if (image instanceof Blob || image instanceof File) {
       return URL.createObjectURL(image);
     }
-    
+
     // If image is an Array or Array-like
     if (Array.isArray(image)) {
       try {
@@ -66,7 +66,7 @@
         return '';
       }
     }
-    
+
     if (image.buffer || image.byteLength) { // TypedArray/ArrayBuffer
       try {
         return 'data:image/png;base64,' + arrayBufferToBase64(image);
@@ -75,7 +75,7 @@
         return '';
       }
     }
-    
+
     // If image is an object
     if (typeof image === 'object') {
       const srcVal = image.href || image.base64 || image.data || image.bytes;
@@ -83,7 +83,7 @@
         return resolveImageSrc(srcVal);
       }
     }
-    
+
     return '';
   }
 
@@ -118,20 +118,31 @@
       $header.empty();
 
       const headerHtml = `
-        <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 12px;">
-          <button class="qm-back-btn" title="Back to Profile">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <div class="qm-header-avatar" style="width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); border: 1px solid var(--border); box-shadow: 0 0 15px var(--glow-shadow-weak); font-size: 18px;">📊</div>
-          <div class="qm-header-titles" style="display: flex; flex-direction: column; gap: 2px;">
-            <h2 id="qm-title" style="font-size: 18px !important; font-weight: 800 !important; letter-spacing: 0.5px !important; margin: 0 !important; background: linear-gradient(135deg, #fff, var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PORTFOLIO HOLDINGS</h2>
-            <p class="qm-header-subtitle" style="font-size: 11px; color: var(--muted); margin: 0;">Explorer tree and accounts detail summary</p>
+        <div class="qm-header-main-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 15px;">
+            <button class="qm-back-btn" title="Back to Profile">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6" class="arrow-chevron" />
+              </svg>
+              <span>Go Back</span>
+            </button>
+            <div class="qm-header-avatar" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); border: 1px solid var(--border); box-shadow: 0 0 10px var(--glow-shadow); font-size: 22px;">📊</div>
+            <div class="qm-header-titles" style="display: flex; flex-direction: column;">
+              <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin: 0; text-transform: uppercase; font-family: 'Outfit', sans-serif;">PORTFOLIO HOLDINGS</h2>
+              <p class="qm-header-subtitle" style="font-size: 13px; color: var(--muted); margin-top: 2px; font-weight: 400; margin-bottom: 0;">Explorer tree and accounts detail summary</p>
+            </div>
           </div>
         </div>
       `;
       $header.append(headerHtml);
+
+      $("#qm-breadcrumbs-bar").removeClass("hidden").html(`
+        <div class="qm-header-breadcrumbs">
+          <a href="#" class="qm-breadcrumb-link" data-action="home">Profile</a>
+          <span class="qm-breadcrumb-separator">/</span>
+          <span class="qm-breadcrumb-current">Holdings</span>
+        </div>
+      `);
       headerRestored = false;
     }
   }
@@ -351,7 +362,7 @@
           function (response) {
             if (window.UIRenderer) window.UIRenderer.hideLoader($contentArea);
             categoryData = response;
-            
+
             // Set first tab as active
             activeTabId = categoryCfg.tabs && categoryCfg.tabs.length > 0 ? categoryCfg.tabs[0].id : "";
             initLayout();
@@ -491,7 +502,6 @@
 
               let accounts = Array.isArray(response) ? response : [];
               // Filter locally just in case
-              accounts = accounts.filter(acc => acc[custKey] === currentCustomerId);
               activeTabAccounts = accounts;
               renderAccounts(accounts);
             },
@@ -543,7 +553,7 @@
         const msg = searchInputVal.trim()
           ? "No accounts match your search query."
           : "No accounts available under this holdings category.";
-        
+
         $list.html(`
           <div style="text-align: center; padding: 30px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;">
             <img src="${animPath}" style="width: 180px; height: 180px; margin-bottom: 16px;" alt="Empty State Animation" />
@@ -749,7 +759,7 @@
                 let cardsHtml = '<div style="display: flex; flex-direction: column; gap: 12px; padding: 4px;">';
                 cards.forEach(card => {
                   let cardFieldsHtml = '';
-                  
+
                   // Render card image inside a cell of the detail fields grid
                   if (card.image) {
                     const imgTag = renderCardImage(card.image);
@@ -772,7 +782,7 @@
                       const valStr = String(v);
                       const icon = getLocalFieldIcon(k);
                       const isFullWidth = valStr.length > 20 || k.toLowerCase().includes("address") || k.toLowerCase().includes("details") || k.toLowerCase().includes("remarks");
-                      
+
                       cardFieldsHtml += `
                         <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="padding: 10px; border-bottom: 1px solid var(--border);">
                           <div class="df-info">
@@ -895,4 +905,14 @@
       subtree: true
     });
   });
+
+  function escapeHtml(str) {
+    if (typeof str !== 'string') return str;
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
 })();

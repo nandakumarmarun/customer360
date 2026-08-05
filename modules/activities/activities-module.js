@@ -333,19 +333,53 @@
       gap: 3px;
     }
 
-    .act-overdue-badge {
+    .act-status-badge {
       font-size: 8px;
       font-weight: 700;
-      color: var(--accent2, #ff4444);
       text-transform: uppercase;
       letter-spacing: 1px;
-      background: rgba(255, 68, 68, 0.12);
-      border: 1px solid rgba(255, 68, 68, 0.2);
-      padding: 1px 5px;
-      border-radius: 3px;
+      padding: 2px 6px;
+      border-radius: 4px;
       width: fit-content;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
       font-family: inherit;
+      display: inline-block;
+    }
+
+    .act-status-badge.completed {
+      color: #34d399;
+      background: rgba(52, 211, 153, 0.12);
+      border: 1px solid rgba(52, 211, 153, 0.2);
+    }
+
+    .act-status-badge.canceled, .act-status-badge.cancelled {
+      color: #f87171;
+      background: rgba(248, 113, 113, 0.12);
+      border: 1px solid rgba(248, 113, 113, 0.2);
+    }
+
+    .act-status-badge.scheduled {
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .act-status-badge.rescheduled {
+      color: #fb923c;
+      background: rgba(251, 146, 60, 0.12);
+      border: 1px solid rgba(251, 146, 60, 0.2);
+    }
+
+    .act-status-badge.overdue {
+      color: #f87171;
+      background: rgba(248, 113, 113, 0.12);
+      border: 1px solid rgba(248, 113, 113, 0.2);
+    }
+
+    .act-status-badge:not(.completed):not(.canceled):not(.cancelled):not(.scheduled):not(.rescheduled):not(.overdue) {
+      color: #9ca3af;
+      background: rgba(156, 163, 175, 0.12);
+      border: 1px solid rgba(156, 163, 175, 0.2);
     }
 
     .act-item-title {
@@ -429,6 +463,32 @@
       0% { opacity: 0.6; }
       50% { opacity: 0.3; }
       100% { opacity: 0.6; }
+    }
+
+    .act-users-badges-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .act-user-badge {
+      font-size: 10px;
+      color: var(--text);
+      background: var(--glass2);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .activities-timeline-item:hover .act-user-badge {
+      border-color: rgba(108, 99, 255, 0.4);
+      background: rgba(108, 99, 255, 0.1);
     }
   `;
 
@@ -531,7 +591,7 @@
             }
 
             // Filter by active customer ID in-memory (handles both 'customer' and 'customerId' mappings)
-            allActivities = (dataList || []).filter(act => act.customer === cid || act.customerId === cid);
+            allActivities = dataList;
 
             renderTimeline();
           },
@@ -809,8 +869,8 @@
 
       // 1. Overdue Status Filter
       if (filterOverdueOnly) {
-        const isPast = itemDate < now;
-        if (!isPast) return false;
+        const isOverdue = (item.status && item.status.toLowerCase() === 'overdue');
+        if (!isOverdue) return false;
       }
 
       // 2. Type Filter
@@ -981,9 +1041,9 @@
         totalItemsRendered++;
         const typeCfg = config.TYPES[item.type] || config.DEFAULT_TYPE;
 
-        // Determine if overdue: date is in past
-        const dateIsOverdue = item.parsedDate < now;
-        const dateClass = dateIsOverdue ? "act-item-date overdue" : "act-item-date";
+        // Determine status and overdue conditions based on backend status field
+        const isOverdue = (item.status && item.status.toLowerCase() === 'overdue');
+        const dateClass = isOverdue ? "act-item-date overdue" : "act-item-date";
 
         // Human readable display date
         let displayDate = item.date;
@@ -1010,24 +1070,30 @@
         const lastClass = isLastItem ? "last-item" : "";
 
         const assignedUsers = item.assignedUsers || [];
+        const statusBadge = item.status ? `<span class="act-status-badge ${item.status.toLowerCase()}">${escapeHtml(item.status)}</span>` : "";
+
         const $itemHtml = $(`
           <div class="activities-timeline-item ${lastClass}" style="cursor: pointer;">
             <div class="act-item-icon-wrapper">
               <div class="act-item-icon ${typeCfg.colorClass}">${typeCfg.icon}</div>
             </div>
             <div class="act-item-details">
-              ${dateIsOverdue ? `<span class="act-overdue-badge">Overdue</span>` : ""}
+              ${statusBadge}
               <span class="act-item-title">${escapeHtml(item.title)}</span>
               <span class="act-item-subtitle">${escapeHtml(item.subtitle)}</span>
+              ${(assignedUsers && assignedUsers.length > 0) ? `
+                <div class="act-users-badges-container">
+                  ${assignedUsers.map(user => `
+                    <span class="act-user-badge">
+                      👤 ${escapeHtml(user)}
+                    </span>
+                  `).join('')}
+                </div>
+              ` : ""}
             </div>
             <div class="act-right-controls" style="display: flex; align-items: center; gap: 15px;">
               <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center;">
                 <span class="${dateClass}">${displayDate}</span>
-                ${(assignedUsers && assignedUsers.length > 0) ? `
-                  <span class="act-assigned-users" style="font-size: 10px; color: var(--muted); font-weight: 600; text-align: right; background: var(--glass2); padding: 2px 8px; border-radius: 12px; border: 1px solid var(--border); margin-top: 4px; display: inline-flex; align-items: center; gap: 3px;">
-                    👥 ${assignedUsers.join(', ')}
-                  </span>
-                ` : ""}
               </div>
               <span class="act-arrow">▶</span>
             </div>
@@ -1241,33 +1307,44 @@
       $header.empty();
 
       const headerHtml = `
-        <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 15px;">
-          <button class="qm-back-btn" title="Back to Profile">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <div class="qm-header-avatar" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); border: 1px solid var(--border); box-shadow: 0 0 10px var(--glow-shadow); font-size: 22px;">📅</div>
-          <div class="qm-header-titles" style="display: flex; flex-direction: column;">
-            <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin: 0; text-transform: uppercase; font-family: 'Outfit', sans-serif;">ACTIVITIES</h2>
-            <p class="qm-header-subtitle" style="font-size: 13px; color: var(--muted); margin-top: 2px; font-weight: 400; margin-bottom: 0;">Customer interaction records and appointments</p>
+        <div class="qm-header-main-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 15px;">
+            <button class="qm-back-btn" title="Back to Profile">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6" class="arrow-chevron" />
+              </svg>
+              <span>Go Back</span>
+            </button>
+            <div class="qm-header-avatar" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); border: 1px solid var(--border); box-shadow: 0 0 10px var(--glow-shadow); font-size: 22px;">📅</div>
+            <div class="qm-header-titles" style="display: flex; flex-direction: column;">
+              <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin: 0; text-transform: uppercase; font-family: 'Outfit', sans-serif;">ACTIVITIES</h2>
+              <p class="qm-header-subtitle" style="font-size: 13px; color: var(--muted); margin-top: 2px; font-weight: 400; margin-bottom: 0;">Customer interaction records and appointments</p>
+            </div>
           </div>
-        </div>
-        <div class="qm-header-actions" style="display: flex; align-items: center; gap: 12px; font-size: 12px;">
-          <button class="qm-text-action-btn" id="toggle-filters-btn" style="background:none; border:none; color:var(--accent2); cursor:pointer; font-weight:600; font-family:inherit; outline:none; font-size:12px;">🔍 Filters</button>
-          <span style="color: var(--border);">|</span>
-          <button class="qm-text-action-btn" id="goto-today-btn" style="background:none; border:none; color:var(--accent2); cursor:pointer; font-weight:600; font-family:inherit; outline:none; font-size:12px; display:flex; align-items:center; gap:4px;">📍 Today</button>
-          <span style="color: var(--border);">|</span>
-          <button class="qm-text-action-btn" id="refresh-activities-btn" style="background:none; border:none; color:var(--accent2); cursor:pointer; font-weight:600; font-family:inherit; outline:none; font-size:12px;">Refresh</button>
-          <span style="color: var(--border);">|</span>
-          <button class="qm-text-action-btn" id="expand-all-btn" style="background:none; border:none; color:var(--accent2); cursor:pointer; font-weight:600; font-family:inherit; outline:none; font-size:12px;">Expand All</button>
-          <span style="color: var(--border);">|</span>
-          <button class="qm-text-action-btn" id="collapse-all-btn" style="background:none; border:none; color:var(--accent2); cursor:pointer; font-weight:600; font-family:inherit; outline:none; font-size:12px;">Collapse All</button>
-          <span style="color: var(--border);">|</span>
-          <button class="qm-action-btn" id="create-appointment-btn" style="padding: 5px 12px; font-size: 11px;">📅 Create Appointment</button>
+          <div class="qm-header-actions" style="display: flex; align-items: center; gap: 12px; font-size: 12px;">
+            <button class="qm-text-action-btn" id="toggle-filters-btn" style="background:none; border:none; color:var(--accent2); cursor:pointer; font-weight:600; font-family:inherit; outline:none; font-size:12px;">🔍 Filters</button>
+            <span style="color: var(--border);">|</span>
+            <button class="qm-text-action-btn" id="goto-today-btn" style="background:none; border:none; color:var(--accent2); cursor:pointer; font-weight:600; font-family:inherit; outline:none; font-size:12px; display:flex; align-items:center; gap:4px;">📍 Today</button>
+            <span style="color: var(--border);">|</span>
+            <button class="qm-text-action-btn" id="refresh-activities-btn" style="background:none; border:none; color:var(--accent2); cursor:pointer; font-weight:600; font-family:inherit; outline:none; font-size:12px;">Refresh</button>
+            <span style="color: var(--border);">|</span>
+            <button class="qm-text-action-btn" id="expand-all-btn" style="background:none; border:none; color:var(--accent2); cursor:pointer; font-weight:600; font-family:inherit; outline:none; font-size:12px;">Expand All</button>
+            <span style="color: var(--border);">|</span>
+            <button class="qm-text-action-btn" id="collapse-all-btn" style="background:none; border:none; color:var(--accent2); cursor:pointer; font-weight:600; font-family:inherit; outline:none; font-size:12px;">Collapse All</button>
+            <span style="color: var(--border);">|</span>
+            <button class="qm-action-btn" id="create-appointment-btn" style="padding: 5px 12px; font-size: 11px;">📅 Create Appointment</button>
+          </div>
         </div>
       `;
       $header.append(headerHtml);
+
+      $("#qm-breadcrumbs-bar").removeClass("hidden").html(`
+        <div class="qm-header-breadcrumbs">
+          <a href="#" class="qm-breadcrumb-link" data-action="home">Profile</a>
+          <span class="qm-breadcrumb-separator">/</span>
+          <span class="qm-breadcrumb-current">Activities</span>
+        </div>
+      `);
 
       // Bind header actions
       $("#toggle-filters-btn").on("click", function () {

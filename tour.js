@@ -55,29 +55,47 @@ class DashboardTour {
   /* ── Initialisation ───────────────────────────────────────────────── */
 
   init() {
+    this.fetchTourSteps(false, (success) => {
+      if (success) {
+        this.checkAutoStart();
+      }
+    });
+    this.initMenu();
+  }
+
+  fetchTourSteps(fromMenu = false, callback = null) {
     if (window.ApiService) {
-      const endpoint = window.API_CONFIG &&
-                       window.API_CONFIG.ENDPOINTS &&
-                       window.API_CONFIG.ENDPOINTS.TOUR;
+      let endpoint = window.API_CONFIG &&
+                     window.API_CONFIG.ENDPOINTS &&
+                     window.API_CONFIG.ENDPOINTS.TOUR;
+      if (!endpoint) {
+        if (callback) callback(false);
+        return;
+      }
+
+      if (fromMenu) {
+        const prefix = endpoint.includes('?') ? '&' : '?';
+        endpoint += `${prefix}manual=true`;
+      }
+
       window.ApiService.get(
         endpoint,
         (response) => {
-          // Only proceed if the API returns a non-empty array of steps
           if (response && Array.isArray(response) && response.length > 0) {
             this.steps = response;
             this.isReady = true;
-            this.checkAutoStart();
+            if (callback) callback(true);
+          } else {
+            if (callback) callback(false);
           }
-          // If empty array or invalid format — silently do nothing, tour won't show
         },
         () => {
-          // API error — silently do nothing, tour won't show
+          if (callback) callback(false);
         }
       );
+    } else {
+      if (callback) callback(false);
     }
-    // If ApiService not available — silently do nothing
-
-    this.initMenu();
   }
 
   checkAutoStart() {
@@ -115,7 +133,13 @@ class DashboardTour {
     if (startTourBtn) {
       startTourBtn.addEventListener('click', () => {
         dropdown.classList.remove('show');
-        this.startTour();
+        this.fetchTourSteps(true, (success) => {
+          if (success) {
+            this.startTour();
+          } else {
+            console.warn('[Tour] Could not start tour: no steps available.');
+          }
+        });
       });
     }
   }
