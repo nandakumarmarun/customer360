@@ -93,6 +93,10 @@
           // 1. Render sidebar / header summary
           if (response.summary) {
             window.currentCustomerSummary = response.summary;
+            const pan = response.summary.panNumber || response.summary.pan || response.summary.panNo || response.summary.taxId;
+            if (pan && window.ParamsData) {
+              window.ParamsData.set('panNumber', pan);
+            }
             window.UIRenderer.renderSummary(response.summary);
           }
 

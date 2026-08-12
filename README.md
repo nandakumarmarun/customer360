@@ -143,3 +143,24 @@ The guided walkthrough tour (`tour.js`) now successfully records user interactio
   - We mapped the `TOUR_PROGRESS` key to `"/tourProgress"` in the global endpoints dictionary.
   - We initialized the `"tourProgress": []` table in [db.json](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/db.json).
   - Now, whenever a user goes through the tour steps or clicks "Skip", json-server automatically stores their progress logs in the database.
+
+---
+
+## 6. Zero-Code Dynamic Parameter System (Holdings Module)
+
+All categories and tabs in `window.HOLDING_CONFIG` ([config.js](file:///c:/Users/Lenovo/Desktop/works/customer%20360/customer360/config.js)) support 100% dynamic API parameters without modifying `holding.js`:
+
+```javascript
+// 1. Single parameter (e.g. panNumber)
+{ id: "mutualFunds", endpoint: "/mutualFunds", paramKey: "panNumber" }
+
+// 2. Multiple parameters
+{ id: "customTab", endpoint: "/custom", params: ["customerId", "panNumber"] }
+
+// 3. Custom Query Parameter Aliasing
+{ id: "customTab2", endpoint: "/custom2", params: { pan: "panNumber", cid: "customerId" } }
+
+// 4. Default fallback
+// If no params/paramKey is declared, defaults automatically to customerId: currentCustomerId
+```
+

@@ -110,11 +110,93 @@
     });
   }
 
+  /**
+   * Dynamically resolves API parameters from config options.
+   * Supports:
+   * 1. Single string: `paramKey: "panNumber"` or `params: "panNumber"`
+   * 2. Array of strings (multiple params): `params: ["customerId", "panNumber"]`
+   * 3. Key-Value mapping object: `params: { pan: "panNumber", id: "customerId" }`
+   *    (where the object key is the request param name sent to the API, and the value is the ParamsData store key or static value)
+   * 4. Function: `params: () => ({ ... })`
+   * 5. Default fallback: `{ [fName("customerId")]: currentCustomerId }`
+   */
+  function resolveConfigParams(configObj, defaultKey) {
+    const params = {};
+    if (!configObj) {
+      const defKey = defaultKey || fName("customerId");
+      params[defKey] = currentCustomerId;
+      return params;
+    }
+
+    // Check if custom params are explicitly defined in any standard config property
+    const rawParams = configObj.params !== undefined ? configObj.params :
+      (configObj.queryParams !== undefined ? configObj.queryParams :
+        (configObj.paramKey !== undefined ? configObj.paramKey :
+          (configObj.paramKeys !== undefined ? configObj.paramKeys : null)));
+
+    if (typeof rawParams === "function") {
+      return rawParams() || {};
+    }
+
+    if (Array.isArray(rawParams)) {
+      // e.g. ["customerId", "panNumber"] or ["panNumber"]
+      rawParams.forEach(function (pKey) {
+        const apiKey = fName(pKey) || pKey;
+        const val = (window.ParamsData && window.ParamsData.get)
+          ? window.ParamsData.get(pKey)
+          : (window.ParamsData ? window.ParamsData[pKey] : null);
+        if (val !== undefined && val !== null) {
+          params[apiKey] = val;
+        } else if (pKey === "customerId" && currentCustomerId) {
+          params[apiKey] = currentCustomerId;
+        }
+      });
+      return params;
+    }
+
+    if (typeof rawParams === "object" && rawParams !== null) {
+      // e.g. { pan: "panNumber", id: "customerId" }
+      Object.keys(rawParams).forEach(function (reqKey) {
+        const storeKey = rawParams[reqKey];
+        let val = (window.ParamsData && window.ParamsData.get)
+          ? window.ParamsData.get(storeKey)
+          : (window.ParamsData ? window.ParamsData[storeKey] : null);
+        if (val === undefined || val === null) {
+          if (storeKey === "customerId" && currentCustomerId) {
+            val = currentCustomerId;
+          } else {
+            val = storeKey;
+          }
+        }
+        params[reqKey] = val;
+      });
+      return params;
+    }
+
+    if (typeof rawParams === "string" && rawParams.trim() !== "") {
+      // Single key e.g. "panNumber" or "customerId"
+      const apiKey = fName(rawParams) || rawParams;
+      const val = (window.ParamsData && window.ParamsData.get)
+        ? window.ParamsData.get(rawParams)
+        : (window.ParamsData ? window.ParamsData[rawParams] : null);
+      params[apiKey] = (val !== undefined && val !== null) ? val : (rawParams === "customerId" ? currentCustomerId : val);
+      return params;
+    }
+
+    // Default fallback: customerId
+    const defKey = defaultKey ? (fName(defaultKey) || defaultKey) : fName("customerId");
+    params[defKey] = currentCustomerId;
+    return params;
+  }
+
+  // Expose helper globally for modular reusability
+  window.resolveConfigParams = resolveConfigParams;
+
   // ── CUSTOM HEADER RENDERING ──
   function renderHoldingsHeader() {
     const $header = $(".qm-header-inline");
     if (!$header.length || !$header.hasClass("holdings-active")) {
-      $header.removeClass("leads-active cases-active activities-active").addClass("holdings-active");
+      $header.removeClass("leads-active cases-active activities-active mandates-active").addClass("holdings-active");
       $header.empty();
 
       const headerHtml = `
@@ -153,7 +235,19 @@
     if ($header.length && $header.hasClass("holdings-active")) {
       $header.removeClass("holdings-active");
       $header.empty();
-      $header.append(`<h2 id="qm-title">${title}</h2>`);
+      $header.append(`
+        <div class="qm-header-main-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 15px;">
+            <button class="qm-back-btn" title="Back to Profile">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6" class="arrow-chevron" />
+              </svg>
+              <span>Go Back</span>
+            </button>
+            <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); margin: 0;">${title}</h2>
+          </div>
+        </div>
+      `);
       headerRestored = true;
     }
   }
@@ -192,14 +286,8 @@
         function (response) {
           if (window.UIRenderer) window.UIRenderer.hideLoader("#qm-content");
 
-          // Find the customer's holdings record
-          let record = null;
-          const custKey = fName("customerId");
-          if (Array.isArray(response)) {
-            record = response.find(h => h[custKey] === currentCustomerId || h.id === currentCustomerId);
-          } else if (response && (response[custKey] === currentCustomerId || response.id === currentCustomerId)) {
-            record = response;
-          }
+          // Directly use the returned holdings data
+          let record = Array.isArray(response) ? (response[0] || null) : response;
 
           if (record) {
             holdingsData = record;
@@ -351,9 +439,7 @@
         $contentArea.html("<div style='text-align:center; padding: 40px;'>Loading Portfolio Items...</div>");
       }
 
-      const custKey = fName("customerId");
-      const params = {};
-      params[custKey] = currentCustomerId;
+      const params = resolveConfigParams(categoryCfg);
 
       if (window.ApiService) {
         window.ApiService.get(
@@ -382,18 +468,109 @@
       initLayout();
     }
 
+    function updateHeaderSummary(tabId, accountsList) {
+      const $modelInfo = $(".model-info");
+      if (!$modelInfo.length) return;
+
+      $modelInfo.find(".header-summary-inline").remove();
+
+      // Dynamic renderer for summary items
+      const renderDynamicSummaryItems = (items) => {
+        $modelInfo.find(".header-summary-inline").remove();
+        if (!items || !items.length) return;
+
+        const itemsHtml = items.map(item => `
+          <div class="summary-inline-item">
+            ${item.isStatus ? '<span class="status-dot"></span>' : ''}
+            <span class="label" style="${item.isStatus ? 'margin-left: 2px;' : ''}">${escapeHtml(item.label)}:</span>
+            <span class="value ${item.isGreen ? 'green' : ''}">${escapeHtml(item.value)}</span>
+          </div>
+        `).join("");
+
+        $modelInfo.append(`<div class="header-summary-inline">${itemsHtml}</div>`);
+      };
+
+      // Fetch summary from API endpoint if configured
+      const summaryEndpoint = activeTab ? activeTab.summaryEndpoint : null;
+      const summaryConfig = activeTab ? { params: activeTab.summaryParams || activeTab.params || activeTab.paramKey || activeTab.paramKeys } : null;
+      const apiParams = resolveConfigParams(summaryConfig);
+
+      if (summaryEndpoint && window.ApiService) {
+        window.ApiService.get(
+          summaryEndpoint,
+          apiParams,
+          function (response) {
+            const dataItem = Array.isArray(response)
+              ? (response[0] || null)
+              : response;
+
+            if (dataItem && typeof dataItem === 'object') {
+              const summaryItems = [];
+              const ignoredKeys = ["id", "customerId", "customer", "panNumber", "pan", "taxId"];
+
+              // Support nested summaryStats or flat key-value pairs directly from backend response
+              const statsSource = (dataItem.summaryStats && typeof dataItem.summaryStats === 'object')
+                ? dataItem.summaryStats
+                : dataItem;
+
+              Object.entries(statsSource).forEach(([rawKey, val]) => {
+                if (ignoredKeys.includes(rawKey) || val === null || val === undefined || typeof val === 'object') {
+                  return;
+                }
+
+                // If backend passes readable string e.g. "Total Balance", use as-is; otherwise format camelCase/snake_case
+                let label = rawKey;
+                if (!rawKey.includes(' ')) {
+                  label = rawKey
+                    .replace(/_/g, ' ')
+                    .replace(/([A-Z])/g, ' $1')
+                    .trim();
+                  label = label.charAt(0).toUpperCase() + label.slice(1);
+                }
+
+                const valStr = String(val);
+                const isStatus = label.toLowerCase().includes('status') || label.toLowerCase().includes('standing');
+                const isGreen = valStr.includes('₹') || valStr.includes('$') || valStr.includes('€') || valStr.includes('%') || label.toLowerCase().includes('value') || label.toLowerCase().includes('balance');
+
+                summaryItems.push({
+                  label: label,
+                  value: valStr,
+                  isGreen: isGreen,
+                  isStatus: isStatus
+                });
+              });
+
+              if (summaryItems.length > 0) {
+                renderDynamicSummaryItems(summaryItems);
+              } else {
+                $modelInfo.find(".header-summary-inline").remove();
+              }
+            } else {
+              $modelInfo.find(".header-summary-inline").remove();
+            }
+          },
+          function (error) {
+            console.warn("Could not fetch holdings summary from API:", error);
+            $modelInfo.find(".header-summary-inline").remove();
+          }
+        );
+      } else {
+        $modelInfo.find(".header-summary-inline").remove();
+      }
+    }
+
     function initLayout() {
       // 5. Build holdings explorer UI structure
       const explorerHtml = `
-        <div class="holdings-explorer-layout" style="display: flex; flex-direction: column; height: 100%; gap: 16px; min-height: 0; flex: 1;">
+        <div class="holdings-explorer-layout">
           <!-- SUB-CATEGORY TABS BAR (At the top of the detail view area) -->
           <div class="modal-tabs-bar" id="explorer-tabs-container" style="display: flex; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 12px; background: transparent; flex-shrink: 0; flex-wrap: wrap;">
             <!-- subcategory tabs dynamically generated -->
           </div>
 
-          <div class="explorer-body" style="display: flex; gap: 20px; overflow: hidden; height: 100%; flex: 1; min-height: 0;">
+          <div class="explorer-body">
             <!-- LEFT SECTION: Account List -->
-            <div class="explorer-left" style="width: 45%; display: flex; flex-direction: column; gap: 16px; border-right: 1px solid var(--border); padding-right: 20px; height: 100%; overflow: hidden;">
+            <div class="explorer-left">
               <div class="explorer-search-wrap" style="position: relative; flex-shrink: 0;">
                 <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px;">🔍</span>
                 <input type="text" id="explorer-search-input" style="width: 100%; padding: 8px 12px 8px 34px; border-radius: 20px; background: var(--glass2); border: 1px solid var(--border); color: var(--text); outline: none; font-size: 13px;" placeholder="Search accounts..." />
@@ -403,7 +580,7 @@
               </div>
             </div>
             <!-- RIGHT SECTION: Account Detail Preview -->
-            <div class="explorer-right" id="explorer-detail-preview" style="width: 55%; display: flex; flex-direction: column; height: 100%; padding-left: 10px; overflow: hidden;">
+            <div class="explorer-right" id="explorer-detail-preview">
               <!-- Dynamic details preview -->
             </div>
           </div>
@@ -425,6 +602,8 @@
       // Back button cleanups and restore styles on exit
       $("#back-to-dash").off("click.holdings").on("click.holdings", function () {
         $contentArea.css({ "overflow-y": "", "height": "", "display": "", "flex-direction": "" });
+        $(".model-info").find(".header-summary-inline").remove();
+        $("#detail-model-title").text(categoryCfg.title);
       });
     }
 
@@ -479,19 +658,18 @@
 
         if (Array.isArray(categoryData)) {
           accounts = categoryData.filter(acc => {
-            const customerMatch = acc[custKey] === currentCustomerId;
             const typeMatch = String(acc.type || acc.matchType || acc.category || "").toLowerCase() === tabMatchType.toLowerCase();
-            return customerMatch && typeMatch;
+            return typeMatch;
           });
         }
 
         activeTabAccounts = accounts;
         renderAccounts(accounts);
+        updateHeaderSummary(activeTabId, accounts);
       } else {
         // Tab-Specific Endpoint Flow (Original Logic)
         const endpoint = activeTab.endpoint;
-        const params = {};
-        params[custKey] = currentCustomerId;
+        const params = resolveConfigParams(activeTab);
 
         if (window.ApiService) {
           window.ApiService.get(
@@ -501,9 +679,9 @@
               if (window.UIRenderer) window.UIRenderer.hideLoader("#explorer-account-list");
 
               let accounts = Array.isArray(response) ? response : [];
-              // Filter locally just in case
               activeTabAccounts = accounts;
               renderAccounts(accounts);
+              updateHeaderSummary(activeTabId, accounts);
             },
             function (error) {
               if (window.UIRenderer) window.UIRenderer.hideLoader("#explorer-account-list");
@@ -883,27 +1061,33 @@
     }
   }
 
-  // ── MUTATIONOBSERVER ON QUICK MODULE TITLES ──
+  // ── MUTATIONOBSERVER & EVENT LISTENER ON QUICK MODULE TITLES ──
   $(function () {
-    const $titleNode = $("#qm-title");
-    if (!$titleNode.length) return;
+    function checkTitle(text) {
+      if (!text) return;
+      if (text === "Holding Module" || text === "Holding") {
+        loadHoldings();
+      } else if (text !== "" && !text.includes("PORTFOLIO HOLDINGS") && !headerRestored) {
+        restoreDefaultHeader(text);
+      }
+    }
 
-    const observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function (mutation) {
-        const text = $titleNode.text().trim();
-        if (text === "Holding Module") {
-          loadHoldings();
-        } else if (text !== "" && !text.includes("PORTFOLIO HOLDINGS") && !headerRestored) {
-          restoreDefaultHeader(text);
-        }
+    $(document).on("quickModuleChanged", function (e, title) {
+      checkTitle(title);
+    });
+
+    const headerNode = document.querySelector(".qm-header-inline");
+    if (headerNode) {
+      const observer = new MutationObserver(function () {
+        const text = $("#qm-title").text().trim();
+        checkTitle(text);
       });
-    });
-
-    observer.observe($titleNode[0], {
-      childList: true,
-      characterData: true,
-      subtree: true
-    });
+      observer.observe(headerNode, {
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
+    }
   });
 
   function escapeHtml(str) {

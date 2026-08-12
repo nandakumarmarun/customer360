@@ -55,17 +55,26 @@ window.API_CONFIG = {
     HOLDINGS_GOLD: "/goldAccounts",
     HOLDINGS_LOCKER: "/locker",
     HOLDINGS_INVESTMENTS: "/investments",
+    HOLDINGS_INSURANCE: "/insurance",
+    HOLDINGS_MUTUAL_FUNDS: "/mutualFunds",
+    HOLDINGS_CASA_SUMMARY: "/casaSummary",
+    HOLDINGS_DEPOSITS_SUMMARY: "/depositsSummary",
+    HOLDINGS_INSURANCE_SUMMARY: "/insuranceSummary",
+    HOLDINGS_MUTUAL_FUNDS_SUMMARY: "/mutualFundsSummary",
     THEME: "/theme",
     SEARCH: "/search",
     ACTIVITIES: "/activities",
     ACTIVITY_TYPES: "/activityTypes",
     ACTIVITY_CONFIG: "/activitiesConfig",
-    QUICK_MODULES: "/quickModules"
+    QUICK_MODULES: "/quickModules",
+    MANDATES: "/mandates",
+    MANDATE_ACCOUNTS: "/mandateAccounts"
   },
 
   // Grouped Query Parameter keys used by backend APIs
   PARAMS: {
     CUSTOMER_ID: "customerId", // parameter key used to identify customers (in query string and API requests)
+    PAN_NUMBER: "panNumber",
     INPUT_TYPE: "inputType",
     INPUT_VALUE: "inputValue"
   },
@@ -73,6 +82,7 @@ window.API_CONFIG = {
   // Generic global layout field mapping
   FIELD_MAPPING: {
     customerId: "customer",
+    panNumber: "panNumber",
     title: "name",
     subtitle: "number",
     value: "amount",
@@ -134,6 +144,7 @@ window.HOLDING_CONFIG = [
     icon: "🏦",
     apiKey: "assets",
     endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_ASSETS,
+    paramKey: "customerId",
     tabs: [
       { id: "loans", title: "Asset Loans", icon: "🏠", matchType: "Asset Loans", detailsEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOANS_DETAILS, detailsParams: { idKey: "loanId" } },
       { id: "goldLoans", title: "Gold Loans", icon: "🪙", matchType: "Gold Loans", detailsEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_GOLD_LOANS_DETAILS, detailsParams: { idKey: "goldLoanId" } }
@@ -151,13 +162,15 @@ window.HOLDING_CONFIG = [
         icon: "💳",
         matchType: "CASA Details",
         endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_CASA,
+        summaryEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_CASA_SUMMARY,
+        paramKey: "customerId",
         rightTabs: [
           { id: "details", title: "Details" },
           { id: "debitCards", title: "Debit Cards", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_CASA_CARDS, paramKey: "casaId", idField: "number" }
         ]
       },
-      { id: "casaDeposits", title: "DEPOSITS", icon: "📈", matchType: "CASA Deposits", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_DEPOSITS },
-      { id: "goldAccounts", title: "Gold Accounts", icon: "🪙", matchType: "Gold Accounts", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_GOLD }
+      { id: "casaDeposits", title: "DEPOSITS", icon: "📈", matchType: "CASA Deposits", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_DEPOSITS, summaryEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_DEPOSITS_SUMMARY, paramKey: "customerId" },
+      { id: "goldAccounts", title: "Gold Accounts", icon: "🪙", matchType: "Gold Accounts", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_GOLD, paramKey: "customerId" }
     ]
   },
   {
@@ -166,7 +179,7 @@ window.HOLDING_CONFIG = [
     icon: "🌟",
     apiKey: "valueAdded",
     tabs: [
-      { id: "locker", title: "Locker", icon: "🔒", matchType: "Locker Details", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOCKER }
+      { id: "locker", title: "Locker", icon: "🔒", matchType: "Locker Details", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOCKER, paramKey: "customerId" }
     ]
   },
   {
@@ -175,9 +188,39 @@ window.HOLDING_CONFIG = [
     icon: "📊",
     apiKey: "investments",
     tabs: [
-      { id: "investmentDetails", title: "Investments", icon: "📈", matchType: "Investment Details", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_INVESTMENTS }
+      { id: "insurance", title: "Insurance", icon: "🛡️", matchType: "Insurance Details", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_INSURANCE, summaryEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_INSURANCE_SUMMARY, paramKey: "customerId" },
+      { id: "mutualFunds", title: "Mutual Funds", icon: "🎯", matchType: "Mutual Funds", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_MUTUAL_FUNDS, summaryEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_MUTUAL_FUNDS_SUMMARY, paramKey: "panNumber" }
     ]
   }
+];
+
+
+
+/**
+ * Configurable tab configuration for the Mandates module.
+ */
+window.MANDATES_CONFIG = {
+  tabs: [
+    { id: "debit-card", title: "Debit Card", icon: "💳", categories: ["Direct Debit", "E-Mandates"] },
+    { id: "upi", title: "UPI", icon: "📱", categories: ["UPI"], locked: true },
+    { id: "nach", title: "NACH", icon: "🏦", categories: ["NACH"], locked: true }
+  ]
+};
+
+/**
+ * Quick Access Modules configuration fallback.
+ */
+window.QUICK_MODULES_CONFIG = [
+  { id: "case", title: "Case", icon: "⚖️", enabled: true, order: 1 },
+  { id: "lead", title: "Lead", icon: "🎯", enabled: true, order: 2 },
+  { id: "activities", title: "Activities", icon: "📅", enabled: true, order: 3 },
+  { id: "contacts", title: "Related Contacts", icon: "👥", enabled: true, order: 4 },
+  { id: "group", title: "Group", icon: "🏢", enabled: true, order: 5 },
+  { id: "attachments", title: "Attachments", icon: "📎", enabled: true, order: 6 },
+  { id: "holding", title: "Holding", icon: "📊", enabled: true, order: 7 },
+  { id: "mandates", title: "Mandates", icon: "📋", enabled: true, order: 8 },
+  { id: "profiler", title: "Profiler", icon: "👤", enabled: true, order: 9 },
+  { id: "offers", title: "Offers", icon: "🏷️", enabled: true, order: 10 }
 ];
 
 

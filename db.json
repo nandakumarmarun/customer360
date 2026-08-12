@@ -18,6 +18,7 @@
       "initials": "A",
       "subtitle": "Cooporate Customer Insight",
       "cid": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
       "status": "Active",
       "tier": "prime platinum",
       "accountsCount": "12",
@@ -986,7 +987,7 @@
       "customer": "NX-4829-0055",
       "type": "CASA Details",
       "name": "Premium Checking Account",
-      "number": "5D0100123456789",
+      "number": "5D0200987654321",
       "amount": "$45,000",
       "status": "Active",
       "fullDetails": {
@@ -1142,7 +1143,7 @@
     }
   ],
   "theme": {
-    "mode": "light",
+    "mode": "dark",
     "color": "red"
   },
   "quickModules": [
@@ -1168,39 +1169,53 @@
       "order": 3
     },
     {
-      "id": "holding",
-      "title": "Holding",
-      "icon": "📊",
+      "id": "contacts",
+      "title": "Related Contacts",
+      "icon": "👥",
       "enabled": true,
       "order": 4
     },
     {
-      "id": "",
-      "title": "Coming Soon",
-      "icon": "⏳",
+      "id": "group",
+      "title": "Group",
+      "icon": "🏢",
       "enabled": true,
       "order": 5
     },
     {
-      "id": "",
-      "title": "Coming Soon",
-      "icon": "⏳",
+      "id": "attachments",
+      "title": "Attachments",
+      "icon": "📎",
       "enabled": true,
       "order": 6
     },
     {
-      "id": "",
-      "title": "Coming Soon",
-      "icon": "⏳",
+      "id": "holding",
+      "title": "Holding",
+      "icon": "📊",
       "enabled": true,
-      "order": 6
+      "order": 7
     },
     {
-      "id": "",
-      "title": "Coming Soon",
-      "icon": "⏳",
+      "id": "mandates",
+      "title": "Mandates",
+      "icon": "📋",
       "enabled": true,
-      "order": 6
+      "order": 8
+    },
+    {
+      "id": "profiler",
+      "title": "Profiler",
+      "icon": "👤",
+      "enabled": true,
+      "order": 9
+    },
+    {
+      "id": "offers",
+      "title": "Offers",
+      "icon": "🏷️",
+      "enabled": true,
+      "order": 10
     }
   ],
   "loanDetails": [
@@ -3484,6 +3499,1320 @@
       "status": "skipped",
       "timestamp": "2026-08-05T08:59:52.014Z",
       "id": "CSYv7IZ0MRk"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T04:40:29.361Z",
+      "id": "pHWOnKce4ak"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T04:40:30.094Z",
+      "id": "udlMXALJPH0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T04:53:14.220Z",
+      "id": "HGVtak_25p4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T04:53:16.185Z",
+      "id": "BfWuH0jrzz4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T04:55:14.820Z",
+      "id": "XYajzb9k4z0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T04:55:15.755Z",
+      "id": "UG0r27hijw0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T05:03:38.734Z",
+      "id": "skwMi4D3iFM"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T05:03:39.881Z",
+      "id": "9Emez-1PQRU"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T05:56:40.542Z",
+      "id": "IT7QSphcmFc"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T05:56:41.315Z",
+      "id": "qAjsATGx-ko"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:01:46.684Z",
+      "id": "NOKQAvgJVrs"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:01:48.127Z",
+      "id": "QUtV2S0wRWs"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:03:37.969Z",
+      "id": "eXIo3CPvRdA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:03:38.796Z",
+      "id": "G9aFr-ve9eM"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:08:10.758Z",
+      "id": "HIEgR5K4Owc"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:08:14.450Z",
+      "id": "IXqzHLgp7y8"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:11:25.797Z",
+      "id": "k3XnHzB9QU4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:11:27.303Z",
+      "id": "BicUXmg6ZTo"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:11:42.089Z",
+      "id": "mVvsRCiEnW4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:11:42.839Z",
+      "id": "hwSvHTD5vik"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:13:29.013Z",
+      "id": "239CPvbQ7og"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:13:30.386Z",
+      "id": "UmSFXDoa8I4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:17:31.263Z",
+      "id": "o1FJMV9UHog"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:17:32.513Z",
+      "id": "vn0n4pSao5Y"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:20:34.915Z",
+      "id": "gPOKq1GDJ4U"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:20:36.414Z",
+      "id": "KjETLyD2eo8"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:20:54.720Z",
+      "id": "ND8HRQQvAO4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:20:55.546Z",
+      "id": "yiPHO7ltZW4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:22:29.653Z",
+      "id": "R-en9T0qRlw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:22:30.401Z",
+      "id": "RdWpLgW0f6Y"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:26:44.534Z",
+      "id": "1PEsigtOJK0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:26:45.667Z",
+      "id": "UJXZIJSlLn0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:28:46.667Z",
+      "id": "SVTjle7zOHw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:28:47.644Z",
+      "id": "M03y2AV6pNU"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:30:04.120Z",
+      "id": "PPGjqiLVSvY"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:30:04.978Z",
+      "id": "1p-dK-XxJPw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:32:55.034Z",
+      "id": "5YaFO3h2EJs"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:32:56.027Z",
+      "id": "a86M7PaC5tE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:34:02.163Z",
+      "id": "n2_WdlY-FWo"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:34:02.916Z",
+      "id": "14gGmbVPSxs"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:34:53.410Z",
+      "id": "qYzuPcwV7gw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:34:54.125Z",
+      "id": "GZXyFDq-aJA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T06:37:15.107Z",
+      "id": "ZvH9rS0mrx8"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T06:37:15.993Z",
+      "id": "aPHZTaSTLU8"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T07:09:24.248Z",
+      "id": "LWNz3mExxAA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T07:09:25.320Z",
+      "id": "4ejUfMa3wHI"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T07:12:30.073Z",
+      "id": "TGq_5fIb_k8"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T07:12:30.898Z",
+      "id": "pbjcRWm7nxA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T07:14:42.192Z",
+      "id": "gsAiXLsuAXw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T07:14:42.975Z",
+      "id": "YjZzantLHL4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T07:28:44.068Z",
+      "id": "rgHaLCMUcuQ"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T07:28:45.566Z",
+      "id": "-FL1rgF2kHs"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T07:29:34.713Z",
+      "id": "BFld93yxYAM"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T07:29:35.795Z",
+      "id": "NGjZRY1T6Uo"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T07:31:31.009Z",
+      "id": "W5U4CxNDq9w"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T07:31:31.934Z",
+      "id": "pkOaB_aXS7A"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T08:17:57.183Z",
+      "id": "9FeX7l8zq6E"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T08:18:05.360Z",
+      "id": "QoPWpjLNM6E"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T08:18:18.192Z",
+      "id": "p-k-reWMJIU"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T08:18:33.425Z",
+      "id": "GCfzq7njQa0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T08:18:34.457Z",
+      "id": "qt1iD7Inlx4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T08:19:22.548Z",
+      "id": "dMIV2hDs_po"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T08:19:23.914Z",
+      "id": "vPtSBs-iCQ4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T08:19:43.442Z",
+      "id": "4ZJlm9dZTa0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T08:19:44.242Z",
+      "id": "RmcpHGwhvzw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T08:21:59.928Z",
+      "id": "eJUazYTZyXc"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T08:22:36.900Z",
+      "id": "DPVK2qExZJg"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T08:27:50.479Z",
+      "id": "9l294ZpjqVE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T08:27:51.702Z",
+      "id": "I-1RdyGSOaw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T08:29:00.190Z",
+      "id": "8sGjnBIYDLI"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T08:29:03.111Z",
+      "id": "Fz-t61W56Mg"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T08:34:31.525Z",
+      "id": "csldZsQQUyU"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T08:34:32.418Z",
+      "id": "5PuUzvFgODg"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T08:35:36.938Z",
+      "id": "2uHcllnzZpY"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T08:35:38.092Z",
+      "id": "lSBOAJq8BIE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T08:36:31.154Z",
+      "id": "LJc1_lZ9KyY"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T08:36:31.963Z",
+      "id": "yz7emycmft0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T08:42:56.288Z",
+      "id": "o1-AcrA9-2c"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T08:42:57.522Z",
+      "id": "WW7DPxtHpjY"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T10:20:15.518Z",
+      "id": "G9X9LeGRpzw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T10:20:16.761Z",
+      "id": "nOMGhTkcxp0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T15:54:02.566Z",
+      "id": "gxMtT2q"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T15:54:03.591Z",
+      "id": "LvtVWzR"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T15:54:32.423Z",
+      "id": "nwazR7V"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T15:54:33.654Z",
+      "id": "Qq_vYa1"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T15:55:21.679Z",
+      "id": "95WsDEz"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T15:55:23.225Z",
+      "id": "oPf-fKr"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T16:07:46.065Z",
+      "id": "b1O5vqy"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T16:07:47.877Z",
+      "id": "INDqoC4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T16:25:00.810Z",
+      "id": "PrQTQej"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T16:25:02.337Z",
+      "id": "oeo8jIb"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T16:28:45.858Z",
+      "id": "44T-3eD"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-06T16:28:54.711Z",
+      "id": "xhaJu8r"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 2,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-06T16:28:56.033Z",
+      "id": "MoavyD0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 3,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-06T16:28:57.095Z",
+      "id": "HiNuaAA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 4,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-06T16:28:59.317Z",
+      "id": "TeVjDyn"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 5,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-06T16:29:00.519Z",
+      "id": "xLvdDL1"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 6,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-06T16:29:00.520Z",
+      "id": "d4iScRo"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 7,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-06T16:29:02.862Z",
+      "id": "ZcwcnNa"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 8,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-06T16:29:04.440Z",
+      "id": "5Dgv2UA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 9,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-06T16:29:07.295Z",
+      "id": "d7jwLFE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 10,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-06T16:29:08.895Z",
+      "id": "dzdSJhk"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 11,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-08-06T16:29:08.896Z",
+      "id": "MnbIw4B"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 12,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T16:29:10.361Z",
+      "id": "xW6CUNo"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T16:29:53.343Z",
+      "id": "CCf9pUZ"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T16:29:54.629Z",
+      "id": "8SnjULl"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T16:31:41.839Z",
+      "id": "MnpdsUv"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T16:31:45.408Z",
+      "id": "g2e6RoI"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T16:35:31.758Z",
+      "id": "P_1uV4-"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T16:35:32.778Z",
+      "id": "vWwfJQ0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T16:38:33.633Z",
+      "id": "OqgcYFg"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T16:38:34.687Z",
+      "id": "ZbpySno"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T16:50:49.203Z",
+      "id": "uhXLosE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T16:50:50.723Z",
+      "id": "GKeElsc"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T16:55:14.997Z",
+      "id": "JPoydr8"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T16:55:16.442Z",
+      "id": "V6JkYCH"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T17:00:39.937Z",
+      "id": "k1CA12o"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T17:00:41.862Z",
+      "id": "LhIZ4z7"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T17:01:23.885Z",
+      "id": "yTvEHde"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T17:01:24.989Z",
+      "id": "cCSxsBd"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T17:06:34.250Z",
+      "id": "UYDacjQ"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T17:08:17.607Z",
+      "id": "Z4v-bpV"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T17:13:51.704Z",
+      "id": "Qb7_kxE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T17:13:53.130Z",
+      "id": "370UdyE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T17:13:57.858Z",
+      "id": "hoD1FiF"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T17:14:00.425Z",
+      "id": "X0YRmW6"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T17:15:05.916Z",
+      "id": "KVmeV1c"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T17:15:07.573Z",
+      "id": "9NaK5Li"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T17:17:10.437Z",
+      "id": "PpB9AZf"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T17:17:11.601Z",
+      "id": "6ZAE7gd"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-06T17:18:02.311Z",
+      "id": "855c8i9"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-06T17:18:04.776Z",
+      "id": "mF0_dEC"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-10T09:46:01.223Z",
+      "id": "61_Zrm_"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-10T09:46:03.007Z",
+      "id": "6ATqYdk"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-11T05:18:03.174Z",
+      "id": "c7WrDou"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-11T05:18:29.841Z",
+      "id": "PKm7o12"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-12T04:22:19.984Z",
+      "id": "_dAkt8C"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-12T04:22:20.744Z",
+      "id": "juAbx4R"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-12T04:28:23.709Z",
+      "id": "sPo4Yi_"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-12T04:28:24.481Z",
+      "id": "9jfNpPd"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-12T05:23:35.579Z",
+      "id": "kr9eOiO"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-12T05:23:36.586Z",
+      "id": "Ox50cy9"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-12T05:39:28.226Z",
+      "id": "faRKM8F"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-12T05:39:29.574Z",
+      "id": "98e7AjI"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-12T05:39:38.839Z",
+      "id": "pa7zYzL"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-12T05:40:26.664Z",
+      "id": "_1KEvw_"
     }
   ],
   "activities": {
@@ -3759,5 +5088,387 @@
       "colorClass": "act-theme-gray"
     }
   },
-  "$schema": "./node_modules/json-server/schema.json"
+  "mandates": [
+    {
+      "id": "MND-1001",
+      "customerId": "NX-4829-0055",
+      "category": "Direct Debit",
+      "title": "Office Rent",
+      "status": "Active",
+      "amount": "₹1,50,000",
+      "frequency": "Monthly",
+      "account": "5D0100123456789",
+      "createdDate": "12-Jan-2026",
+      "expiryDate": "11-Jan-2028",
+      "vendor": "Metro Realty Corp",
+      "sections": [
+        {
+          "name": "Mandate Details",
+          "fields": {
+            "Mandate ID": "MND-1001",
+            "Linked Account": "CASA - 5D0100123456789",
+            "Recipient Vendor": "Metro Realty Corp",
+            "Mandate Channel": "NetBanking Auto-Debit",
+            "Mandate Type": "Recurring Direct Debit",
+            "Payment Purpose": "New York Office Space Rent"
+          }
+        },
+        {
+          "name": "Limits & Schedule",
+          "fields": {
+            "Transaction Limit": "₹1,50,000",
+            "Max Daily Limit": "₹3,00,000",
+            "Frequency": "Monthly",
+            "Next Due Date": "01-Sep-2026",
+            "Last Payment Date": "01-Aug-2026",
+            "Last Payment Amount": "₹1,50,000",
+            "Total Payments Done": "7 Payments (Total: ₹10,50,000)"
+          }
+        },
+        {
+          "name": "Compliance & Audit",
+          "fields": {
+            "Created Date": "12-Jan-2026",
+            "Expiry Date": "11-Jan-2028",
+            "Authorized By": "Sarah Jenkins (Auditor)",
+            "Mandate Status": "Active & Verified",
+            "Remarks": "Monthly direct debit for commercial space rent. Pre-approved under corporate budget."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MND-1002",
+      "customerId": "NX-4829-0055",
+      "category": "Direct Debit",
+      "title": "Electricity Utility",
+      "status": "Active",
+      "amount": "₹25,000",
+      "frequency": "Monthly",
+      "account": "5D0100123456789",
+      "createdDate": "15-Jan-2026",
+      "expiryDate": "Until Cancelled",
+      "vendor": "State Electricity Board",
+      "sections": [
+        {
+          "name": "Mandate Details",
+          "fields": {
+            "Mandate ID": "MND-1002",
+            "Linked Account": "CASA - 5D0100123456789",
+            "Recipient Vendor": "State Power & Electricity Board",
+            "Utility Account Num": "ELEC-8890214-NY",
+            "Mandate Type": "Variable Bill Sweep"
+          }
+        },
+        {
+          "name": "Limits & Schedule",
+          "fields": {
+            "Max Bill Limit": "₹25,000",
+            "Frequency": "Monthly (On Bill Gen)",
+            "Next Due Date": "15-Aug-2026",
+            "Last Payment Date": "15-Jul-2026",
+            "Last Payment Amount": "₹21,450",
+            "Total Payments Done": "12 Payments (Total: ₹2,58,900)"
+          }
+        },
+        {
+          "name": "Compliance & Audit",
+          "fields": {
+            "Created Date": "15-Jan-2026",
+            "Expiry Date": "Until Cancelled",
+            "Authorized By": "System Auto-Scheduler",
+            "Mandate Status": "Active & Verified",
+            "Remarks": "Sweeping debit mandate linked to state utility bill billing cycle."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MND-1003",
+      "customerId": "NX-4829-0055",
+      "category": "E-Mandates",
+      "title": "AWS Cloud Hosting",
+      "status": "Active",
+      "amount": "₹75,000",
+      "frequency": "Monthly",
+      "account": "5D0200987654321",
+      "createdDate": "20-May-2026",
+      "expiryDate": "19-May-2027",
+      "vendor": "Amazon Web Services",
+      "sections": [
+        {
+          "name": "Mandate Details",
+          "fields": {
+            "Mandate ID": "MND-1003",
+            "Linked Account": "CASA - 5D0200987654321",
+            "Card Reference": "Visa Signature Debit - 8921",
+            "AWS Account ID": "AWS-899-2311-002",
+            "Recipient Vendor": "Amazon Web Services Inc"
+          }
+        },
+        {
+          "name": "Limits & Schedule",
+          "fields": {
+            "Max Debit Limit": "₹75,000",
+            "Frequency": "Monthly",
+            "Next Due Date": "20-Aug-2026",
+            "Last Payment Date": "20-Jul-2026",
+            "Last Payment Amount": "₹68,400",
+            "Total Payments Done": "3 Payments (Total: ₹1,95,200)"
+          }
+        },
+        {
+          "name": "Compliance & Audit",
+          "fields": {
+            "Created Date": "20-May-2026",
+            "Expiry Date": "19-May-2027",
+            "Authorized By": "Priya Menon",
+            "Mandate Status": "Active",
+            "Remarks": "Digital e-mandate setup for development and staging environment hosting costs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MND-1004",
+      "customerId": "NX-4829-0055",
+      "category": "E-Mandates",
+      "title": "Adobe Creative Cloud",
+      "status": "Pending Approval",
+      "amount": "₹12,00,000",
+      "frequency": "Monthly",
+      "account": "5D0200987654321",
+      "createdDate": "01-Jul-2026",
+      "expiryDate": "Until Cancelled",
+      "vendor": "Adobe Systems",
+      "sections": [
+        {
+          "name": "Mandate Details",
+          "fields": {
+            "Mandate ID": "MND-1004",
+            "Linked Account": "CASA - 5D0200987654321",
+            "Card Reference": "Visa Signature Debit - 8921",
+            "Adobe Account ID": "ADOBE-CC-901-DESIGN",
+            "Recipient Vendor": "Adobe Systems India"
+          }
+        },
+        {
+          "name": "Limits & Schedule",
+          "fields": {
+            "Max Debit Limit": "₹12,000",
+            "Frequency": "Monthly",
+            "Billing Cycle": "Monthly Calendar",
+            "Next Due Date": "Pending Final Approval"
+          }
+        },
+        {
+          "name": "Compliance & Audit",
+          "fields": {
+            "Created Date": "01-Jul-2026",
+            "Expiry Date": "Until Cancelled",
+            "Authorized By": "Sarah Jenkins",
+            "Mandate Status": "Awaiting Final Board Consent",
+            "Remarks": "Corporate subscription plan for design team graphics licenses."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MND-1005",
+      "customerId": "NX-4829-0055",
+      "category": "Signing Authority",
+      "title": "Board Resolution 2026",
+      "status": "Active",
+      "amount": "₹10,00,000 (Singly)",
+      "frequency": "One-time",
+      "account": "N/A",
+      "createdDate": "05-Apr-2026",
+      "expiryDate": "04-Apr-2028",
+      "vendor": "N/A",
+      "sections": [
+        {
+          "name": "Signing Authority Details",
+          "fields": {
+            "Mandate ID": "MND-1005",
+            "Signing Authority": "Board Resolution 2026",
+            "Single Sign Limit": "₹10,00,000",
+            "Joint Sign Limit": "Above ₹10,00,000 (Requires two Directors)",
+            "Resolution Ref Num": "BR-2026-XYZ-01"
+          }
+        },
+        {
+          "name": "Compliance & Board Approval",
+          "fields": {
+            "Board Meeting Date": "02-Apr-2026",
+            "Effective Date": "05-Apr-2026",
+            "Expiry Date": "04-Apr-2028",
+            "Signatories Listed": "Daniel James Anderson, Priya Menon",
+            "Approval Level": "Level 2 Operational Signatory",
+            "Audit Log Ref": "AUD-BR-2026",
+            "Remarks": "Allows individual execution of operational transactions up to ₹10L."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MND-1006",
+      "customerId": "NX-4829-0055",
+      "category": "Signing Authority",
+      "title": "Joint Signing Authority",
+      "status": "Suspended",
+      "amount": "Unlimited (Jointly)",
+      "frequency": "Until Revoked",
+      "account": "N/A",
+      "createdDate": "20-May-2026",
+      "expiryDate": "Until Revoked",
+      "vendor": "N/A",
+      "sections": [
+        {
+          "name": "Signing Authority Details",
+          "fields": {
+            "Mandate ID": "MND-1006",
+            "Signing Authority": "Joint Signing Mandate",
+            "Single Sign Limit": "Not Authorized",
+            "Joint Sign Limit": "Unlimited (Any two Signatories)",
+            "Resolution Ref Num": "BR-909-2026"
+          }
+        },
+        {
+          "name": "Compliance & Board Approval",
+          "fields": {
+            "Effective Date": "20-May-2026",
+            "Suspended Date": "15-Jun-2026",
+            "Signatories Listed": "Daniel James Anderson, Priya Menon, Sarah Jenkins",
+            "Audit Log Ref": "AUD-JOINT-BR",
+            "Remarks": "Temporarily suspended pending revision of signatory members lists."
+          }
+        }
+      ]
+    }
+  ],
+  "mandateAccounts": [
+    "5D0100123456789",
+    "5D0200987654321"
+  ],
+  "$schema": "./node_modules/json-server/schema.json",
+  "insurance": [
+    {
+      "customer": "NX-4829-0055",
+      "customerId": "NX-4829-0055",
+      "type": "Insurance Details",
+      "name": "Keyman Life Insurance",
+      "number": "POL-992014",
+      "amount": "₹2,50,00,000",
+      "status": "Active",
+      "fullDetails": {
+        "title": "Insurance Details",
+        "hero": "shield.svg",
+        "tag": "Active",
+        "tagClass": "tag-green",
+        "sections": [
+          {
+            "name": "Policy Information",
+            "fields": {
+              "Policy Number": "POL-992014",
+              "Plan Name": "Keyman Term Life Plan",
+              "Insured Amount": "₹2,50,00,000",
+              "Premium Amount": "₹1,25,000 / Annually",
+              "Risk Class": "Standard Preferred"
+            }
+          },
+          {
+            "name": "Coverage Details",
+            "fields": {
+              "Maturity Date": "15-Aug-2045",
+              "Nominees Listed": "Sarah Jenkins (Managing Director)",
+              "Policy Status": "Premium Paid",
+              "Remarks": "Key employee coverage for corporate continuity plan."
+            }
+          }
+        ]
+      },
+      "id": "ins1"
+    }
+  ],
+  "mutualFunds": [
+    {
+      "customer": "NX-4829-0055",
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "type": "Mutual Funds",
+      "name": "Growth Mutual Fund",
+      "number": "MF-8012934",
+      "amount": "₹12,40,000",
+      "status": "Active",
+      "fullDetails": {
+        "title": "Mutual Funds",
+        "hero": "invest_hero.png",
+        "tag": "Active",
+        "tagClass": "tag-green",
+        "sections": [
+          {
+            "name": "Fund Information",
+            "fields": {
+              "Folio Number": "MF-8012934",
+              "Fund Name": "Growth Mutual Fund - Direct",
+              "Asset Class": "Equity - Large Cap",
+              "Current NAV": "₹124.50",
+              "Risk Profile": "High Risk"
+            }
+          },
+          {
+            "name": "Portfolio Value",
+            "fields": {
+              "Units Held": "9,959.839 Units",
+              "Invested Value": "₹10,00,000",
+              "Current Value": "₹12,40,000",
+              "Total Return": "+24.0% (₹2,40,000)"
+            }
+          }
+        ]
+      },
+      "id": "mf1"
+    }
+  ],
+  "casaSummary": [
+    {
+      "customer": "NX-4829-0055",
+      "customerId": "NX-4829-0055",
+      "totalValue": "₹1,85,000 + $45,000",
+      "count": "2 Accounts",
+      "status": "100% Secure",
+      "id": "casa-sum1"
+    }
+  ],
+  "depositsSummary": [
+    {
+      "customer": "NX-4829-0055",
+      "customerId": "NX-4829-0055",
+      "totalValue": "₹5,00,000",
+      "count": "1 Deposit",
+      "status": "100% Secure",
+      "id": "dep-sum1"
+    }
+  ],
+  "insuranceSummary": [
+    {
+      "customer": "NX-4829-0055",
+      "customerId": "NX-4829-0055",
+      "totalValue": "₹2,50,00,000",
+      "count": "1 Policy",
+      "status": "100% Secure",
+      "id": "ins-sum1"
+    }
+  ],
+  "mutualFundsSummary": [
+    {
+      "customer": "NX-4829-0055",
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "totalValue": "₹12,40,000",
+      "count": "1 Fund",
+      "status": "100% Secure",
+      "id": "mf-sum1"
+    }
+  ]
 }

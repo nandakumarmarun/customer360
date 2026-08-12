@@ -583,15 +583,26 @@
           function (response) {
             if (window.UIRenderer) window.UIRenderer.hideLoader("#qm-content");
 
-            let dataList = null;
+            let dataList = [];
             if (response && response.data) {
               dataList = response.data;
             } else if (Array.isArray(response)) {
               dataList = response;
             }
 
-            // Filter by active customer ID in-memory (handles both 'customer' and 'customerId' mappings)
-            allActivities = dataList;
+            if (dataList && Array.isArray(dataList)) {
+              const currentCid = (window.ParamsData && window.ParamsData.getCustomerId) ? window.ParamsData.getCustomerId() : cid;
+              if (currentCid) {
+                allActivities = dataList.filter(item => {
+                  const itemCid = item.customerId || item.customer;
+                  return !itemCid || String(itemCid).toLowerCase() === String(currentCid).toLowerCase();
+                });
+              } else {
+                allActivities = dataList;
+              }
+            } else {
+              allActivities = [];
+            }
 
             renderTimeline();
           },
@@ -1303,7 +1314,7 @@
   function renderActivitiesHeader() {
     const $header = $(".qm-header-inline");
     if (!$header.length || !$header.hasClass("activities-active")) {
-      $header.removeClass("cases-active leads-active holdings-active").addClass("activities-active");
+      $header.removeClass("cases-active leads-active holdings-active mandates-active").addClass("activities-active");
       $header.empty();
 
       const headerHtml = `
@@ -1392,12 +1403,24 @@
     if ($header.length && $header.hasClass("activities-active")) {
       $header.removeClass("activities-active");
       $header.empty();
-      $header.append(`<h2 id="qm-title">${title}</h2>`);
+      $header.append(`
+        <div class="qm-header-main-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 15px;">
+            <button class="qm-back-btn" title="Back to Profile">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6" class="arrow-chevron" />
+              </svg>
+              <span>Go Back</span>
+            </button>
+            <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); margin: 0;">${title}</h2>
+          </div>
+        </div>
+      `);
       headerRestored = true;
     }
   }
 
-  // ── MUTATIONOBSERVER ON QUICK ACCESS TITLE ──
+  // ── MUTATIONOBSERVER & EVENT LISTENER ON QUICK ACCESS TITLE ──
   $(function () {
     // Bind toggle section clicks via event delegation
     $(document).on("click", ".activities-section-header", function () {
@@ -1408,26 +1431,36 @@
       }
     });
 
-    const $titleNode = $("#qm-title");
-    if (!$titleNode.length) return;
-
-    const observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function () {
-        const text = $titleNode.text().trim();
-        if (text === "Activities Module") {
-          renderActivitiesHeader();
+    function checkTitle(text) {
+      if (!text) return;
+      const clean = text.toLowerCase().trim();
+      if (clean.includes("activit")) {
+        const wasActive = $(".qm-header-inline").hasClass("activities-active");
+        renderActivitiesHeader();
+        if (!wasActive || !$(".activities-container").length) {
           loadActivities();
-        } else if (text !== "" && !text.includes("ACTIVITIES") && !headerRestored) {
-          // Navigated to another quick access module
-          restoreDefaultHeader(text);
         }
-      });
+      } else if (text !== "" && !clean.includes("activit") && !headerRestored) {
+        // Navigated to another quick access module
+        restoreDefaultHeader(text);
+      }
+    }
+
+    $(document).on("quickModuleChanged", function (e, title) {
+      checkTitle(title);
     });
 
-    observer.observe($titleNode[0], {
-      childList: true,
-      characterData: true,
-      subtree: true
-    });
+    const headerNode = document.querySelector(".qm-header-inline");
+    if (headerNode) {
+      const observer = new MutationObserver(function () {
+        const text = $("#qm-title").text().trim();
+        checkTitle(text);
+      });
+      observer.observe(headerNode, {
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
+    }
   });
 })();

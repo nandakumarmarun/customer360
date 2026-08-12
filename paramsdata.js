@@ -6,7 +6,7 @@
 (function () {
   // Internal state store
   const store = {};
-  
+
   // Registry for reactive callback listeners
   const subscribers = {};
 
@@ -31,12 +31,15 @@
   // Define the Global Parameters Data object
   const ParamsData = {
     /**
-     * Retrieve a parameter value by key.
+     * Retrieve a parameter value by key (checks store first, then fallback to URL search query).
      * @param {string} key
      * @returns {*}
      */
     get: function (key) {
-      return store[key];
+      if (store[key] !== undefined && store[key] !== null) {
+        return store[key];
+      }
+      return getQueryParam(key) || null;
     },
 
     /**
@@ -48,6 +51,14 @@
     },
 
     /**
+     * Helper to retrieve active PAN number safely from store, URL parameter, or fallback default.
+     * @returns {string}
+     */
+    getPanNumber: function () {
+      return this.panNumber || getQueryParam('panNumber') || null;
+    },
+
+    /**
      * Set a parameter value and trigger any registered subscribers.
      * @param {string} key
      * @param {*} value
@@ -55,7 +66,7 @@
     set: function (key, value) {
       const oldValue = store[key];
       if (oldValue === value) return; // No change, skip updates
-      
+
       store[key] = value;
 
       // Trigger all callback functions registered for this key
@@ -104,6 +115,17 @@
     configurable: false
   });
 
+  Object.defineProperty(ParamsData, 'panNumber', {
+    get: function () {
+      return this.get('panNumber');
+    },
+    set: function (value) {
+      this.set('panNumber', value);
+    },
+    enumerable: true,
+    configurable: false
+  });
+
   Object.defineProperty(ParamsData, 'inputType', {
     get: function () {
       return this.get('inputType');
@@ -133,5 +155,10 @@
   const initialCustomerId = getQueryParam('customerId') || null;
   ParamsData.set('customerId', initialCustomerId);
 
-  console.log(`[ParamsData] Global storage initialized. Customer ID: ${initialCustomerId}`);
+  const initialPanNumber = getQueryParam('panNumber') || null;
+  if (initialPanNumber) {
+    ParamsData.set('panNumber', initialPanNumber);
+  }
+
+  console.log(`[ParamsData] Global storage initialized. Customer ID: ${initialCustomerId}, PAN: ${initialPanNumber}`);
 })();
