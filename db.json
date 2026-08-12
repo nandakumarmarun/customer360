@@ -1438,8 +1438,48 @@
         "Card Type": "Mastercard Business Debit",
         "Card Holder": "Arjun Menon",
         "Expiry Date": "03 / 2027",
-        "Daily ATM Limit": ",000",
-        "Daily POS Limit": ",000",
+        "Daily ATM Limit": "₹1,00,000",
+        "Daily POS Limit": "₹5,00,000",
+        "Status": "Active"
+      }
+    },
+    {
+      "id": "card4",
+      "customer": "NX-4829-0055",
+      "casaId": "5D0200987654321",
+      "title": "Visa Platinum Debit",
+      "subtitle": "Active — International",
+      "image": {
+        "href": "assets/png/card.png",
+        "alt": "Visa Platinum"
+      },
+      "fields": {
+        "Card Number": "4111-XXXX-XXXX-9944",
+        "Card Type": "Visa Platinum Debit",
+        "Card Holder": "Daniel J. Anderson",
+        "Expiry Date": "11 / 2028",
+        "Daily ATM Limit": "₹1,00,000",
+        "Daily POS Limit": "₹3,00,000",
+        "Status": "Active"
+      }
+    },
+    {
+      "id": "card5",
+      "customer": "NX-4829-0055",
+      "casaId": "5D0200987654321",
+      "title": "RuPay Select Corporate",
+      "subtitle": "Active — Domestic",
+      "image": {
+        "base64": "iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAALElEQVR42u3PMQEAAAgEIDfcP7S2mIGD5dIE2i9wECBAgAABAgQIECBAgAABbgX7C/l4X/X/AAAAAElFTkSuQmCC",
+        "alt": "RuPay Corporate Card"
+      },
+      "fields": {
+        "Card Number": "6521-XXXX-XXXX-1122",
+        "Card Type": "RuPay Select Corporate",
+        "Card Holder": "Daniel J. Anderson",
+        "Expiry Date": "05 / 2030",
+        "Daily ATM Limit": "₹50,000",
+        "Daily POS Limit": "₹2,50,000",
         "Status": "Active"
       }
     }
@@ -4813,6 +4853,42 @@
       "status": "skipped",
       "timestamp": "2026-08-12T05:40:26.664Z",
       "id": "_1KEvw_"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-12T06:09:42.065Z",
+      "id": "727n93H"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-12T06:09:42.948Z",
+      "id": "uIlXkvc"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-12T06:25:01.903Z",
+      "id": "9mpiH7X"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-12T06:25:03.964Z",
+      "id": "FRLoMxN"
     }
   ],
   "activities": {
