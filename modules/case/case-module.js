@@ -577,7 +577,7 @@
   function renderCasesHeader() {
     const $header = $(".qm-header-inline");
     if (!$header.length || !$header.hasClass("cases-active")) {
-      $header.removeClass("leads-active holdings-active activities-active mandates-active").addClass("cases-active");
+      $header.removeClass("leads-active holdings-active activities-active mandates-active cards-active").addClass("cases-active");
       $header.empty();
 
       const headerHtml = `

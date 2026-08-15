@@ -212,7 +212,7 @@
       }
 
       // Rating badge
-      $('.profile-tier .rating-badge').text(`★ ${data.rating || 'A+'}`);
+      $('.profile-tier .rating-badge').text(`★ ${data.rating}`);
 
       // Dynamic Profile Meta Badges
       $('.profile-tier .meta-badge-status').html(`<strong>${data.gender || '-'}</strong>`);

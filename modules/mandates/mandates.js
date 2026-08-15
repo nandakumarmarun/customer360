@@ -1,15 +1,15 @@
 /**
  * Customer 360 - Mandates Information Module
- * Uses the exact same CASA endpoints (`/casaDetails` and `/casaCards`) to display accounts & debit card details.
+ * Decoupled integration module for dynamic top-tabbed mandates explorer.
  */
 (function () {
   // ── APP STATE ──
-  let allAccounts = [];       // Loaded CASA accounts list for left sidebar ({ number, name, amount, status })
-  let accountCards = [];      // Loaded debit cards for the selected account
+  let allAccounts = [];       // Loaded CASA accounts list for left sidebar
+  let accountMandates = [];   // Loaded mandates for the selected account
   const configTabs = (window.MANDATES_CONFIG && window.MANDATES_CONFIG.tabs) || [
     { id: "debit-card", title: "Debit Card", icon: "💳", categories: ["Direct Debit", "E-Mandates"] },
-    { id: "upi", title: "UPI", icon: "📱", categories: ["UPI"], locked: true },
-    { id: "nach", title: "NACH", icon: "🏦", categories: ["NACH"], locked: true }
+    { id: "upi", title: "UPI", icon: "📱", categories: ["UPI"] },
+    { id: "nach", title: "NACH", icon: "🏦", categories: ["NACH"] }
   ];
   let activeTab = (configTabs.length > 0) ? configTabs[0].id : "debit-card";
   let selectedAccountId = null; // Currently selected account number (e.g. "5D0100123456789")
@@ -149,50 +149,65 @@
       width: 100%;
       flex: 1;
       min-height: 0;
-      box-sizing: border-box;
       overflow: hidden;
+      animation: mandatesFadeIn 0.4s ease;
+      box-sizing: border-box;
     }
 
-    /* Left Sidebar: Tree / Accounts Panel */
+    @keyframes mandatesFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     .mandates-tree-panel {
-      width: 270px;
-      min-width: 270px;
-      max-width: 270px;
+      width: 22%;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 10px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      background: var(--glass2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px;
+      padding: 6px;
       box-sizing: border-box;
-      height: 100%;
-      overflow: hidden;
+      gap: 8px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+      margin-bottom: 0;
     }
 
+    .mandates-details-panel {
+      width: 78%;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      padding: 10px 12px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+      position: relative;
+      margin-bottom: 0;
+    }
+
+    .mandates-tree-panel::-webkit-scrollbar, .mandates-details-panel::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .mandates-tree-panel::-webkit-scrollbar-thumb, .mandates-details-panel::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    /* Controls & Search */
     .tree-search-wrap {
       position: relative;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .tree-search-input {
-      width: 100%;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 6px 12px 6px 30px;
-      font-size: 11.5px;
-      color: var(--text);
-      outline: none;
-      transition: all 0.25s ease;
-      box-sizing: border-box;
-      font-family: inherit;
-    }
-
-    .tree-search-input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 8px var(--glow-shadow-weak);
+      flex-shrink: 0;
     }
 
     .tree-search-icon {
@@ -200,33 +215,42 @@
       left: 10px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 11px;
+      font-size: 12px;
       color: var(--muted);
       pointer-events: none;
     }
 
+    .tree-search-input {
+      width: 100%;
+      background: var(--glass2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--text);
+      padding: 6px 12px 6px 28px;
+      font-family: inherit;
+      font-size: 12px;
+      outline: none;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    .tree-search-input:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 8px var(--glow-shadow-weak);
+    }
+
+    /* Sidebar list item row */
     .mandates-list-container {
       display: flex;
       flex-direction: column;
       gap: 6px;
-      overflow-y: auto;
-      flex: 1;
-      padding-right: 2px;
-    }
-
-    .mandates-list-container::-webkit-scrollbar {
-      width: 4px;
-    }
-    .mandates-list-container::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 4px;
+      padding-bottom: 24px;
     }
 
     .mandates-list-item {
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
+      align-items: center;
+      justify-content: space-between;
       padding: 10px 12px;
       background: var(--glass2);
       border: 1px solid var(--border);
@@ -268,7 +292,7 @@
 
     .mandates-list-item-title {
       font-weight: 700;
-      font-size: 13px;
+      font-size: 13.5px;
       color: var(--text);
       font-family: 'Roboto Mono', monospace;
       letter-spacing: 0.5px;
@@ -283,28 +307,7 @@
       flex-shrink: 0;
     }
 
-    /* Right Column Details Panel */
-    .mandates-details-panel {
-      flex: 1;
-      background: var(--glass2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      box-sizing: border-box;
-      height: 100%;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .mandates-details-panel::-webkit-scrollbar {
-      width: 5px;
-    }
-    .mandates-details-panel::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 4px;
-    }
-
+    /* Details Panel Styling */
     .mandate-detail-empty {
       display: flex;
       flex-direction: column;
@@ -316,74 +319,176 @@
       gap: 10px;
     }
 
-    /* Card Details Sections - matching CASA in Holdings */
-    .detail-section-block {
-      background: var(--glass2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 12px;
-      box-sizing: border-box;
+    .mandate-detail-empty-icon {
+      font-size: 36px;
+      opacity: 0.5;
     }
 
-    .detail-fields-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      gap: 1px;
-    }
-
-    .detail-field-card {
-      background: var(--bg2);
-      padding: 10px 12px;
+    /* Stacked mandate view */
+    .mandates-stacked-container {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 16px;
+      padding-bottom: 30px;
+    }
+
+    .mandate-stacked-card {
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 16px;
+    }
+
+    .mandate-stacked-card:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .mandate-detail-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+
+    .mandate-detail-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .mandate-detail-title-wrap h2 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .light-mode .mandate-detail-title-wrap h2 {
+      background: linear-gradient(135deg, var(--text), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .mandate-detail-id {
+      font-family: monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    .mandate-section-block {
+      background: var(--glass2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
       box-sizing: border-box;
     }
 
-    .detail-field-card.full-width {
+    .mandate-section-block h3 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 4px;
+    }
+
+    .mandate-fields-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px;
+    }
+
+    .mandate-field-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      box-sizing: border-box;
+    }
+
+    .mandate-field-card.full-width {
       grid-column: 1 / -1;
     }
 
-    .df-label {
-      font-size: 11px;
+    .mandate-field-lbl {
+      font-size: 9px;
       color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-bottom: 2px;
+      text-transform: uppercase;
       font-weight: 600;
+      letter-spacing: 0.5px;
     }
 
-    .df-value {
-      font-size: 13px;
-      font-weight: 600;
+    .mandate-field-val {
+      font-size: 11.5px;
       color: var(--text);
+      font-weight: 700;
     }
 
-    .card-img-container {
-      width: 100%;
-      max-width: 100%;
-      height: 180px;
-      border-radius: 8px;
-      overflow: hidden;
-      display: flex;
+    /* Status Badges */
+    .status-badge {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      margin: 4px 0;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      min-width: 65px;
+      text-align: center;
     }
 
-    .card-img-container img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      border-radius: 6px;
+    .status-badge.active {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .status-badge.pending-approval {
+      background: rgba(245, 158, 11, 0.12);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+
+    .status-badge.suspended {
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+
+    /* Toast overlay */
+    .mandates-toast {
+      position: fixed;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      border: 1px solid var(--accent2);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 13px;
+      z-index: 9999;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .mandates-toast.show {
+      bottom: 24px;
     }
 
     @media (max-width: 900px) {
@@ -393,160 +498,115 @@
         flex: none !important;
       }
       .mandates-container {
-        flex-direction: column !important;
-        height: auto !important;
-        overflow: visible !important;
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+        flex: none;
+        min-height: 0;
       }
-      .mandates-tree-panel {
-        width: 100% !important;
-        min-width: 100% !important;
-        max-width: 100% !important;
-        height: 220px !important;
+      .mandates-tree-panel, .mandates-details-panel {
+        width: 100%;
+        height: auto;
+        max-height: 400px;
+        margin-bottom: 12px;
       }
-      .mandates-details-panel {
-        width: 100% !important;
-        height: auto !important;
-        overflow: visible !important;
+    }
+
+    @media (max-width: 480px) {
+      .mandates-tab-bar {
+        display: flex;
+        width: 100%;
       }
-      .detail-fields-grid {
-        grid-template-columns: 1fr !important;
+      .mandates-tab-btn {
+        flex: 1;
+        padding: 6px 4px;
+        font-size: 11px;
+        justify-content: center;
+        gap: 4px;
       }
     }
   `;
 
-  // Inject CSS dynamically into DOM
-  function injectMandatesStyles() {
-    if (!document.getElementById("mandates-dynamic-styles")) {
-      const styleEl = document.createElement("style");
-      styleEl.id = "mandates-dynamic-styles";
-      styleEl.textContent = mandatesStyles;
-      document.head.appendChild(styleEl);
+  // ── INJECT THE CSS ──
+  $(function () {
+    const $style = $("<style>").text(mandatesStyles);
+    $("head").append($style);
+  });
+
+  // ── TOAST NOTIFICATION UTILITY ──
+  function showToast(message) {
+    let $toast = $(".mandates-toast");
+    if (!$toast.length) {
+      $toast = $("<div class='mandates-toast'></div>");
+      $("body").append($toast);
     }
+    $toast.text(message);
+    $toast.addClass("show");
+    setTimeout(() => {
+      $toast.removeClass("show");
+    }, 2500);
   }
 
-  // ── HELPER: IMAGE RESOLUTION ──
-  function byteArrayToBase64(byteArray) {
-    let binary = '';
-    const bytes = new Uint8Array(byteArray);
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return window.btoa(binary);
-  }
-
-  function arrayBufferToBase64(buffer) {
-    let binary = '';
-    const bytes = new Uint8Array(buffer);
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return window.btoa(binary);
-  }
-
-  function resolveImageSrc(image) {
-    if (!image) return '';
-    if (typeof image === 'string') {
-      const trimmed = image.trim();
-      if (trimmed.startsWith('data:') || trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('assets/') || trimmed.startsWith('/') || trimmed.startsWith('./')) {
-        return trimmed;
-      }
-      return 'data:image/png;base64,' + trimmed;
-    }
-    if (image instanceof Blob || image instanceof File) {
-      return URL.createObjectURL(image);
-    }
-    if (Array.isArray(image)) {
-      try {
-        return 'data:image/png;base64,' + byteArrayToBase64(image);
-      } catch (e) {
-        return '';
-      }
-    }
-    if (image.buffer || image.byteLength) {
-      try {
-        return 'data:image/png;base64,' + arrayBufferToBase64(image);
-      } catch (e) {
-        return '';
-      }
-    }
-    if (typeof image === 'object') {
-      const srcVal = image.href || image.base64 || image.data || image.bytes;
-      if (srcVal) {
-        return resolveImageSrc(srcVal);
-      }
-    }
-    return '';
-  }
-
-  function renderCardImage(image) {
-    if (!image) return '';
-    const src = resolveImageSrc(image);
-    if (!src) return '';
-    const alt = (image && image.alt) || 'Card image';
-    return `<img class="card-image" src="${src}" alt="${alt}" loading="lazy" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 6px;" />`;
-  }
-
-  function getLocalFieldIcon(label) {
-    const l = (label || "").toLowerCase();
-    if (l.includes("phone") || l.includes("mobile") || l.includes("tel")) return "📞";
-    if (l.includes("email") || l.includes("mail")) return "✉️";
-    if (l.includes("address") || l.includes("street") || l.includes("city") || l.includes("state") || l.includes("country")) return "📍";
-    if (l.includes("holder") || l.includes("name") || l.includes("user")) return "👤";
-    if (l.includes("card") || l.includes("type")) return "💳";
-    if (l.includes("status")) return "🏷️";
-    if (l.includes("limit") || l.includes("atm") || l.includes("pos") || l.includes("amount") || l.includes("balance")) return "💰";
-    if (l.includes("date") || l.includes("expiry") || l.includes("valid")) return "📅";
-    if (l.includes("number") || l.includes("id")) return "📄";
-    return "🔹";
-  }
-
-  // ── RENDER CUSTOM HEADER ──
+  // ── CUSTOM HEADER RENDERING ──
   function renderMandatesHeader() {
     const $header = $(".qm-header-inline");
-    if (!$header.length || $header.hasClass("mandates-active")) return;
+    if (!$header.length || !$header.hasClass("mandates-active")) {
+      $header.removeClass("leads-active cases-active holdings-active activities-active cards-active").addClass("mandates-active");
+      $header.empty();
 
-    $header.find(".mandates-header-actions").remove();
-
-    $header
-      .removeClass("leads-active cases-active holdings-active activities-active")
-      .addClass("mandates-active");
-
-    $header.html(`
-      <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <button class="qm-back-btn" id="qm-header-back-btn" title="Back to Dashboard" style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: var(--glass2); border: 1px solid var(--border); border-radius: 50%; color: var(--text); cursor: pointer; font-size: 14px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-          </button>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 20px;">📋</span>
-            <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin: 0; text-transform: uppercase; font-family: 'Outfit', sans-serif;">MANDATES</h2>
+      const headerHtml = `
+        <div class="qm-header-main-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 15px;">
+            <button class="qm-back-btn" title="Back to Profile">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6" class="arrow-chevron" />
+              </svg>
+              <span>Go Back</span>
+            </button>
+            <div class="qm-header-avatar" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); border: 1px solid var(--border); box-shadow: 0 0 10px var(--glow-shadow); font-size: 22px;">🗄️</div>
+            <div class="qm-header-titles" style="display: flex; flex-direction: column;">
+              <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin: 0; text-transform: uppercase; font-family: 'Outfit', sans-serif;">CUSTOMER MANDATES</h2>
+              <p class="qm-header-subtitle" style="font-size: 13px; color: var(--muted); margin-top: 2px; font-weight: 400; margin-bottom: 0;">Debit Card, UPI & NACH authorization sweeps</p>
+            </div>
+          </div>
+          <div class="qm-header-actions" style="display: flex; align-items: center; gap: 8px;">
+            <button class="qm-action-btn" id="refresh-mandates-btn">🔄 Refresh</button>
           </div>
         </div>
-      </div>
-    `);
+      `;
+      $header.append(headerHtml);
 
-    headerRestored = false;
+      $("#qm-breadcrumbs-bar").removeClass("hidden").html(`
+        <div class="qm-header-breadcrumbs">
+          <a href="#" class="qm-breadcrumb-link" data-action="home">Profile</a>
+          <span class="qm-breadcrumb-separator">/</span>
+          <span class="qm-breadcrumb-current">Mandates</span>
+        </div>
+      `);
+
+      // Bind refresh handler
+      $("#refresh-mandates-btn").on("click", function () {
+        loadMandates();
+      });
+
+      headerRestored = false;
+    }
   }
 
-  // ── RESTORE DEFAULT HEADER WHEN LEAVING MODULE ──
+  // ── RESTORE DEFAULT HEADER ──
   function restoreDefaultHeader(title) {
     const $header = $(".qm-header-inline");
     if ($header.length && $header.hasClass("mandates-active")) {
       $header.removeClass("mandates-active");
-      $header.find(".mandates-header-actions").remove();
-      $header.html(`
-        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <button class="qm-back-btn" id="qm-header-back-btn" title="Back to Dashboard" style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: var(--glass2); border: 1px solid var(--border); border-radius: 50%; color: var(--text); cursor: pointer; font-size: 14px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
+      $header.empty();
+      $header.append(`
+        <div class="qm-header-main-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          <div class="qm-header-left-wrap" style="display: flex; align-items: center; gap: 15px;">
+            <button class="qm-back-btn" title="Back to Profile">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6" class="arrow-chevron" />
               </svg>
+              <span>Go Back</span>
             </button>
             <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); margin: 0;">${title}</h2>
           </div>
@@ -556,68 +616,55 @@
     }
   }
 
-  // ── LOCKED TOAST FEEDBACK ──
-  function showLockedToast(msg) {
-    let $toast = $(".mandates-toast");
-    if (!$toast.length) {
-      $toast = $(`<div class="mandates-toast"><span>🔒</span> <span>${msg}</span></div>`);
-      $("#qm-content").append($toast);
-    } else {
-      $toast.html(`<span>🔒</span> <span>${msg}</span>`);
-    }
-
-    $toast.addClass("show");
-    setTimeout(() => {
-      $toast.removeClass("show");
-    }, 2500);
+  // Subscribe to customer ID changes
+  if (window.ParamsData) {
+    window.ParamsData.subscribe('customerId', function (newCid) {
+      const $header = $(".qm-header-inline");
+      if ($header.length && $header.hasClass("mandates-active")) {
+        loadMandates();
+      }
+    });
   }
 
-  // ── MAIN ENTRY: LOAD ACCOUNTS USING MANDATE_ACCOUNTS API ──
+  // ── LOAD MANDATES DATA ──
   function loadMandates() {
-    injectMandatesStyles();
+    const $content = $("#qm-content");
+    if (!$content.length) return;
+
+    // Render loading skeleton layout
     renderSkeletonLayout();
 
-    const cid = (window.ParamsData && window.ParamsData.getCustomerId) ? window.ParamsData.getCustomerId() : null;
-    const $content = $("#qm-content");
-
-    if (!cid) {
+    const customerParam = (window.ParamsData && window.ParamsData.getCustomerId) ? window.ParamsData.getCustomerId() : null;
+    if (!customerParam) {
       if (window.UIRenderer) {
         window.UIRenderer.showEmptyState("#qm-content");
       } else {
-        $content.html("<div style='text-align:center; padding: 40px;'>No active customer selected.</div>");
+        $content.html("<div style='text-align:center; padding: 40px;'>No active customer ID.</div>");
       }
       return;
     }
 
-    // Load available account numbers string list from /mandateAccounts endpoint
-    const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.MANDATE_ACCOUNTS) || "/mandateAccounts";
-    const params = { customerId: cid };
+    const endpoint = window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.MANDATE_ACCOUNTS; // "/mandateAccounts"
+    const params = { customer: customerParam };
 
     if (window.ApiService) {
       window.ApiService.get(
         endpoint,
         params,
         function (response) {
-          const rawList = Array.isArray(response) ? response : [];
-          allAccounts = rawList.map(item => {
-            if (typeof item === 'object' && item !== null) {
-              return item.number || item.accountNumber || item.account || item.id || "";
-            }
-            return String(item);
-          }).filter(acc => acc && acc.trim() !== "");
-
+          allAccounts = response || [];
           selectedAccountId = null;
-          accountCards = [];
+          accountMandates = [];
 
           renderMandatesLayout();
 
           if (allAccounts.length > 0) {
             selectedAccountId = allAccounts[0];
             renderSidebarList();
-            loadCardsForAccount(selectedAccountId);
+            loadMandatesForAccount(selectedAccountId);
           } else {
             renderSidebarList();
-            renderCardDetails();
+            renderMandateDetails();
           }
         },
         function (error) {
@@ -639,17 +686,18 @@
     }
   }
 
-  // ── LOAD CARDS FOR SPECIFIC ACCOUNT USING EXACT SAME CASA CARDS ENDPOINT ──
-  function loadCardsForAccount(accountId) {
+  // ── LOAD MANDATES FOR SPECIFIC ACCOUNT ──
+  function loadMandatesForAccount(accountId) {
     const $details = $("#mandate-details-area");
     if (!$details.length) return;
 
-    const hasContent = $details.find(".mandates-cards-container, .mandate-detail-empty, .detail-section-block").length > 0;
+    // smooth loading experience - only show spinner on first load, otherwise dim the cards
+    const hasContent = $details.find(".mandates-stacked-container, .mandate-detail-empty").length > 0;
     if (!hasContent) {
       $details.html(`
         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); gap: 10px;">
           <div style="width: 30px; height: 30px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite;"></div>
-          <p style="font-size: 12px;">Loading debit cards...</p>
+          <p style="font-size: 12px;">Loading mandates...</p>
         </div>
       `);
     } else {
@@ -660,17 +708,16 @@
       });
     }
 
-    // Exact same API endpoint used in CASA in Holdings (`/casaCards`)
-    const endpoint = (window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.HOLDINGS_CASA_CARDS) || "/casaCards";
-    const params = { casaId: accountId };
+    const endpoint = window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.MANDATES; // "/mandates"
+    const params = { account: accountId };
 
     if (window.ApiService) {
       window.ApiService.get(
         endpoint,
         params,
         function (response) {
-          accountCards = Array.isArray(response) ? response : [];
-          renderCardDetails();
+          accountMandates = response || [];
+          renderMandateDetails();
           $details.css({
             "opacity": "1",
             "pointer-events": "auto"
@@ -683,7 +730,7 @@
           });
           $details.html(`
             <div style="text-align:center; padding: 40px;">
-              <div style="color:#ef4444; font-weight:600; font-size:12px;">Failed to load cards: ${escapeHtml(error)}</div>
+              <div style="color:#ef4444; font-weight:600; font-size:12px;">Failed to load mandates: ${escapeHtml(error)}</div>
             </div>
           `);
         }
@@ -747,18 +794,19 @@
           </div>
         </div>
 
-        <!-- RIGHT COLUMN: Stacked Details Preview (Direct Card Details) -->
+        <!-- RIGHT COLUMN: Stacked Details Preview -->
         <div class="mandates-details-panel" id="mandate-details-area">
-          <!-- Card details injected here -->
+          <!-- Stacked details cards injected here -->
         </div>
       </div>
     `);
 
-    // Helper to position the sliding background pill
+    // Helper to position the iOS-style sliding background pill
     function updateTabSlider(animate = true) {
       const activeBtn = document.querySelector(".mandates-tab-btn.active");
       const slider = document.querySelector(".tab-slider-pill");
       if (activeBtn && slider) {
+        // Use native layout offset properties which are not affected by GSAP scaled/skewed transforms during transitions
         const width = activeBtn.offsetWidth;
         const left = activeBtn.offsetLeft;
 
@@ -772,6 +820,7 @@
         slider.style.left = left + "px";
 
         if (!animate) {
+          // Force layout recalculation
           slider.offsetHeight;
           slider.style.transition = "";
         }
@@ -783,8 +832,10 @@
       const tab = $(this).attr("data-tab");
       const tabCfg = configTabs.find(t => t.id === tab);
       if (tabCfg && tabCfg.locked) {
+        // Shake feedback
         $(this).addClass("shake-anim");
         setTimeout(() => $(this).removeClass("shake-anim"), 300);
+
         showLockedToast(`${tabCfg.title} mandates feature is currently locked.`);
         return;
       }
@@ -795,7 +846,7 @@
         $(this).addClass("active");
         
         updateTabSlider(true);
-        renderCardDetails();
+        renderMandateDetails();
       }
     });
 
@@ -804,28 +855,42 @@
       renderSidebarList();
     });
 
+    // Window resize recalibrates slider layout positions
     $(window).off("resize.mandatesTabs").on("resize.mandatesTabs", function () {
       updateTabSlider(false);
     });
 
-    setTimeout(() => updateTabSlider(false), 50);
-    setTimeout(() => updateTabSlider(false), 200);
-    setTimeout(() => updateTabSlider(false), 450);
+    // Initialize pill coordinates immediately and retry after transitions
+    setTimeout(() => {
+      updateTabSlider(false);
+    }, 50);
+    setTimeout(() => {
+      updateTabSlider(false);
+    }, 200);
+    setTimeout(() => {
+      updateTabSlider(false);
+    }, 450);
+    setTimeout(() => {
+      updateTabSlider(false);
+    }, 850);
 
+    // Watch tab bar container resize/visibility shifts via ResizeObserver to ensure absolute coordinates match
     if (typeof ResizeObserver !== 'undefined') {
       const $bar = $(".mandates-tab-bar");
       if ($bar.length) {
-        const ro = new ResizeObserver(() => updateTabSlider(false));
+        const ro = new ResizeObserver(() => {
+          updateTabSlider(false);
+        });
         ro.observe($bar[0]);
       }
     }
 
     // Initial renders
     renderSidebarList();
-    renderCardDetails();
+    renderMandateDetails();
   }
 
-  // ── RENDER SIDEBAR LIST (ACCOUNT NUMBERS STRING LIST) ──
+  // ── RENDER SIDEBAR LIST (ACCOUNTS LIST) ──
   function renderSidebarList() {
     const $list = $("#mandates-sidebar-list");
     if (!$list.length) return;
@@ -837,6 +902,7 @@
       return;
     }
 
+    // Filter items based on search query
     const filtered = allAccounts.filter(item => {
       return item.toLowerCase().includes(searchQuery);
     });
@@ -867,7 +933,7 @@
           selectedAccountId = item;
           $(".mandates-list-item").removeClass("active");
           $(this).addClass("active");
-          loadCardsForAccount(selectedAccountId);
+          loadMandatesForAccount(selectedAccountId);
         }
       });
 
@@ -875,110 +941,170 @@
     });
   }
 
-  // ── RENDER CARD DETAILS (EXACTLY MATCHING CASA IN HOLDINGS) ──
-  function renderCardDetails() {
+  // ── RENDER MANDATES DETAILED LIST (RIGHT PANEL) ──
+  function renderMandateDetails() {
     const $details = $("#mandate-details-area");
     if (!$details.length) return;
 
     const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('EMPTY')) || 
                      (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS && window.ASSETS_CONFIG.ANIMATIONS.EMPTY) || '';
 
+    // Filter mandates inside the loaded set by category matching activeTab configuration
+    const currentTabCfg = configTabs.find(t => t.id === activeTab);
+    const allowedCategories = currentTabCfg && Array.isArray(currentTabCfg.categories) ? currentTabCfg.categories : [];
+
+    const matchingMandates = accountMandates.filter(m => {
+      return m.category && allowedCategories.some(cat => 
+        m.category.toLowerCase().trim() === cat.toLowerCase().trim()
+      );
+    });
+
     if (allAccounts.length === 0) {
       $details.html(`
         <div class="mandate-detail-empty">
           <img src="${animPath}" style="width: 120px; height: 120px; margin-bottom: 12px;" alt="Empty State Animation" />
           <h3>No Accounts Found</h3>
-          <p>There are no active bank accounts to query cards for.</p>
+          <p>There are no active bank accounts to query mandates for.</p>
         </div>
       `);
       return;
     }
 
     if (!selectedAccountId) {
+      const currentTabCfg = configTabs.find(t => t.id === activeTab);
+      const displayTabName = currentTabCfg ? currentTabCfg.title : activeTab.toUpperCase();
       $details.html(`
         <div class="mandate-detail-empty">
           <img src="${animPath}" style="width: 120px; height: 120px; margin-bottom: 12px;" alt="Empty State Animation" />
           <h3>No Account Selected</h3>
-          <p>Please select an account from the left sidebar to view its linked debit card details.</p>
+          <p>Please select an active CASA account from the left sidebar to view its associated ${displayTabName.toLowerCase()} mandates.</p>
         </div>
       `);
       return;
     }
 
-    if (accountCards.length === 0) {
+    if (matchingMandates.length === 0) {
+      const currentTabCfg = configTabs.find(t => t.id === activeTab);
+      const displayTabName = currentTabCfg ? currentTabCfg.title : activeTab.toUpperCase();
       $details.html(`
         <div class="mandate-detail-empty">
           <img src="${animPath}" style="width: 120px; height: 120px; margin-bottom: 12px;" alt="Empty State Animation" />
-          <h3>No Cards Linked</h3>
-          <p>No active debit cards are linked to account ${escapeHtml(selectedAccountId)}.</p>
+          <h3>No ${displayTabName} Mandates Found</h3>
+          <p>There are no active ${displayTabName.toLowerCase()} mandates configured for this account.</p>
         </div>
       `);
       return;
     }
 
-    // Build Cards View exactly matching CASA in Holdings
-    let cardsHtml = '<div class="mandates-cards-container" style="display: flex; flex-direction: column; gap: 14px; padding: 2px;">';
+    // Build stacked detail panels
+    let stackedHtml = `<div class="mandates-stacked-container">`;
 
-    accountCards.forEach(card => {
-      let cardFieldsHtml = '';
-
-      // Render card image inside a cell of the detail fields grid
-      if (card.image) {
-        const imgTag = renderCardImage(card.image);
-        if (imgTag) {
-          cardFieldsHtml += `
-            <div class="detail-field-card full-width" style="padding: 10px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px;">
-              <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-bottom: 4px;">
-                <span class="df-icon-inline">🖼️</span> Card Design
-              </label>
-              <div class="card-img-container">
-                ${imgTag}
-              </div>
-            </div>
-          `;
-        }
-      }
-
-      if (card.fields) {
-        Object.entries(card.fields).forEach(([k, v]) => {
-          const valStr = String(v);
-          const icon = getLocalFieldIcon(k);
-          const isFullWidth = valStr.length > 25 || k.toLowerCase().includes("address") || k.toLowerCase().includes("details") || k.toLowerCase().includes("remarks");
-
-          cardFieldsHtml += `
-            <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}">
-              <div class="df-info">
-                <label class="df-label">
-                  <span class="df-icon-inline">${icon}</span> ${escapeHtml(k)}
-                </label>
-                <span class="df-value" style="display: block;">${escapeHtml(valStr)}</span>
-              </div>
+    matchingMandates.forEach(mandate => {
+      const badgeClass = mandate.status.toLowerCase().replace(/\s+/g, '-');
+      const badgeStyle = getStatusBadgeStyle(mandate.status);
+      
+      let sectionsHtml = "";
+      mandate.sections.forEach(sec => {
+        let fieldsHtml = "";
+        Object.entries(sec.fields).forEach(([label, val]) => {
+          const icon = getFieldIcon(label);
+          const isFullWidth = String(val).length > 40 || label.toLowerCase().includes("remark") || label.toLowerCase().includes("signatory");
+          fieldsHtml += `
+            <div class="mandate-field-card ${isFullWidth ? 'full-width' : ''}">
+              <span class="mandate-field-lbl">${icon} ${escapeHtml(label)}</span>
+              <span class="mandate-field-val">${escapeHtml(val)}</span>
             </div>
           `;
         });
-      }
 
-      cardsHtml += `
-        <div class="detail-section-block glass-card">
-          <div style="display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px;">
-            <span style="font-size: 20px;">💳</span>
-            <div style="display: flex; flex-direction: column; text-align: left;">
-              <h3 style="margin: 0; font-size: 13px; font-weight: 800; color: var(--accent2); text-transform: uppercase; letter-spacing: 1px; font-family: 'Outfit', sans-serif;">${escapeHtml(card.title || card.name || "Debit Card")}</h3>
-              <span style="font-size: 11px; color: var(--muted); font-family: monospace;">${escapeHtml(card.subtitle || card.number || "")}</span>
+        sectionsHtml += `
+          <div class="mandate-section-block">
+            <h3>${escapeHtml(sec.name)}</h3>
+            <div class="mandate-fields-grid">
+              ${fieldsHtml}
             </div>
           </div>
-          <div class="detail-fields-grid">
-            ${cardFieldsHtml}
+        `;
+      });
+
+      stackedHtml += `
+        <div class="mandate-stacked-card">
+          <div class="mandate-detail-header">
+            <div class="mandate-detail-title-wrap">
+              <h2>${escapeHtml(mandate.title)}</h2>
+              <span class="mandate-detail-id">MANDATE ID · ${escapeHtml(mandate.id)}</span>
+            </div>
+            <div>
+              <span class="status-badge ${badgeClass}" style="${badgeStyle}">${escapeHtml(mandate.status)}</span>
+            </div>
+          </div>
+          
+          <div class="mandate-detail-sections-wrap">
+            ${sectionsHtml}
           </div>
         </div>
       `;
     });
 
-    cardsHtml += '</div>';
-    $details.html(cardsHtml);
+    stackedHtml += `</div>`;
+    $details.html(stackedHtml);
   }
 
-  // ── MUTATIONOBSERVER & EVENT LISTENER ON QUICK ACCESS TITLE ──
+  // ── BADGE/DOT STYLE HELPERS ──
+  function getStatusBadgeStyle(status) {
+    switch (status) {
+      case "Active":
+        return "background: rgba(16, 185, 129, 0.12) !important; color: #10b981 !important; border: 1px solid rgba(16, 185, 129, 0.25) !important;";
+      case "Pending Approval":
+        return "background: rgba(245, 158, 11, 0.12) !important; color: #f59e0b !important; border: 1px solid rgba(245, 158, 11, 0.25) !important;";
+      case "Suspended":
+        return "background: rgba(239, 68, 68, 0.12) !important; color: #ef4444 !important; border: 1px solid rgba(239, 68, 68, 0.25) !important;";
+      default:
+        return "background: var(--glass2) !important; color: var(--text) !important; border: 1px solid var(--border) !important;";
+    }
+  }
+
+  function getFieldIcon(label) {
+    const l = label.toLowerCase();
+    if (l.includes("id")) return "🆔";
+    if (l.includes("account") || l.includes("linked")) return "💳";
+    if (l.includes("frequency")) return "🔄";
+    if (l.includes("limit") || l.includes("amount")) return "💰";
+    if (l.includes("vendor") || l.includes("recipient")) return "🏢";
+    if (l.includes("date")) return "📅";
+    if (l.includes("authorized") || l.includes("approv")) return "👤";
+    if (l.includes("remark")) return "📝";
+    if (l.includes("sign")) return "✍️";
+    return "🔹";
+  }
+
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  // Show interactive locked features toast
+  function showLockedToast(message) {
+    let $toast = $(".mandates-toast");
+    if (!$toast.length) {
+      $toast = $(`<div class="mandates-toast"><span>🔒</span> <span class="toast-msg"></span></div>`);
+      $("#qm-content").append($toast);
+    }
+    $toast.find(".toast-msg").text(message);
+    $toast.addClass("show");
+    
+    clearTimeout(window.mandatesToastTimeout);
+    window.mandatesToastTimeout = setTimeout(() => {
+      $toast.removeClass("show");
+    }, 2500);
+  }
+
+  // ── MUTATIONOBSERVER & EVENT LISTENER ON QUICK MODULE TITLES ──
   $(function () {
     function checkTitle(text) {
       if (!text) return;
@@ -1011,14 +1137,4 @@
       });
     }
   });
-
-  function escapeHtml(str) {
-    if (typeof str !== 'string') return str;
-    return str
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
 })();

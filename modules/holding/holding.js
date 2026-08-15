@@ -196,7 +196,7 @@
   function renderHoldingsHeader() {
     const $header = $(".qm-header-inline");
     if (!$header.length || !$header.hasClass("holdings-active")) {
-      $header.removeClass("leads-active cases-active activities-active mandates-active").addClass("holdings-active");
+      $header.removeClass("leads-active cases-active activities-active mandates-active cards-active").addClass("holdings-active");
       $header.empty();
 
       const headerHtml = `

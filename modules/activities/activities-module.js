@@ -1314,7 +1314,7 @@
   function renderActivitiesHeader() {
     const $header = $(".qm-header-inline");
     if (!$header.length || !$header.hasClass("activities-active")) {
-      $header.removeClass("cases-active leads-active holdings-active mandates-active").addClass("activities-active");
+      $header.removeClass("cases-active leads-active holdings-active mandates-active cards-active").addClass("activities-active");
       $header.empty();
 
       const headerHtml = `

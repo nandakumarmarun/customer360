@@ -789,7 +789,7 @@ function initQuickModules() {
       }
       const $header = $(".qm-header-inline");
       if ($header.length) {
-        $header.removeClass("leads-active cases-active holdings-active activities-active mandates-active");
+        $header.removeClass("leads-active cases-active holdings-active activities-active mandates-active cards-active");
         $header.html('<h2 id="qm-title"></h2>');
       }
 

@@ -208,6 +208,16 @@ window.MANDATES_CONFIG = {
 };
 
 /**
+ * Configurable tab configuration for the Cards module.
+ */
+window.CARDS_CONFIG = {
+  tabs: [
+    { id: "debit-card", title: "Debit Card", icon: "💳" },
+    { id: "credit-card", title: "Credit Card", icon: "💳", locked: true }
+  ]
+};
+
+/**
  * Quick Access Modules configuration fallback.
  */
 window.QUICK_MODULES_CONFIG = [
@@ -219,8 +229,9 @@ window.QUICK_MODULES_CONFIG = [
   { id: "attachments", title: "Attachments", icon: "📎", enabled: true, order: 6 },
   { id: "holding", title: "Holding", icon: "📊", enabled: true, order: 7 },
   { id: "mandates", title: "Mandates", icon: "📋", enabled: true, order: 8 },
-  { id: "profiler", title: "Profiler", icon: "👤", enabled: true, order: 9 },
-  { id: "offers", title: "Offers", icon: "🏷️", enabled: true, order: 10 }
+  { id: "cards", title: "Cards", icon: "💳", enabled: true, order: 9 },
+  { id: "profiler", title: "Profiler", icon: "👤", enabled: true, order: 10 },
+  { id: "offers", title: "Offers", icon: "🏷️", enabled: true, order: 11 }
 ];
 
 

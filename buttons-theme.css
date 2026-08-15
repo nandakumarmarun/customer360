@@ -1,0 +1,314 @@
+/* ==========================================================================
+   THEME-INTEGRATED PREMIUM BUTTON SYSTEM
+   ========================================================================== 
+   This file contains a premium, modern button system built to align with your
+   application's dynamic theme variables. 
+
+   Because it references the variables defined in your `:root` (such as
+   --accent, --accent2, --border, and --glow-shadow), these buttons will 
+   automatically change their colors, borders, and glows as users toggle
+   between Crimson Red, Neon Palette, Light Mode, and Dark Mode.
+   
+   HOW TO USE:
+   Link this file in your HTML:
+   <link rel="stylesheet" href="buttons-theme.css" />
+   
+   Apply the markup:
+   <button class="btn btn-primary-theme">Primary Action</button>
+   <button class="btn btn-secondary-theme">Secondary Action</button>
+   <button class="btn btn-outline-theme">Outline Action</button>
+   <button class="btn btn-ghost-theme">Ghost Action</button>
+   <button class="btn btn-neon-glow">Neon Interactive</button>
+   ========================================================================== */
+
+/* ─── BASE BUTTON STYLING ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: var(--radius, 20px);
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text, #ffffff);
+  transition: 
+    background var(--transition, 0.3s ease),
+    border-color var(--transition, 0.3s ease),
+    color var(--transition, 0.3s ease),
+    box-shadow var(--transition, 0.3s ease),
+    transform var(--transition, 0.3s ease);
+  position: relative;
+  overflow: hidden;
+  outline: none;
+  white-space: nowrap;
+  
+  /* GPU acceleration for smooth scaling & transitions */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Base Active/Press Animation */
+.btn:active {
+  transform: scale(0.97) translate3d(0, 0, 0);
+}
+
+/* Focus indicator for accessibility */
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+
+/* ─── PRIMARY GRADIENT BUTTON ─── */
+.btn-primary-theme {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 15px var(--glow-shadow, rgba(170, 0, 0, 0.3));
+}
+
+.btn-primary-theme:hover {
+  transform: translate3d(0, -2px, 0);
+  box-shadow: 0 8px 25px var(--glow-shadow-strong, rgba(170, 0, 0, 0.5));
+}
+
+
+/* ─── SECONDARY GLASSMORPHISM BUTTON ─── */
+.btn-secondary-theme {
+  background: var(--glass2, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--border, rgba(170, 0, 0, 0.25));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--text, #ffffff);
+}
+
+.btn-secondary-theme:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent2);
+  transform: translate3d(0, -1px, 0);
+  box-shadow: 0 4px 12px var(--glow-shadow-weak, rgba(0, 0, 0, 0.1));
+}
+
+
+/* ─── OUTLINE THEMED BUTTON ─── */
+.btn-outline-theme {
+  background: transparent;
+  border: 1.5px solid var(--border, rgba(170, 0, 0, 0.25));
+  color: var(--text, #ffffff);
+}
+
+.btn-outline-theme:hover {
+  border-color: var(--accent);
+  color: var(--accent2);
+  background: var(--glow-shadow-hover, rgba(170, 0, 0, 0.04));
+  transform: translate3d(0, -1px, 0);
+}
+
+
+/* ─── GHOST THEMED BUTTON ─── */
+.btn-ghost-theme {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--muted, rgba(255, 255, 255, 0.7));
+}
+
+.btn-ghost-theme:hover {
+  background: var(--glass, rgba(255, 255, 255, 0.05));
+  color: var(--text, #ffffff);
+}
+
+
+/* ─── ULTRA-PREMIUM NEON GLOW BUTTON ─── */
+.btn-neon-glow {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--text, #ffffff);
+  box-shadow: 
+    0 0 10px var(--glow-shadow-weak, rgba(170, 0, 0, 0.12)),
+    inset 0 0 10px var(--glow-shadow-weak, rgba(170, 0, 0, 0.12));
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.btn-neon-glow:hover {
+  background: var(--accent);
+  border-color: var(--accent2);
+  color: #ffffff;
+  transform: translate3d(0, -3px, 0);
+  box-shadow: 
+    0 0 20px var(--glow-shadow-strong, rgba(170, 0, 0, 0.65)),
+    0 0 40px var(--glow-shadow, rgba(170, 0, 0, 0.4)),
+    inset 0 0 5px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}
+
+
+/* ─── SHIMMER AND SWIPE EFFECTS ─── */
+/* Adds a sleek glare sweep animation across the button on hover */
+.btn-primary-theme::after,
+.btn-secondary-theme::after,
+.btn-neon-glow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.28), 
+    transparent
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.btn-primary-theme:hover::after,
+.btn-secondary-theme:hover::after,
+.btn-neon-glow:hover::after {
+  left: 150%;
+  transition: left 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* ─── SIZING MODIFIERS ─── */
+.btn-xs {
+  padding: 4px 10px;
+  font-size: 11px;
+  border-radius: calc(var(--radius, 20px) - 8px);
+}
+
+.btn-sm {
+  padding: 8px 18px;
+  font-size: 12.5px;
+  border-radius: calc(var(--radius, 20px) - 4px);
+}
+
+.btn-lg {
+  padding: 12px 30px;
+  font-size: 15.5px;
+  border-radius: calc(var(--radius, 20px) + 4px);
+}
+
+.btn-xl {
+  padding: 16px 38px;
+  font-size: 17px;
+  border-radius: calc(var(--radius, 20px) + 8px);
+}
+
+/* Full Width Utility */
+.btn-block {
+  display: flex;
+  width: 100%;
+}
+
+
+/* ─── SHAPE MODIFIERS ─── */
+/* Pill Shape: completely rounded */
+.btn-pill {
+  border-radius: 9999px !important;
+}
+
+/* Sharp/Squircle style */
+.btn-squircle {
+  border-radius: 8px !important;
+}
+
+/* Completely flat layout without transforms or glow shadows */
+.btn-flat {
+  box-shadow: none !important;
+  transform: none !important;
+}
+.btn-flat:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+
+/* ─── UTILITY STATES ─── */
+/* Disabled state */
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Loading State (Adds a spinning ring indicator) */
+.btn-loading {
+  color: transparent !important;
+  pointer-events: none;
+  position: relative;
+}
+
+.btn-loading::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  margin-top: -9px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: btn-spin 0.6s linear infinite;
+  z-index: 10;
+}
+
+/* Spinner colors for transparent/light loading styles */
+.btn-outline-theme.btn-loading::before,
+.btn-ghost-theme.btn-loading::before {
+  border-color: rgba(0, 0, 0, 0.1);
+  border-top-color: var(--accent);
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ─── ICON SPECIFIC TRANSITIONS ─── */
+/* Styles icons inside buttons so they feel integrated */
+.btn svg,
+.btn span.icon,
+.btn i {
+  flex-shrink: 0;
+  transition: transform var(--transition, 0.3s ease);
+}
+
+/* Interactive micro-animations for icons on hover */
+.btn:hover svg,
+.btn:hover span.icon,
+.btn:hover i {
+  transform: scale(1.1);
+}
+
+/* Specific micro-animation styles */
+.btn-animate-arrow:hover svg,
+.btn-animate-arrow:hover i {
+  transform: translateX(3px) scale(1.1);
+}
+
+.btn-animate-spin:hover svg,
+.btn-animate-spin:hover i {
+  transform: rotate(45deg) scale(1.1);
+}

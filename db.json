@@ -1204,18 +1204,25 @@
       "order": 8
     },
     {
+      "id": "cards",
+      "title": "Cards",
+      "icon": "💳",
+      "enabled": true,
+      "order": 9
+    },
+    {
       "id": "profiler",
       "title": "Profiler",
       "icon": "👤",
       "enabled": true,
-      "order": 9
+      "order": 10
     },
     {
       "id": "offers",
       "title": "Offers",
       "icon": "🏷️",
       "enabled": true,
-      "order": 10
+      "order": 11
     }
   ],
   "loanDetails": [
@@ -4889,6 +4896,96 @@
       "status": "skipped",
       "timestamp": "2026-08-12T06:25:03.964Z",
       "id": "FRLoMxN"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-12T07:44:05.602Z",
+      "id": "soWcUhL"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-12T07:44:06.628Z",
+      "id": "luGJOxv"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-12T07:44:29.976Z",
+      "id": "aqNY7Jq"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-12T07:44:43.496Z",
+      "id": "3xj5uFm"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-12T11:28:07.875Z",
+      "id": "Ct4oDkq"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-12T11:28:08.931Z",
+      "id": "jlHfqQ0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-12T11:52:58.697Z",
+      "id": "gRO-iD4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-12T11:52:59.573Z",
+      "id": "fiXh3cx"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-15T09:30:02.463Z",
+      "id": "xoaI4it"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-15T09:30:03.836Z",
+      "id": "WodfHzY"
     }
   ],
   "activities": {
