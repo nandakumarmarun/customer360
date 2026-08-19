@@ -861,7 +861,12 @@
           Object.entries(sec.fields).forEach(([key, val]) => {
             const valStr = String(val);
             const icon = getLocalFieldIcon(key);
-            const isFullWidth = valStr.length > 20 || key.toLowerCase().includes("address") || key.toLowerCase().includes("details") || key.toLowerCase().includes("remarks");
+            let isFullWidth = key.toLowerCase().includes("address") || key.toLowerCase().includes("details") || key.toLowerCase().includes("remarks");
+            if (!isFullWidth && window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
+              isFullWidth = window.UIRenderer.calculateTextSpan(valStr, 180, "600 12px 'Outfit', sans-serif") > 1;
+            } else if (!isFullWidth) {
+              isFullWidth = valStr.length > 20;
+            }
 
             fieldsHtml += `
               <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="padding: 10px; border-bottom: 1px solid var(--border);">
@@ -959,7 +964,12 @@
                     Object.entries(card.fields).forEach(([k, v]) => {
                       const valStr = String(v);
                       const icon = getLocalFieldIcon(k);
-                      const isFullWidth = valStr.length > 20 || k.toLowerCase().includes("address") || k.toLowerCase().includes("details") || k.toLowerCase().includes("remarks");
+                      let isFullWidth = k.toLowerCase().includes("address") || k.toLowerCase().includes("details") || k.toLowerCase().includes("remarks");
+                      if (!isFullWidth && window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
+                        isFullWidth = window.UIRenderer.calculateTextSpan(valStr, 180, "600 12px 'Outfit', sans-serif") > 1;
+                      } else if (!isFullWidth) {
+                        isFullWidth = valStr.length > 20;
+                      }
 
                       cardFieldsHtml += `
                         <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="padding: 10px; border-bottom: 1px solid var(--border);">

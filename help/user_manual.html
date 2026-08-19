@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer 360 User Manual & Help Center</title>
+  <link rel="stylesheet" href="../fonts/fonts.css" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #12121c;
+      --accent: #ff3366;
+      --accent2: #ff6699;
+      --text: #ffffff;
+      --muted: #8e90a6;
+      --border: rgba(255, 255, 255, 0.08);
+      --glass: rgba(255, 255, 255, 0.03);
+      --glass2: rgba(255, 255, 255, 0.06);
+      --glow: rgba(255, 51, 102, 0.25);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      width: 300px;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      padding: 40px 24px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .logo-icon {
+      font-size: 28px;
+      color: var(--accent);
+      text-shadow: 0 0 15px var(--glow);
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      background: linear-gradient(135deg, #fff 30%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav-item a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 12px 16px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+
+    .nav-item a:hover,
+    .nav-item.active a {
+      color: var(--text);
+      background: var(--glass2);
+      border-color: var(--border);
+      transform: translateX(4px);
+    }
+
+    .nav-item.active a {
+      box-shadow: inset 3px 0 0 var(--accent);
+    }
+
+    /* Dropdown & Submenu Styles */
+    .nav-dropdown {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .dropdown-trigger {
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 12px 16px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      user-select: none;
+    }
+
+    .dropdown-trigger:hover,
+    .nav-dropdown.active-parent .dropdown-trigger {
+      color: var(--text);
+      background: var(--glass2);
+      border-color: var(--border);
+    }
+
+    .dropdown-arrow {
+      transition: transform 0.3s ease;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .nav-dropdown.open .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+
+    .submenu {
+      list-style: none;
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+      padding-left: 12px;
+      border-left: 1px solid var(--border);
+      margin-left: 24px;
+    }
+
+    .nav-dropdown.open .submenu {
+      grid-template-rows: 1fr;
+    }
+
+    .submenu-inner {
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+
+    .submenu-inner .nav-item a {
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+
+    .btn-pdf {
+      margin-top: auto;
+      background: linear-gradient(135deg, var(--accent) 0%, #ff5c8a 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      text-decoration: none;
+      padding: 14px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px var(--glow);
+    }
+
+    .btn-pdf:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 51, 102, 0.4);
+    }
+
+    /* Main Content Area */
+    .content {
+      margin-left: 300px;
+      flex: 1;
+      padding: 60px 80px;
+      max-width: 1100px;
+    }
+
+    .header-banner {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      margin-bottom: 50px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .header-banner::before {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: var(--accent);
+      filter: blur(100px);
+      top: -100px;
+      right: -50px;
+      border-radius: 50%;
+      opacity: 0.15;
+    }
+
+    .header-banner h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .header-banner p {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 600px;
+    }
+
+    section {
+      margin-bottom: 70px;
+      scroll-margin-top: 40px;
+    }
+
+    section h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    section h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 24px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    /* Key Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin: 30px 0;
+    }
+
+    .feature-card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      background: var(--glass2);
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .feature-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feature-card p {
+      font-size: 13.5px;
+      margin-bottom: 0;
+    }
+
+    /* Screenshot Container */
+    .screenshot-container {
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin: 30px 0;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+
+    .screenshot-container img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .screenshot-caption {
+      font-size: 12px;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* Step Lists */
+    .steps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 16px;
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px var(--glow);
+    }
+
+    .step-content h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .step-content p {
+      font-size: 13.5px;
+      margin-bottom: 0;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 30px 20px;
+      }
+
+      .content {
+        margin-left: 0;
+        padding: 40px 20px;
+      }
+
+      body {
+        flex-direction: column;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Print styling rules for PDF export */
+    @media print {
+      body {
+        background: #fff;
+        color: #000;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .content {
+        margin-left: 0;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .header-banner {
+        border: none;
+        background: none;
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: 30px;
+      }
+
+      .header-banner h1 {
+        color: #000;
+      }
+
+      .header-banner p {
+        color: #555;
+      }
+
+      section {
+        page-break-inside: avoid;
+      }
+
+      section h2 {
+        color: #000;
+        border-bottom: 2px solid #000;
+      }
+
+      p,
+      .step-content p,
+      .feature-card p {
+        color: #333;
+      }
+
+      .feature-card {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+      }
+
+      .screenshot-container {
+        border: 1px solid #ccc;
+        background: #fff;
+        box-shadow: none;
+        page-break-inside: avoid;
+      }
+
+      .screenshot-container img {
+        border: 1px solid #aaa;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar">
+    <div class="logo-container">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">CUSTOMER360</span>
+    </div>
+
+    <ul class="nav-menu">
+      <li class="nav-item active" id="li-welcome"><a href="#welcome">Welcome</a></li>
+      <li class="nav-item" id="li-search"><a href="#search">1. Customer Search</a></li>
+      <li class="nav-item" id="li-navigation"><a href="#navigation">2. Dashboard Navigation</a></li>
+      
+      <!-- Collapsible Modules Dropdown -->
+      <li class="nav-dropdown" id="dropdown-modules">
+        <div class="dropdown-trigger" onclick="toggleDropdown()">
+          <span>3. Modules</span>
+          <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <ul class="submenu">
+          <div class="submenu-inner">
+            <li class="nav-item" id="li-holdings"><a href="#holdings">3.1. Portfolio Holdings</a></li>
+            <li class="nav-item" id="li-leads"><a href="#leads">3.2. Leads</a></li>
+            <li class="nav-item" id="li-cases"><a href="#cases">3.3. Cases</a></li>
+            <li class="nav-item" id="li-mandates"><a href="#mandates">3.4. Mandates</a></li>
+            <li class="nav-item" id="li-cards"><a href="#cards">3.5. Credit Cards</a></li>
+          </div>
+        </ul>
+      </li>
+
+      <li class="nav-item" id="li-tour"><a href="#tour">4. Interactive Onboarding</a></li>
+    </ul>
+
+    <!-- Download PDF version of this document -->
+    <a href="user_manual.pdf" download class="btn-pdf">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
+        style="margin-right: 4px;">
+        <path
+          d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+        <path
+          d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+      </svg>
+      Download User Manual PDF
+    </a>
+  </aside>
+
+  <!-- MAIN MANUAL CONTENT -->
+  <main class="content">
+
+    <!-- Title Banner -->
+    <div class="header-banner">
+      <h1>Help Center & User Manual</h1>
+      <p>Welcome to the Customer 360 Help Center. This guide will walk you through the core navigation, interface
+        panels, and premium features of the client intelligence dashboard.</p>
+    </div>
+
+    <!-- WELCOME SECTION -->
+    <section id="welcome">
+      <h2>Welcome to Customer 360</h2>
+      <p>
+        Welcome to the Customer 360 Help Center, your comprehensive guide to understanding and navigating the Customer
+        360 client intelligence dashboard. This guide will take you through the essential features of the platform,
+        including core navigation, key interface panels, customer information, leads, cases, mandates, card details, and
+        other important customer-centric functionalities. It is designed to help you quickly understand how information
+        is organized, where to find the details you need, and how to make the most of the dashboard’s premium features
+        for a complete and efficient view of customer relationships and interactions.
+      </p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>⚡ Customer information</h3>
+          <p>The Customer 360 dashboard provides a comprehensive view of the customer’s personal, contact, address, and
+            profile information, allowing users to quickly access and review essential customer details in one
+            centralized location.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎨 Banking Relationships</h3>
+          <p>The Customer 360 dashboard provides a consolidated view of the customer’s accounts, financial holdings,
+            active mandates, cases, leads, and related contacts, enabling users to easily access and review important
+            banking relationships, service interactions, and associated customer information from a single centralized
+            interface.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎨 Customer Insights</h3>
+          <p>The Customer 360 dashboard provides access to security information, rewards, customer activities,
+            compliance details, and contextual insights, enabling users to gain a comprehensive understanding of the
+            customer’s overall profile, engagement, and relationship with the organization.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. CUSTOMER SEARCH -->
+    <section id="search">
+      <h2>1. Customer Search</h2>
+      <p>To view customer information, start from the Customer Search Interface. This is the main page where you can
+        search and find customer records using details such as customer ID or other available identifiers.</p>
+
+      <div class="screenshot-container">
+        <img src="images/search_page.png" alt="Customer Search Interface Screenshot"
+          onerror="this.src='../assets/png/bank.png'; this.style.opacity='0.4';">
+        <div class="screenshot-caption">Figure 1.1: Customer Search portal screen featuring query input and quick
+          navigation triggers.</div>
+      </div>
+
+      <div class="screenshot-container">
+        <img src="images/searchpage_expandeddropdown.png" alt="Customer Search Interface Screenshot"
+          onerror="this.src='../assets/png/bank.png'; this.style.opacity='0.4';">
+        <div class="screenshot-caption">Figure 1.2: Customer Search portal interface with the search query category dropdown expanded.</div>
+      </div>
+
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Launch Search</h4>
+            <p>Open the portal page. Select the required search option from the dropdown, such as Customer ID, Phone
+              Number, Email, or Account Number. Enter the corresponding details in the search box and click Search to
+              find the customer’s information.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Select Client Profile</h4>
+            <p>If you search using Phone Number, Email, or Account Number, the matching customer profiles will be
+              displayed below the search bar. Select the required customer from the list to open and view their details.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. DASHBOARD NAVIGATION -->
+    <section id="navigation">
+      <h2>2. Dashboard Navigation</h2>
+      <p>The Profile Dashboard provides a centralized and comprehensive view of the customer, bringing key identity,
+        relationship, and engagement information together in a single interface. It enables users to quickly understand
+        the customer’s profile, relationship with the organization, and available services, while providing easy access
+        to deeper customer insights and actions.</p>
+
+      <div class="screenshot-container">
+        <img src="images/avathar_section.png" alt="Main Dashboard Avatar Section Screenshot"
+          onerror="this.src='../assets/png/bank.png'; this.style.opacity='0.4';">
+        <div class="screenshot-caption">Figure 2.1: Cinematic Avatar status section sitting at the center of the dashboard workspace.</div>
+      </div>
+
+      <div class="screenshot-container">
+        <img src="images/dashboard.png" alt="Main Dashboard Screen Layout Screenshot"
+          onerror="this.src='../assets/png/bank.png'; this.style.opacity='0.4';">
+        <div class="screenshot-caption">Figure 2.2: Main Customer 360 Dashboard showing customer profile sidebar and quick-access modules.</div>
+      </div>
+
+      <div class="screenshot-container">
+        <img src="images/DashboardcardDetailedView.png" alt="Dashboard Card Detailed View Screenshot"
+          onerror="this.src='../assets/png/bank.png'; this.style.opacity='0.4';">
+        <div class="screenshot-caption">Figure 2.3: Dashboard detailed card preview modal displaying structured key-value client metadata.</div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>👤 Large Left Profile Sidebar</h3>
+          <p>Displays detailed contact information, the client's tier classification (e.g., Platinum), branch details,
+            and the assigned Relationship Manager's contact card.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🧭 Sticky Header Bar</h3>
+          <p>Provides theme selectors, alerts toggles, profile editing shortcuts, and the system settings hamburger
+            dropdown (⋮).</p>
+        </div>
+        <div class="feature-card">
+          <h3>🌐 Central Cinematic Workspace</h3>
+          <p>Houses a 3D avatar orb showing visual status. Below the orb sits the quick-access grid containing dynamic
+            modules (Holding, Leads, Cases, Cards, etc.) that open inside the modal overlay.</p>
+        </div>
+        <div class="feature-card">
+          <h3>⚙️ Settings & Help Menu</h3>
+          <p>Click the hamburger button (⋮) in the header to access options, trigger the system tour, or open this Help
+            Center.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PORTFOLIO HOLDINGS -->
+    <section id="holdings">
+      <h2>3.1. Portfolio Holdings</h2>
+      <p>The **Portfolio Holdings Explorer** is a decoupled module inside the quick-access grid that gives you complete
+        visibility into the client's financial relationships with the bank.</p>
+
+      <div class="screenshot-container">
+        <img src="images/holdings.png" alt="Portfolio Holdings Module Screenshot"
+          onerror="this.src='../assets/png/chart.png'; this.style.opacity='0.4';">
+        <div class="screenshot-caption">Figure 3.1: Portfolio Holdings panel featuring category tabs, account lists, and
+          auto-spaced detail values.</div>
+      </div>
+
+      <p>When you click the **Holding** module, you are presented with three high-level category cards:</p>
+      <ul>
+        <li><strong>Assets:</strong> Highlights loans, investments, and capital resources.</li>
+        <li><strong>Liabilities:</strong> Details checking (CASA) accounts, savings, and term deposits.</li>
+        <li><strong>Value-Added Services:</strong> Tracks active mandates, standing instructions, insurance, and
+          benefits.</li>
+      </ul>
+
+      <div class="steps-list" style="margin-top: 30px;">
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Double-Panel Explorer</h4>
+            <p>Clicking any category launches a double-panel explorer modal. The left side lists all linked bank
+              accounts, and the right side displays fields and balances.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Search & Filter</h4>
+            <p>Use the search input at the top of the account list to instantly filter accounts by name or number.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>Dynamic Canvas Spacing</h4>
+            <p>The right preview panel dynamically checks the pixel width of value strings offscreen using an HTML5
+              Canvas. If a value overflows the standard column, it automatically expands (spans) to two columns or full
+              width to prevent clipping.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3.2. LEADS -->
+    <section id="leads">
+      <h2>3.2. Leads</h2>
+      <p>The **Leads Module** tracks all active opportunities, prospects, and sales pipelines associated with the customer. It helps relationship managers stay on top of open deals, track interactions, and prioritize follow-ups.</p>
+
+      <div class="screenshot-container">
+        <img src="images/leads.png" alt="Leads Module Screenshot"
+          onerror="this.src='../assets/png/chart.png'; this.style.opacity='0.4';">
+        <div class="screenshot-caption">Figure 3.2: Leads tracking pipeline showing open deals, sales status, and follow-up activities.</div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>📈 Sales Pipeline Tracker</h3>
+          <p>Displays active sales opportunities from qualification and proposal phases to close-won/lost states.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎯 Lead Details</h3>
+          <p>Inspects specific lead values, estimated close dates, confidence levels, and assigned products.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3.3. CASES -->
+    <section id="cases">
+      <h2>3.3. Cases</h2>
+      <p>The **Cases Module** is a customer service ticket explorer that logs and tracks customer complaints, requests, and inquiries. It helps ensure SLAs are met and customer issues are resolved in a timely manner.</p>
+
+      <div class="screenshot-container">
+        <img src="images/Case.png" alt="Cases Module Screenshot"
+          onerror="this.src='../assets/png/bank.png'; this.style.opacity='0.4';">
+        <div class="screenshot-caption">Figure 3.3: Service cases overview showing ticket list, priorities, and SLA statuses.</div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>🛠️ Support Ticket Management</h3>
+          <p>View ticket details, query category classifications, assignments, and resolution notes.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🚨 Priority & SLA Status</h3>
+          <p>Flags high-priority cases with distinct badges to warn support agents of nearing SLA deadlines.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3.4. MANDATES -->
+    <section id="mandates">
+      <h2>3.4. Mandates</h2>
+      <p>The **Mandates Module** lists all active standing orders, direct debits, and authorized recurring transaction approvals for the customer. It provides complete transparency over automated bank clearances.</p>
+
+      <div class="screenshot-container">
+        <img src="images/mandates.png" alt="Mandates Module Screenshot"
+          onerror="this.src='../assets/png/bank.png'; this.style.opacity='0.4';">
+        <div class="screenshot-caption">Figure 3.4: Mandates dashboard highlighting authorized payees, payment limits, and frequency configurations.</div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>🔄 Active Clearances</h3>
+          <p>Lists payees, payment intervals, mandate types, and execution status configurations.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🛡️ Audit Control</h3>
+          <p>Displays starting and ending dates, transaction limits, and mandate reference numbers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3.5. CREDIT CARDS -->
+    <section id="cards">
+      <h2>3.5. Credit Cards</h2>
+      <p>The **Cards Module** details all linked credit cards, limits, balances, payment dates, and reward points. You
+        can select individual cards to inspect transaction parameters, block statuses, and design visuals.</p>
+
+      <div class="screenshot-container">
+        <img src="images/cards.png" alt="Credit Cards Module Screenshot"
+          onerror="this.src='../assets/png/card.png'; this.style.opacity='0.4';">
+        <div class="screenshot-caption">Figure 3.5: Credit Cards panel displaying active cards, credit limit utilization, and design aesthetics.</div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>💳 Digital Card Designs</h3>
+          <p>Displays a digital card mockup showing design presets matching the customer's active card tier.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Real-Time Limits</h3>
+          <p>Inspects total credit limits, available balances, payment status, and interest cycles.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. INTERACTIVE TOUR -->
+    <section id="tour">
+      <h2>4. Interactive Onboarding Tour</h2>
+      <p>For new users, the application includes a built-in step-by-step **Interactive Tour**. It highlights key
+        components of the UI and introduces the controls.</p>
+
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Trigger Onboarding</h4>
+            <p>Click the hamburger button (⋮) in the top-right header, then select **Start Tour**.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Follow Steps</h4>
+            <p>The dashboard will dim, and a glowing highlight capsule will guide you through the client info sidebar,
+              3D avatar, and quick access modules sequentially.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Simple script to handle active navigation highlighting on scroll
+    const sections = document.querySelectorAll('section');
+    const navItems = document.querySelectorAll('.nav-item');
+    const dropdownModules = document.getElementById('dropdown-modules');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (window.pageYOffset >= (sectionTop - 150)) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('id') === `li-${current}`) {
+          item.classList.add('active');
+        }
+      });
+
+      // Auto-expand and highlight parent of the active submenu item
+      const isSubmoduleActive = ['holdings', 'leads', 'cases', 'mandates', 'cards'].includes(current);
+      if (isSubmoduleActive) {
+        dropdownModules.classList.add('open');
+        dropdownModules.classList.add('active-parent');
+      } else {
+        dropdownModules.classList.remove('active-parent');
+      }
+    });
+
+    // Toggle dropdown manually on click
+    function toggleDropdown() {
+      dropdownModules.classList.toggle('open');
+    }
+  </script>
+</body>
+
+</html>

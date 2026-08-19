@@ -959,7 +959,12 @@
         Object.entries(card.fields).forEach(([k, v]) => {
           const valStr = String(v);
           const icon = getLocalFieldIcon(k);
-          const isFullWidth = valStr.length > 25 || k.toLowerCase().includes("address") || k.toLowerCase().includes("details") || k.toLowerCase().includes("remarks");
+          let isFullWidth = k.toLowerCase().includes("address") || k.toLowerCase().includes("details") || k.toLowerCase().includes("remarks");
+          if (!isFullWidth && window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
+            isFullWidth = window.UIRenderer.calculateTextSpan(valStr, 180, "600 12px 'Outfit', sans-serif") > 1;
+          } else if (!isFullWidth) {
+            isFullWidth = valStr.length > 25;
+          }
 
           cardFieldsHtml += `
             <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}">

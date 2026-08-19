@@ -608,15 +608,19 @@ function openDetail(data) {
 
       const icon = getFieldIcon(label);
 
-      // Dynamically calculate the column span based on data length:
-      // - span 1: short text (value length <= 15)
-      // - span 2: medium text (value length > 15 && value length <= 35)
-      // - span 3: long text (value length > 35)
+      // Dynamically calculate the column span based on precise text rendering width:
       let span = 1;
-      if (valStr.length > 35 || hideLabel) {
+      if (hideLabel) {
         span = 3;
-      } else if (valStr.length > 15) {
-        span = 2;
+      } else if (window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
+        span = window.UIRenderer.calculateTextSpan(valStr, 130, "600 12px 'Outfit', sans-serif");
+      } else {
+        // Fallback if renderer utility is not loaded yet
+        if (valStr.length > 35) {
+          span = 3;
+        } else if (valStr.length > 15) {
+          span = 2;
+        }
       }
 
       const isFullWidth = span === 3;

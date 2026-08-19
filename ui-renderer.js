@@ -558,5 +558,40 @@
     }
   };
 
+  /**
+   * Helper function to calculate appropriate grid column span based on pixel text width.
+   * Uses an off-screen canvas to measure the exact text width in pixels.
+   * Falls back to character length approximations if canvas is not supported.
+   * 
+   * @param {string} text The text to measure.
+   * @param {number} colWidth Target column width in pixels (1fr size).
+   * @param {string} font Font definition string (e.g. "600 12px Outfit").
+   * @returns {number} The span count (1, 2, or 3).
+   */
+  UIRenderer.calculateTextSpan = function (text, colWidth = 140, font = "600 12px 'Outfit', sans-serif") {
+    if (!text) return 1;
+    try {
+      if (!UIRenderer._canvas) {
+        UIRenderer._canvas = document.createElement("canvas");
+      }
+      const ctx = UIRenderer._canvas.getContext("2d");
+      ctx.font = font;
+      const textWidth = ctx.measureText(String(text)).width;
+      
+      if (textWidth > colWidth * 2) {
+        return 3;
+      } else if (textWidth > colWidth) {
+        return 2;
+      }
+      return 1;
+    } catch (e) {
+      // Fallback to character length approximation if canvas/offscreen operations fail
+      const len = String(text).length;
+      if (len > 35) return 3;
+      if (len > 15) return 2;
+      return 1;
+    }
+  };
+
   window.UIRenderer = UIRenderer;
 })();

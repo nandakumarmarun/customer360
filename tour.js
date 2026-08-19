@@ -142,6 +142,14 @@ class DashboardTour {
         });
       });
     }
+
+    const helpCenterBtn = document.getElementById('help-center-btn');
+    if (helpCenterBtn && dropdown) {
+      helpCenterBtn.addEventListener('click', () => {
+        dropdown.classList.remove('show');
+        window.open('help/user_manual.html', '_blank');
+      });
+    }
   }
 
   /* ── Progress Tracking (API + local) ─────────────────────────────── */
