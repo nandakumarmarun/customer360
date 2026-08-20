@@ -51,6 +51,7 @@ window.API_CONFIG = {
     HOLDINGS_GOLD_LOANS_DETAILS: "/goldLoanDetails",
     HOLDINGS_CASA: "/casaDetails",
     HOLDINGS_CASA_CARDS: "/casaCards",
+    HOLDINGS_CASA_TRANSACTIONS: "/casaTransactions",
     HOLDINGS_DEPOSITS: "/casaDeposits",
     HOLDINGS_GOLD: "/goldAccounts",
     HOLDINGS_LOCKER: "/locker",
@@ -166,7 +167,8 @@ window.HOLDING_CONFIG = [
         paramKey: "customerId",
         rightTabs: [
           { id: "details", title: "Details" },
-          { id: "debitCards", title: "Debit Cards", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_CASA_CARDS, paramKey: "casaId", idField: "number" }
+          { id: "debitCards", title: "Debit Cards", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_CASA_CARDS, paramKey: "casaId", idField: "number" },
+          { id: "transactions", title: "Transactions", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_CASA_TRANSACTIONS, paramKey: "casaId", idField: "number" }
         ]
       },
       { id: "casaDeposits", title: "DEPOSITS", icon: "📈", matchType: "CASA Deposits", endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_DEPOSITS, summaryEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_DEPOSITS_SUMMARY, paramKey: "customerId" },

@@ -526,6 +526,20 @@
     </div>
   </div>
 
+  <!-- ===== TRANSACTION DETAIL PANEL (CASA) ===== -->
+  <div id="txn-detail-backdrop" class="txn-detail-backdrop hidden"></div>
+  <div id="txn-detail-panel" class="txn-detail-panel hidden">
+    <div class="txn-detail-header">
+      <div class="txn-detail-header-left">
+        <h2>Transaction Detail</h2>
+      </div>
+      <button class="txn-detail-close-btn" id="txn-detail-close-btn" aria-label="Close Details">&times;</button>
+    </div>
+    <div class="txn-detail-body" id="txn-detail-body">
+      <!-- Detailed fields injected dynamically -->
+    </div>
+  </div>
+
   <!-- ===== FLOATING SEARCH BUTTON ===== -->
   <a href="customer-search/customer-search.html" id="floating-search-btn" class="floating-search-btn"
     onclick="event.preventDefault(); window.UIRenderer && window.UIRenderer.triggerSearchTransition((window.API_CONFIG && window.API_CONFIG.CUSTOMER_SEARCH_URL) || 'customer-search/customer-search.html');">

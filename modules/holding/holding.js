@@ -907,6 +907,8 @@
             sectionsHtml += renderSectionBlock(sec);
           });
           $container.html(sectionsHtml);
+        } else if (subTabId === "transactions") {
+          renderTransactions(acc, $container);
         } else {
           // Find configuration of this sub-tab
           const rtConfig = activeTab.rightTabs.find(rt => rt.id === subTabId);
@@ -1013,10 +1015,190 @@
         }
       }
 
+
+
+      function renderTransactionIconHtml(txn) {
+        const isCredit = String(txn.type).toLowerCase() === 'credit';
+        return isCredit ? 'C' : 'D';
+      }
+
+      function renderTransactions(acc, $container) {
+        const rtConfig = activeTab.rightTabs.find(rt => rt.id === "transactions");
+        if (!rtConfig || !rtConfig.endpoint) {
+          $container.html(`<div style="text-align: center; color: var(--muted); padding: 50px 10px; font-style: italic;">Configuration error.</div>`);
+          return;
+        }
+
+        const params = {};
+        const paramKey = rtConfig.paramKey || "casaId";
+        const valField = rtConfig.idField || "number";
+        params[paramKey] = acc[valField];
+
+        if (window.UIRenderer) {
+          window.UIRenderer.showLoader("#preview-tab-content-area");
+        } else {
+          $container.html(`<div style="text-align: center; color: var(--muted); padding: 30px 10px;">Loading Transactions...</div>`);
+        }
+
+        if (window.ApiService) {
+          window.ApiService.get(
+            rtConfig.endpoint,
+            params,
+            function (response) {
+              if (window.UIRenderer) window.UIRenderer.hideLoader("#preview-tab-content-area");
+              let txns = Array.isArray(response) ? response : [];
+              if (txns.length === 0) {
+                $container.html(`<div style="text-align: center; color: var(--muted); padding: 50px 10px; font-style: italic; font-size: 13px;">No transactions linked to this account.</div>`);
+                return;
+              }
+
+              let txnsHtml = '<div style="display: flex; flex-direction: column; gap: 8px; padding: 4px;">';
+              txns.forEach(txn => {
+                const iconHtml = renderTransactionIconHtml(txn);
+                const isCredit = String(txn.type).toLowerCase() === 'credit';
+                const status = (txn.fields && txn.fields["Status"]) || "Success";
+                const statusLower = status.toLowerCase();
+                let statusClass = 'pending';
+                if (statusLower === 'success' || statusLower === 'completed') {
+                  statusClass = 'success';
+                } else if (statusLower === 'failed' || statusLower === 'declined') {
+                  statusClass = 'failed';
+                }
+
+                txnsHtml += `
+                  <div class="txn-list-item" data-txn-id="${txn.id}">
+                    <div class="txn-item-left">
+                      <div class="txn-category-icon ${isCredit ? 'credit' : 'debit'}">${iconHtml}</div>
+                      <div class="txn-meta">
+                        <span class="txn-description">${txn.description}</span>
+                        <span class="txn-date">${txn.date}</span>
+                      </div>
+                    </div>
+                    <div class="txn-item-right">
+                      <div class="txn-amount-wrap">
+                        <span class="txn-amount ${isCredit ? 'credit' : 'debit'}">${txn.amount}</span>
+                        <span class="txn-badge ${statusClass}">${status}</span>
+                      </div>
+                      <div class="txn-arrow-indicator">→</div>
+                    </div>
+                  </div>
+                `;
+              });
+              txnsHtml += '</div>';
+              $container.html(txnsHtml);
+
+              // Click handler on list items to open transaction details offcanvas
+              $container.find('.txn-list-item').on('click', function() {
+                const txnId = $(this).data('txn-id');
+                const txnData = txns.find(t => t.id === txnId);
+                if (txnData) {
+                  openTxnDetailOffcanvas(txnData);
+                }
+              });
+            },
+            function (error) {
+              if (window.UIRenderer) window.UIRenderer.hideLoader("#preview-tab-content-area");
+              $container.html(`<div style="text-align: center; color: #ef4444; padding: 50px 10px; font-size: 13px;">Error loading transactions: ${error}</div>`);
+            }
+          );
+        } else {
+          if (window.UIRenderer) window.UIRenderer.hideLoader("#preview-tab-content-area");
+          $container.html("<div style='text-align: center; color: #ef4444; padding: 40px;'>API Service is unavailable.</div>");
+        }
+      }
+
+      function openTxnDetailOffcanvas(txn) {
+        const $panel = $("#txn-detail-panel");
+        const $backdrop = $("#txn-detail-backdrop");
+        const $body = $("#txn-detail-body");
+
+        if (!$panel.length || !$backdrop.length || !$body.length) return;
+
+        // Build details content
+        let fieldsHtml = '';
+        if (txn.fields) {
+          fieldsHtml += `<div class="detail-fields-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; gap: 1px;">`;
+          Object.entries(txn.fields).forEach(([k, v]) => {
+            const valStr = String(v);
+            const icon = getLocalFieldIcon(k);
+            let highlightStyle = '';
+            if (k.toLowerCase() === 'status') {
+              const isSuccess = valStr.toLowerCase() === 'success';
+              highlightStyle = `color: ${isSuccess ? '#10b981' : '#ef4444'}; font-weight: 800;`;
+            } else if (k.toLowerCase() === 'amount') {
+              const isCredit = String(txn.type).toLowerCase() === 'credit';
+              highlightStyle = `color: ${isCredit ? '#10b981' : 'var(--text)'}; font-weight: 800; font-size: 16px;`;
+            }
+
+            let isFullWidth = k.toLowerCase().includes("id") || k.toLowerCase().includes("reference") || k.toLowerCase().includes("merchant") || k.toLowerCase().includes("date") || k.toLowerCase().includes("remarks");
+            if (!isFullWidth && window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
+              isFullWidth = window.UIRenderer.calculateTextSpan(valStr, 180, "600 12px 'Outfit', sans-serif") > 1;
+            } else if (!isFullWidth) {
+              isFullWidth = valStr.length > 20;
+            }
+
+            fieldsHtml += `
+              <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: var(--bg2);">
+                <div class="df-info" style="display: flex; flex-direction: column;">
+                  <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-bottom: 4px;">
+                    <span class="df-icon-inline">${icon}</span> ${k}
+                  </label>
+                  <span class="df-value" style="display: block; font-size: 13px; font-weight: 600; color: var(--text); ${highlightStyle}">${valStr}</span>
+                </div>
+              </div>
+            `;
+          });
+          fieldsHtml += `</div>`;
+        }
+
+        const iconHtml = renderTransactionIconHtml(txn);
+        const isCredit = String(txn.type).toLowerCase() === 'credit';
+
+        const contentHtml = `
+          <div style="text-align: center; padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+            <div class="txn-category-icon-lg ${isCredit ? 'credit' : 'debit'}" style="width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); font-size: 28px; font-weight: 800;">
+              ${iconHtml}
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-size: 16px; font-weight: 800; color: var(--text);">${txn.description}</span>
+              <span style="font-size: 12px; color: var(--muted);">${txn.category}</span>
+            </div>
+            <div style="font-size: 26px; font-weight: 900; margin-top: 5px; ${isCredit ? 'color: #10b981;' : 'color: var(--text);'}">${txn.amount}</div>
+          </div>
+          ${fieldsHtml}
+        `;
+
+        $body.html(contentHtml);
+
+        // Open offcanvas
+        $panel.removeClass("hidden");
+        $backdrop.removeClass("hidden");
+        // force reflow
+        $panel[0].offsetHeight;
+        $backdrop[0].offsetHeight;
+        $panel.addClass("active");
+        $backdrop.addClass("active");
+
+        // Bind close events
+        function closeTxnPanel() {
+          $panel.removeClass("active");
+          $backdrop.removeClass("active");
+          setTimeout(() => {
+            if (!$panel.hasClass("active")) {
+              $panel.addClass("hidden");
+              $backdrop.addClass("hidden");
+            }
+          }, 400);
+        }
+
+        $("#txn-detail-close-btn").off("click").on("click", closeTxnPanel);
+        $backdrop.off("click").on("click", closeTxnPanel);
+      }
+
       if (activeTab && activeTab.rightTabs) {
         // Render sub-tabs container
         let tabsHtml = `
-          <div class="preview-tabs-bar" style="display: flex; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 14px; flex-shrink: 0;">
+          <div class="preview-tabs-bar" style="display: flex; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-top: 12px; margin-bottom: 14px; margin-left: 12px; margin-right: 12px; flex-shrink: 0;">
         `;
         activeTab.rightTabs.forEach(rt => {
           const isRtActive = rt.id === activePreviewTabId;

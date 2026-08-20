@@ -5094,6 +5094,204 @@
       "status": "skipped",
       "timestamp": "2026-08-18T05:45:15.721Z",
       "id": "dGLY_LQ"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-19T09:07:38.919Z",
+      "id": "mKdDuRr"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-19T09:07:39.792Z",
+      "id": "tmNnkJ5"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-19T09:14:06.625Z",
+      "id": "upaP2Z1"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-19T09:14:07.505Z",
+      "id": "Q4C3_Oi"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-19T09:22:08.789Z",
+      "id": "0NgsIgU"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-19T09:22:09.533Z",
+      "id": "Wq5a125"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-19T10:05:12.582Z",
+      "id": "JDx5hue"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-19T10:05:13.721Z",
+      "id": "OKNzXp4"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-19T11:05:40.485Z",
+      "id": "9J3xijG"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-19T11:05:46.581Z",
+      "id": "zfnHrjN"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-19T11:13:09.754Z",
+      "id": "j8e1Boq"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-19T11:13:10.781Z",
+      "id": "cp2589N"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-19T11:18:13.843Z",
+      "id": "zGn0Byz"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-19T11:18:14.962Z",
+      "id": "jsJNQj0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-19T11:32:07.219Z",
+      "id": "Wo9pppw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-19T11:32:10.355Z",
+      "id": "ecqljTC"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-19T12:00:47.043Z",
+      "id": "8q6KHt2"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-19T12:00:47.888Z",
+      "id": "3uHupsG"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-19T12:09:35.154Z",
+      "id": "2J5x-MV"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-19T12:55:42.334Z",
+      "id": "DhzZr5q"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-20T05:40:09.109Z",
+      "id": "eQL0GCY"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-20T05:40:10.179Z",
+      "id": "gIbBJiJ"
     }
   ],
   "activities": {
@@ -5750,6 +5948,162 @@
       "count": "1 Fund",
       "status": "100% Secure",
       "id": "mf-sum1"
+    }
+  ],
+  "casaTransactions": [
+    {
+      "id": "tx1",
+      "customer": "NX-4829-0055",
+      "casaId": "5D0100123456789",
+      "date": "18-Aug-2026",
+      "description": "UPI/Swiggy/20260818",
+      "category": "Food & Dining",
+      "amount": "₹450.00",
+      "type": "Debit",
+      "fields": {
+        "Transaction ID": "TXN2026081889234",
+        "Reference Number": "UPI-892348092",
+        "Date & Time": "18-Aug-2026 12:45 PM",
+        "Merchant Name": "Swiggy Delivery",
+        "Category": "Food & Dining",
+        "Payment Mode": "UPI",
+        "Transaction Type": "Debit",
+        "Amount": "₹450.00",
+        "Status": "Success",
+        "Remarks": "Lunch order"
+      }
+    },
+    {
+      "id": "tx2",
+      "customer": "NX-4829-0055",
+      "casaId": "5D0100123456789",
+      "date": "17-Aug-2026",
+      "description": "Salary Credit/Lenovo",
+      "category": "Salary",
+      "amount": "₹1,20,000.00",
+      "type": "Credit",
+      "fields": {
+        "Transaction ID": "TXN2026081700987",
+        "Reference Number": "NEFT-LENOVO-8923",
+        "Date & Time": "17-Aug-2026 09:00 AM",
+        "Merchant Name": "Lenovo India Corp",
+        "Category": "Salary",
+        "Payment Mode": "NEFT Transfer",
+        "Transaction Type": "Credit",
+        "Amount": "₹1,20,000.00",
+        "Status": "Success",
+        "Remarks": "Monthly Salary Credit"
+      }
+    },
+    {
+      "id": "tx3",
+      "customer": "NX-4829-0055",
+      "casaId": "5D0100123456789",
+      "date": "15-Aug-2026",
+      "description": "ATM Cash Withdrawal/Tris",
+      "category": "Cash",
+      "amount": "₹10,000.00",
+      "type": "Debit",
+      "fields": {
+        "Transaction ID": "TXN2026081545678",
+        "Reference Number": "ATM-THRIS-002",
+        "Date & Time": "15-Aug-2026 04:15 PM",
+        "Merchant Name": "Thrissur Main ATM 2",
+        "Category": "Cash Withdrawal",
+        "Payment Mode": "ATM Debit Card",
+        "Transaction Type": "Debit",
+        "Amount": "₹10,000.00",
+        "Status": "Success",
+        "Remarks": "Self cash withdrawal"
+      }
+    },
+    {
+      "id": "tx4",
+      "customer": "NX-4829-0055",
+      "casaId": "5D0100123456789",
+      "date": "12-Aug-2026",
+      "description": "Amazon/Refund/202608",
+      "category": "Shopping",
+      "amount": "₹2,499.00",
+      "type": "Credit",
+      "fields": {
+        "Transaction ID": "TXN2026081267890",
+        "Reference Number": "REF-AMZN-209",
+        "Date & Time": "12-Aug-2026 11:30 AM",
+        "Merchant Name": "Amazon India",
+        "Category": "Shopping & Lifestyle",
+        "Payment Mode": "Refund to Card",
+        "Transaction Type": "Credit",
+        "Amount": "₹2,499.00",
+        "Status": "Success",
+        "Remarks": "Refund for order #408-290"
+      }
+    },
+    {
+      "id": "tx5",
+      "customer": "NX-4829-0055",
+      "casaId": "5D0100123456789",
+      "date": "10-Aug-2026",
+      "description": "Netflix Subscription/Card",
+      "category": "Entertainment",
+      "amount": "₹649.00",
+      "type": "Debit",
+      "fields": {
+        "Transaction ID": "TXN2026081011223",
+        "Reference Number": "RECUR-NETFLIX-9",
+        "Date & Time": "10-Aug-2026 02:00 AM",
+        "Merchant Name": "Netflix Entertainment",
+        "Category": "Entertainment / Subscriptions",
+        "Payment Mode": "Auto-Debit Debit Card",
+        "Transaction Type": "Debit",
+        "Amount": "₹649.00",
+        "Status": "Success",
+        "Remarks": "Monthly renewal fee"
+      }
+    },
+    {
+      "id": "tx6",
+      "customer": "NX-4829-0055",
+      "casaId": "5D0200987654321",
+      "date": "18-Aug-2026",
+      "description": "Wire Transfer/Citi NY",
+      "category": "Transfer",
+      "amount": "$5,000.00",
+      "type": "Credit",
+      "fields": {
+        "Transaction ID": "TXN2026081832049",
+        "Reference Number": "WIRE-CITI-NY-90",
+        "Date & Time": "18-Aug-2026 10:20 AM",
+        "Merchant Name": "Citibank New York",
+        "Category": "Wire Transfer",
+        "Payment Mode": "Wire",
+        "Transaction Type": "Credit",
+        "Amount": "$5,000.00",
+        "Status": "Success",
+        "Remarks": "Consulting services payment"
+      }
+    },
+    {
+      "id": "tx7",
+      "customer": "NX-4829-0055",
+      "casaId": "5D0200987654321",
+      "date": "15-Aug-2026",
+      "description": "Starbucks/Manhattan/POS",
+      "category": "Food & Dining",
+      "amount": "$24.50",
+      "type": "Debit",
+      "fields": {
+        "Transaction ID": "TXN2026081512390",
+        "Reference Number": "POS-SBUX-893",
+        "Date & Time": "15-Aug-2026 08:15 AM",
+        "Merchant Name": "Starbucks Manhattan",
+        "Category": "Food & Dining",
+        "Payment Mode": "POS Debit Card",
+        "Transaction Type": "Debit",
+        "Amount": "$24.50",
+        "Status": "Success",
+        "Remarks": "Breakfast & Coffee"
+      }
     }
   ]
 }
