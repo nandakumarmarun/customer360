@@ -55,6 +55,84 @@
     },
 
     /**
+     * Standardizes and merges header statistics from multiple sources, then renders them.
+     * @param {Object|Array} newStats The stats object or array to merge.
+     * @param {boolean} isSeparateApi If true, merges into the existing stats cache. If false, resets the cache.
+     */
+    mergeAndRenderHeaderStats: function (newStats, isSeparateApi) {
+      console.log("[UIRenderer] mergeAndRenderHeaderStats start. isSeparateApi:", isSeparateApi, "incoming stats:", newStats);
+      if (!window.headerStatsCache || !isSeparateApi) {
+        window.headerStatsCache = [];
+      }
+
+      let incoming = [];
+      if (newStats && typeof newStats === 'object') {
+        if (Array.isArray(newStats)) {
+          incoming = newStats;
+        } else {
+          for (const [key, val] of Object.entries(newStats)) {
+            incoming.push({ label: key, value: val });
+          }
+        }
+      }
+
+      incoming.forEach(stat => {
+        if (!stat || !stat.label) return;
+        const idx = window.headerStatsCache.findIndex(item => item.label.toLowerCase() === stat.label.toLowerCase());
+        if (idx !== -1) {
+          window.headerStatsCache[idx] = { ...window.headerStatsCache[idx], ...stat };
+        } else {
+          window.headerStatsCache.push(stat);
+        }
+      });
+
+      console.log("[UIRenderer] Merged headerStatsCache is now:", window.headerStatsCache);
+
+      const $headerCenter = $('.header-center');
+      $headerCenter.empty();
+
+      window.headerStatsCache.forEach((stat, index) => {
+        let valClass = stat.class || '';
+        if (!valClass) {
+          const lblLower = stat.label.toLowerCase();
+          if (lblLower === 'credit score') valClass = 'credit-good';
+          if (lblLower === 'risk level') valClass = 'risk-low';
+        }
+
+        $headerCenter.append(`
+          <div class="header-stat">
+            <span class="stat-label">${escapeHtml(stat.label)}</span>
+            <span class="stat-value ${valClass}">${escapeHtml(stat.value)}</span>
+          </div>
+        `);
+        if (index < window.headerStatsCache.length - 1) {
+          $headerCenter.append('<div class="header-divider"></div>');
+        }
+      });
+    },
+
+    /**
+     * Renders the header statistics dynamically in the top bar.
+     */
+    renderHeaderStats: function (headerStats, fallbackData) {
+      if (fallbackData) {
+        // Called from renderSummary: reset cache and render summary stats
+        let summaryStats = {};
+        if (headerStats && typeof headerStats === 'object') {
+          summaryStats = headerStats;
+        } else {
+          if (fallbackData.netWorth) summaryStats["Net Worth"] = fallbackData.netWorth;
+          if (fallbackData.creditScore) summaryStats["Credit Score"] = fallbackData.creditScore;
+          if (fallbackData.riskLevel) summaryStats["Risk Level"] = fallbackData.riskLevel;
+        }
+        this.mergeAndRenderHeaderStats(summaryStats, false);
+      } else {
+        // Called from separate API response: merge stats
+        this.mergeAndRenderHeaderStats(headerStats, true);
+      }
+    },
+
+    /**
      * Renders the common customer summary details across the sidebar, header, and avatar panel.
      */
     renderSummary: function (data) {
@@ -120,35 +198,7 @@
       $('.header-name').text(data.name);
       $('.header-id').text(`CID · ${data.cid}`);
 
-      const $headerCenter = $('.header-center');
-      $headerCenter.empty();
-
-      let stats = [];
-
-      // Support dynamic arbitrary header stats if provided as an object
-      if (data.headerStats && typeof data.headerStats === 'object') {
-        for (const [key, val] of Object.entries(data.headerStats)) {
-          stats.push({ label: key, value: val });
-        }
-      } else {
-        // Fallback: check for standard fields, only add if they exist in the JSON
-        if (data.netWorth) stats.push({ label: "Net Worth", value: data.netWorth });
-        if (data.creditScore) stats.push({ label: "Credit Score", value: data.creditScore, class: "credit-good" });
-        if (data.riskLevel) stats.push({ label: "Risk Level", value: data.riskLevel, class: "risk-low" });
-      }
-
-      // Render stats dynamically with dividers
-      stats.forEach((stat, index) => {
-        $headerCenter.append(`
-          <div class="header-stat">
-            <span class="stat-label">${escapeHtml(stat.label)}</span>
-            <span class="stat-value ${stat.class || ''}">${escapeHtml(stat.value)}</span>
-          </div>
-        `);
-        if (index < stats.length - 1) {
-          $headerCenter.append('<div class="header-divider"></div>');
-        }
-      });
+      this.renderHeaderStats(data.headerStats, data);
 
       // 3. Sidebar (Scene 2)
       updateAvatar($('.profile-avatar-large'), data.avatarUrl || data.avatarImage, data.initials);

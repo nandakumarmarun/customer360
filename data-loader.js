@@ -47,6 +47,54 @@
 
   const DataLoader = {
     /**
+     * Loads the header statistics from a separate API endpoint.
+     */
+    loadHeaderStats: function() {
+      const endpoint = window.API_CONFIG && window.API_CONFIG.ENDPOINTS && window.API_CONFIG.ENDPOINTS.HEADER_STATS;
+      if (!endpoint || !window.ApiService) {
+        console.warn("[DataLoader] Missing HEADER_STATS endpoint or ApiService");
+        return;
+      }
+
+      const cid = (window.ParamsData && window.ParamsData.getCustomerId) ? window.ParamsData.getCustomerId() : null;
+      if (!cid) {
+        console.warn("[DataLoader] No customer ID found for loadHeaderStats");
+        return;
+      }
+
+      const paramKey = (window.API_CONFIG && window.API_CONFIG.PARAMS && window.API_CONFIG.PARAMS.CUSTOMER_ID) || "customerId";
+      const params = {};
+      params[paramKey] = cid;
+
+      console.log(`[DataLoader] Fetching headerStats from ${endpoint} with params:`, params);
+
+      window.ApiService.get(
+        endpoint,
+        params,
+        function(response) {
+          console.log("[DataLoader] Fetching headerStats success. Response:", response);
+          if (response && window.UIRenderer && window.UIRenderer.renderHeaderStats) {
+            const statsData = Array.isArray(response) ? response[0] : response;
+            if (statsData) {
+              const cleanStats = { ...statsData };
+              delete cleanStats.customerId;
+              delete cleanStats.id;
+              console.log("[DataLoader] Sending cleanStats to UIRenderer:", cleanStats);
+              window.UIRenderer.renderHeaderStats(cleanStats);
+            } else {
+              console.warn("[DataLoader] statsData is empty/falsy");
+            }
+          } else {
+            console.warn("[DataLoader] Response is empty or UIRenderer.renderHeaderStats is missing");
+          }
+        },
+        function(errorMsg) {
+          console.error("[DataLoader] Failed to load header stats from separate API:", errorMsg);
+        }
+      );
+    },
+
+    /**
      * Single API call — fetches everything at once and
      * distributes each section to the correct renderer.
      */
@@ -98,6 +146,9 @@
               window.ParamsData.set('panNumber', pan);
             }
             window.UIRenderer.renderSummary(response.summary);
+
+            // Fetch headerStats from the separate API
+            DataLoader.loadHeaderStats();
           }
 
           // 2. Render each card section

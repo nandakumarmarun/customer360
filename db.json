@@ -16,6 +16,11 @@
       "avatarUrl": "",
       "name": "Anderson",
       "initials": "A",
+      "headerStats": {
+        "Reward points Redeemed": "1245 pts",
+        "Reward points Balance": "1245 pts",
+        "Reward Points Expiry": "1245 pts"
+      },
       "subtitle": "Cooporate Customer Insight",
       "cid": "NX-4829-0055",
       "panNumber": "ABCDE1234F",
@@ -24,11 +29,6 @@
       "accountsCount": "12",
       "tenure": "8yr",
       "kycProgress": "99%",
-      "headerStats": {
-        "Reward points Redeemed": "1245 pts",
-        "Reward points Balance": "1245 pts",
-        "Reward Points Expiry": "1245 pts"
-      },
       "gender": "Male",
       "branchId": "8082",
       "branchName": "New York Office",
@@ -1144,7 +1144,7 @@
   ],
   "theme": {
     "mode": "dark",
-    "color": "red"
+    "color": "neon"
   },
   "quickModules": [
     {
@@ -5490,6 +5490,276 @@
       "status": "skipped",
       "timestamp": "2026-08-21T05:03:26.300Z",
       "id": "D_J6RK-"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T08:45:07.483Z",
+      "id": "tvkuz3s"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T08:45:08.321Z",
+      "id": "72SJB89"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T08:46:11.504Z",
+      "id": "XU1yKFW"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T08:46:12.188Z",
+      "id": "gogRFrt"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T08:46:37.231Z",
+      "id": "o9bbCat"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T08:46:38.612Z",
+      "id": "GecljM9"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T08:47:58.835Z",
+      "id": "MMmDYuA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T08:48:00.031Z",
+      "id": "k-leIdp"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T08:51:52.509Z",
+      "id": "gpg2xvO"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T08:51:56.612Z",
+      "id": "NaHLFnn"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T08:58:06.396Z",
+      "id": "D_LcZ0r"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T08:58:08.390Z",
+      "id": "1HHYti1"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T08:59:49.028Z",
+      "id": "BdtX95b"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T08:59:49.923Z",
+      "id": "cqjt3ke"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T09:00:04.652Z",
+      "id": "n-A5mSw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T09:00:05.922Z",
+      "id": "22sY2JI"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T09:04:38.355Z",
+      "id": "8kbwai7"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T09:04:40.145Z",
+      "id": "pS_HISN"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T09:04:49.500Z",
+      "id": "A_Yoeb_"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T09:04:51.428Z",
+      "id": "DxolTCk"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T09:05:50.062Z",
+      "id": "RHWOLMl"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T09:05:53.875Z",
+      "id": "8N6k1Ym"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T09:10:09.884Z",
+      "id": "de-bJvv"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T09:10:11.754Z",
+      "id": "Hl-b3ts"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T09:19:19.270Z",
+      "id": "MlqjPHI"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T09:19:20.213Z",
+      "id": "s1HYS60"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T09:41:49.532Z",
+      "id": "5O5tIXe"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T09:41:50.759Z",
+      "id": "DoNRG_r"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T09:55:30.511Z",
+      "id": "1EdmDIx"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T09:55:31.473Z",
+      "id": "QURXSyh"
     }
   ],
   "activities": {
@@ -6302,6 +6572,14 @@
         "Status": "Success",
         "Remarks": "Breakfast & Coffee"
       }
+    }
+  ],
+  "headerStats": [
+    {
+      "customerId": "NX-4829-0055",
+      "id": 1,
+      "Reward points Balance": "1245 pts",
+      "Reward Points Expiry": "1245 pts"
     }
   ]
 }

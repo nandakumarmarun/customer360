@@ -38,6 +38,7 @@ window.API_CONFIG = {
   // Grouped Endpoints for easy modification
   ENDPOINTS: {
     CUSTOMER: "/customer",
+    HEADER_STATS: "/headerStats",
     CUSTOMERS: "/customers",
     LEADS: "/leads",
     CASES: "/cases",
