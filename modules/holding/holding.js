@@ -857,6 +857,7 @@
 
       function renderSectionBlock(sec) {
         let fieldsHtml = '';
+        let totalSpan = 0;
         if (sec.fields) {
           Object.entries(sec.fields).forEach(([key, val]) => {
             const valStr = String(val);
@@ -867,6 +868,9 @@
             } else if (!isFullWidth) {
               isFullWidth = valStr.length > 20;
             }
+
+            const span = isFullWidth ? 2 : 1;
+            totalSpan += span;
 
             fieldsHtml += `
               <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="padding: 10px; border-bottom: 1px solid var(--border);">
@@ -879,6 +883,14 @@
               </div>
             `;
           });
+
+          // Fill empty cells to prevent the solid background from showing
+          const remainder = totalSpan % 2;
+          if (remainder !== 0) {
+            fieldsHtml += `
+              <div class="detail-field-card empty-placeholder" style="padding: 10px; border-bottom: 1px solid var(--border);"></div>
+            `;
+          }
         }
 
         return `
@@ -945,10 +957,13 @@
                 cards.forEach(card => {
                   let cardFieldsHtml = '';
 
+                  let totalSpan = 0;
+
                   // Render card image inside a cell of the detail fields grid
                   if (card.image) {
                     const imgTag = renderCardImage(card.image);
                     if (imgTag) {
+                      totalSpan += 2; // card image spans full-width
                       cardFieldsHtml += `
                         <div class="detail-field-card full-width" style="padding: 10px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px;">
                           <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-bottom: 4px;">
@@ -973,6 +988,9 @@
                         isFullWidth = valStr.length > 20;
                       }
 
+                      const span = isFullWidth ? 2 : 1;
+                      totalSpan += span;
+
                       cardFieldsHtml += `
                         <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="padding: 10px; border-bottom: 1px solid var(--border);">
                           <div class="df-info">
@@ -984,6 +1002,13 @@
                         </div>
                       `;
                     });
+                  }
+
+                  const remainder = totalSpan % 2;
+                  if (remainder !== 0) {
+                    cardFieldsHtml += `
+                      <div class="detail-field-card empty-placeholder" style="padding: 10px; border-bottom: 1px solid var(--border);"></div>
+                    `;
                   }
 
                   cardsHtml += `
@@ -1116,6 +1141,7 @@
 
         // Build details content
         let fieldsHtml = '';
+        let totalSpan = 0;
         if (txn.fields) {
           fieldsHtml += `<div class="detail-fields-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; gap: 1px;">`;
           Object.entries(txn.fields).forEach(([k, v]) => {
@@ -1137,6 +1163,9 @@
               isFullWidth = valStr.length > 20;
             }
 
+            const span = isFullWidth ? 2 : 1;
+            totalSpan += span;
+
             fieldsHtml += `
               <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: var(--bg2);">
                 <div class="df-info" style="display: flex; flex-direction: column;">
@@ -1148,6 +1177,13 @@
               </div>
             `;
           });
+
+          const remainder = totalSpan % 2;
+          if (remainder !== 0) {
+            fieldsHtml += `
+              <div class="detail-field-card empty-placeholder" style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: var(--bg2);"></div>
+            `;
+          }
           fieldsHtml += `</div>`;
         }
 

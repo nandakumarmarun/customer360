@@ -594,6 +594,7 @@ function openDetail(data) {
 
     let sectionHeader = `<h3>${sec.name}</h3>`;
     let fieldsHtml = '';
+    let totalSpan = 0;
 
     Object.entries(sec.fields).forEach(([label, v]) => {
       let valStr = "";
@@ -623,6 +624,8 @@ function openDetail(data) {
         }
       }
 
+      totalSpan += span;
+
       const isFullWidth = span === 3;
       const isSpan2 = span === 2;
       const isInline = false;
@@ -636,6 +639,13 @@ function openDetail(data) {
         </div>
       `;
     });
+
+    // Fill empty cells to prevent the solid background from showing
+    const remainder = totalSpan % 3;
+    const emptyNeeded = remainder === 0 ? 0 : 3 - remainder;
+    for (let i = 0; i < emptyNeeded; i++) {
+      fieldsHtml += `<div class="detail-field-card empty-placeholder"></div>`;
+    }
 
     secEl.innerHTML = `
       ${sectionHeader}

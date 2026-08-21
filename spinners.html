@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CUSTOMER360 · Banking Spinner Showcase</title>
+  <!-- Load fonts and style.css for general variables and consistency -->
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="style.css">
+  <!-- Load Lottie-web from CDNjs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <!-- Load jQuery since Customer360 uses it -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <style>
+    /* Reset & Base Premium Styles */
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 0.4s ease, color 0.4s ease;
+      position: relative;
+    }
+
+    /* Ambient background glowing orbs */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      opacity: 0.15;
+      transition: background 0.5s ease;
+    }
+    .orb-1 {
+      top: -10%;
+      left: 10%;
+      width: 400px;
+      height: 400px;
+      background: var(--accent2);
+    }
+    .orb-2 {
+      bottom: -10%;
+      right: 15%;
+      width: 500px;
+      height: 500px;
+      background: var(--accent);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Glassmorphic Header */
+    header.showcase-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 30px;
+      border-radius: var(--radius);
+      background: rgba(28, 31, 43, 0.45);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      margin-bottom: 40px;
+      box-shadow: var(--shadow);
+    }
+
+    body.light-mode header.showcase-header {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-hexagon {
+      font-size: 28px;
+      color: var(--accent2);
+      text-shadow: 0 0 15px var(--glow-shadow);
+      animation: hexPulse 3s infinite ease-in-out;
+    }
+    .logo-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--text);
+    }
+    .logo-subtitle {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* Custom Theme Controls in Header */
+    .controls-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .theme-chip {
+      background: var(--glass2);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    .theme-chip:hover {
+      background: var(--glass);
+      border-color: var(--accent2);
+      transform: translateY(-1px);
+    }
+    .theme-chip.active {
+      background: var(--accent);
+      border-color: var(--accent2);
+      box-shadow: 0 0 15px var(--glow-shadow);
+    }
+
+    /* Intro Section */
+    .intro-section {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .intro-section h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--text) 30%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .intro-section p {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Main Grid Layout */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    /* Premium Animation Card */
+    .spinner-card {
+      background: rgba(28, 31, 43, 0.45);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    body.light-mode .spinner-card {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .spinner-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px var(--glow-shadow-weak);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    body.light-mode .card-badge {
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .animation-display-window {
+      height: 200px;
+      background: rgba(18, 20, 28, 0.3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    body.light-mode .animation-display-window {
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    .lottie-container {
+      width: 130px;
+      height: 130px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    /* Fallback spinner style if Lottie fails */
+    .fallback-spinner {
+      display: none; /* Shown dynamically via JS if Lottie load fails */
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.05);
+      border-top-color: var(--accent2);
+      animation: rotateSpinner 1s linear infinite;
+    }
+
+    /* Loading text style below animation */
+    .loading-text-preview {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 12px;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+
+    .card-info {
+      flex-grow: 1;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* Inline controls */
+    .card-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+    body.light-mode .card-controls {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.03);
+    }
+    .control-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+    .control-label {
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .control-value {
+      color: var(--text);
+      font-weight: 700;
+    }
+    .slider-input {
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      -webkit-appearance: none;
+      margin-top: 4px;
+    }
+    .slider-input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent2);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+    .slider-input::-webkit-slider-thumb:hover {
+      transform: scale(1.3);
+    }
+    .text-input {
+      width: 100%;
+      background: rgba(0,0,0,0.2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      padding: 6px 10px;
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+    }
+    .text-input:focus {
+      border-color: var(--accent2);
+    }
+
+    /* Tabs & Code Area */
+    .tabs-bar {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+    }
+    .tab-btn.active {
+      color: var(--accent2);
+      border-bottom-color: var(--accent2);
+    }
+
+    .code-window {
+      background: #090a0f;
+      border-radius: 8px;
+      padding: 14px;
+      max-height: 160px;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+    }
+    .code-window pre {
+      margin: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #9cdcfe;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .copy-btn:hover {
+      background: var(--accent2);
+      border-color: var(--accent2);
+    }
+
+    /* Interactive Sandbox Section */
+    .sandbox-section {
+      background: rgba(28, 31, 43, 0.45);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 40px;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      margin-bottom: 60px;
+    }
+    body.light-mode .sandbox-section {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .sandbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .sandbox-title h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .sandbox-title p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .sandbox-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 40px;
+    }
+    @media (max-width: 900px) {
+      .sandbox-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sandbox-picker-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .preset-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.3s ease;
+    }
+    .preset-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(5px);
+    }
+    .preset-card.active {
+      background: var(--glass2);
+      border-color: var(--accent2);
+      box-shadow: 0 0 15px var(--glow-shadow-weak);
+    }
+    .preset-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .preset-info h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 2px;
+      color: var(--text);
+    }
+    .preset-info p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Mock Card Component with Simulated Loader */
+    .mock-dashboard-card {
+      background: #12141c;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
+    }
+    body.light-mode .mock-dashboard-card {
+      background: #f8fafc;
+      border-color: rgba(0,0,0,0.06);
+    }
+
+    .mock-card-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.02);
+    }
+    body.light-mode .mock-card-header {
+      border-bottom-color: rgba(0,0,0,0.05);
+      background: rgba(0,0,0,0.02);
+    }
+
+    .mock-card-title {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mock-card-action {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 10px var(--glow-shadow-weak);
+    }
+    .mock-card-action:hover {
+      background: var(--accent2);
+      transform: scale(1.03);
+    }
+
+    .mock-card-content {
+      padding: 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .mock-balance-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .mock-val {
+      font-size: 28px;
+      font-weight: 900;
+      font-family: 'Outfit', sans-serif;
+      color: var(--text);
+    }
+    .mock-txn-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 8px;
+    }
+    body.light-mode .mock-txn-item {
+      background: rgba(0,0,0,0.01);
+      border-color: rgba(0,0,0,0.03);
+    }
+
+    /* Sandbox Loader Overlay (Inside Card) */
+    .sandbox-loader-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(18, 20, 28, 0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    body.light-mode .sandbox-loader-overlay {
+      background: rgba(255, 255, 255, 0.85);
+    }
+    .sandbox-loader-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .sandbox-loader-container {
+      width: 140px;
+      height: 140px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .sandbox-loader-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 16px;
+      text-shadow: 0 0 10px rgba(0,0,0,0.3);
+      animation: textPulse 1.5s infinite ease-in-out;
+    }
+
+    /* Fullscreen Modal Loader Demo styling */
+    .fullscreen-demo-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 10, 16, 0.85);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .fullscreen-demo-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .fs-loader-box {
+      width: 250px;
+      height: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .fs-glow-bg {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: var(--accent);
+      filter: blur(60px);
+      opacity: 0.3;
+      animation: fsGlow 3s infinite ease-in-out;
+    }
+    .fs-status-messages {
+      margin-top: 30px;
+      text-align: center;
+      min-height: 48px;
+    }
+    .fs-step-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .fs-sub-text {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .fs-progress-bar {
+      width: 200px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      margin-top: 16px;
+      overflow: hidden;
+    }
+    .fs-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+      box-shadow: 0 0 8px var(--accent2);
+      transition: width 0.4s ease;
+    }
+
+    /* Keyframes */
+    @keyframes hexPulse {
+      0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+      50% { transform: scale(1.1) rotate(180deg); opacity: 1; }
+    }
+    @keyframes textPulse {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.02); }
+    }
+    @keyframes rotateSpinner {
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes fsGlow {
+      0%, 100% { transform: scale(1); opacity: 0.25; }
+      50% { transform: scale(1.2); opacity: 0.45; }
+    }
+
+    .doc-section {
+      background: rgba(28, 31, 43, 0.45);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 40px;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      margin-bottom: 40px;
+    }
+    body.light-mode .doc-section {
+      background: rgba(255, 255, 255, 0.7);
+    }
+    .doc-section h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .doc-list {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .doc-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .doc-icon {
+      font-size: 18px;
+      color: var(--accent2);
+      margin-top: 2px;
+    }
+    .doc-text h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+    .doc-text p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .back-nav-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    .back-nav-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent2);
+      box-shadow: 0 0 15px var(--glow-shadow);
+      transform: translateX(-4px);
+    }
+  </style>
+</head>
+<body class="theme-red">
+
+  <!-- Ambient orbs -->
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+
+  <div class="container">
+
+    <!-- Header Navigation -->
+    <header class="showcase-header">
+      <div class="logo-area">
+        <span class="logo-hexagon">⬡</span>
+        <div>
+          <div class="logo-title">CUSTOMER360</div>
+          <div class="logo-subtitle">Lottie Spinner Showcase</div>
+        </div>
+      </div>
+      <div class="controls-row">
+        <a href="index.html" class="back-nav-btn">
+          <span>🏠</span> Back to Dashboard
+        </a>
+        <div class="theme-chip" id="theme-toggle-btn">
+          <span class="theme-icon">🌙</span> Toggle Light Mode
+        </div>
+      </div>
+    </header>
+
+    <!-- Intro Headline -->
+    <div class="intro-section">
+      <h1>Premium Banking Lottie Loaders</h1>
+      <p>A playground to evaluate, customize, and choose the ideal banking-related Lottie animation to replace the default circular CSS spinner across the Customer360 application.</p>
+    </div>
+
+    <!-- Active Theme Presets Selection (Crimson, Neon, Emerald, Gold) -->
+    <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap;">
+      <div class="theme-chip active" data-preset="red">🔴 Crimson Red (Default)</div>
+      <div class="theme-chip" data-preset="neon">🟣 Cyber Neon</div>
+      <div class="theme-chip" data-preset="green">🟢 Emerald Wealth</div>
+      <div class="theme-chip" data-preset="gold">🟡 Royal Gold</div>
+    </div>
+
+    <!-- The 4 Lottie Variations Grid -->
+    <div class="showcase-grid" id="variations-grid">
+      <!-- Cards will be dynamically initialized -->
+    </div>
+
+    <!-- Interactive Sandbox Area -->
+    <section class="sandbox-section">
+      <div class="sandbox-header">
+        <div class="sandbox-title">
+          <h2>Interactive Loader Sandbox</h2>
+          <p>Test how each loader variation behaves during a dynamic card refresh or a full-screen system handshaking screen.</p>
+        </div>
+        <div style="display: flex; gap: 12px;">
+          <button class="mock-card-action" id="trigger-card-refresh">Simulate Card Refresh</button>
+          <button class="mock-card-action" style="background: var(--accent3);" id="trigger-fullscreen-loader">Test Full Page Load</button>
+        </div>
+      </div>
+
+      <div class="sandbox-layout">
+        <!-- Variation Picker -->
+        <div class="sandbox-picker-pane" id="sandbox-selector-pane">
+          <!-- Populated by JavaScript -->
+        </div>
+
+        <!-- Mock Dashboard Card -->
+        <div class="mock-dashboard-card" id="sandbox-mock-card">
+          <!-- Card loading overlay -->
+          <div class="sandbox-loader-overlay" id="sandbox-card-loader">
+            <div class="sandbox-loader-container" id="sandbox-loader-anim"></div>
+            <div class="sandbox-loader-text" id="sandbox-loader-msg">Fetching account balance...</div>
+          </div>
+
+          <div class="mock-card-header">
+            <div class="mock-card-title">
+              <span>💳</span> CASA Wealth Portfolio
+            </div>
+            <div style="font-size: 11px; font-weight: 700; color: var(--accent2); background: var(--glass2); padding: 4px 8px; border-radius: 4px;">
+              ACTIVE LEDGER
+            </div>
+          </div>
+
+          <div class="mock-card-content">
+            <div class="mock-balance-row">
+              <div>
+                <div style="font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Combined Liquid Assets</div>
+                <div class="mock-val" style="margin-top: 4px;">$184,930.50</div>
+              </div>
+              <div style="font-size: 12px; color: #10b981; font-weight: 700; display: flex; align-items: center; gap: 4px; padding-bottom: 6px;">
+                <span>▲</span> +4.2% this month
+              </div>
+            </div>
+
+            <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 16px;">
+              <div style="font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">Recent Ledger Postings</div>
+              
+              <div class="mock-txn-item" style="margin-bottom: 8px;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 700; color: var(--text);">Transfer to Term Deposit #8892</div>
+                  <div style="font-size: 10px; color: var(--muted);">Today, 10:14 AM</div>
+                </div>
+                <div style="font-size: 12px; font-weight: 800; color: var(--text);">-$25,000.00</div>
+              </div>
+
+              <div class="mock-txn-item">
+                <div>
+                  <div style="font-size: 12px; font-weight: 700; color: var(--text);">Inbound Wire Transfer · Apex Corp</div>
+                  <div style="font-size: 10px; color: var(--muted);">Yesterday, 4:45 PM</div>
+                </div>
+                <div style="font-size: 12px; font-weight: 800; color: #10b981;">+$50,000.00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Implementation and Integration Steps -->
+    <section class="doc-section">
+      <h2>How to Apply the Lottie Loader to Customer360</h2>
+      <p style="color: var(--muted); font-size: 14px; margin-bottom: 24px;">To migrate from the standard CSS loading spinner to your preferred Lottie animation, follow these quick implementation steps:</p>
+      
+      <ul class="doc-list">
+        <li>
+          <div class="doc-icon">1️⃣</div>
+          <div class="doc-text">
+            <h3>Include the Lottie Library</h3>
+            <p>Ensure that the <code style="color:var(--accent2); background:var(--glass2); padding:2px 6px; border-radius:4px;">lottie-web</code> library script is added in the head section of your main <a href="file:///c:/Users/Lenovo/Desktop/works/Attendence/customer 360/customer360/index.html">index.html</a>:</p>
+            <pre style="background:#090a0f; padding:8px; border-radius:6px; font-size:11px; margin-top:8px; overflow-x:auto; color: #a9b7c6;">&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"&gt;&lt;/script&gt;</pre>
+          </div>
+        </li>
+        <li>
+          <div class="doc-icon">2️⃣</div>
+          <div class="doc-text">
+            <h3>Update the JavaScript Render Code</h3>
+            <p>Modify the <code style="color:var(--accent2); background:var(--glass2); padding:2px 6px; border-radius:4px;">showLoader</code> method in <a href="file:///c:/Users/Lenovo/Desktop/works/Attendence/customer 360/customer360/ui-renderer.js#L378-L404">ui-renderer.js</a> to render a Lottie container instead of the plain <code style="color:var(--accent2); background:var(--glass2); padding:2px 6px; border-radius:4px;">&lt;div class="card-spinner"&gt;&lt;/div&gt;</code> element, and initialize the player dynamically.</p>
+          </div>
+        </li>
+        <li>
+          <div class="doc-icon">3️⃣</div>
+          <div class="doc-text">
+            <h3>Select a Fallback Mechanism</h3>
+            <p>Always maintain a clean SVG or CSS fallback (included automatically in the snippets below) in case of network timeouts or blocked scripts. This guarantees a bulletproof user experience.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+  </div>
+
+  <!-- Fullscreen Modal Loader Demo Overlay -->
+  <div class="fullscreen-demo-overlay" id="fullscreen-demo">
+    <div class="fs-glow-bg"></div>
+    <div class="fs-loader-box">
+      <div id="fs-loader-anim" style="width: 220px; height: 220px;"></div>
+    </div>
+    <div class="fs-status-messages">
+      <div class="fs-step-text" id="fs-step-text">Initializing Secure Connection...</div>
+      <div class="fs-sub-text" id="fs-sub-text">Handshaking with Central Ledger</div>
+      <div class="fs-progress-bar">
+        <div class="fs-progress-fill" id="fs-progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Spinner variations metadata configuration
+    const spinnerConfigs = [
+      {
+        id: "vault",
+        title: "Secure Banking Vault",
+        badge: "Security & Safety",
+        desc: "A luxury vault safe that rotates and locks. Best suited for secure biometric logins, profile verification, and data encryption operations.",
+        lottieUrl: "https://lottie.host/3e8a7d0c-60db-46be-a931-f11181283d5a/L9B1tL7t9D.json",
+        defaultText: "Securing your connection...",
+        icon: "🛡️",
+        size: 130,
+        speed: 1.0,
+        svgFallback: `<svg viewBox="0 0 100 100" width="60" height="60" style="fill:none; stroke:var(--accent2); stroke-width:4; stroke-linecap:round;">
+          <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.05)" />
+          <circle cx="50" cy="50" r="40" stroke-dasharray="180 180" transform="rotate(-90 50 50)">
+            <animateTransform attributeName="transform" type="rotate" values="-90 50 50; 270 50 50" dur="1.5s" repeatCount="indefinite" />
+          </circle>
+          <rect x="38" y="44" width="24" height="20" rx="3" stroke-width="4" />
+          <path d="M43 44v-6a7 7 0 0 1 14 0v6" stroke-width="4" />
+        </svg>`
+      },
+      {
+        id: "coins",
+        title: "Smart Ledger Flow",
+        badge: "Transactions & Funds",
+        desc: "A series of cascading coins flowing into a wallet. Perfect for loading account summaries, CASA transactional ledger updates, and holdings portfolios.",
+        lottieUrl: "https://lottie.host/a6ea9f13-6bb3-4700-9854-ce36109dfb0c/UeX72D0z1z.json",
+        defaultText: "Fetching liquid assets...",
+        icon: "💰",
+        size: 140,
+        speed: 1.1,
+        svgFallback: `<svg viewBox="0 0 100 100" width="60" height="60" style="fill:none; stroke:var(--accent2); stroke-width:4; stroke-linejoin:round;">
+          <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.05)" />
+          <circle cx="50" cy="50" r="40" stroke-dasharray="120 180" transform="rotate(-90 50 50)">
+            <animateTransform attributeName="transform" type="rotate" values="-90 50 50; 270 50 50" dur="1.2s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="50" cy="38" r="8" stroke-width="4" />
+          <circle cx="40" cy="58" r="8" stroke-width="4" />
+          <circle cx="60" cy="58" r="8" stroke-width="4" />
+        </svg>`
+      },
+      {
+        id: "card",
+        title: "Holographic Credit Card",
+        badge: "Card Accounts",
+        desc: "A glowing credit card with dynamic light sweeps. Recommended for loading credit accounts, loan portfolios, payment details, and card limits.",
+        lottieUrl: "https://lottie.host/9a622a57-1d54-47f2-a058-29bf374187f8/Bq8j2hZ5Nl.json",
+        defaultText: "Verifying credit limits...",
+        icon: "💳",
+        size: 130,
+        speed: 0.9,
+        svgFallback: `<svg viewBox="0 0 100 100" width="60" height="60" style="fill:none; stroke:var(--accent2); stroke-width:4;">
+          <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.05)" />
+          <circle cx="50" cy="50" r="40" stroke-dasharray="150 150" transform="rotate(-90 50 50)">
+            <animateTransform attributeName="transform" type="rotate" values="-90 50 50; 270 50 50" dur="1.4s" repeatCount="indefinite" />
+          </circle>
+          <rect x="32" y="36" width="36" height="24" rx="3" stroke-width="4" />
+          <line x1="32" y1="44" x2="68" y2="44" stroke-width="3" />
+        </svg>`
+      },
+      {
+        id: "wallet",
+        title: "Digital Wallet Engine",
+        badge: "Mobile & Transfers",
+        desc: "An interactive mobile payment transaction processing loop. Fits seamlessly into standing order processing, mandates, and external bank transfers.",
+        lottieUrl: "https://lottie.host/9e530939-f00e-436f-8703-9ea9cc8b7ea8/r5WfK1z0o1.json",
+        defaultText: "Processing digital payment...",
+        icon: "📱",
+        size: 130,
+        speed: 1.0,
+        svgFallback: `<svg viewBox="0 0 100 100" width="60" height="60" style="fill:none; stroke:var(--accent2); stroke-width:4; stroke-linecap:round;">
+          <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.05)" />
+          <circle cx="50" cy="50" r="40" stroke-dasharray="140 180" transform="rotate(-90 50 50)">
+            <animateTransform attributeName="transform" type="rotate" values="-90 50 50; 270 50 50" dur="1.3s" repeatCount="indefinite" />
+          </circle>
+          <rect x="36" y="32" width="28" height="36" rx="4" stroke-width="4" />
+          <circle cx="50" cy="60" r="3" fill="var(--accent2)" />
+        </svg>`
+      },
+      {
+        id: "biometrics",
+        title: "Biometric Auth Scan",
+        badge: "Identity Verification",
+        desc: "A premium scanner checking fingerprint templates and security nodes. Excellent for biometric signature prompts and transaction verification overlays.",
+        lottieUrl: "https://lottie.host/a434d284-8848-43e5-8f64-44cf4d2091fb/0vD3fWzYnB.json",
+        defaultText: "Scanning biometric token...",
+        icon: "🫵",
+        size: 130,
+        speed: 1.0,
+        svgFallback: `<svg viewBox="0 0 100 100" width="60" height="60" style="fill:none; stroke:var(--accent2); stroke-width:4; stroke-linecap:round;">
+          <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.05)" />
+          <circle cx="50" cy="50" r="40" stroke-dasharray="140 180" transform="rotate(-90 50 50)">
+            <animateTransform attributeName="transform" type="rotate" values="-90 50 50; 270 50 50" dur="1.3s" repeatCount="indefinite" />
+          </circle>
+          <path d="M35 65a22 22 0 0 1 30 0" stroke-width="3" />
+          <path d="M40 55a14 14 0 0 1 20 0" stroke-width="3" />
+          <path d="M45 45a6 6 0 0 1 10 0v8" stroke-width="3" />
+          <line x1="25" y1="30" x2="75" y2="30" stroke="var(--accent3)" stroke-width="2">
+            <animate attributeName="y1" values="30; 70; 30" dur="2s" repeatCount="indefinite" />
+            <animate attributeName="y2" values="30; 70; 30" dur="2s" repeatCount="indefinite" />
+          </line>
+        </svg>`
+      },
+      {
+        id: "growth",
+        title: "Wealth Analytics Trend",
+        badge: "Portfolio & Growth",
+        desc: "An active growth curve climbing a grid chart. Perfect for investment accounts, portfolio analytics, financial planning, and interest rate simulations.",
+        lottieUrl: "https://lottie.host/c5de59bd-608a-4c22-b91c-fa95fa1b61c9/4L6GfeO1lR.json",
+        defaultText: "Analyzing market indexes...",
+        icon: "📈",
+        size: 130,
+        speed: 1.0,
+        svgFallback: `<svg viewBox="0 0 100 100" width="60" height="60" style="fill:none; stroke:var(--accent2); stroke-width:4; stroke-linecap:round;">
+          <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.05)" />
+          <circle cx="50" cy="50" r="40" stroke-dasharray="140 180" transform="rotate(-90 50 50)">
+            <animateTransform attributeName="transform" type="rotate" values="-90 50 50; 270 50 50" dur="1.3s" repeatCount="indefinite" />
+          </circle>
+          <path d="M30 65l12-15 10 8 18-25" stroke-width="4" stroke-dasharray="100" stroke-dashoffset="100">
+            <animate attributeName="stroke-dashoffset" values="100; 0" dur="2.5s" repeatCount="indefinite" />
+          </path>
+        </svg>`
+      },
+      {
+        id: "shield",
+        title: "Secure Ledger Crypt",
+        badge: "Encryption",
+        desc: "An orbital shield encrypting blocks in real-time. Best for secure bank transfers, API handshakes, and loading personal documents.",
+        lottieUrl: "https://lottie.host/7df5b860-24cc-42b7-a3f2-ef4c4ea3d517/mYhN92E87w.json",
+        defaultText: "Crypting data nodes...",
+        icon: "🛡️",
+        size: 130,
+        speed: 1.0,
+        svgFallback: `<svg viewBox="0 0 100 100" width="60" height="60" style="fill:none; stroke:var(--accent2); stroke-width:4; stroke-linecap:round;">
+          <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.05)" />
+          <circle cx="50" cy="50" r="40" stroke-dasharray="140 180" transform="rotate(-90 50 50)">
+            <animateTransform attributeName="transform" type="rotate" values="-90 50 50; 270 50 50" dur="1.3s" repeatCount="indefinite" />
+          </circle>
+          <path d="M50 30L35 36v16c0 10 7 19 15 22 8-3 15-12 15-22V36l-15-6z" stroke-width="4" />
+        </svg>`
+      },
+      {
+        id: "piggy",
+        title: "Savings Piggy Bank",
+        badge: "Savings Account",
+        desc: "A classic piggy bank receiving coins. Ideal for savings accounts, recurring deposits, fixed deposit portfolios, and goal trackers.",
+        lottieUrl: "https://lottie.host/d193d56b-dfcf-4b95-a22c-a25e1ad3cb6c/zV77jS20p1.json",
+        defaultText: "Aggregating savings...",
+        icon: "🐷",
+        size: 130,
+        speed: 1.0,
+        svgFallback: `<svg viewBox="0 0 100 100" width="60" height="60" style="fill:none; stroke:var(--accent2); stroke-width:4; stroke-linecap:round;">
+          <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.05)" />
+          <circle cx="50" cy="50" r="40" stroke-dasharray="140 180" transform="rotate(-90 50 50)">
+            <animateTransform attributeName="transform" type="rotate" values="-90 50 50; 270 50 50" dur="1.3s" repeatCount="indefinite" />
+          </circle>
+          <ellipse cx="50" cy="55" rx="18" ry="14" stroke-width="4" />
+          <circle cx="62" cy="52" r="2.5" fill="var(--accent2)" />
+          <path d="M50 25v10" stroke-width="3">
+            <animate attributeName="transform" type="translate" values="0 -10; 0 10; 0 -10" dur="1.5s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0; 1; 0" dur="1.5s" repeatCount="indefinite" />
+          </path>
+        </svg>`
+      }
+    ];
+
+    // Global reference to initialized Lottie players
+    const activePlayers = {};
+    let activePresetTheme = "red";
+    let activeSandboxId = "vault";
+
+    // Initialize all spinner variations in the grid
+    function buildVariationsGrid() {
+      const $grid = $("#variations-grid");
+      $grid.empty();
+
+      spinnerConfigs.forEach((config) => {
+        const cardHtml = `
+          <div class="spinner-card" id="card-${config.id}">
+            <span class="card-badge">${config.badge}</span>
+            
+            <div class="animation-display-window">
+              <div class="lottie-container" id="lottie-container-${config.id}" style="width: ${config.size}px; height: ${config.size}px;"></div>
+              <div class="fallback-spinner" id="fallback-${config.id}">
+                ${config.svgFallback}
+              </div>
+              <div class="loading-text-preview" id="text-preview-${config.id}">${config.defaultText}</div>
+            </div>
+
+            <div class="card-info">
+              <h3 class="card-title">${config.icon} ${config.title}</h3>
+              <p class="card-desc">${config.desc}</p>
+            </div>
+
+            <!-- Customizer Controls -->
+            <div class="card-controls">
+              <div class="control-group">
+                <span class="control-label">Scale size:</span>
+                <span class="control-value"><span id="size-val-${config.id}">${config.size}</span>px</span>
+              </div>
+              <input type="range" class="slider-input size-slider" data-id="${config.id}" min="80" max="220" value="${config.size}">
+              
+              <div class="control-group" style="margin-top: 6px;">
+                <span class="control-label">Animation speed:</span>
+                <span class="control-value"><span id="speed-val-${config.id}">${config.speed}</span>x</span>
+              </div>
+              <input type="range" class="slider-input speed-slider" data-id="${config.id}" min="5" max="30" value="${config.speed * 10}">
+
+              <div class="control-group" style="margin-top: 6px;">
+                <span class="control-label">Loading label:</span>
+              </div>
+              <input type="text" class="text-input label-text-input" data-id="${config.id}" value="${config.defaultText}">
+            </div>
+
+            <!-- Integration Snippets -->
+            <div class="tabs-bar">
+              <button class="tab-btn active" data-tab="js" data-id="${config.id}">JS Config</button>
+              <button class="tab-btn" data-tab="html" data-id="${config.id}">HTML Markup</button>
+            </div>
+
+            <div class="code-window">
+              <button class="copy-btn" onclick="copySnippet('${config.id}')">Copy</button>
+              <pre id="code-snippet-${config.id}"></pre>
+            </div>
+          </div>
+        `;
+        $grid.append(cardHtml);
+
+        // Load the Lottie Animation
+        loadLottieAnimation(config.id, config.lottieUrl, config.speed);
+        updateCodeSnippet(config.id);
+      });
+    }
+
+    // Load Lottie JSON via lottie-web library
+    function loadLottieAnimation(id, url, speed, targetContainerId = null) {
+      const containerId = targetContainerId || `lottie-container-${id}`;
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      // Clean up previous animations if exist
+      if (activePlayers[containerId]) {
+        activePlayers[containerId].destroy();
+      }
+
+      try {
+        const anim = lottie.loadAnimation({
+          container: container,
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          path: url
+        });
+
+        anim.addEventListener('DOMLoaded', () => {
+          anim.setSpeed(speed);
+          // Hide fallback spinner if loaded successfully
+          $(`#fallback-${id}`).hide();
+        });
+
+        anim.addEventListener('data_failed', () => {
+          console.warn(`Lottie failed to load for: ${id}, displaying SVG fallback.`);
+          showFallbackSpinner(id);
+        });
+
+        activePlayers[containerId] = anim;
+      } catch (err) {
+        console.error(`Error initializing Lottie player: ${err}`);
+        showFallbackSpinner(id);
+      }
+    }
+
+    function showFallbackSpinner(id) {
+      $(`#lottie-container-${id}`).hide();
+      $(`#fallback-${id}`).show();
+    }
+
+    // Build the sandbox sidebar selectors
+    function buildSandboxPicker() {
+      const $pane = $("#sandbox-selector-pane");
+      $pane.empty();
+
+      spinnerConfigs.forEach((config) => {
+        const activeClass = config.id === activeSandboxId ? "active" : "";
+        const html = `
+          <div class="preset-card ${activeClass}" data-sandbox-id="${config.id}">
+            <div class="preset-icon">${config.icon}</div>
+            <div class="preset-info">
+              <h3>${config.title}</h3>
+              <p>${config.badge}</p>
+            </div>
+          </div>
+        `;
+        $pane.append(html);
+      });
+    }
+
+    // Render integration code snippets depending on active tab
+    function updateCodeSnippet(id) {
+      const config = spinnerConfigs.find(c => c.id === id);
+      const activeTab = $(`.tab-btn.active[data-id="${id}"]`).attr('data-tab');
+      
+      const sizeVal = $(`#size-val-${id}`).text();
+      const speedVal = $(`#speed-val-${id}`).text();
+      const textVal = $(`.label-text-input[data-id="${id}"]`).val();
+
+      let snippet = "";
+      if (activeTab === "js") {
+        snippet = `// Replace showLoader in ui-renderer.js
+showLoader: function(target) {
+  const $container = $(target);
+  if (!$container.length) return;
+  
+  $container.find('.card-loader-overlay').remove();
+  const $loader = $(\`
+    <div class="card-loader-overlay active">
+      <div id="lottie-loader-container" style="width:${sizeVal}px; height:${sizeVal}px;"></div>
+      <div class="card-loader-text">${textVal}</div>
+    </div>
+  \`);
+  $container.append($loader);
+
+  // Initialize Lottie player
+  const anim = lottie.loadAnimation({
+    container: document.getElementById('lottie-loader-container'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: '${config.lottieUrl}'
+  });
+  anim.setSpeed(${speedVal});
+}`;
+      } else {
+        snippet = `<!-- HTML structure for the overlay loader -->
+<div class="card-loader-overlay">
+  <!-- Lottie player container -->
+  <div id="lottie-loader-container" style="width:${sizeVal}px; height:${sizeVal}px;"></div>
+  
+  <!-- Modern Fallback Spinner -->
+  <div class="fallback-spinner-svg" style="display:none;">
+    ${config.svgFallback.replace(/\n\s*/g, '')}
+  </div>
+  
+  <div class="card-loader-text">${textVal}</div>
+</div>`;
+      }
+
+      $(`#code-snippet-${id}`).text(snippet);
+    }
+
+    // Setup events
+    function setupEvents() {
+      // Toggle theme classes
+      $("#theme-toggle-btn").on("click", function() {
+        $("body").toggleClass("light-mode");
+        const isLight = $("body").hasClass("light-mode");
+        $(this).html(isLight ? "☀️ Toggle Dark Mode" : "🌙 Toggle Light Mode");
+      });
+
+      // Preset colors selection
+      $("[data-preset]").on("click", function() {
+        const preset = $(this).attr("data-preset");
+        $("[data-preset]").removeClass("active");
+        $(this).addClass("active");
+
+        // Swap CSS variable themes (red/neon/green/gold)
+        const root = document.documentElement;
+        if (preset === "red") {
+          root.style.setProperty("--accent", "#aa0000");
+          root.style.setProperty("--accent2", "#ff4444");
+          root.style.setProperty("--border", "rgba(170, 0, 0, 0.25)");
+          root.style.setProperty("--glow-shadow", "rgba(170, 0, 0, 0.4)");
+        } else if (preset === "neon") {
+          root.style.setProperty("--accent", "#6c63ff");
+          root.style.setProperty("--accent2", "#00d4ff");
+          root.style.setProperty("--border", "rgba(108, 99, 255, 0.25)");
+          root.style.setProperty("--glow-shadow", "rgba(108, 99, 255, 0.4)");
+        } else if (preset === "green") {
+          root.style.setProperty("--accent", "#064e3b");
+          root.style.setProperty("--accent2", "#10b981");
+          root.style.setProperty("--border", "rgba(16, 185, 129, 0.25)");
+          root.style.setProperty("--glow-shadow", "rgba(16, 185, 129, 0.4)");
+        } else if (preset === "gold") {
+          root.style.setProperty("--accent", "#78350f");
+          root.style.setProperty("--accent2", "#fbbf24");
+          root.style.setProperty("--border", "rgba(251, 191, 36, 0.25)");
+          root.style.setProperty("--glow-shadow", "rgba(251, 191, 36, 0.4)");
+        }
+      });
+
+      // Size sliders input listener
+      $(document).on("input", ".size-slider", function() {
+        const id = $(this).attr("data-id");
+        const val = $(this).val();
+        $(`#size-val-${id}`).text(val);
+        $(`#lottie-container-${id}`).css({ width: `${val}px`, height: `${val}px` });
+        updateCodeSnippet(id);
+      });
+
+      // Speed sliders input listener
+      $(document).on("input", ".speed-slider", function() {
+        const id = $(this).attr("data-id");
+        const val = $(this).val() / 10;
+        $(`#speed-val-${id}`).text(val.toFixed(1));
+        
+        const anim = activePlayers[`lottie-container-${id}`];
+        if (anim) anim.setSpeed(val);
+        updateCodeSnippet(id);
+      });
+
+      // Text input change listener
+      $(document).on("input", ".label-text-input", function() {
+        const id = $(this).attr("data-id");
+        const val = $(this).val();
+        $(`#text-preview-${id}`).text(val);
+        updateCodeSnippet(id);
+      });
+
+      // Tab switcher
+      $(document).on("click", ".tab-btn", function() {
+        const id = $(this).attr("data-id");
+        $(`.tab-btn[data-id="${id}"]`).removeClass("active");
+        $(this).addClass("active");
+        updateCodeSnippet(id);
+      });
+
+      // Sandbox selector picker click
+      $(document).on("click", "[data-sandbox-id]", function() {
+        $("[data-sandbox-id]").removeClass("active");
+        $(this).addClass("active");
+        activeSandboxId = $(this).attr("data-sandbox-id");
+      });
+
+      // Card refresh simulation
+      $("#trigger-card-refresh").on("click", function() {
+        const activeConfig = spinnerConfigs.find(c => c.id === activeSandboxId);
+        const textVal = $(`.label-text-input[data-id="${activeSandboxId}"]`).val();
+        const speedVal = parseFloat($(`#speed-val-${activeSandboxId}`).text());
+        const sizeVal = parseFloat($(`#size-val-${activeSandboxId}`).text());
+
+        // Update sandbox overlay properties
+        $("#sandbox-loader-msg").text(textVal);
+        $("#sandbox-loader-anim").css({ width: `${sizeVal}px`, height: `${sizeVal}px` });
+        
+        // Show overlay loader
+        $("#sandbox-card-loader").addClass("active");
+
+        // Load the animation in the sandbox
+        loadLottieAnimation(activeSandboxId, activeConfig.lottieUrl, speedVal, "sandbox-loader-anim");
+
+        // Automatically hide loader after 2.2 seconds to simulate successful API refresh
+        setTimeout(() => {
+          $("#sandbox-card-loader").removeClass("active");
+        }, 2200);
+      });
+
+      // Full screen system loading simulation
+      $("#trigger-fullscreen-loader").on("click", function() {
+        const activeConfig = spinnerConfigs.find(c => c.id === activeSandboxId);
+        const speedVal = parseFloat($(`#speed-val-${activeSandboxId}`).text());
+        const textVal = $(`.label-text-input[data-id="${activeSandboxId}"]`).val();
+
+        // Prepare full page container and show
+        $("#fullscreen-demo").addClass("active");
+        loadLottieAnimation(activeSandboxId, activeConfig.lottieUrl, speedVal, "fs-loader-anim");
+
+        // Stage progress sequencing messages
+        const steps = [
+          { pct: 0, title: "Connecting secure ledger...", sub: "Authenticating SSL handshake" },
+          { pct: 25, title: "Decrypting portfolio items...", sub: "Retrieving encrypted records" },
+          { pct: 55, title: "Fetching live financial tickers...", sub: "Synchronizing with stock market feed" },
+          { pct: 85, title: "Performing risk evaluations...", sub: "Compiling Customer360 score insights" },
+          { pct: 100, title: "System Ready", sub: "Rendering high-fidelity view" }
+        ];
+
+        let currentStep = 0;
+        const progressInterval = setInterval(() => {
+          if (currentStep >= steps.length) {
+            clearInterval(progressInterval);
+            setTimeout(() => {
+              $("#fullscreen-demo").removeClass("active");
+            }, 600);
+            return;
+          }
+
+          const step = steps[currentStep];
+          $("#fs-step-text").text(step.title);
+          $("#fs-sub-text").text(step.sub);
+          $("#fs-progress-fill").css("width", `${step.pct}%`);
+
+          currentStep++;
+        }, 1200);
+      });
+    }
+
+    // Utility function to copy code to clipboard
+    window.copySnippet = function(id) {
+      const codeText = document.getElementById(`code-snippet-${id}`).innerText;
+      navigator.clipboard.writeText(codeText).then(() => {
+        const $btn = $(`#card-${id} .copy-btn`);
+        $btn.text("Copied!").css("background", "#10b981");
+        setTimeout(() => {
+          $btn.text("Copy").css("background", "");
+        }, 2000);
+      });
+    }
+
+    // Startup Initialization
+    $(document).ready(() => {
+      buildVariationsGrid();
+      buildSandboxPicker();
+      setupEvents();
+    });
+  </script>
+</body>
+</html>

@@ -937,11 +937,13 @@
 
     accountCards.forEach(card => {
       let cardFieldsHtml = '';
+      let totalSpan = 0;
 
       // Render card image inside a cell of the detail fields grid
       if (card.image) {
         const imgTag = renderCardImage(card.image);
         if (imgTag) {
+          totalSpan += 2; // card image spans full-width
           cardFieldsHtml += `
             <div class="detail-field-card full-width" style="padding: 10px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px;">
               <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-bottom: 4px;">
@@ -966,6 +968,9 @@
             isFullWidth = valStr.length > 25;
           }
 
+          const span = isFullWidth ? 2 : 1;
+          totalSpan += span;
+
           cardFieldsHtml += `
             <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}">
               <div class="df-info">
@@ -977,6 +982,13 @@
             </div>
           `;
         });
+      }
+
+      const remainder = totalSpan % 2;
+      if (remainder !== 0) {
+        cardFieldsHtml += `
+          <div class="detail-field-card empty-placeholder"></div>
+        `;
       }
 
       cardsHtml += `

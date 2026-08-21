@@ -3829,6 +3829,17 @@ body::before {
   min-height: auto;
 }
 
+/* Empty placeholders to fill grid rows */
+.detail-field-card.empty-placeholder {
+  pointer-events: none !important;
+  background: var(--bg2) !important;
+  box-shadow: none !important;
+}
+
+.light-mode .detail-field-card.empty-placeholder {
+  background: #ffffff !important;
+}
+
 .detail-field-card.span-2 {
   grid-column: span 2;
 }
