@@ -587,6 +587,15 @@ function openDetail(data) {
   const contentArea = document.getElementById('detail-content-area');
   contentArea.innerHTML = '';
 
+  // Setup dynamic style tag for API-delivered section CSS
+  let dynamicStyleEl = document.getElementById('dynamic-api-styles');
+  if (!dynamicStyleEl) {
+    dynamicStyleEl = document.createElement('style');
+    dynamicStyleEl.id = 'dynamic-api-styles';
+    document.head.appendChild(dynamicStyleEl);
+  }
+  let combinedCss = '';
+
   data.sections.forEach(sec => {
     // Create Section Element
     const secEl = document.createElement('div');
@@ -596,49 +605,51 @@ function openDetail(data) {
     let fieldsHtml = '';
     let totalSpan = 0;
 
-    Object.entries(sec.fields).forEach(([label, v]) => {
-      let valStr = "";
-      let hideLabel = false;
+    if (sec.fields) {
+      Object.entries(sec.fields).forEach(([label, v]) => {
+        let valStr = "";
+        let hideLabel = false;
 
-      if (typeof v === 'object' && v !== null && !Array.isArray(v)) {
-        valStr = String(v.value || "");
-        hideLabel = !!v.hideLabel;
-      } else {
-        valStr = String(v);
-      }
-
-      const icon = getFieldIcon(label);
-
-      // Dynamically calculate the column span based on precise text rendering width:
-      let span = 1;
-      if (hideLabel) {
-        span = 3;
-      } else if (window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
-        span = window.UIRenderer.calculateTextSpan(valStr, 130, "600 12px 'Outfit', sans-serif");
-      } else {
-        // Fallback if renderer utility is not loaded yet
-        if (valStr.length > 35) {
-          span = 3;
-        } else if (valStr.length > 15) {
-          span = 2;
+        if (typeof v === 'object' && v !== null && !Array.isArray(v)) {
+          valStr = String(v.value || "");
+          hideLabel = !!v.hideLabel;
+        } else {
+          valStr = String(v);
         }
-      }
 
-      totalSpan += span;
+        const icon = getFieldIcon(label);
 
-      const isFullWidth = span === 3;
-      const isSpan2 = span === 2;
-      const isInline = false;
+        // Dynamically calculate the column span based on precise text rendering width:
+        let span = 1;
+        if (hideLabel) {
+          span = 3;
+        } else if (window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
+          span = window.UIRenderer.calculateTextSpan(valStr, 130, "600 12px 'Outfit', sans-serif");
+        } else {
+          // Fallback if renderer utility is not loaded yet
+          if (valStr.length > 35) {
+            span = 3;
+          } else if (valStr.length > 15) {
+            span = 2;
+          }
+        }
 
-      fieldsHtml += `
-        <div class="detail-field-card ${isFullWidth ? 'full-width' : ''} ${isSpan2 ? 'span-2' : ''} ${isInline ? 'inline-layout' : ''}">
-          <div class="df-info">
-            ${hideLabel ? '' : `<label class="df-label"><span class="df-icon-inline">${icon}</span> ${label}${isInline ? ':' : ''}</label>`}
-            <span class="df-value">${valStr}</span>
+        totalSpan += span;
+
+        const isFullWidth = span === 3;
+        const isSpan2 = span === 2;
+        const isInline = false;
+
+        fieldsHtml += `
+          <div class="detail-field-card ${isFullWidth ? 'full-width' : ''} ${isSpan2 ? 'span-2' : ''} ${isInline ? 'inline-layout' : ''}">
+            <div class="df-info">
+              ${hideLabel ? '' : `<label class="df-label"><span class="df-icon-inline">${icon}</span> ${label}${isInline ? ':' : ''}</label>`}
+              <span class="df-value">${valStr}</span>
+            </div>
           </div>
-        </div>
-      `;
-    });
+        `;
+      });
+    }
 
     // Fill empty cells to prevent the solid background from showing
     const remainder = totalSpan % 3;
@@ -647,15 +658,32 @@ function openDetail(data) {
       fieldsHtml += `<div class="detail-field-card empty-placeholder"></div>`;
     }
 
+    let sectionBody = '';
+    if (sec.fields) {
+      sectionBody += `
+        <div class="detail-fields-grid">
+          ${fieldsHtml}
+        </div>
+      `;
+    }
+
+    if (sec.html) {
+      sectionBody += `<div class="dynamic-section-html">${sec.html}</div>`;
+    }
+
     secEl.innerHTML = `
       ${sectionHeader}
-      <div class="detail-fields-grid">
-        ${fieldsHtml}
-      </div>
+      ${sectionBody}
     `;
 
     contentArea.appendChild(secEl);
+
+    if (sec.css) {
+      combinedCss += `\n/* Section: ${sec.name} */\n${sec.css}\n`;
+    }
   });
+
+  dynamicStyleEl.textContent = combinedCss;
 }
 
 function closeDetail() {
@@ -663,6 +691,12 @@ function closeDetail() {
   detailView.classList.remove('visible');
   document.body.style.overflow = '';
   setTimeout(() => detailView.classList.add('hidden'), 800);
+
+  // Clean up dynamic styles on close
+  const dynamicStyleEl = document.getElementById('dynamic-api-styles');
+  if (dynamicStyleEl) {
+    dynamicStyleEl.textContent = '';
+  }
 
   // Restore nav dots visibility if we are scrolled to the dashboard section
   const dashboard = document.getElementById('scene-dashboard');
@@ -968,6 +1002,12 @@ function initQuickModules() {
         });
         qmNavDots.appendChild(dot);
       });
+    // Toggle open/close on nav dots container (mobile only)
+    qmNavDots.addEventListener('click', (e) => {
+      // If clicking a dot, let its own handler run
+      if (e.target.classList.contains('qm-dot') || e.target.closest('.qm-dot')) return;
+      qmNavDots.classList.toggle('open');
+    });
     }
 
     // Card Clicks

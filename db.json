@@ -307,7 +307,9 @@
               "ID Type": "Passport (Valid)",
               "Address Proof": "Utility Bill",
               "TIN/SSN": "Verified"
-            }
+            },
+            "html": "<div class='vault-list'><div class='vault-item'><span class='vault-icon'>📄</span><div class='vault-info'><span class='vault-name'>Passport Copy</span><span class='vault-meta'>PDF • 2.4 MB</span></div><div class='vault-actions'><a href='#' class='btn-vault view'>👁️ View</a><a href='#' class='btn-vault download'>📥 Download</a></div></div><div class='vault-item'><span class='vault-icon'>📄</span><div class='vault-info'><span class='vault-name'>Utility Bill (Address Proof)</span><span class='vault-meta'>JPG • 1.1 MB</span></div><div class='vault-actions'><a href='#' class='btn-vault view'>👁️ View</a><a href='#' class='btn-vault download'>📥 Download</a></div></div></div>",
+            "css": ".vault-list { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; border-top: 1px solid var(--border); padding-top: 16px; } .vault-item { display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); padding: 10px 14px; border-radius: 12px; transition: all 0.2s ease; } .vault-item:hover { background: rgba(255, 255, 255, 0.07); transform: translateY(-1px); } .vault-icon { font-size: 18px; } .vault-info { display: flex; flex-direction: column; flex-grow: 1; } .vault-name { font-size: 12px; font-weight: 600; color: var(--text); } .vault-meta { font-size: 10px; color: var(--muted); } .vault-actions { display: flex; gap: 8px; } .btn-vault { text-decoration: none; font-size: 10px; font-weight: 600; padding: 6px 12px; border-radius: 20px; transition: all 0.2s ease; border: 1px solid rgba(255, 255, 255, 0.05); } .btn-vault.view { background: rgba(255, 255, 255, 0.08); color: var(--text); } .btn-vault.view:hover { background: rgba(255, 255, 255, 0.15); } .btn-vault.download { background: var(--accent); color: #fff; } .btn-vault.download:hover { background: var(--accent2); }"
           }
         ]
       }
@@ -5760,6 +5762,1212 @@
       "status": "skipped",
       "timestamp": "2026-08-21T09:55:31.473Z",
       "id": "QURXSyh"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T11:24:29.282Z",
+      "id": "2L1lE27"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T11:25:05.628Z",
+      "id": "x3gZQDa"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T11:25:19.269Z",
+      "id": "sP29Bhw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T11:25:20.374Z",
+      "id": "iceSyBS"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-21T11:51:24.615Z",
+      "id": "IBdIHZ5"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-21T11:51:25.376Z",
+      "id": "qJlAKBI"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-23T03:58:34.791Z",
+      "id": "Phb5q0Q"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-23T03:58:35.796Z",
+      "id": "04-R8AK"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-23T04:12:20.428Z",
+      "id": "yRUo8Kl"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-23T04:12:21.435Z",
+      "id": "nCu5CQN"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-24T15:02:48.630Z",
+      "id": "vstzwxm"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-24T15:02:51.224Z",
+      "id": "Fz6Er8p"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T06:38:22.045Z",
+      "id": "riW5anV"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T06:38:22.931Z",
+      "id": "wbzuH4y"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T06:41:54.611Z",
+      "id": "NeXYR09"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T06:41:55.548Z",
+      "id": "5sJmnDZ"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T06:44:47.014Z",
+      "id": "tdRBROI"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T06:44:47.950Z",
+      "id": "Nog-k_o"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T06:45:02.917Z",
+      "id": "4fEGNMn"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T06:45:03.797Z",
+      "id": "-PGy34M"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T06:45:38.333Z",
+      "id": "K6qCP7N"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T06:45:39.099Z",
+      "id": "q3XerGE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T06:53:10.718Z",
+      "id": "KFxd788"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T06:53:11.346Z",
+      "id": "Q1IuEdA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T08:53:02.352Z",
+      "id": "GptkDBx"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T08:53:02.991Z",
+      "id": "wVUNato"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T09:12:03.999Z",
+      "id": "bdtUoWE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T09:12:13.212Z",
+      "id": "z-K6R52"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T09:33:12.790Z",
+      "id": "lRCdxwV"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T09:33:13.725Z",
+      "id": "zLH00hh"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T09:45:57.479Z",
+      "id": "50NeoF6"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T09:45:59.546Z",
+      "id": "J3Mz_H0"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T10:08:01.864Z",
+      "id": "barNp9U"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T10:08:02.580Z",
+      "id": "qsSwoL1"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T10:10:01.423Z",
+      "id": "o1tdWFv"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T10:10:02.216Z",
+      "id": "NtaQlvi"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T10:16:11.794Z",
+      "id": "J9izsqy"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T10:16:13.008Z",
+      "id": "NTEBVk_"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T10:22:54.627Z",
+      "id": "U0Hf3Nw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T10:22:58.274Z",
+      "id": "hPCQq3C"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T11:18:00.090Z",
+      "id": "ZX0EEAa"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T11:18:01.774Z",
+      "id": "vIm1vmK"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T11:20:55.432Z",
+      "id": "7SEvYJM"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T11:20:56.291Z",
+      "id": "0vizO5j"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T11:41:30.074Z",
+      "id": "iSjm9s2"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T11:41:31.131Z",
+      "id": "O0yOyth"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-29T11:43:46.810Z",
+      "id": "Nwbst9O"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-29T11:43:47.782Z",
+      "id": "ystI70O"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T05:18:10.995Z",
+      "id": "smBqTkl"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T05:18:11.827Z",
+      "id": "yNBzjZ_"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T06:01:50.553Z",
+      "id": "zeIOnlA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T06:01:51.673Z",
+      "id": "ZEKG1Q9"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T06:02:08.302Z",
+      "id": "d5yjhaI"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T06:02:09.432Z",
+      "id": "QtO_abZ"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T06:30:29.404Z",
+      "id": "tb5g5wf"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T06:30:31.569Z",
+      "id": "o-W1US1"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T06:34:37.284Z",
+      "id": "z386QD2"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T06:34:38.293Z",
+      "id": "t09ZCYc"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T06:36:13.363Z",
+      "id": "mdyPuYh"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T06:36:14.759Z",
+      "id": "O91F4ba"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T06:39:27.521Z",
+      "id": "5LAQIMB"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T06:39:29.148Z",
+      "id": "lyFxLAu"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T06:41:15.531Z",
+      "id": "rtETJNH"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T06:41:16.791Z",
+      "id": "g-QcpEX"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T06:45:16.093Z",
+      "id": "P5HOrDz"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T06:45:17.077Z",
+      "id": "CHT4OmY"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T06:54:50.968Z",
+      "id": "m4D7_GR"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T06:54:52.149Z",
+      "id": "5J_vxEF"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T08:18:33.604Z",
+      "id": "zLqxz5X"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T08:18:37.088Z",
+      "id": "vYEWxdG"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T08:20:00.464Z",
+      "id": "K_li6Al"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T08:20:01.426Z",
+      "id": "bpegnqh"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T08:36:07.280Z",
+      "id": "n94H6G6"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T08:36:08.220Z",
+      "id": "npSiP0W"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T08:49:26.639Z",
+      "id": "1aHdIeT"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T08:49:31.049Z",
+      "id": "KQ5M4ix"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T09:07:20.378Z",
+      "id": "uRTn6Na"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T09:07:21.236Z",
+      "id": "eFf1sHA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T09:17:19.472Z",
+      "id": "LBF7ASq"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T09:17:21.198Z",
+      "id": "MAkEEsI"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T09:18:31.941Z",
+      "id": "D4xVm8j"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T09:20:07.968Z",
+      "id": "SMar9-B"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T09:36:51.001Z",
+      "id": "x1hf4J3"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T09:36:52.106Z",
+      "id": "FjcFr0a"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T10:04:26.895Z",
+      "id": "I_UpBEq"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T10:04:28.349Z",
+      "id": "8VaIR26"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T10:06:17.745Z",
+      "id": "bMbb4Bx"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T10:06:19.065Z",
+      "id": "brUV7fn"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T10:08:29.454Z",
+      "id": "_LMfzrv"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T10:08:31.043Z",
+      "id": "pUl7Fq2"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T10:10:13.466Z",
+      "id": "dGl-HVB"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T10:10:14.793Z",
+      "id": "LLsSpWq"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T10:14:06.149Z",
+      "id": "_Lm8pW6"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T10:14:07.230Z",
+      "id": "ZrIzkS6"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T10:15:39.627Z",
+      "id": "HsBcyRn"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T10:15:56.937Z",
+      "id": "icRCeEx"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T10:16:10.537Z",
+      "id": "duzdB1N"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T10:16:23.216Z",
+      "id": "OaP9Noo"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T11:18:25.930Z",
+      "id": "f3-ICv6"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T11:18:27.094Z",
+      "id": "jey5IfM"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T11:23:21.865Z",
+      "id": "wXK07qk"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T11:23:22.955Z",
+      "id": "LaO8kWD"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T11:50:26.318Z",
+      "id": "aPTBpYE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T11:50:27.806Z",
+      "id": "A6s-eNC"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T12:10:52.745Z",
+      "id": "Rn-aMUz"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T12:10:58.015Z",
+      "id": "FD1rmyH"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T12:11:45.716Z",
+      "id": "o-l1nGu"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T12:11:47.258Z",
+      "id": "0y5mYsR"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-08-31T12:12:03.142Z",
+      "id": "Hq2Facw"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-08-31T12:12:05.919Z",
+      "id": "DlDy-jR"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-01T04:49:37.782Z",
+      "id": "LHSGwtG"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-01T04:49:38.873Z",
+      "id": "c6q_HdS"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-01T05:00:14.587Z",
+      "id": "9UNaVRf"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-01T05:00:18.724Z",
+      "id": "LY4TUPS"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-01T05:07:01.192Z",
+      "id": "3OhBnUr"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-01T05:07:11.673Z",
+      "id": "QDWxICD"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-01T05:23:19.567Z",
+      "id": "TA8LCvN"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-01T05:23:21.498Z",
+      "id": "_MN7U_I"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-01T05:29:02.121Z",
+      "id": "vsDAAVH"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-01T05:29:05.681Z",
+      "id": "tsiFmy7"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-01T05:30:16.195Z",
+      "id": "4LEDvHM"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-01T05:30:17.899Z",
+      "id": "qLu4bGF"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-01T05:37:58.596Z",
+      "id": "Tt6mun6"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-01T05:38:01.628Z",
+      "id": "ns8GV90"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-01T05:55:47.652Z",
+      "id": "I3FJo4S"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-01T05:55:49.100Z",
+      "id": "-Cyo3yP"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-01T06:16:04.263Z",
+      "id": "8sKevDH"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-01T06:16:05.930Z",
+      "id": "s3pttB_"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-01T06:21:32.967Z",
+      "id": "Ezddc-w"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-01T06:21:33.890Z",
+      "id": "HgWPv0M"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-01T06:25:07.405Z",
+      "id": "3GQ8j4t"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-01T06:25:08.625Z",
+      "id": "KZnNIPE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-01T06:25:18.366Z",
+      "id": "MplnCrK"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-01T06:25:19.233Z",
+      "id": "Wca0ojD"
     }
   ],
   "activities": {

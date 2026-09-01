@@ -541,8 +541,11 @@
   </div>
 
   <!-- ===== FLOATING SEARCH BUTTON ===== -->
-  <a href="customer-search/customer-search.html" id="floating-search-btn" class="floating-search-btn"
-    onclick="event.preventDefault(); window.UIRenderer && window.UIRenderer.triggerSearchTransition((window.API_CONFIG && window.API_CONFIG.CUSTOMER_SEARCH_URL) || 'customer-search/customer-search.html');">
+
+  <a href="customer-search/customer-search.html"
+     id="floating-search-btn"
+     class="floating-search-btn"
+     onclick="event.preventDefault(); window.UIRenderer && window.UIRenderer.triggerSearchTransition((window.API_CONFIG && window.API_CONFIG.CUSTOMER_SEARCH_URL) || 'customer-search/customer-search.html');">
     <span class="btn-icon">🔍</span>
     <span class="btn-text">Search New Customer</span>
   </a>

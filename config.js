@@ -4,7 +4,7 @@
  */
 
 window.API_CONFIG = {
-  BASE_URL: "http://localhost:3000",
+  BASE_URL: "http://localhost:3001",
   TIMEOUT_MS: 8000,
 
   // Customer Search URL for easy modification

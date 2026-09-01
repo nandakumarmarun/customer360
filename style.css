@@ -2058,7 +2058,6 @@ body::before {
   font-size: 10px;
   letter-spacing: 1px;
   font-weight: 700;
-  text-transform: uppercase;
 }
 
 .profile-tier {
@@ -3357,6 +3356,35 @@ body::before {
   flex: 1;
   padding: 30px;
   overflow-y: auto;
+}
+
+#quick-module-view .qm-content-area {
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: visible !important;
+  /* allow content to overflow for scroll */
+  flex: 1 !important;
+  min-height: 0 !important;
+}
+
+/* When holdings module is active, enable scrolling */
+#quick-module-view .qm-header-inline.holdings-active~.qm-content-area {
+  overflow-y: scroll !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* Scroll Holdings Landing View directly in qm-content-area */
+.qm-header-inline.holdings-active~.qm-content-area {
+  overflow-y: scroll !important;
+  display: block !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.qm-header-inline.holdings-active~.qm-content-area .holdings-landing-grid {
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  flex: none !important;
 }
 
 .qm-back-btn {
@@ -5675,7 +5703,7 @@ body::before {
   width: 56px;
   height: 56px;
   padding: 0;
-  background: var(--accent);
+  background: var(--accent, #0066ff);
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 50px;
@@ -5688,6 +5716,29 @@ body::before {
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
   white-space: nowrap;
+}
+
+/* Icon inside FAB */
+.floating-search-btn .btn-icon {
+  font-size: 20px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.4s ease, width 0.4s ease;
+  color: #ffffff !important;
+}
+
+/* Text inside FAB */
+.floating-search-btn .btn-text {
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  color: #ffffff !important;
 }
 
 /* Continuous Pulse Ripple (makes it super noticeable) */
@@ -6424,4 +6475,349 @@ body:has(#qm-back-to-dash:not(.hidden)) .floating-search-btn {
   border-color: var(--accent);
   color: var(--text);
   box-shadow: 0 0 15px var(--glow-shadow, rgba(170, 0, 0, 0.3));
+}
+
+/* Holdings Explorer Filter Bar */
+.explorer-filter-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* Custom Dropdown Container */
+.explorer-status-filter-custom {
+  position: relative;
+  width: 140px;
+  flex-shrink: 0;
+  font-family: 'Outfit', sans-serif;
+  user-select: none;
+}
+
+/* Custom Dropdown Trigger */
+.custom-dropdown-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: var(--glass2, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--border, rgba(170, 0, 0, 0.25));
+  color: var(--text, #ffffff);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.custom-dropdown-trigger:hover {
+  border-color: var(--accent, #a00);
+  background: var(--glass3, rgba(255, 255, 255, 0.12));
+  box-shadow: 0 0 10px var(--glow-shadow-weak);
+}
+
+.custom-dropdown-arrow {
+  font-size: 9px;
+  color: var(--muted, rgba(255, 255, 255, 0.6));
+  transition: transform 0.2s ease;
+}
+
+.explorer-status-filter-custom.open .custom-dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+/* Custom Dropdown Menu list */
+.custom-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 6px;
+  background: var(--bg2, #1c1f2b);
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.15));
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.explorer-status-filter-custom.open .custom-dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Custom Dropdown Item */
+.custom-dropdown-item {
+  padding: 8px 14px;
+  font-size: 12.5px;
+  color: var(--text, #ffffff);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-dropdown-item:hover {
+  background: var(--border, rgba(170, 0, 0, 0.15));
+  color: var(--text, #ffffff);
+}
+
+.custom-dropdown-item.active {
+  background: var(--accent, #a00) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* --- Dynamic Mobile List -> Details navigation styling for Holdings Explorer --- */
+@media (max-width: 1024px) {
+
+  /* Scope to explorer body under Holdings Explorer */
+  .explorer-body {
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* Make panels stretch full-width on mobile */
+  .explorer-body .explorer-left,
+  .explorer-body .explorer-right {
+    width: 100% !important;
+    height: 100% !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+    margin-top: 0 !important;
+    border-right: none !important;
+    padding-right: 0 !important;
+  }
+
+  /* Initial state: Show list, hide details */
+  .explorer-body .explorer-left {
+    display: flex !important;
+  }
+
+  .explorer-body .explorer-right {
+    display: none !important;
+  }
+
+  /* Active details state: Hide list, show details */
+  .explorer-body.mobile-view-details .explorer-left {
+    display: none !important;
+  }
+
+  .explorer-body.mobile-view-details .explorer-right {
+    display: flex !important;
+  }
+
+  /* Custom mobile back navigation bar in details panel */
+  .mobile-details-back-bar {
+    display: flex !important;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--glass2, rgba(255, 255, 255, 0.05));
+    border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .mobile-details-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: var(--accent, #aa0000);
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-details-back-btn:hover {
+    background: var(--glass3, rgba(255, 255, 255, 0.08));
+  }
+}
+
+/* Hide mobile back bar by default on desktop/wider screens */
+.mobile-details-back-bar {
+  display: none;
+}
+
+/* Keep holdings landing grid and other quick module views scrollable and fixed-height on mobile */
+
+@media (max-width: 1024px) {
+  #quick-module-view .qm-content-area {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 20px 15px !important;
+    flex: none !important;
+    height: 65vh !important;
+    max-height: 65vh !important;
+    overflow: hidden !important;
+    font-size: 14px !important;
+    line-height: 1.4;
+  }
+
+  #quick-module-view .qm-content-area .holdings-landing-grid {
+    overflow-y: auto !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 80px !important;
+    /* Ensure last item is fully accessible */
+  }
+
+  #quick-module-view {
+    height: auto !important;
+    max-height: 80vh !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    transform: translateZ(0) !important;
+  }
+
+  /* Card components scaling */
+  .info-card,
+  .card-header,
+  .card-body,
+  .card-footer {
+    padding: 10px 12px !important;
+    margin: 4px 0 !important;
+  }
+
+  .info-card {
+    font-size: 14px !important;
+  }
+
+  .qm-header-inline h2 {
+    font-size: 18px !important;
+    margin-bottom: 8px;
+  }
+
+  .qm-breadcrumbs-bar {
+    font-size: 12px !important;
+    margin-bottom: 12px;
+  }
+
+  .mobile-details-back-btn {
+    font-size: 13px !important;
+    padding: 5px 10px !important;
+  }
+}
+
+/* Mobile floating navigation dots removed to inherit desktop styling */
+
+/* ==========================================
+   MOBILE LEVEL OVERRIDES (iPhone SE Fixes)
+   ========================================== */
+@media (max-width: 480px) {
+
+  body,
+  #app,
+  .scene,
+  #scene-dashboard {
+    overflow-x: hidden !important;
+    width: 100vw !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Fix alerts bar cut-off */
+  .alerts-bar {
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  /* Fix header overflow and cut-off */
+  .dash-header {
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    padding: 10px !important;
+    margin: 0 !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+    border-radius: 0 !important;
+  }
+
+  .header-right {
+    gap: 8px !important;
+    justify-content: flex-end !important;
+    flex: 1 1 100% !important;
+    margin-top: 10px !important;
+  }
+
+  /* Fix main content pushing out of screen */
+  .dash-body {
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 10px !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Ensure sidebar doesn't overflow */
+  #profile-sidebar {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 0 16px 0 !important;
+  }
+
+  /* Force cards grid to column on very small screens */
+  .cards-grid {
+    display: flex;
+    /* Removed !important to allow JS to hide it inline */
+    flex-direction: column !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 16px !important;
+  }
+
+  .info-card {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Hide the right-side floating navigation dots on mobile to save space */
+  .qm-nav-dots {
+    display: none !important;
+  }
+
+  /* Make module headers (e.g. Portfolio Holdings) split into multiple rows */
+  .qm-header-left-wrap {
+    flex-wrap: wrap !important;
+    gap: 10px 15px !important;
+  }
+
+  .qm-back-btn {
+    flex: 0 0 100% !important;
+  }
+
+  .qm-header-titles {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
 }

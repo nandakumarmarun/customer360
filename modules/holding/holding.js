@@ -9,7 +9,6 @@
   let currentCustomerId = (window.ParamsData && window.ParamsData.getCustomerId) ? window.ParamsData.getCustomerId() : null;
   let holdingsData = null;
   let headerRestored = true;
-
   // Helper for dynamic field mapping fallback in case window.fieldName is not loaded
   const fName = (window.fieldName || window.fieldName2 || function (k) { return k; });
 
@@ -430,6 +429,10 @@
     let activeTab = null;
     let activeTabAccounts = []; // Stores fetched accounts for searching
     let categoryData = null;    // Cache for single API response
+    let currentFilters = {
+      status: "Active"
+    };
+
 
     // Handle single category API vs standard individual tab loading
     if (categoryCfg.endpoint) {
@@ -571,9 +574,20 @@
           <div class="explorer-body">
             <!-- LEFT SECTION: Account List -->
             <div class="explorer-left">
-              <div class="explorer-search-wrap" style="position: relative; flex-shrink: 0;">
-                <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px;">🔍</span>
-                <input type="text" id="explorer-search-input" style="width: 100%; padding: 8px 12px 8px 34px; border-radius: 20px; background: var(--glass2); border: 1px solid var(--border); color: var(--text); outline: none; font-size: 13px;" placeholder="Search accounts..." />
+              <div class="explorer-filter-bar">
+                <div class="explorer-search-wrap" style="position: relative; flex: 1;">
+                  <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px;">🔍</span>
+                  <input type="text" id="explorer-search-input" style="width: 100%; padding: 8px 12px 8px 34px; border-radius: 20px; background: var(--glass2); border: 1px solid var(--border); color: var(--text); outline: none; font-size: 13px;" placeholder="Search accounts..." />
+                </div>
+                <div class="explorer-status-filter-custom" id="explorer-status-filter-container">
+                  <div class="custom-dropdown-trigger" id="explorer-status-filter-trigger">
+                    <span class="selected-val">Active</span>
+                    <span class="custom-dropdown-arrow">▼</span>
+                  </div>
+                  <div class="custom-dropdown-menu" id="explorer-status-filter-menu">
+                    <!-- Dynamic items -->
+                  </div>
+                </div>
               </div>
               <div class="account-list" id="explorer-account-list" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-bottom: 20px;">
                 <!-- Dynamically rendered accounts -->
@@ -593,17 +607,27 @@
       renderTabs();
       loadActiveCategoryItems();
 
-      // Bind search input filter
+      // Bind search and custom filter events
       $contentArea.find("#explorer-search-input").on("input", function () {
-        const query = $(this).val().toLowerCase().trim();
-        filterActiveCategoryItems(query);
+        applyFilters();
       });
+
+      $contentArea.find("#explorer-status-filter-trigger").on("click", function (e) {
+        e.stopPropagation();
+        $contentArea.find("#explorer-status-filter-container").toggleClass("open");
+      });
+
+      $(document).off("click.statusfilter").on("click.statusfilter", function () {
+        $contentArea.find("#explorer-status-filter-container").removeClass("open");
+      });
+
 
       // Back button cleanups and restore styles on exit
       $("#back-to-dash").off("click.holdings").on("click.holdings", function () {
         $contentArea.css({ "overflow-y": "", "height": "", "display": "", "flex-direction": "" });
         $(".model-info").find(".header-summary-inline").remove();
         $("#detail-model-title").text(categoryCfg.title);
+        $(document).off("click.statusfilter");
       });
     }
 
@@ -627,6 +651,7 @@
             selectedAccountIndex = 0;
             activePreviewTabId = "details";
             $contentArea.find("#explorer-search-input").val(""); // reset search on tab swap
+            currentFilters.status = "Active"; // reset status filter on tab swap
             renderTabs();
             loadActiveCategoryItems();
           }
@@ -640,6 +665,12 @@
       activeTab = categoryCfg.tabs.find(t => t.id === activeTabId);
       const $list = $contentArea.find("#explorer-account-list");
       $list.empty();
+
+      // Reset mobile view details state on tab load
+      const $explorerBody = $contentArea.find(".explorer-body");
+      if ($explorerBody.length) {
+        $explorerBody.removeClass("mobile-view-details");
+      }
 
       if (window.UIRenderer) {
         window.UIRenderer.showLoader("#explorer-account-list");
@@ -664,7 +695,8 @@
         }
 
         activeTabAccounts = accounts;
-        renderAccounts(accounts);
+        populateStatusFilter();
+        applyFilters();
         updateHeaderSummary(activeTabId, accounts);
       } else {
         // Tab-Specific Endpoint Flow (Original Logic)
@@ -680,7 +712,8 @@
 
               let accounts = Array.isArray(response) ? response : [];
               activeTabAccounts = accounts;
-              renderAccounts(accounts);
+              populateStatusFilter();
+              applyFilters();
               updateHeaderSummary(activeTabId, accounts);
             },
             function (error) {
@@ -710,13 +743,100 @@
       }
     }
 
-    function filterActiveCategoryItems(query) {
-      const nameKey = fName("title");
-      const numberKey = fName("subtitle");
-      const filtered = activeTabAccounts.filter(acc =>
-        (acc[nameKey] ? String(acc[nameKey]).toLowerCase().includes(query) : false) ||
-        (acc[numberKey] ? String(acc[numberKey]).toLowerCase().includes(query) : false)
-      );
+    function populateStatusFilter() {
+      const statusKey = fName("tag") || "status";
+      const uniqueStatuses = new Set();
+      activeTabAccounts.forEach(acc => {
+        const status = String(acc[statusKey] || "").trim();
+        if (status) {
+          uniqueStatuses.add(status);
+        }
+      });
+
+      const $menu = $contentArea.find("#explorer-status-filter-menu");
+      if (!$menu.length) return;
+
+      $menu.empty();
+
+      // Check if "Active" status exists in accounts
+      let hasActive = false;
+      let activeCaseValue = "Active";
+      uniqueStatuses.forEach(status => {
+        if (status.toLowerCase() === "active") {
+          hasActive = true;
+          activeCaseValue = status;
+        }
+      });
+
+      // Default selected status
+      const defaultStatus = hasActive ? activeCaseValue : "Active";
+      currentFilters.status = defaultStatus;
+
+      // Update trigger label
+      $contentArea.find("#explorer-status-filter-trigger .selected-val").text(defaultStatus);
+
+      // Helper to append item to menu
+      const appendMenuItem = (val, label) => {
+        const isActive = currentFilters.status.toLowerCase() === val.toLowerCase();
+        const $item = $(`
+          <div class="custom-dropdown-item ${isActive ? 'active' : ''}" data-value="${escapeHtml(val)}">
+            ${escapeHtml(label)}
+          </div>
+        `);
+        $item.on("click", function (e) {
+          e.stopPropagation();
+          const newVal = $(this).attr("data-value");
+          currentFilters.status = newVal;
+          $contentArea.find("#explorer-status-filter-trigger .selected-val").text(newVal);
+          $menu.find(".custom-dropdown-item").removeClass("active");
+          $(this).addClass("active");
+          $contentArea.find("#explorer-status-filter-container").removeClass("open");
+          applyFilters();
+        });
+        $menu.append($item);
+      };
+
+      // Add "All" option
+      appendMenuItem("All", "All Statuses");
+
+      // Add actual statuses
+      uniqueStatuses.forEach(status => {
+        appendMenuItem(status, status);
+      });
+
+      // If "Active" is not in data, add it as selectable option anyway to satisfy default selection
+      if (!hasActive) {
+        appendMenuItem("Active", "Active");
+      }
+    }
+
+    function applyFilters() {
+      const statusKey = fName("tag") || "status";
+      const nameKey = fName("title") || "name";
+      const numberKey = fName("subtitle") || "number";
+
+      const query = $contentArea.find("#explorer-search-input").val().toLowerCase().trim();
+      const selectedStatus = currentFilters.status || "Active";
+
+      let filtered = activeTabAccounts;
+
+      // 1. Status Filter
+      if (selectedStatus !== "All") {
+        filtered = filtered.filter(acc => {
+          const accStatus = String(acc[statusKey] || "").trim();
+          return accStatus.toLowerCase() === selectedStatus.toLowerCase();
+        });
+      }
+
+      // 2. Text Search Filter
+      if (query) {
+        filtered = filtered.filter(acc =>
+          (acc[nameKey] ? String(acc[nameKey]).toLowerCase().includes(query) : false) ||
+          (acc[numberKey] ? String(acc[numberKey]).toLowerCase().includes(query) : false)
+        );
+      }
+
+      // Render filtered accounts
       selectedAccountIndex = 0;
       renderAccounts(filtered);
     }
@@ -728,8 +848,9 @@
       if (accountList.length === 0) {
         const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('EMPTY')) || (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS && window.ASSETS_CONFIG.ANIMATIONS.EMPTY) || '';
         const searchInputVal = $contentArea.find("#explorer-search-input").val() || "";
-        const msg = searchInputVal.trim()
-          ? "No accounts match your search query."
+        const filterVal = currentFilters.status || "Active";
+        const msg = (searchInputVal.trim() || filterVal !== "All")
+          ? "No accounts match your search query or filter options."
           : "No accounts available under this holdings category.";
 
         $list.html(`
@@ -771,6 +892,7 @@
           $list.find(".account-item").css({ "border-color": "var(--border)", "background": "var(--glass)" }).removeClass("active");
           $(this).css({ "border-color": "var(--accent)", "background": "var(--glass2)" }).addClass("active");
           selectAccount(acc);
+          $contentArea.find(".explorer-body").addClass("mobile-view-details");
         });
 
         $list.append($item);
@@ -834,6 +956,18 @@
 
       if (!acc) {
         $preview.html(`<div style="text-align: center; color: var(--muted); padding: 100px 10px; font-style: italic; font-size: 13px;">Select an account to view details.</div>`);
+        const backLabel = activeTab ? (activeTab.title || "Accounts") : "List";
+        const $backBar = $(`
+          <div class="mobile-details-back-bar">
+            <button class="mobile-details-back-btn">
+              <span>←</span> Back to ${escapeHtml(backLabel)}
+            </button>
+          </div>
+        `);
+        $backBar.find(".mobile-details-back-btn").on("click", function () {
+          $contentArea.find(".explorer-body").removeClass("mobile-view-details");
+        });
+        $preview.prepend($backBar);
         return;
       }
 
@@ -1286,6 +1420,19 @@
           </div>
         `);
       }
+
+      const backLabel = activeTab ? (activeTab.title || "Accounts") : "List";
+      const $backBar = $(`
+        <div class="mobile-details-back-bar">
+          <button class="mobile-details-back-btn">
+            <span>←</span> Back to ${escapeHtml(backLabel)}
+          </button>
+        </div>
+      `);
+      $backBar.find(".mobile-details-back-btn").on("click", function () {
+        $contentArea.find(".explorer-body").removeClass("mobile-view-details");
+      });
+      $preview.prepend($backBar);
     }
   }
 

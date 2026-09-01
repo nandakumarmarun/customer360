@@ -165,6 +165,18 @@ Rather than rendering generic full-page loading indicators or spinners, we imple
   - The frontend dynamically renders the supplied `module.title` and `module.icon` from the API without overriding them, while the bottom badge has been completely removed from the HTML output.
 - **Graceful Script Fallback**: Handled correctly in `script.js` which defaults to `[]` when `window.QUICK_MODULES_CONFIG` is not defined.
 
+---
+
+## 14. Holdings Landing Grid Scroll Fix
+
+To prevent the `.qm-content-area` from dynamically growing in height and stretching the quick-module-view container, we introduced a global scroll layout for the holdings module common to both mobile and desktop screen sizes.
+
+### Key Details:
+- **No Dynamic Style Injection**: Reverted dynamic CSS injection logic inside `holding.js` to keep the JavaScript codebase modular and clean.
+- **Scroll Container Redirect**: Configured `.qm-content-area` to act as the direct scroll container (`overflow-y: scroll !important`) when the holdings header is active (`.qm-header-inline.holdings-active ~ .qm-content-area`). This allows the browser to render standard dashboard-level scrollbars at the outer padding edge instead of relying on custom nested scrollbars on `.holdings-landing-grid`, which can fail to render in complex flex-grid computations.
+- **Fixed Height on Mobile Views**: Configured `#quick-module-view` to have a fixed height of `480px !important` under the `@media (max-width: 1024px)` responsive query. This prevents the module containers from growing dynamically on mobile viewports, enabling scrolling inside `.qm-content-area` just like on desktop.
+- **Touch momentum scrolling**: Enabled `-webkit-overflow-scrolling: touch !important` on `.qm-content-area` under the holdings state to guarantee responsive touch-swipe scrolling across all mobile devices.
+
 
 
 
