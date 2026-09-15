@@ -92,7 +92,7 @@
     const src = resolveImageSrc(image);
     if (!src) return '';
     const alt = (image && image.alt) || 'Card image';
-    return `<img class="card-image" src="${src}" alt="${alt}" loading="lazy" />`;
+    return `<img class="card-image" src="${src}" alt="${alt}" loading="lazy" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 6px;" />`;
   }
 
 
@@ -994,15 +994,28 @@
         let totalSpan = 0;
         if (sec.fields) {
           Object.entries(sec.fields).forEach(([key, val]) => {
-            const valStr = String(val);
-            const icon = getLocalFieldIcon(key);
-            let isFullWidth = key.toLowerCase().includes("address") || key.toLowerCase().includes("details") || key.toLowerCase().includes("remarks");
-            if (!isFullWidth && window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
-              isFullWidth = window.UIRenderer.calculateTextSpan(valStr, 180, "600 12px 'Outfit', sans-serif") > 1;
-            } else if (!isFullWidth) {
-              isFullWidth = valStr.length > 20;
+            let valHtml = '';
+            let isFullWidth = false;
+
+            if (val && typeof val === 'object' && (String(val.type).toLowerCase() === 'image' || val.href || val.base64)) {
+              isFullWidth = true;
+              const src = val.href || val.base64 || '';
+              const alt = val.alt || '';
+              const width = val.width || '100%';
+              const height = val.height || 'auto';
+              valHtml = `<img src="${src}" alt="${alt}" style="max-width: ${width}; height: ${height}; border-radius: 8px; margin-top: 8px; display: block; object-fit: contain;" />`;
+            } else {
+              const valStr = String(val);
+              isFullWidth = key.toLowerCase().includes("address") || key.toLowerCase().includes("details") || key.toLowerCase().includes("remarks");
+              if (!isFullWidth && window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
+                isFullWidth = window.UIRenderer.calculateTextSpan(valStr, 180, "600 12px 'Outfit', sans-serif") > 1;
+              } else if (!isFullWidth) {
+                isFullWidth = valStr.length > 20;
+              }
+              valHtml = `<span class="df-value" style="display: block; font-size: 13px; font-weight: 600; color: var(--text);">${valStr}</span>`;
             }
 
+            const icon = getLocalFieldIcon(key);
             const span = isFullWidth ? 2 : 1;
             totalSpan += span;
 
@@ -1012,7 +1025,7 @@
                   <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px;">
                     <span class="df-icon-inline">${icon}</span> ${key}
                   </label>
-                  <span class="df-value" style="display: block; font-size: 13px; font-weight: 600; color: var(--text);">${valStr}</span>
+                  ${valHtml}
                 </div>
               </div>
             `;
@@ -1090,72 +1103,156 @@
                 let cardsHtml = '<div style="display: flex; flex-direction: column; gap: 12px; padding: 4px;">';
                 cards.forEach(card => {
                   let cardFieldsHtml = '';
-
                   let totalSpan = 0;
 
-                  // Render card image inside a cell of the detail fields grid
-                  if (card.image) {
-                    const imgTag = renderCardImage(card.image);
-                    if (imgTag) {
-                      totalSpan += 2; // card image spans full-width
-                      cardFieldsHtml += `
-                        <div class="detail-field-card full-width" style="padding: 10px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px;">
-                          <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-bottom: 4px;">
-                            <span class="df-icon-inline">🖼️</span> Card Design
-                          </label>
-                          <div class="card-img-container" style="width: 100%; max-width: 100%; height: 180px; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); margin: 4px 0;">
-                            ${imgTag}
-                          </div>
-                        </div>
-                      `;
-                    }
-                  }
-
+                  let parsedFields = [];
                   if (card.fields) {
                     Object.entries(card.fields).forEach(([k, v]) => {
-                      const valStr = String(v);
-                      const icon = getLocalFieldIcon(k);
-                      let isFullWidth = k.toLowerCase().includes("address") || k.toLowerCase().includes("details") || k.toLowerCase().includes("remarks");
-                      if (!isFullWidth && window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
-                        isFullWidth = window.UIRenderer.calculateTextSpan(valStr, 180, "600 12px 'Outfit', sans-serif") > 1;
-                      } else if (!isFullWidth) {
-                        isFullWidth = valStr.length > 20;
+                      let isFullWidth = false;
+                      let valStr = String(v);
+                      if (v && typeof v === 'object' && (String(v.type).toLowerCase() === 'image' || v.href || v.base64)) {
+                        isFullWidth = v.fullWidth === true;
+                      } else {
+                        isFullWidth = k.toLowerCase().includes("address") || k.toLowerCase().includes("details") || k.toLowerCase().includes("remarks");
+                        if (!isFullWidth && window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
+                          isFullWidth = window.UIRenderer.calculateTextSpan(valStr, 300, "600 12px 'Outfit', sans-serif") > 1;
+                        } else if (!isFullWidth) {
+                          isFullWidth = valStr.length > 50;
+                        }
                       }
-
-                      const span = isFullWidth ? 2 : 1;
-                      totalSpan += span;
-
-                      cardFieldsHtml += `
-                        <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="padding: 10px; border-bottom: 1px solid var(--border);">
-                          <div class="df-info">
-                            <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-bottom: 4px;">
-                              <span class="df-icon-inline">${icon}</span> ${k}
-                            </label>
-                            <span class="df-value" style="display: block; font-size: 13px; font-weight: 600; color: var(--text);">${valStr}</span>
-                          </div>
-                        </div>
-                      `;
+                      parsedFields.push({ k, v, isFullWidth, valStr });
                     });
                   }
 
-                  const remainder = totalSpan % 2;
-                  if (remainder !== 0) {
-                    cardFieldsHtml += `
-                      <div class="detail-field-card empty-placeholder" style="padding: 10px; border-bottom: 1px solid var(--border);"></div>
+                  let topFieldsHtml = '';
+                  let bottomFieldsHtml = '';
+                  let topFieldsCount = 0;
+                  let bottomSpan = 0;
+
+                  // Render card image
+                  let imageHtml = '';
+                  let imgTag = card.image ? renderCardImage(card.image) : '';
+                  if (imgTag) {
+                    imageHtml = `
+                      <div style="width: 50%; background: var(--bg); padding: 10px; display: flex; flex-direction: column; gap: 4px; border-right: 1px solid var(--border);">
+                        <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-bottom: 4px;">
+                          <span class="df-icon-inline">🖼️</span> Card Design
+                        </label>
+                        <div class="card-img-container" style="width: 100%; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                          ${imgTag}
+                        </div>
+                      </div>
                     `;
+                  }
+
+                  let maxTopFields = 0;
+                  if (imgTag) {
+                    let currentHeight = 0;
+                    for (let i = 0; i < parsedFields.length; i++) {
+                      if (parsedFields[i].isFullWidth) break;
+                      let fieldHeight = 62;
+                      if (parsedFields[i].valStr) {
+                        let len = parsedFields[i].valStr.length;
+                        if (len > 30) fieldHeight += 18;
+                        if (len > 60) fieldHeight += 18;
+                      }
+                      if (currentHeight + fieldHeight > 300 && maxTopFields > 0) break;
+                      currentHeight += fieldHeight;
+                      maxTopFields++;
+                    }
+                  }
+
+                  parsedFields.forEach((field) => {
+                    let valHtml = '';
+                    const k = field.k;
+                    const v = field.v;
+                    const isFullWidth = field.isFullWidth;
+
+                    if (v && typeof v === 'object' && (String(v.type).toLowerCase() === 'image' || v.href || v.base64)) {
+                      const src = v.href || v.base64 || '';
+                      const alt = v.alt || '';
+                      const width = v.width || '100%';
+                      const height = v.height || 'auto';
+                      valHtml = `<img src="${src}" alt="${alt}" style="max-width: ${width}; height: ${height}; border-radius: 8px; margin-top: 8px; display: block; object-fit: fill;" />`;
+                    } else {
+                      valHtml = `<span class="df-value" style="display: block; font-size: 13px; font-weight: 600; color: var(--text);">${field.valStr}</span>`;
+                    }
+
+                    const icon = getLocalFieldIcon(k);
+                    let isTop = imgTag && !isFullWidth && topFieldsCount < maxTopFields;
+                    let flexBasis = isFullWidth ? '100%' : (isTop ? '100%' : '20%');
+
+                    const fieldHtml = `
+                      <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="flex: 1 1 ${flexBasis}; min-width: 0; padding: 10px; background: var(--bg);">
+                        <div class="df-info">
+                          <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-bottom: 4px;">
+                            <span class="df-icon-inline">${icon}</span> ${k}
+                          </label>
+                          ${valHtml}
+                        </div>
+                      </div>
+                    `;
+
+                    if (isTop) {
+                      topFieldsHtml += fieldHtml;
+                      topFieldsCount++;
+                    } else {
+                      bottomFieldsHtml += fieldHtml;
+                    }
+                  });
+
+                  let combinedFieldsHtml = '';
+                  if (imgTag) {
+                    combinedFieldsHtml += `
+                      <div style="display: flex; border-bottom: ${bottomFieldsHtml ? '1px solid var(--border)' : 'none'};">
+                        ${imageHtml}
+                        <div style="width: 50%; background: var(--bg);">
+                          <div style="display: flex; flex-wrap: wrap; gap: 1px; background: var(--border); border-bottom: 1px solid var(--border);">
+                            ${topFieldsHtml}
+                          </div>
+                        </div>
+                      </div>
+                    `;
+                  }
+
+                  if (bottomFieldsHtml || !imgTag) {
+                    combinedFieldsHtml += `
+                      <div style="display: flex; flex-wrap: wrap; gap: 1px; background: var(--border);">
+                        ${bottomFieldsHtml}
+                      </div>
+                    `;
+                  }
+
+                  let headerLogoHtml = '';
+
+                  let logoSrc = '';
+                  let logoProp = card.logo || card.headerLogo || card.headerImage;
+                  if (logoProp) {
+                    if (typeof logoProp === 'object' && (logoProp.href || logoProp.base64)) {
+                      logoSrc = logoProp.href || logoProp.base64;
+                    } else if (typeof logoProp === 'string') {
+                      logoSrc = logoProp;
+                    }
+                  }
+
+                  if (logoSrc) {
+                    headerLogoHtml = `<img src="${logoSrc}" alt="Logo" style="height: 18px; object-fit: contain;">`;
                   }
 
                   cardsHtml += `
                     <div class="detail-section-block glass-card" style="padding: 16px; border-radius: 14px; margin-bottom: 16px;">
-                      <div style="display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px;">
-                        <span style="font-size: 20px;">💳</span>
-                        <div style="display: flex; flex-direction: column; text-align: left;">
-                          <h3 style="margin: 0; font-size: 13px; font-weight: 800; color: var(--accent2); text-transform: uppercase; letter-spacing: 1px;">${card.title || card.name || ""}</h3>
-                          <span style="font-size: 11px; color: var(--muted);">${card.subtitle || card.number || ""}</span>
+                      <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                          <span style="font-size: 20px;">💳</span>
+                          <div style="display: flex; flex-direction: column; text-align: left;">
+                            <h3 style="margin: 0; font-size: 13px; font-weight: 800; color: var(--accent2); text-transform: uppercase; letter-spacing: 1px;">${card.title || card.name || ""}</h3>
+                            <span style="font-size: 11px; color: var(--muted);">${card.subtitle || card.number || ""}</span>
+                          </div>
                         </div>
+                        ${headerLogoHtml ? `<div>${headerLogoHtml}</div>` : ''}
                       </div>
-                      <div class="detail-fields-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; gap: 1px;">
-                        ${cardFieldsHtml}
+                      <div class="detail-fields-wrapper" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+                        ${combinedFieldsHtml}
                       </div>
                     </div>
                   `;
@@ -1247,7 +1344,7 @@
               $container.html(txnsHtml);
 
               // Click handler on list items to open transaction details offcanvas
-              $container.find('.txn-list-item').on('click', function() {
+              $container.find('.txn-list-item').on('click', function () {
                 const txnId = $(this).data('txn-id');
                 const txnData = txns.find(t => t.id === txnId);
                 if (txnData) {

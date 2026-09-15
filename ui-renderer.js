@@ -227,12 +227,12 @@
 
       if (tierVal === 'prime platinum') {
         $tierBadge.html('👑 PRIME PLATINUM').show();
-        $sidebarCrown.show();
-        $avatarCrown.show();
+        $sidebarCrown.removeClass('silver-crown').show();
+        $avatarCrown.removeClass('silver-crown').show();
       } else if (tierVal === 'prime') {
-        $tierBadge.html('★ PRIME').show();
-        $sidebarCrown.hide();
-        $avatarCrown.hide();
+        $tierBadge.html('<span class="silver-crown-emoji">👑</span> PRIME').show();
+        $sidebarCrown.addClass('silver-crown').show();
+        $avatarCrown.addClass('silver-crown').show();
       } else {
         $tierBadge.hide();
         $sidebarCrown.hide();

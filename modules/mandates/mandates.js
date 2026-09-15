@@ -15,6 +15,7 @@
   let selectedAccountId = null; // Currently selected account number (e.g. "5D0100123456789")
   let searchQuery = "";
   let headerRestored = true;
+  let mobileStep = 0;
 
   // ── DYNAMIC CSS STYLES INJECTION ──
   const mandatesStyles = `
@@ -491,38 +492,78 @@
       bottom: 24px;
     }
 
+    .mobile-category-cards { display: none !important; }
+    .mobile-back-btn { display: none !important; }
+
     @media (max-width: 900px) {
       #quick-module-view .qm-content-area {
-        height: auto !important;
-        overflow: visible !important;
-        flex: none !important;
+        height: 100% !important;
+        overflow-y: auto !important;
+        flex: 1 !important;
       }
       .mandates-container {
-        flex-direction: column;
-        height: auto;
-        overflow: visible;
-        flex: none;
-        min-height: 0;
+        flex-direction: column !important;
+        height: auto !important;
+        overflow: visible !important;
       }
-      .mandates-tree-panel, .mandates-details-panel {
-        width: 100%;
-        height: auto;
-        max-height: 400px;
-        margin-bottom: 12px;
+      .mandates-tree-panel {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        height: 300px !important;
       }
-    }
+      .mandates-details-panel {
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+      
+      /* Mobile Drill-Down Flow States */
+      .mobile-step-0 .mandates-tab-bar { display: none !important; }
+      .mobile-step-0 .mandates-tree-panel { display: none !important; }
+      .mobile-step-0 .mandates-details-panel { display: none !important; }
+      .mobile-step-0 .mobile-category-cards { display: flex !important; flex-direction: column; gap: 12px; }
 
-    @media (max-width: 480px) {
-      .mandates-tab-bar {
+      .mobile-step-1 .mobile-category-cards { display: none !important; }
+      .mobile-step-1 .mandates-tab-bar { display: none !important; }
+      .mobile-step-1 .mandates-details-panel { display: none !important; }
+      .mobile-step-1 .mandates-tree-panel { display: flex !important; height: auto !important; flex: 1; }
+
+      .mobile-step-2 .mobile-category-cards { display: none !important; }
+      .mobile-step-2 .mandates-tab-bar { display: none !important; }
+      .mobile-step-2 .mandates-tree-panel { display: none !important; }
+      .mobile-step-2 .mandates-details-panel { display: flex !important; flex-direction: column; }
+      .mobile-cat-card {
+        background: var(--glass2);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
         display: flex;
-        width: 100%;
+        align-items: center;
+        gap: 16px;
+        cursor: pointer;
       }
-      .mandates-tab-btn {
-        flex: 1;
-        padding: 6px 4px;
-        font-size: 11px;
-        justify-content: center;
-        gap: 4px;
+      .mobile-cat-card.locked { opacity: 0.5; cursor: not-allowed; }
+      .mobile-cat-icon { font-size: 24px; }
+      .mobile-cat-title { font-size: 16px; font-weight: 600; color: var(--text); flex: 1; }
+      .mobile-back-btn {
+        background: var(--glass2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 13px;
+        cursor: pointer;
+        margin-bottom: 12px;
+        display: flex !important;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+        align-self: flex-start;
+        position: sticky !important;
+        top: 10px !important;
+        z-index: 50 !important;
+        backdrop-filter: blur(10px);
       }
     }
   `;
@@ -688,7 +729,7 @@
 
   // ── LOAD MANDATES FOR SPECIFIC ACCOUNT ──
   function loadMandatesForAccount(accountId) {
-    const $details = $("#mandate-details-area");
+    const $details = $("#mandate-details-content");
     if (!$details.length) return;
 
     // smooth loading experience - only show spinner on first load, otherwise dim the cards
@@ -760,16 +801,33 @@
     `);
   }
 
+  // ── UPDATE MOBILE VIEW ──
+  function updateMobileView() {
+    const $content = $("#qm-content");
+    $content.removeClass("mobile-step-0 mobile-step-1 mobile-step-2");
+    if (window.innerWidth <= 900) {
+      $content.addClass("mobile-step-" + mobileStep);
+    }
+  }
+
   // ── RENDER TWO-COLUMN MANDATES GRID ──
   function renderMandatesLayout() {
     const $content = $("#qm-content");
     if (!$content.length) return;
 
     let tabsHtml = "";
+    let mobileCatsHtml = "";
     configTabs.forEach(t => {
       const isActive = activeTab === t.id;
       const isLocked = t.locked === true;
       tabsHtml += `<button class="mandates-tab-btn ${isActive ? 'active' : ''} ${isLocked ? 'locked' : ''}" data-tab="${t.id}">${t.icon} ${t.title}</button>`;
+      mobileCatsHtml += `
+        <div class="mobile-cat-card ${isLocked ? 'locked' : ''}" data-tab="${t.id}">
+          <span class="mobile-cat-icon">${t.icon}</span>
+          <span class="mobile-cat-title">${t.title}</span>
+          ${isLocked ? '<span>🔒</span>' : '<span>➡️</span>'}
+        </div>
+      `;
     });
 
     $content.html(`
@@ -779,9 +837,15 @@
         ${tabsHtml}
       </div>
 
+      <!-- Mobile Category Cards (Only visible in mobile step 0) -->
+      <div class="mobile-category-cards">
+        ${mobileCatsHtml}
+      </div>
+
       <div class="mandates-container">
         <!-- LEFT COLUMN: Accounts List Panel -->
         <div class="mandates-tree-panel">
+          <button class="mobile-back-btn" id="mobile-back-to-cats">🔙 Back to Categories</button>
           <!-- Search filter input -->
           <div class="tree-search-wrap">
             <span class="tree-search-icon">🔍</span>
@@ -796,7 +860,8 @@
 
         <!-- RIGHT COLUMN: Stacked Details Preview -->
         <div class="mandates-details-panel" id="mandate-details-area">
-          <!-- Stacked details cards injected here -->
+          <button class="mobile-back-btn" id="mobile-back-to-list" style="margin-bottom: 12px; margin-left: 12px; margin-top: 12px; width: calc(100% - 24px);">🔙 Back to Accounts</button>
+          <div id="mandate-details-content"></div>
         </div>
       </div>
     `);
@@ -850,6 +915,35 @@
       }
     });
 
+    $(".mobile-cat-card").on("click", function () {
+      const tab = $(this).attr("data-tab");
+      const tabCfg = configTabs.find(t => t.id === tab);
+      if (tabCfg && tabCfg.locked) {
+        $(this).addClass("shake-anim");
+        setTimeout(() => $(this).removeClass("shake-anim"), 300);
+        showLockedToast(`${tabCfg.title} mandates feature is currently locked.`);
+        return;
+      }
+      activeTab = tab;
+      $(".mandates-tab-btn").removeClass("active");
+      $(`.mandates-tab-btn[data-tab="${tab}"]`).addClass("active");
+      updateTabSlider(true);
+      
+      mobileStep = 1;
+      updateMobileView();
+      renderMandateDetails();
+    });
+
+    $("#mobile-back-to-cats").on("click", function() {
+      mobileStep = 0;
+      updateMobileView();
+    });
+
+    $("#mobile-back-to-list").on("click", function() {
+      mobileStep = 1;
+      updateMobileView();
+    });
+
     $("#tree-search").on("input", function () {
       searchQuery = $(this).val().toLowerCase().trim();
       renderSidebarList();
@@ -858,6 +952,7 @@
     // Window resize recalibrates slider layout positions
     $(window).off("resize.mandatesTabs").on("resize.mandatesTabs", function () {
       updateTabSlider(false);
+      updateMobileView();
     });
 
     // Initialize pill coordinates immediately and retry after transitions
@@ -873,6 +968,8 @@
     setTimeout(() => {
       updateTabSlider(false);
     }, 850);
+
+    updateMobileView();
 
     // Watch tab bar container resize/visibility shifts via ResizeObserver to ensure absolute coordinates match
     if (typeof ResizeObserver !== 'undefined') {
@@ -929,6 +1026,8 @@
 
       const $itemEl = $(itemHtml);
       $itemEl.on("click", function () {
+        mobileStep = 2;
+        updateMobileView();
         if (selectedAccountId !== item) {
           selectedAccountId = item;
           $(".mandates-list-item").removeClass("active");
@@ -943,7 +1042,7 @@
 
   // ── RENDER MANDATES DETAILED LIST (RIGHT PANEL) ──
   function renderMandateDetails() {
-    const $details = $("#mandate-details-area");
+    const $details = $("#mandate-details-content");
     if (!$details.length) return;
 
     const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('EMPTY')) || 

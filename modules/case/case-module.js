@@ -552,6 +552,117 @@
       color: var(--text);
       transform: translateX(-2px);
     }
+
+    /* Mobile Card View for Cases */
+    @media (max-width: 768px) {
+      .qm-header-main-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 16px;
+      }
+      .qm-header-actions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .qm-action-btn {
+        flex: 1;
+        text-align: center;
+        justify-content: center;
+        font-size: 11px;
+        padding: 6px 4px;
+        white-space: nowrap;
+      }
+
+      .cases-table thead {
+        display: none;
+      }
+      
+      .cases-table tbody {
+        display: block;
+        width: 100%;
+        padding-bottom: 30px;
+      }
+      
+      .cases-table tr, .cases-table td {
+        display: block;
+        width: 100%;
+      }
+      
+      .cases-table tbody tr {
+        position: relative;
+        background: var(--glass);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        margin-bottom: 10px;
+        padding: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .cases-table tbody tr:hover {
+        background: var(--glass2);
+        border-color: var(--accent2);
+        transform: translateY(-2px);
+      }
+
+      .cases-table td {
+        border: none;
+        padding: 4px 0;
+        height: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+        font-size: 12.5px;
+      }
+
+      .cases-table td::before {
+        content: attr(data-label);
+        font-weight: 500;
+        color: var(--muted);
+        text-align: left;
+        margin-right: 16px;
+      }
+
+      .cases-table td.col-id {
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 8px;
+        margin-bottom: 6px;
+        justify-content: flex-start;
+        padding-right: 90px;
+      }
+      
+      .cases-table td.col-id::before {
+        display: none;
+      }
+      
+      .cases-table td.col-id a {
+        font-size: 15px;
+      }
+
+      .cases-table td.col-status {
+        position: absolute;
+        top: 10px;
+        right: 12px;
+        width: auto;
+        padding: 0;
+      }
+      
+      .cases-table td.col-status::before {
+        display: none;
+      }
+
+      .cases-table td.col-action {
+        justify-content: flex-end;
+        margin-top: 8px;
+      }
+      
+      .cases-table td.col-action::before {
+        display: none;
+      }
+    }
   `;
 
   // Inject Styles dynamically
@@ -993,18 +1104,18 @@
 
         const rowHtml = `
           <tr>
-            <td class="col-id" style="font-family: 'JetBrains Mono', monospace;">
+            <td class="col-id" data-label="Case ID" style="font-family: 'JetBrains Mono', monospace;">
               <a href="javascript:void(0)" class="case-id-link" data-id="${item.caseId}" data-type="${typeClass}" title="Open details for ${escapeHtml(item.caseId)}">${escapeHtml(item.caseId)}</a>
             </td>
-            <td class="col-type">
+            <td class="col-type" data-label="Case Type">
               <span class="type-badge ${typeClass}">${escapeHtml(typeText)}</span>
             </td>
-            <td class="col-req" style="font-weight: 600;">${escapeHtml(item.requestType || "")}</td>
-            <td class="col-status">
+            <td class="col-req" data-label="Request Type" style="font-weight: 600;">${escapeHtml(item.requestType || "")}</td>
+            <td class="col-status" data-label="Status">
               <span class="status-badge" style="${statusStyle}">${escapeHtml(statusText)}</span>
             </td>
-            <td class="col-date" style="color: var(--muted);">${escapeHtml(item.createdDate)}</td>
-            <td class="col-action" style="text-align: center;">
+            <td class="col-date" data-label="Created Date" style="color: var(--muted);">${escapeHtml(item.createdDate)}</td>
+            <td class="col-action" data-label="Actions" style="text-align: center;">
               <a href="javascript:void(0)" class="cases-table-action-btn" data-id="${item.caseId}" data-type="${typeClass}" title="View details for ${escapeHtml(item.caseId)}">👁️ View</a>
             </td>
           </tr>

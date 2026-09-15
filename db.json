@@ -25,7 +25,7 @@
       "cid": "NX-4829-0055",
       "panNumber": "ABCDE1234F",
       "status": "Active",
-      "tier": "prime platinum",
+      "tier": "prime",
       "accountsCount": "12",
       "tenure": "8yr",
       "kycProgress": "99%",
@@ -1145,6 +1145,8 @@
     }
   ],
   "theme": {
+    "customerId": "NX-4829-0055",
+    "panNumber": "ABCDE1234F",
     "mode": "dark",
     "color": "neon"
   },
@@ -1463,6 +1465,13 @@
         "alt": "Visa Platinum"
       },
       "fields": {
+        "lounge Access": {
+          "type": "image",
+          "alt": "Visa Logo",
+          "width": "30px",
+          "height": "30px",
+          "href": "https://cdn-icons-png.flaticon.com/512/1809/1809012.png"
+        },
         "Card Number": "4111-XXXX-XXXX-9944",
         "Card Type": "Visa Platinum Debit",
         "Card Holder": "Daniel J. Anderson",
@@ -6968,6 +6977,1090 @@
       "status": "skipped",
       "timestamp": "2026-09-01T06:25:19.233Z",
       "id": "Wca0ojD"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-02T11:28:17.964Z",
+      "id": "4WXDsEx"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-02T11:28:18.888Z",
+      "id": "cOcEPGa"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-02T11:34:18.109Z",
+      "id": "FnYmvf3"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-02T11:34:20.263Z",
+      "id": "m1baY6f"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-02T11:44:06.857Z",
+      "id": "Lww8vSg"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-02T11:44:07.865Z",
+      "id": "yacDQhs"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-02T11:49:15.477Z",
+      "id": "CEU-LGM"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-02T11:49:17.046Z",
+      "id": "FJ4gVwL"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-02T12:20:35.610Z",
+      "id": "HS6KlEG"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-02T12:20:36.737Z",
+      "id": "cCHG7hb"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-02T12:21:48.902Z",
+      "id": "0-ek44w"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-02T12:21:49.777Z",
+      "id": "gs5oyVM"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-02T12:34:37.116Z",
+      "id": "Utij7da"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-02T12:34:38.006Z",
+      "id": "zO3dYY8"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-03T06:54:42.948Z",
+      "id": "D3OemBB"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-03T06:54:43.934Z",
+      "id": "LzYKv-c"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-03T06:56:05.090Z",
+      "id": "kElUwmE"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-03T06:56:06.289Z",
+      "id": "dyWucvf"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-03T07:03:11.011Z",
+      "id": "RH_1ZVZ"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-03T07:03:11.871Z",
+      "id": "ap8ejl2"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-03T07:27:46.905Z",
+      "id": "gcJITXv"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-03T07:27:48.117Z",
+      "id": "RFgO-zN"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-03T07:28:54.862Z",
+      "id": "qrG5AjV"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-03T07:28:55.823Z",
+      "id": "1yfn0Oi"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-03T07:29:36.763Z",
+      "id": "R50_gGQ"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-03T07:29:38.253Z",
+      "id": "GaONWxW"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-03T09:15:02.783Z",
+      "id": "75G_QyI"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-03T09:15:04.694Z",
+      "id": "Wal6_-R"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-03T09:26:37.783Z",
+      "id": "1_B6B0q"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-03T09:26:38.938Z",
+      "id": "6IuwpF9"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-03T09:39:25.092Z",
+      "id": "YbM1vnN"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-03T09:39:36.469Z",
+      "id": "-AP2G_N"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-03T09:39:38.669Z",
+      "id": "A9Y5tmO"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-03T10:02:59.880Z",
+      "id": "aO-H418"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-03T10:03:10.504Z",
+      "id": "p44-tT6"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-03T10:03:11.698Z",
+      "id": "ynlA2hy"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-08T11:05:20.756Z",
+      "id": "TVfWlU2"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-08T11:05:21.695Z",
+      "id": "91luDY7"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-08T11:18:52.312Z",
+      "id": "tSQZQQ-"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-08T11:18:53.459Z",
+      "id": "3sdPJcc"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-08T11:25:07.536Z",
+      "id": "IOjt1l5"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-08T11:25:10.116Z",
+      "id": "ZasniHi"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-08T11:30:32.813Z",
+      "id": "kH21DjA"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-08T11:30:33.685Z",
+      "id": "QIUZB7V"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-08T11:32:00.034Z",
+      "id": "AL9x4of"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-08T11:32:00.999Z",
+      "id": "uRaO-1m"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-08T11:33:48.606Z",
+      "id": "D9RQJ12"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-08T11:33:49.741Z",
+      "id": "NS2iR4G"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-08T11:34:52.375Z",
+      "id": "eSOozJc"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-08T11:34:53.867Z",
+      "id": "cnvdvMi"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-08T11:41:09.415Z",
+      "id": "DQwA8_q"
+    },
+    {
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-08T11:41:10.428Z",
+      "id": "nNlBr9E"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-10T06:35:09.462Z",
+      "id": "Llvp-Fe"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-10T06:35:12.168Z",
+      "id": "WX9xdOn"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-10T06:37:02.819Z",
+      "id": "ttWmbnw"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-10T06:37:04.103Z",
+      "id": "K3teThM"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-10T07:41:44.222Z",
+      "id": "A5o4srI"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-10T07:41:45.912Z",
+      "id": "gV9OP5c"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-10T07:41:54.163Z",
+      "id": "tYGYiHH"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-10T07:41:58.112Z",
+      "id": "1ytJx9r"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-10T09:27:48.548Z",
+      "id": "Oy2Snko"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-10T09:27:50.179Z",
+      "id": "ls5BnhE"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T05:31:31.163Z",
+      "id": "poSJGr5"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T05:31:33.289Z",
+      "id": "CVF9mn2"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T05:38:55.400Z",
+      "id": "5qHd8-I"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T05:38:56.822Z",
+      "id": "vr5s5ph"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T05:48:43.731Z",
+      "id": "KFRH0BY"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T05:48:44.538Z",
+      "id": "dasCxye"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T05:59:20.236Z",
+      "id": "bkkpWjr"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T05:59:21.111Z",
+      "id": "c8pmRNH"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T06:01:57.754Z",
+      "id": "LHThmkH"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T06:01:58.750Z",
+      "id": "qhQXJzv"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T06:04:24.943Z",
+      "id": "iq4zF3d"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T06:04:26.826Z",
+      "id": "RV3u9sT"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T06:04:38.889Z",
+      "id": "a8SFRn2"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T06:04:39.949Z",
+      "id": "qmo6xDT"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T06:41:36.422Z",
+      "id": "W0hLh7o"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T06:41:37.707Z",
+      "id": "bWPBLhQ"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T06:46:09.421Z",
+      "id": "qcyrExN"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T06:46:10.580Z",
+      "id": "relhttk"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T06:50:41.727Z",
+      "id": "jYV-SHL"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T06:50:42.673Z",
+      "id": "_e_e7cD"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T06:57:02.239Z",
+      "id": "cly-v8Z"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T06:57:10.969Z",
+      "id": "mO_TCBC"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T06:57:26.192Z",
+      "id": "3MpYPUO"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T06:58:24.155Z",
+      "id": "iEixLnO"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T07:11:53.139Z",
+      "id": "WDIThG_"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T08:39:00.244Z",
+      "id": "57VGN9B"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T08:41:30.870Z",
+      "id": "1GlBK4i"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T08:41:32.200Z",
+      "id": "nor7wSb"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T08:45:08.946Z",
+      "id": "yQKAx9b"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T08:45:09.825Z",
+      "id": "rsMZE0K"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T08:45:42.625Z",
+      "id": "30tx9rP"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T08:46:06.374Z",
+      "id": "RS9cE8M"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T08:49:18.915Z",
+      "id": "m-Yo8up"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T08:49:19.783Z",
+      "id": "kpUAQBq"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T08:51:30.394Z",
+      "id": "TfapXFD"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T08:51:31.782Z",
+      "id": "SeH701l"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T08:58:32.823Z",
+      "id": "I2NUpiR"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T08:58:33.774Z",
+      "id": "m50PV3G"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T09:03:33.144Z",
+      "id": "exSK3Zk"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T09:03:35.689Z",
+      "id": "vDnxL8B"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T09:11:18.370Z",
+      "id": "IKgKnw2"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T09:11:19.527Z",
+      "id": "u4plsKS"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T09:23:25.727Z",
+      "id": "Qecr85Y"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T09:24:08.288Z",
+      "id": "Nb-P9BG"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-14T10:26:49.971Z",
+      "id": "3qzFr6s"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-14T10:28:52.977Z",
+      "id": "NBhdJtQ"
     }
   ],
   "activities": {

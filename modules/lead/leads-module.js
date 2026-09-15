@@ -607,6 +607,117 @@
     .leads-toast.show {
       bottom: 30px;
     }
+
+    /* Mobile Card View for Leads */
+    @media (max-width: 768px) {
+      .qm-header-main-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 16px;
+      }
+      .qm-header-actions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .qm-action-btn {
+        flex: 1;
+        text-align: center;
+        justify-content: center;
+        font-size: 11px;
+        padding: 6px 4px;
+        white-space: nowrap;
+      }
+
+      .leads-table thead {
+        display: none;
+      }
+      
+      .leads-table tbody {
+        display: block;
+        width: 100%;
+        padding-bottom: 30px;
+      }
+      
+      .leads-table tr, .leads-table td {
+        display: block;
+        width: 100%;
+      }
+      
+      .leads-table-body tr {
+        position: relative;
+        background: var(--glass);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        margin-bottom: 10px;
+        padding: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .leads-table-body tr:hover {
+        background: var(--glass2);
+        border-color: var(--accent2);
+        transform: translateY(-2px);
+      }
+
+      .leads-table td {
+        border: none;
+        padding: 4px 0;
+        height: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+        font-size: 12.5px;
+      }
+
+      .leads-table td::before {
+        content: attr(data-label);
+        font-weight: 500;
+        color: var(--muted);
+        text-align: left;
+        margin-right: 16px;
+      }
+
+      .leads-table td.col-id {
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 8px;
+        margin-bottom: 6px;
+        justify-content: flex-start;
+        padding-right: 90px;
+      }
+      
+      .leads-table td.col-id::before {
+        display: none;
+      }
+      
+      .leads-table td.col-id a {
+        font-size: 15px;
+      }
+
+      .leads-table td.col-status {
+        position: absolute;
+        top: 10px;
+        right: 12px;
+        width: auto;
+        padding: 0;
+      }
+      
+      .leads-table td.col-status::before {
+        display: none;
+      }
+
+      .leads-table td.col-action {
+        justify-content: flex-end;
+        margin-top: 8px;
+      }
+      
+      .leads-table td.col-action::before {
+        display: none;
+      }
+    }
   `;
 
   // ── INJECT THE CSS ──
@@ -942,19 +1053,19 @@
   function getStatusBadgeStyle(status) {
     const s = (status || "").trim();
     if (!s) return "";
-    
+
     // Hash function
     let hash = 0;
     for (let i = 0; i < s.length; i++) {
       hash = s.charCodeAt(i) + ((hash << 5) - hash);
     }
-    
+
     // Map to a hue (0 - 360)
     const hue = Math.abs(hash) % 360;
-    
+
     // Check if we are in light mode
     const isLightMode = document.documentElement.classList.contains("light-mode") || document.body.classList.contains("light-mode");
-    
+
     if (isLightMode) {
       const bg = `hsl(${hue}, 85%, 96%)`;
       const color = `hsl(${hue}, 80%, 30%)`;
@@ -1021,15 +1132,15 @@
         const statusStyle = getStatusBadgeStyle(statusText);
         const rowHtml = `
           <tr>
-            <td class="col-id" style="font-family: 'JetBrains Mono', monospace;">
+            <td class="col-id" data-label="Lead ID" style="font-family: 'JetBrains Mono', monospace;">
               <a href="javascript:void(0)" class="lead-id-link" data-id="${lead.leadId}" title="Open details for ${escapeHtml(lead.leadId)}">${escapeHtml(lead.leadId)}</a>
             </td>
-            <td class="col-prod" style="font-weight: 600;">${escapeHtml(lead.product)}</td>
-            <td class="col-status">
+            <td class="col-prod" data-label="Product" style="font-weight: 600;">${escapeHtml(lead.product)}</td>
+            <td class="col-status" data-label="Status">
               <span class="status-badge" style="${statusStyle}">${escapeHtml(statusText)}</span>
             </td>
-            <td class="col-date" style="color: var(--muted);">${escapeHtml(lead.createdDate)}</td>
-            <td class="col-action" style="text-align: center;">
+            <td class="col-date" data-label="Created Date" style="color: var(--muted);">${escapeHtml(lead.createdDate)}</td>
+            <td class="col-action" data-label="Actions" style="text-align: center;">
               <a href="javascript:void(0)" class="leads-table-action-btn" data-id="${lead.leadId}" title="View details for ${escapeHtml(lead.leadId)}">👁️ View</a>
             </td>
           </tr>

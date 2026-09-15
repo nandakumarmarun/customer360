@@ -14,6 +14,7 @@
   let selectedAccountId = null; // Currently selected account number (e.g. "5D0100123456789")
   let searchQuery = "";
   let headerRestored = true;
+  let mobileStep = 0;
 
   // ── DYNAMIC CSS STYLES INJECTION ──
   const cardsStyles = `
@@ -385,11 +386,14 @@
       border-radius: 6px;
     }
 
+    .mobile-category-cards { display: none !important; }
+    .mobile-back-btn { display: none !important; }
+
     @media (max-width: 900px) {
       #quick-module-view .qm-content-area {
-        height: auto !important;
-        overflow: visible !important;
-        flex: none !important;
+        height: 100% !important;
+        overflow-y: auto !important;
+        flex: 1 !important;
       }
       .cards-container {
         flex-direction: column !important;
@@ -400,7 +404,7 @@
         width: 100% !important;
         min-width: 100% !important;
         max-width: 100% !important;
-        height: 220px !important;
+        height: 300px !important;
       }
       .cards-details-panel {
         width: 100% !important;
@@ -409,6 +413,53 @@
       }
       .detail-fields-grid {
         grid-template-columns: 1fr !important;
+      }
+      
+      /* Mobile Drill-Down Flow States */
+      .mobile-step-0 .cards-tab-bar { display: none !important; }
+      .mobile-step-0 .cards-tree-panel { display: none !important; }
+      .mobile-step-0 .cards-details-panel { display: none !important; }
+      .mobile-step-0 .mobile-category-cards { display: flex !important; flex-direction: column; gap: 12px; }
+
+      .mobile-step-1 .cards-tab-bar { display: none !important; }
+      .mobile-step-1 .cards-details-panel { display: none !important; }
+      .mobile-step-1 .cards-tree-panel { display: flex !important; height: auto !important; flex: 1; }
+
+      .mobile-step-2 .cards-tab-bar { display: none !important; }
+      .mobile-step-2 .cards-tree-panel { display: none !important; }
+      .mobile-step-2 .cards-details-panel { display: flex !important; flex-direction: column; }
+      
+      .mobile-cat-card {
+        background: var(--glass2);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        cursor: pointer;
+      }
+      .mobile-cat-card.locked { opacity: 0.5; cursor: not-allowed; }
+      .mobile-cat-icon { font-size: 24px; }
+      .mobile-cat-title { font-size: 16px; font-weight: 600; color: var(--text); flex: 1; }
+      .mobile-back-btn {
+        background: var(--glass2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 13px;
+        cursor: pointer;
+        margin-bottom: 12px;
+        display: flex !important;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+        align-self: flex-start;
+        position: sticky !important;
+        top: 10px !important;
+        z-index: 50 !important;
+        backdrop-filter: blur(10px);
       }
     }
   `;
@@ -491,13 +542,18 @@
     const l = (label || "").toLowerCase();
     if (l.includes("phone") || l.includes("mobile") || l.includes("tel")) return "📞";
     if (l.includes("email") || l.includes("mail")) return "✉️";
-    if (l.includes("address") || l.includes("street") || l.includes("city") || l.includes("state") || l.includes("country")) return "📍";
-    if (l.includes("holder") || l.includes("name") || l.includes("user")) return "👤";
+    if (l.includes("address") || l.includes("street") || l.includes("city") || l.includes("state") || l.includes("country") || l.includes("zip") || l.includes("postal")) return "📍";
+    if (l.includes("birth") || l.includes("dob") || l.includes("age")) return "🎂";
+    if (l.includes("gender") || l.includes("sex")) return "👤";
+    if (l.includes("nationality") || l.includes("passport")) return "🌐";
+    if (l.includes("occupation") || l.includes("employer") || l.includes("industry") || l.includes("job") || l.includes("work")) return "💼";
     if (l.includes("card") || l.includes("type")) return "💳";
-    if (l.includes("status")) return "🏷️";
-    if (l.includes("limit") || l.includes("atm") || l.includes("pos") || l.includes("amount") || l.includes("balance")) return "💰";
-    if (l.includes("date") || l.includes("expiry") || l.includes("valid")) return "📅";
-    if (l.includes("number") || l.includes("id")) return "📄";
+    if (l.includes("status") || l.includes("classification") || l.includes("tier")) return "🏷️";
+    if (l.includes("net worth") || l.includes("balance") || l.includes("income") || l.includes("salary") || l.includes("revenue") || l.includes("amount") || l.includes("limit") || l.includes("atm") || l.includes("pos") || l.includes("interest")) return "💰";
+    if (l.includes("score") || l.includes("rating") || l.includes("risk")) return "⭐️";
+    if (l.includes("since") || l.includes("date") || l.includes("time") || l.includes("maturity") || l.includes("opened") || l.includes("expiry") || l.includes("valid")) return "📅";
+    if (l.includes("tax") || l.includes("ssn") || l.includes("id") || l.includes("cid") || l.includes("number") || l.includes("acc")) return "📄";
+    if (l.includes("rm") || l.includes("manager") || l.includes("owner") || l.includes("beneficial") || l.includes("holder") || l.includes("name") || l.includes("user")) return "👥";
     return "🔹";
   }
 
@@ -657,7 +713,7 @@
 
   // ── LOAD CARDS FOR SPECIFIC ACCOUNT USING CASA CARDS ENDPOINT ──
   function loadCardsForAccount(accountId) {
-    const $details = $("#cards-details-area");
+    const $details = $("#cards-details-content");
     if (!$details.length) return;
 
     const hasContent = $details.find(".cards-cards-container, .cards-detail-empty, .detail-section-block").length > 0;
@@ -729,16 +785,33 @@
     `);
   }
 
+  // ── UPDATE MOBILE VIEW ──
+  function updateMobileView() {
+    const $content = $("#qm-content");
+    $content.removeClass("mobile-step-0 mobile-step-1 mobile-step-2");
+    if (window.innerWidth <= 900) {
+      $content.addClass("mobile-step-" + mobileStep);
+    }
+  }
+
   // ── RENDER TWO-COLUMN CARDS GRID ──
   function renderCardsLayout() {
     const $content = $("#qm-content");
     if (!$content.length) return;
 
     let tabsHtml = "";
+    let mobileCatsHtml = "";
     configTabs.forEach(t => {
       const isActive = activeTab === t.id;
       const isLocked = t.locked === true;
       tabsHtml += `<button class="cards-tab-btn ${isActive ? 'active' : ''} ${isLocked ? 'locked' : ''}" data-tab="${t.id}">${t.icon} ${t.title}</button>`;
+      mobileCatsHtml += `
+        <div class="mobile-cat-card ${isLocked ? 'locked' : ''}" data-tab="${t.id}">
+          <span class="mobile-cat-icon">${t.icon}</span>
+          <span class="mobile-cat-title">${t.title}</span>
+          ${isLocked ? '<span>🔒</span>' : '<span>➡️</span>'}
+        </div>
+      `;
     });
 
     $content.html(`
@@ -748,9 +821,15 @@
         ${tabsHtml}
       </div>
 
+      <!-- Mobile Category Cards (Only visible in mobile step 0) -->
+      <div class="mobile-category-cards">
+        ${mobileCatsHtml}
+      </div>
+
       <div class="cards-container">
         <!-- LEFT COLUMN: Accounts List Panel -->
         <div class="cards-tree-panel">
+          <button class="mobile-back-btn" id="mobile-back-to-cats">🔙 Back to Categories</button>
           <!-- Search filter input -->
           <div class="tree-search-wrap">
             <span class="tree-search-icon">🔍</span>
@@ -765,7 +844,8 @@
 
         <!-- RIGHT COLUMN: Stacked Details Preview (Direct Card Details) -->
         <div class="cards-details-panel" id="cards-details-area">
-          <!-- Card details injected here -->
+          <button class="mobile-back-btn" id="mobile-back-to-list" style="margin-bottom: 12px; margin-left: 12px; margin-top: 12px; width: calc(100% - 24px);">🔙 Back to Accounts</button>
+          <div id="cards-details-content"></div>
         </div>
       </div>
     `);
@@ -815,6 +895,35 @@
       }
     });
 
+    $(".mobile-cat-card").on("click", function () {
+      const tab = $(this).attr("data-tab");
+      const tabCfg = configTabs.find(t => t.id === tab);
+      if (tabCfg && tabCfg.locked) {
+        $(this).addClass("shake-anim");
+        setTimeout(() => $(this).removeClass("shake-anim"), 300);
+        showLockedToast(`${tabCfg.title} feature is currently locked.`);
+        return;
+      }
+      activeTab = tab;
+      $(".cards-tab-btn").removeClass("active");
+      $(`.cards-tab-btn[data-tab="${tab}"]`).addClass("active");
+      updateTabSlider(true);
+
+      mobileStep = 1;
+      updateMobileView();
+      renderCardDetails();
+    });
+
+    $("#mobile-back-to-cats").on("click", function () {
+      mobileStep = 0;
+      updateMobileView();
+    });
+
+    $("#mobile-back-to-list").on("click", function () {
+      mobileStep = 1;
+      updateMobileView();
+    });
+
     $("#tree-search").on("input", function () {
       searchQuery = $(this).val().toLowerCase().trim();
       renderSidebarList();
@@ -822,11 +931,14 @@
 
     $(window).off("resize.cardsTabs").on("resize.cardsTabs", function () {
       updateTabSlider(false);
+      updateMobileView();
     });
 
     setTimeout(() => updateTabSlider(false), 50);
     setTimeout(() => updateTabSlider(false), 200);
     setTimeout(() => updateTabSlider(false), 450);
+
+    updateMobileView();
 
     if (typeof ResizeObserver !== 'undefined') {
       const $bar = $(".cards-tab-bar");
@@ -879,6 +991,8 @@
 
       const $itemEl = $(itemHtml);
       $itemEl.on("click", function () {
+        mobileStep = 2;
+        updateMobileView();
         if (selectedAccountId !== item) {
           selectedAccountId = item;
           $(".cards-list-item").removeClass("active");
@@ -893,7 +1007,7 @@
 
   // ── RENDER CARD DETAILS (MATCHING CASA IN HOLDINGS) ──
   function renderCardDetails() {
-    const $details = $("#cards-details-area");
+    const $details = $("#cards-details-content");
     if (!$details.length) return;
 
     const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('EMPTY')) ||
@@ -939,69 +1053,154 @@
       let cardFieldsHtml = '';
       let totalSpan = 0;
 
-      // Render card image inside a cell of the detail fields grid
-      if (card.image) {
-        const imgTag = renderCardImage(card.image);
-        if (imgTag) {
-          totalSpan += 2; // card image spans full-width
-          cardFieldsHtml += `
-            <div class="detail-field-card full-width" style="padding: 10px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px;">
-              <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-bottom: 4px;">
-                <span class="df-icon-inline">🖼️</span> Card Design
-              </label>
-              <div class="card-img-container">
-                ${imgTag}
-              </div>
-            </div>
-          `;
-        }
-      }
-
+      let parsedFields = [];
       if (card.fields) {
         Object.entries(card.fields).forEach(([k, v]) => {
-          const valStr = String(v);
-          const icon = getLocalFieldIcon(k);
-          let isFullWidth = k.toLowerCase().includes("address") || k.toLowerCase().includes("details") || k.toLowerCase().includes("remarks");
-          if (!isFullWidth && window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
-            isFullWidth = window.UIRenderer.calculateTextSpan(valStr, 180, "600 12px 'Outfit', sans-serif") > 1;
-          } else if (!isFullWidth) {
-            isFullWidth = valStr.length > 25;
+          let isFullWidth = false;
+          let valStr = String(v);
+          if (v && typeof v === 'object' && (String(v.type).toLowerCase() === 'image' || v.href || v.base64)) {
+            isFullWidth = v.fullWidth === true;
+          } else {
+            isFullWidth = k.toLowerCase().includes("address") || k.toLowerCase().includes("details") || k.toLowerCase().includes("remarks");
+            if (!isFullWidth && window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
+              isFullWidth = window.UIRenderer.calculateTextSpan(valStr, 300, "600 12px 'Outfit', sans-serif") > 1;
+            } else if (!isFullWidth) {
+              isFullWidth = valStr.length > 50;
+            }
           }
-
-          const span = isFullWidth ? 2 : 1;
-          totalSpan += span;
-
-          cardFieldsHtml += `
-            <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}">
-              <div class="df-info">
-                <label class="df-label">
-                  <span class="df-icon-inline">${icon}</span> ${escapeHtml(k)}
-                </label>
-                <span class="df-value" style="display: block;">${escapeHtml(valStr)}</span>
-              </div>
-            </div>
-          `;
+          parsedFields.push({ k, v, isFullWidth, valStr });
         });
       }
 
-      const remainder = totalSpan % 2;
-      if (remainder !== 0) {
-        cardFieldsHtml += `
-          <div class="detail-field-card empty-placeholder"></div>
+      let topFieldsHtml = '';
+      let bottomFieldsHtml = '';
+      let topFieldsCount = 0;
+      let bottomSpan = 0;
+
+      // Render card image
+      let imageHtml = '';
+      let imgTag = card.image ? renderCardImage(card.image) : '';
+      if (imgTag) {
+        imageHtml = `
+          <div style="width: 50%; background: var(--bg); padding: 10px; display: flex; flex-direction: column; gap: 4px; border-right: 1px solid var(--border);">
+            <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-bottom: 4px;">
+              <span class="df-icon-inline">🖼️</span> Card Design
+            </label>
+            <div class="card-img-container" style="width: 100%; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+              ${imgTag}
+            </div>
+          </div>
         `;
+      }
+
+      let maxTopFields = 0;
+      if (imgTag) {
+        let currentHeight = 0;
+        for (let i = 0; i < parsedFields.length; i++) {
+          if (parsedFields[i].isFullWidth) break;
+          let fieldHeight = 62;
+          if (parsedFields[i].valStr) {
+            let len = parsedFields[i].valStr.length;
+            if (len > 30) fieldHeight += 18;
+            if (len > 60) fieldHeight += 18;
+          }
+          if (currentHeight + fieldHeight > 300 && maxTopFields > 0) break;
+          currentHeight += fieldHeight;
+          maxTopFields++;
+        }
+      }
+
+      parsedFields.forEach((field) => {
+        let valHtml = '';
+        const k = field.k;
+        const v = field.v;
+        const isFullWidth = field.isFullWidth;
+
+        if (v && typeof v === 'object' && (String(v.type).toLowerCase() === 'image' || v.href || v.base64)) {
+          const src = v.href || v.base64 || '';
+          const alt = v.alt || '';
+          const width = v.width || '100%';
+          const height = v.height || 'auto';
+          valHtml = `<img src="${src}" alt="${alt}" style="max-width: ${width}; height: ${height}; border-radius: 8px; margin-top: 8px; display: block; object-fit: fill;" />`;
+        } else {
+          valHtml = `<span class="df-value" style="display: block;">${escapeHtml(field.valStr)}</span>`;
+        }
+
+        const icon = getLocalFieldIcon(k);
+        let isTop = imgTag && !isFullWidth && topFieldsCount < maxTopFields;
+        let flexBasis = isFullWidth ? '100%' : (isTop ? '100%' : '20%');
+
+        const fieldHtml = `
+          <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="flex: 1 1 ${flexBasis}; min-width: 0; padding: 10px; background: var(--bg);">
+            <div class="df-info">
+              <label class="df-label">
+                <span class="df-icon-inline">${icon}</span> ${escapeHtml(k)}
+              </label>
+              ${valHtml}
+            </div>
+          </div>
+        `;
+
+        if (isTop) {
+          topFieldsHtml += fieldHtml;
+          topFieldsCount++;
+        } else {
+          bottomFieldsHtml += fieldHtml;
+        }
+      });
+
+      let combinedFieldsHtml = '';
+      if (imgTag) {
+        combinedFieldsHtml += `
+          <div style="display: flex; border-bottom: ${bottomFieldsHtml ? '1px solid var(--border)' : 'none'};">
+            ${imageHtml}
+            <div style="width: 50%; background: var(--bg);">
+              <div style="display: flex; flex-wrap: wrap; gap: 1px; background: var(--border); border-bottom: 1px solid var(--border);">
+                ${topFieldsHtml}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      if (bottomFieldsHtml || !imgTag) {
+        combinedFieldsHtml += `
+          <div style="display: flex; flex-wrap: wrap; gap: 1px; background: var(--border);">
+            ${bottomFieldsHtml}
+          </div>
+        `;
+      }
+
+      let headerLogoHtml = '';
+
+      let logoSrc = '';
+      let logoProp = card.logo || card.headerLogo || card.headerImage;
+      if (logoProp) {
+        if (typeof logoProp === 'object' && (logoProp.href || logoProp.base64)) {
+          logoSrc = logoProp.href || logoProp.base64;
+        } else if (typeof logoProp === 'string') {
+          logoSrc = logoProp;
+        }
+      }
+
+      if (logoSrc) {
+        headerLogoHtml = `<img src="${logoSrc}" alt="Logo" style="height: 18px; object-fit: contain;">`;
       }
 
       cardsHtml += `
         <div class="detail-section-block glass-card">
-          <div style="display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px;">
-            <span style="font-size: 20px;">💳</span>
-            <div style="display: flex; flex-direction: column; text-align: left;">
-              <h3 style="margin: 0; font-size: 13px; font-weight: 800; color: var(--accent2); text-transform: uppercase; letter-spacing: 1px; font-family: 'Outfit', sans-serif;">${escapeHtml(card.title || card.name || "Debit Card")}</h3>
-              <span style="font-size: 11px; color: var(--muted); font-family: monospace;">${escapeHtml(card.subtitle || card.number || "")}</span>
+          <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 20px;">💳</span>
+              <div style="display: flex; flex-direction: column; text-align: left;">
+                <h3 style="margin: 0; font-size: 13px; font-weight: 800; color: var(--accent2); text-transform: uppercase; letter-spacing: 1px; font-family: 'Outfit', sans-serif;">${escapeHtml(card.title || card.name || "Debit Card")}</h3>
+                <span style="font-size: 11px; color: var(--muted); font-family: monospace;">${escapeHtml(card.subtitle || card.number || "")}</span>
+              </div>
             </div>
+            ${headerLogoHtml ? `<div>${headerLogoHtml}</div>` : ''}
           </div>
-          <div class="detail-fields-grid">
-            ${cardFieldsHtml}
+          <div class="detail-fields-wrapper" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+            ${combinedFieldsHtml}
           </div>
         </div>
       `;

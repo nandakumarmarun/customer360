@@ -39,6 +39,19 @@
     _ajax: function(endpoint, method, data, successCallback, errorCallback) {
       const url = `${window.API_CONFIG.BASE_URL}${endpoint}`;
       
+      // Inject global API payload parameters
+      let globalParams = (window.ParamsData && typeof window.ParamsData.getApiPayload === 'function') 
+                         ? window.ParamsData.getApiPayload() : {};
+                         
+      let finalData = null;
+      if (data && typeof data === 'object' && !Array.isArray(data)) {
+        finalData = Object.assign({}, globalParams, data);
+      } else if (data) {
+        finalData = data;
+      } else if (Object.keys(globalParams).length > 0) {
+        finalData = globalParams;
+      }
+
       const ajaxOptions = {
         url: url,
         method: method,
@@ -78,12 +91,12 @@
         }
       };
 
-      if (data) {
+      if (finalData) {
         if (method === "GET" || method === "DELETE") {
-          ajaxOptions.data = data; // Automatically serialized as URL query string params
+          ajaxOptions.data = finalData; // Automatically serialized as standard URL query string params (?key=value)
         } else {
           ajaxOptions.contentType = "application/json";
-          ajaxOptions.data = JSON.stringify(data); // Sent as a JSON string request payload body
+          ajaxOptions.data = JSON.stringify(finalData); // Sent as a JSON string request payload body
         }
       }
 

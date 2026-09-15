@@ -82,6 +82,26 @@
     },
 
     /**
+     * Retrieve all parameters as a single object suitable for API payloads.
+     * @returns {object}
+     */
+    getApiPayload: function () {
+      return Object.assign({}, store);
+    },
+
+    /**
+     * Update or add multiple parameters at once from an object.
+     * @param {object} dataObj - Key-value pairs to add or update
+     */
+    updateApiPayload: function (dataObj) {
+      if (dataObj && typeof dataObj === 'object') {
+        Object.keys(dataObj).forEach(key => {
+          this.set(key, dataObj[key]);
+        });
+      }
+    },
+
+    /**
      * Subscribe to changes for a specific parameter key.
      * @param {string} key
      * @param {function(newValue, oldValue)} callback
@@ -143,6 +163,17 @@
     },
     set: function (value) {
       this.set('inputValue', value);
+    },
+    enumerable: true,
+    configurable: false
+  });
+
+  Object.defineProperty(ParamsData, 'apiPayload', {
+    get: function () {
+      return this.getApiPayload();
+    },
+    set: function (value) {
+      this.updateApiPayload(value);
     },
     enumerable: true,
     configurable: false
