@@ -70,7 +70,10 @@ window.API_CONFIG = {
     ACTIVITY_CONFIG: "/activitiesConfig",
     QUICK_MODULES: "/quickModules",
     MANDATES: "/mandates",
-    MANDATE_ACCOUNTS: "/mandateAccounts"
+    MANDATE_ACCOUNTS: "/mandateAccounts",
+    PENDING_CHARGES: "/pendingCharges",
+    INWARD_CHEQUE_ACCOUNTS: "/inwardChequeAccounts",
+    INWARD_CHEQUES: "/inwardCheques"
   },
 
   // Grouped Query Parameter keys used by backend APIs
@@ -148,8 +151,8 @@ window.HOLDING_CONFIG = [
     endpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_ASSETS,
     paramKey: "customerId",
     tabs: [
-      { id: "loans", title: "Asset Loans", icon: "🏠", matchType: "Asset Loans", detailsEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOANS_DETAILS, detailsParams: { idKey: "loanId" } },
-      { id: "goldLoans", title: "Gold Loans", icon: "🪙", matchType: "Gold Loans", detailsEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_GOLD_LOANS_DETAILS, detailsParams: { idKey: "goldLoanId" } }
+      { id: "loans", title: "Asset Loans", icon: "🏠", matchType: "Asset Loans", useSharedData: true, detailsEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_LOANS_DETAILS, detailsParams: { idKey: "loanId" } },
+      { id: "goldLoans", title: "Gold Loans", icon: "🪙", matchType: "Gold Loans", useSharedData: true, detailsEndpoint: window.API_CONFIG.ENDPOINTS.HOLDINGS_GOLD_LOANS_DETAILS, detailsParams: { idKey: "goldLoanId" } }
     ]
   },
   {
@@ -197,6 +200,33 @@ window.HOLDING_CONFIG = [
   }
 ];
 
+/**
+ * Configuration for the Services module.
+ */
+window.SERVICES_CONFIG = [
+  {
+    id: "inward-cheques",
+    title: "Inward Cheques",
+    icon: "🏦",
+    apiKey: "inwardCheques",
+    endpoint: window.API_CONFIG.ENDPOINTS.INWARD_CHEQUE_ACCOUNTS,
+    paramKey: "customerId",
+    tabs: [
+      {
+        id: "cheque-accounts",
+        title: "Accounts & Cheques",
+        icon: "📄",
+        matchType: "Inward Cheque Accounts",
+        endpoint: window.API_CONFIG.ENDPOINTS.INWARD_CHEQUE_ACCOUNTS,
+        paramKey: "customerId",
+        rightTabs: [
+          { id: "cheques", title: "Cheques", endpoint: window.API_CONFIG.ENDPOINTS.INWARD_CHEQUES, paramKey: "casaId", idField: "number" }
+        ]
+      }
+    ]
+  }
+];
+
 
 
 /**
@@ -234,7 +264,9 @@ window.QUICK_MODULES_CONFIG = [
   { id: "mandates", title: "Mandates", icon: "📋", enabled: true, order: 8 },
   { id: "cards", title: "Cards", icon: "💳", enabled: true, order: 9 },
   { id: "profiler", title: "Profiler", icon: "👤", enabled: true, order: 10 },
-  { id: "offers", title: "Offers", icon: "🏷️", enabled: true, order: 11 }
+  { id: "offers", title: "Offers", icon: "🏷️", enabled: true, order: 11 },
+  { id: "pending-charges", title: "Pending Charges", icon: "💸", enabled: true, order: 12 },
+  { id: "inward-cheque", title: "Inward Cheque", icon: "🏦", enabled: true, order: 13 }
 ];
 
 

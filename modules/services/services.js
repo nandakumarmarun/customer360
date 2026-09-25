@@ -95,8 +95,6 @@
     return `<img class="card-image" src="${src}" alt="${alt}" loading="lazy" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 6px;" />`;
   }
 
-
-
   // Subscribe to customer ID changes
   if (window.ParamsData) {
     window.ParamsData.subscribe('customerId', function (newCid) {
@@ -104,7 +102,7 @@
       // If Holdings module is currently open and active in the DOM, reload holdings
       const $header = $(".qm-header-inline");
       if ($header.length && $header.hasClass("holdings-active")) {
-        loadHoldings();
+        loadServices();
       }
     });
   }
@@ -192,7 +190,7 @@
   window.resolveConfigParams = resolveConfigParams;
 
   // ── CUSTOM HEADER RENDERING ──
-  function renderHoldingsHeader() {
+  function renderServicesHeader() {
     const $header = $(".qm-header-inline");
     if (!$header.length || !$header.hasClass("holdings-active")) {
       $header.removeClass("leads-active cases-active activities-active mandates-active cards-active").addClass("holdings-active");
@@ -209,7 +207,7 @@
             </button>
             <div class="qm-header-avatar" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); border: 1px solid var(--border); box-shadow: 0 0 10px var(--glow-shadow); font-size: 22px;">📊</div>
             <div class="qm-header-titles" style="display: flex; flex-direction: column;">
-              <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin: 0; text-transform: uppercase; font-family: 'Outfit', sans-serif;">PORTFOLIO HOLDINGS</h2>
+              <h2 id="qm-title" style="font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: 1px; margin: 0; text-transform: uppercase; font-family: 'Outfit', sans-serif;">CUSTOMER SERVICES</h2>
               <p class="qm-header-subtitle" style="font-size: 13px; color: var(--muted); margin-top: 2px; font-weight: 400; margin-bottom: 0;">Explorer tree and accounts detail summary</p>
             </div>
           </div>
@@ -251,8 +249,8 @@
     }
   }
 
-  function loadHoldings() {
-    renderHoldingsHeader();
+  function loadServices() {
+    renderServicesHeader();
     currentCustomerId = (window.ParamsData && window.ParamsData.getCustomerId) ? window.ParamsData.getCustomerId() : null;
 
     const $content = $("#qm-content");
@@ -308,7 +306,7 @@
         function (error) {
           if (window.UIRenderer) {
             window.UIRenderer.showError("#qm-content", "Failed to load holdings from API.", function () {
-              loadHoldings();
+              loadServices();
             });
           } else {
             const animPath = (window.UIRenderer && window.UIRenderer.getAnimationPath('ERROR')) || (window.ASSETS_CONFIG && window.ASSETS_CONFIG.ANIMATIONS && window.ASSETS_CONFIG.ANIMATIONS.ERROR) || '';
@@ -341,7 +339,7 @@
       <div class="holdings-landing-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; padding: 20px;">
     `;
 
-    window.HOLDING_CONFIG.forEach(cfg => {
+    window.SERVICES_CONFIG.forEach(cfg => {
       const catData = data[cfg.apiKey] || { subcategoriesCount: 0, accountsCount: 0 };
       cardsHtml += `
         <div class="holding-category-card glass-card info-card" data-category-id="${cfg.id}" style="min-height: 160px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; transition: all 0.3s ease; position: relative; overflow: hidden; border-radius: 14px;">
@@ -372,7 +370,7 @@
     // Bind Category Card clicks to open Explorer Modal
     $content.find(".holding-category-card").on("click", function () {
       const catId = $(this).attr("data-category-id");
-      const cfg = window.HOLDING_CONFIG.find(c => c.id === catId);
+      const cfg = window.SERVICES_CONFIG.find(c => c.id === catId);
       if (cfg) {
         openHoldingsExplorerModal(cfg);
       }
@@ -430,9 +428,10 @@
     let activeTabAccounts = []; // Stores fetched accounts for searching
     let categoryData = null;    // Cache for single API response
     let currentFilters = {
-      status: "Active"
+      status: "Active",
+      fromDate: "",
+      toDate: ""
     };
-
 
     // Handle single category API vs standard individual tab loading
     if (categoryCfg.endpoint) {
@@ -466,7 +465,6 @@
         $contentArea.html("<div style='text-align: center; color: #ef4444; padding: 40px;'>API Service is unavailable.</div>");
       }
     } else {
-      // Standard flow: tabs are loaded individually on click/active
       activeTabId = categoryCfg.tabs && categoryCfg.tabs.length > 0 ? categoryCfg.tabs[0].id : "";
       initLayout();
     }
@@ -574,7 +572,7 @@
           <div class="explorer-body">
             <!-- LEFT SECTION: Account List -->
             <div class="explorer-left">
-              <div class="explorer-filter-bar">
+              <div class="explorer-filter-bar" style="display: flex; gap: 8px; align-items: center; position: relative;">
                 <div class="explorer-search-wrap" style="position: relative; flex: 1;">
                   <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px;">🔍</span>
                   <input type="text" id="explorer-search-input" style="width: 100%; padding: 8px 12px 8px 34px; border-radius: 20px; background: var(--glass2); border: 1px solid var(--border); color: var(--text); outline: none; font-size: 13px;" placeholder="Search accounts..." />
@@ -588,7 +586,24 @@
                     <!-- Dynamic items -->
                   </div>
                 </div>
+                <button id="explorer-date-filter-toggle" style="background: var(--glass2); border: 1px solid var(--border); color: var(--text); padding: 6px 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; height: 32px;">
+                  <span style="font-size: 14px; display: flex; align-items: center; justify-content: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                  </span>
+                </button>
               </div>
+              <div id="explorer-date-filter-panel" style="display: none; background: var(--glass2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 12px; gap: 10px; flex-wrap: wrap; align-items: flex-end;">
+                <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 120px;">
+                  <label style="font-size: 11px; color: var(--muted); font-weight: 600;">From</label>
+                  <input type="date" id="explorer-date-from" style="padding: 6px 10px; border-radius: 6px; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 12px; outline: none;">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 120px;">
+                  <label style="font-size: 11px; color: var(--muted); font-weight: 600;">To</label>
+                  <input type="date" id="explorer-date-to" style="padding: 6px 10px; border-radius: 6px; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 12px; outline: none;">
+                </div>
+                <button id="explorer-date-apply-btn" style="background: var(--accent); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 12px; font-weight: 600; height: 32px; transition: all 0.2s;">Apply</button>
+              </div>
+              <div id="explorer-active-filters" style="display: flex; padding: 0 0 12px 0; gap: 8px; flex-wrap: wrap; margin-top: -4px;"></div>
               <div class="account-list" id="explorer-account-list" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-bottom: 20px;">
                 <!-- Dynamically rendered accounts -->
               </div>
@@ -619,6 +634,22 @@
 
       $(document).off("click.statusfilter").on("click.statusfilter", function () {
         $contentArea.find("#explorer-status-filter-container").removeClass("open");
+      });
+
+      $contentArea.find("#explorer-date-filter-toggle").on("click", function () {
+        const $panel = $contentArea.find("#explorer-date-filter-panel");
+        if ($panel.css("display") === "none") {
+          $panel.css("display", "flex");
+        } else {
+          $panel.css("display", "none");
+        }
+      });
+
+      $contentArea.find("#explorer-date-apply-btn").on("click", function () {
+        currentFilters.fromDate = $contentArea.find("#explorer-date-from").val();
+        currentFilters.toDate = $contentArea.find("#explorer-date-to").val();
+        $contentArea.find("#explorer-date-filter-panel").css("display", "none");
+        applyFilters();
       });
 
 
@@ -652,6 +683,10 @@
             activePreviewTabId = tab.rightTabs && tab.rightTabs.length > 0 ? tab.rightTabs[0].id : "details";
             $contentArea.find("#explorer-search-input").val(""); // reset search on tab swap
             currentFilters.status = "Active"; // reset status filter on tab swap
+            currentFilters.fromDate = "";
+            currentFilters.toDate = "";
+            $contentArea.find("#explorer-date-from").val("");
+            $contentArea.find("#explorer-date-to").val("");
             renderTabs();
             loadActiveCategoryItems();
           }
@@ -814,6 +849,44 @@
     }
 
     function applyFilters() {
+      const $badgesContainer = $contentArea.find("#explorer-active-filters");
+      if ($badgesContainer.length) {
+        $badgesContainer.empty();
+        if (currentFilters.fromDate || currentFilters.toDate) {
+          const formatDate = (d) => {
+            if (!d) return "";
+            const parts = d.split("-");
+            if (parts.length === 3) {
+              return `${parts[2]}/${parts[1]}/${parts[0]}`;
+            }
+            return d;
+          };
+          let label = "Date: ";
+          const fFrom = formatDate(currentFilters.fromDate);
+          const fTo = formatDate(currentFilters.toDate);
+          
+          if (currentFilters.fromDate && currentFilters.toDate) {
+            label += fFrom + " to " + fTo;
+          } else if (currentFilters.fromDate) {
+            label += "From " + fFrom;
+          } else {
+            label += "Until " + fTo;
+          }
+          const $badge = $(`<div style="display: inline-flex; align-items: center; gap: 6px; background: var(--accent); border: 1px solid var(--accent2); color: #fff; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <span>${label}</span>
+            <span class="clear-date-filter" style="cursor: pointer; font-size: 14px; line-height: 1; margin-left: 2px;">&times;</span>
+          </div>`);
+          $badge.find(".clear-date-filter").on("click", function () {
+            currentFilters.fromDate = "";
+            currentFilters.toDate = "";
+            $contentArea.find("#explorer-date-from").val("");
+            $contentArea.find("#explorer-date-to").val("");
+            applyFilters();
+          });
+          $badgesContainer.append($badge);
+        }
+      }
+
       const statusKey = fName("tag") || "status";
       const nameKey = fName("title") || "name";
       const numberKey = fName("subtitle") || "number";
@@ -831,7 +904,27 @@
         });
       }
 
-      // 2. Text Search Filter
+      // 2. Date Filter
+      if (currentFilters.fromDate || currentFilters.toDate) {
+        let fromDateObj = currentFilters.fromDate ? new Date(currentFilters.fromDate) : null;
+        let toDateObj = currentFilters.toDate ? new Date(currentFilters.toDate) : null;
+        if (toDateObj) {
+          toDateObj.setDate(toDateObj.getDate() + 1); // Make it inclusive
+        }
+
+        filtered = filtered.filter(acc => {
+          const dateVal = acc.date || acc.createdAt || acc.issueDate || (acc.fullDetails && acc.fullDetails.fields && acc.fullDetails.fields.Date) || "";
+          const accDate = new Date(dateVal);
+          if (isNaN(accDate.getTime())) return true; // Keep if invalid/missing date
+
+          let valid = true;
+          if (fromDateObj && accDate < fromDateObj) valid = false;
+          if (toDateObj && accDate >= toDateObj) valid = false;
+          return valid;
+        });
+      }
+
+      // 3. Text Search Filter
       if (query) {
         filtered = filtered.filter(acc =>
           (acc[nameKey] ? String(acc[nameKey]).toLowerCase().includes(query) : false) ||
@@ -839,8 +932,18 @@
         );
       }
 
+      // Preserve selected account if it's still in the filtered list
+      const currentSelectedAcc = activeTabAccounts && activeTabAccounts[selectedAccountIndex];
+      let newSelectedIndex = 0;
+      if (currentSelectedAcc) {
+        const foundIdx = filtered.findIndex(acc => acc.id === currentSelectedAcc.id || acc.number === currentSelectedAcc.number || acc.title === currentSelectedAcc.title);
+        if (foundIdx !== -1) {
+          newSelectedIndex = foundIdx;
+        }
+      }
+
       // Render filtered accounts
-      selectedAccountIndex = 0;
+      selectedAccountIndex = newSelectedIndex;
       renderAccounts(filtered);
     }
 
@@ -1069,8 +1172,6 @@
             sectionsHtml += renderSectionBlock(sec);
           });
           $container.html(sectionsHtml);
-        } else if (subTabId === "transactions") {
-          renderTransactions(acc, $container);
         } else {
           // Find configuration of this sub-tab
           const rtConfig = activeTab.rightTabs.find(rt => rt.id === subTabId);
@@ -1085,6 +1186,9 @@
           const valField = rtConfig.idField || "number";
           params[paramKey] = acc[valField];
 
+          if (currentFilters.fromDate) params.fromDate = currentFilters.fromDate;
+          if (currentFilters.toDate) params.toDate = currentFilters.toDate;
+
           if (window.UIRenderer) {
             window.UIRenderer.showLoader("#preview-tab-content-area");
           } else {
@@ -1098,6 +1202,24 @@
               function (response) {
                 if (window.UIRenderer) window.UIRenderer.hideLoader("#preview-tab-content-area");
                 let cards = Array.isArray(response) ? response : [];
+
+                if (currentFilters.fromDate || currentFilters.toDate) {
+                  let fromDateObj = currentFilters.fromDate ? new Date(currentFilters.fromDate) : null;
+                  let toDateObj = currentFilters.toDate ? new Date(currentFilters.toDate) : null;
+                  if (toDateObj) toDateObj.setDate(toDateObj.getDate() + 1);
+
+                  cards = cards.filter(card => {
+                    const dateVal = card.date || card.createdAt || card.issueDate || (card.fields && card.fields.Date) || "";
+                    const cardDate = new Date(dateVal);
+                    if (isNaN(cardDate.getTime())) return true;
+
+                    let valid = true;
+                    if (fromDateObj && cardDate < fromDateObj) valid = false;
+                    if (toDateObj && cardDate >= toDateObj) valid = false;
+                    return valid;
+                  });
+                }
+
                 if (cards.length === 0) {
                   $container.html(`<div style="text-align: center; color: var(--muted); padding: 50px 10px; font-style: italic; font-size: 13px;">No cards linked to this account.</div>`);
                   return;
@@ -1274,199 +1396,7 @@
         }
       }
 
-
-
-      function renderTransactionIconHtml(txn) {
-        const isCredit = String(txn.type).toLowerCase() === 'credit';
-        return isCredit ? 'C' : 'D';
-      }
-
-      function renderTransactions(acc, $container) {
-        const rtConfig = activeTab.rightTabs.find(rt => rt.id === "transactions");
-        if (!rtConfig || !rtConfig.endpoint) {
-          $container.html(`<div style="text-align: center; color: var(--muted); padding: 50px 10px; font-style: italic;">Configuration error.</div>`);
-          return;
-        }
-
-        const params = {};
-        const paramKey = rtConfig.paramKey || "casaId";
-        const valField = rtConfig.idField || "number";
-        params[paramKey] = acc[valField];
-
-        if (window.UIRenderer) {
-          window.UIRenderer.showLoader("#preview-tab-content-area");
-        } else {
-          $container.html(`<div style="text-align: center; color: var(--muted); padding: 30px 10px;">Loading Transactions...</div>`);
-        }
-
-        if (window.ApiService) {
-          window.ApiService.get(
-            rtConfig.endpoint,
-            params,
-            function (response) {
-              if (window.UIRenderer) window.UIRenderer.hideLoader("#preview-tab-content-area");
-              let txns = Array.isArray(response) ? response : [];
-              if (txns.length === 0) {
-                $container.html(`<div style="text-align: center; color: var(--muted); padding: 50px 10px; font-style: italic; font-size: 13px;">No transactions linked to this account.</div>`);
-                return;
-              }
-
-              let txnsHtml = '<div style="display: flex; flex-direction: column; gap: 8px; padding: 4px;">';
-              txns.forEach(txn => {
-                const iconHtml = renderTransactionIconHtml(txn);
-                const isCredit = String(txn.type).toLowerCase() === 'credit';
-                const status = (txn.fields && txn.fields["Status"]) || "Success";
-                const statusLower = status.toLowerCase();
-                let statusClass = 'pending';
-                if (statusLower === 'success' || statusLower === 'completed') {
-                  statusClass = 'success';
-                } else if (statusLower === 'failed' || statusLower === 'declined') {
-                  statusClass = 'failed';
-                }
-
-                txnsHtml += `
-                  <div class="txn-list-item" data-txn-id="${txn.id}">
-                    <div class="txn-item-left">
-                      <div class="txn-category-icon ${isCredit ? 'credit' : 'debit'}">${iconHtml}</div>
-                      <div class="txn-meta">
-                        <span class="txn-description">${txn.description}</span>
-                        <span class="txn-date">${txn.date}</span>
-                      </div>
-                    </div>
-                    <div class="txn-item-right">
-                      <div class="txn-amount-wrap">
-                        <span class="txn-amount ${isCredit ? 'credit' : 'debit'}">${txn.amount}</span>
-                        <span class="txn-badge ${statusClass}">${status}</span>
-                      </div>
-                      <div class="txn-arrow-indicator">→</div>
-                    </div>
-                  </div>
-                `;
-              });
-              txnsHtml += '</div>';
-              $container.html(txnsHtml);
-
-              // Click handler on list items to open transaction details offcanvas
-              $container.find('.txn-list-item').on('click', function () {
-                const txnId = $(this).data('txn-id');
-                const txnData = txns.find(t => t.id === txnId);
-                if (txnData) {
-                  openTxnDetailOffcanvas(txnData);
-                }
-              });
-            },
-            function (error) {
-              if (window.UIRenderer) window.UIRenderer.hideLoader("#preview-tab-content-area");
-              $container.html(`<div style="text-align: center; color: #ef4444; padding: 50px 10px; font-size: 13px;">Error loading transactions: ${error}</div>`);
-            }
-          );
-        } else {
-          if (window.UIRenderer) window.UIRenderer.hideLoader("#preview-tab-content-area");
-          $container.html("<div style='text-align: center; color: #ef4444; padding: 40px;'>API Service is unavailable.</div>");
-        }
-      }
-
-      function openTxnDetailOffcanvas(txn) {
-        const $panel = $("#txn-detail-panel");
-        const $backdrop = $("#txn-detail-backdrop");
-        const $body = $("#txn-detail-body");
-
-        if (!$panel.length || !$backdrop.length || !$body.length) return;
-
-        // Build details content
-        let fieldsHtml = '';
-        let totalSpan = 0;
-        if (txn.fields) {
-          fieldsHtml += `<div class="detail-fields-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; gap: 1px;">`;
-          Object.entries(txn.fields).forEach(([k, v]) => {
-            const valStr = String(v);
-            const icon = getLocalFieldIcon(k);
-            let highlightStyle = '';
-            if (k.toLowerCase() === 'status') {
-              const isSuccess = valStr.toLowerCase() === 'success';
-              highlightStyle = `color: ${isSuccess ? '#10b981' : '#ef4444'}; font-weight: 800;`;
-            } else if (k.toLowerCase() === 'amount') {
-              const isCredit = String(txn.type).toLowerCase() === 'credit';
-              highlightStyle = `color: ${isCredit ? '#10b981' : 'var(--text)'}; font-weight: 800; font-size: 16px;`;
-            }
-
-            let isFullWidth = k.toLowerCase().includes("id") || k.toLowerCase().includes("reference") || k.toLowerCase().includes("merchant") || k.toLowerCase().includes("date") || k.toLowerCase().includes("remarks");
-            if (!isFullWidth && window.UIRenderer && typeof window.UIRenderer.calculateTextSpan === 'function') {
-              isFullWidth = window.UIRenderer.calculateTextSpan(valStr, 180, "600 12px 'Outfit', sans-serif") > 1;
-            } else if (!isFullWidth) {
-              isFullWidth = valStr.length > 20;
-            }
-
-            const span = isFullWidth ? 2 : 1;
-            totalSpan += span;
-
-            fieldsHtml += `
-              <div class="detail-field-card ${isFullWidth ? 'full-width' : ''}" style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: var(--bg2);">
-                <div class="df-info" style="display: flex; flex-direction: column;">
-                  <label class="df-label" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-bottom: 4px;">
-                    <span class="df-icon-inline">${icon}</span> ${k}
-                  </label>
-                  <span class="df-value" style="display: block; font-size: 13px; font-weight: 600; color: var(--text); ${highlightStyle}">${valStr}</span>
-                </div>
-              </div>
-            `;
-          });
-
-          const remainder = totalSpan % 2;
-          if (remainder !== 0) {
-            fieldsHtml += `
-              <div class="detail-field-card empty-placeholder" style="padding: 12px 14px; border-bottom: 1px solid var(--border); background: var(--bg2);"></div>
-            `;
-          }
-          fieldsHtml += `</div>`;
-        }
-
-        const iconHtml = renderTransactionIconHtml(txn);
-        const isCredit = String(txn.type).toLowerCase() === 'credit';
-
-        const contentHtml = `
-          <div style="text-align: center; padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-            <div class="txn-category-icon-lg ${isCredit ? 'credit' : 'debit'}" style="width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); font-size: 28px; font-weight: 800;">
-              ${iconHtml}
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 2px;">
-              <span style="font-size: 16px; font-weight: 800; color: var(--text);">${txn.description}</span>
-              <span style="font-size: 12px; color: var(--muted);">${txn.category}</span>
-            </div>
-            <div style="font-size: 26px; font-weight: 900; margin-top: 5px; ${isCredit ? 'color: #10b981;' : 'color: var(--text);'}">${txn.amount}</div>
-          </div>
-          ${fieldsHtml}
-        `;
-
-        $body.html(contentHtml);
-
-        // Open offcanvas
-        $panel.removeClass("hidden");
-        $backdrop.removeClass("hidden");
-        // force reflow
-        $panel[0].offsetHeight;
-        $backdrop[0].offsetHeight;
-        $panel.addClass("active");
-        $backdrop.addClass("active");
-
-        // Bind close events
-        function closeTxnPanel() {
-          $panel.removeClass("active");
-          $backdrop.removeClass("active");
-          setTimeout(() => {
-            if (!$panel.hasClass("active")) {
-              $panel.addClass("hidden");
-              $backdrop.addClass("hidden");
-            }
-          }, 400);
-        }
-
-        $("#txn-detail-close-btn").off("click").on("click", closeTxnPanel);
-        $backdrop.off("click").on("click", closeTxnPanel);
-      }
-
       if (activeTab && activeTab.rightTabs) {
-        // Render sub-tabs container
         let tabsHtml = `
           <div class="preview-tabs-bar" style="display: flex; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-top: 12px; margin-bottom: 14px; margin-left: 12px; margin-right: 12px; flex-shrink: 0;">
         `;
@@ -1534,15 +1464,16 @@
       });
       $preview.prepend($backBar);
     }
+
   }
 
   // ── MUTATIONOBSERVER & EVENT LISTENER ON QUICK MODULE TITLES ──
   $(function () {
     function checkTitle(text) {
       if (!text) return;
-      if (text === "Holding Module" || text === "Holding") {
-        loadHoldings();
-      } else if (text !== "" && !text.includes("PORTFOLIO HOLDINGS") && !headerRestored) {
+      if (text === "Services Module" || text === "Services") {
+        loadServices();
+      } else if (text !== "" && !text.includes("CUSTOMER SERVICES") && !headerRestored) {
         restoreDefaultHeader(text);
       }
     }

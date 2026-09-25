@@ -949,8 +949,7 @@ function initQuickModules() {
       // Filter out disabled modules, sort them by the 'order' property, and limit to the first 9 items
       const activeConfig = config
         .filter(module => module.enabled !== false)
-        .sort((a, b) => (a.order || 999) - (b.order || 999))
-        .slice(0, 9);
+        .sort((a, b) => (a.order || 999) - (b.order || 999));
 
       activeConfig.forEach(module => {
         const isComingSoon = !module.id || String(module.id).trim() === '' || module.comingSoon === true;
@@ -986,8 +985,10 @@ function initQuickModules() {
     // Generate Navigation Dots
     if (qmNavDots) {
       qmNavDots.innerHTML = '';
+      let dotCount = 0;
       qmModules.forEach((m, i) => {
         if (m.comingSoon) return; // Skip coming soon modules!
+        if (dotCount >= 9) return;
 
         const dot = document.createElement('div');
         dot.className = 'qm-dot';
@@ -1001,6 +1002,7 @@ function initQuickModules() {
           }
         });
         qmNavDots.appendChild(dot);
+        dotCount++;
       });
     // Toggle open/close on nav dots container (mobile only)
     qmNavDots.addEventListener('click', (e) => {

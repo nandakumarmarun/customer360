@@ -1,4 +1,96 @@
 {
+  "pendingCharges": [
+    {
+      "title": "Late Payment Fee",
+      "amount": "₹500",
+      "date": "17 Sep 2026"
+    },
+    {
+      "title": "Processing Charge",
+      "amount": "₹1,200",
+      "date": "15 Sep 2026"
+    },
+    {
+      "title": "Service Charge",
+      "amount": "₹250",
+      "date": "12 Sep 2026"
+    },
+    {
+      "title": "Late Payment Fee",
+      "amount": "₹500",
+      "date": "17 Sep 2026"
+    },
+    {
+      "title": "Processing Charge",
+      "amount": "₹1,200",
+      "date": "15 Sep 2026"
+    },
+    {
+      "title": "Service Charge",
+      "amount": "₹250",
+      "date": "12 Sep 2026"
+    },
+    {
+      "title": "Late Payment Fee",
+      "amount": "₹500",
+      "date": "17 Sep 2026"
+    },
+    {
+      "title": "Processing Charge",
+      "amount": "₹1,200",
+      "date": "15 Sep 2026"
+    },
+    {
+      "title": "Service Charge",
+      "amount": "₹250",
+      "date": "12 Sep 2026"
+    },
+    {
+      "title": "Late Payment Fee",
+      "amount": "₹500",
+      "date": "17 Sep 2026"
+    },
+    {
+      "title": "Processing Charge",
+      "amount": "₹1,200",
+      "date": "15 Sep 2026"
+    },
+    {
+      "title": "Service Charge",
+      "amount": "₹250",
+      "date": "12 Sep 2026"
+    },
+    {
+      "title": "Late Payment Fee",
+      "amount": "₹500",
+      "date": "17 Sep 2026"
+    },
+    {
+      "title": "Processing Charge",
+      "amount": "₹1,200",
+      "date": "15 Sep 2026"
+    },
+    {
+      "title": "Service Charge",
+      "amount": "₹250",
+      "date": "12 Sep 2026"
+    },
+    {
+      "title": "Late Payment Fee",
+      "amount": "₹500",
+      "date": "17 Sep 2026"
+    },
+    {
+      "title": "Processing Charge",
+      "amount": "₹1,200",
+      "date": "15 Sep 2026"
+    },
+    {
+      "title": "Service Charge",
+      "amount": "₹250",
+      "date": "12 Sep 2026"
+    }
+  ],
   "customer": {
     "summary": {
       "customerType": "Corporate",
@@ -1227,6 +1319,20 @@
       "icon": "🏷️",
       "enabled": true,
       "order": 11
+    },
+    {
+      "id": "pending-charges",
+      "title": "Pending Charges",
+      "icon": "💸",
+      "enabled": true,
+      "order": 12
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "icon": "🏦",
+      "enabled": true,
+      "order": 13
     }
   ],
   "loanDetails": [
@@ -8061,6 +8167,1326 @@
       "status": "skipped",
       "timestamp": "2026-09-14T10:28:52.977Z",
       "id": "NBhdJtQ"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T07:09:54.231Z",
+      "id": "uoD0Xpm"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T07:09:55.405Z",
+      "id": "5Y6EYWI"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T07:10:18.710Z",
+      "id": "4kYrvFy"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T07:10:19.752Z",
+      "id": "w9htCwB"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T07:11:41.099Z",
+      "id": "pKRalw-"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T07:11:48.518Z",
+      "id": "0diJZYI"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T07:11:49.600Z",
+      "id": "8NYLiZz"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T07:16:15.653Z",
+      "id": "BPIkHdM"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T07:16:16.641Z",
+      "id": "9BhWpel"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T07:18:00.720Z",
+      "id": "TUp3SqU"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T07:19:02.197Z",
+      "id": "5OfMDIy"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T07:24:03.072Z",
+      "id": "BEQg7hd"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T07:24:04.087Z",
+      "id": "2SM2UG0"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T07:25:15.510Z",
+      "id": "wSq9tLV"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T07:25:16.343Z",
+      "id": "M56R-g4"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T07:25:47.323Z",
+      "id": "LqHbGwD"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T07:25:48.392Z",
+      "id": "EWFvnPF"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T09:23:02.494Z",
+      "id": "QhigBwg"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T09:23:03.849Z",
+      "id": "PvEz-9v"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T09:23:22.293Z",
+      "id": "wL97wLe"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T09:23:28.937Z",
+      "id": "cYr6foc"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T09:23:42.314Z",
+      "id": "co9HDmc"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T09:23:43.203Z",
+      "id": "RTKJU1L"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T09:35:01.595Z",
+      "id": "frMOJig"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T09:35:02.501Z",
+      "id": "MXnvwXp"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T09:40:18.557Z",
+      "id": "QK4bqmr"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T09:40:20.238Z",
+      "id": "SLYCfTC"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T09:41:41.410Z",
+      "id": "Wbo_I05"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T09:41:42.529Z",
+      "id": "wGI9vvi"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T10:03:50.153Z",
+      "id": "oSNRfYH"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T10:03:51.153Z",
+      "id": "Zyjte3k"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T11:15:56.503Z",
+      "id": "PpklI7-"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T11:15:57.559Z",
+      "id": "Z_YbLlC"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-17T11:19:05.050Z",
+      "id": "4i5S0gw"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-17T11:19:06.045Z",
+      "id": "ZQtol71"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-18T11:29:25.580Z",
+      "id": "z4qq1nV"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-18T11:29:26.767Z",
+      "id": "DqME1l7"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-18T11:43:20.535Z",
+      "id": "V_27GrP"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-18T11:43:53.859Z",
+      "id": "BQLvUvJ"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-18T11:47:41.988Z",
+      "id": "AFcC8l9"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-18T11:47:43.048Z",
+      "id": "9IPf5am"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-18T11:49:52.118Z",
+      "id": "Cb84WxD"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-18T11:50:08.692Z",
+      "id": "5de_z33"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T04:59:55.223Z",
+      "id": "u6Nr-48"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T04:59:56.613Z",
+      "id": "yayX_XY"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T05:17:06.132Z",
+      "id": "QGSgWUi"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T05:18:28.416Z",
+      "id": "d0GCg43"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T05:28:05.081Z",
+      "id": "uLReLnH"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T05:28:06.018Z",
+      "id": "Sr89RJt"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T05:45:45.335Z",
+      "id": "OmhVqWx"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T05:45:46.275Z",
+      "id": "pdpMBsq"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T05:50:29.273Z",
+      "id": "h1B3Mq7"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T05:50:30.640Z",
+      "id": "LlUeqB4"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T05:55:35.419Z",
+      "id": "xvQskBd"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T05:55:36.392Z",
+      "id": "gfmQ2Xg"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T05:57:40.105Z",
+      "id": "p3-6nNv"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T05:57:41.757Z",
+      "id": "-bEvoPj"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T06:10:46.683Z",
+      "id": "4rIbZHj"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T06:10:48.654Z",
+      "id": "xomgu4G"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T06:12:13.737Z",
+      "id": "ZRPwLrt"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T06:12:15.675Z",
+      "id": "lzi-HJ0"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T06:12:45.406Z",
+      "id": "dxk0jLl"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T06:13:01.480Z",
+      "id": "W93hmUk"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T09:32:49.333Z",
+      "id": "OtuSEWT"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T09:32:50.301Z",
+      "id": "b9Pnthg"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T09:36:25.595Z",
+      "id": "Hx5ai8e"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T09:36:27.226Z",
+      "id": "-mOkT8H"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T09:40:34.984Z",
+      "id": "THbYHkY"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T09:40:36.440Z",
+      "id": "doLyG6y"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T09:41:16.053Z",
+      "id": "MaKVmi8"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T09:41:16.948Z",
+      "id": "xWfZ7CT"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T09:51:40.373Z",
+      "id": "Gl_oTt9"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T09:51:42.799Z",
+      "id": "8gdarQX"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T10:14:33.728Z",
+      "id": "E7Da5M-"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T10:14:36.571Z",
+      "id": "sMwwTUR"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T10:14:49.645Z",
+      "id": "l1UgtCw"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T10:14:51.592Z",
+      "id": "UnyOU9l"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T10:16:57.330Z",
+      "id": "EJHEdNA"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T10:16:58.765Z",
+      "id": "7bVOgHL"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T10:23:09.403Z",
+      "id": "-9-EMn-"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T10:23:24.981Z",
+      "id": "bm6R3sq"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T10:30:08.240Z",
+      "id": "dMxY867"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T10:30:09.279Z",
+      "id": "Qs2sBtz"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T11:25:45.127Z",
+      "id": "BvDtaJf"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T11:25:46.098Z",
+      "id": "wlT7_RP"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T11:43:55.137Z",
+      "id": "gVXibMw"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-19T11:44:01.247Z",
+      "id": "7vv8NS9"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-19T11:44:02.289Z",
+      "id": "RUdPTFP"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T05:34:42.643Z",
+      "id": "bBvhkCj"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-22T05:34:44.973Z",
+      "id": "7BVxblq"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T05:41:23.840Z",
+      "id": "3ry1pEq"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T05:41:29.889Z",
+      "id": "kpeY5NS"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-22T05:41:31.832Z",
+      "id": "XA7qvEk"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T05:43:46.233Z",
+      "id": "ujQ_PYK"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-22T05:43:47.277Z",
+      "id": "XCQQ4WX"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T05:46:26.246Z",
+      "id": "JK61sRg"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-22T05:46:29.603Z",
+      "id": "hnq59ui"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T06:09:08.252Z",
+      "id": "0zQkMXH"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-22T06:09:09.169Z",
+      "id": "eHiIuRB"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T06:29:42.013Z",
+      "id": "-8UAYov"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-22T06:29:42.862Z",
+      "id": "Hjq19uA"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T09:32:19.685Z",
+      "id": "oHJJbeC"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-22T09:32:20.620Z",
+      "id": "hWtr6Oh"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T09:38:43.403Z",
+      "id": "uM73Q8a"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-22T09:38:44.343Z",
+      "id": "aaGepDW"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T09:39:14.191Z",
+      "id": "MPF6rwa"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-22T09:39:15.562Z",
+      "id": "y4ZKweK"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T09:40:20.324Z",
+      "id": "aeNnGaH"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-22T09:40:21.738Z",
+      "id": "E6TnPYi"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T09:55:30.571Z",
+      "id": "r_nEDK-"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-22T09:57:35.402Z",
+      "id": "MCLWfCs"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T10:22:28.744Z",
+      "id": "PDlY1qD"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-22T10:22:56.187Z",
+      "id": "YLLZ0vL"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-22T10:27:39.051Z",
+      "id": "tMRYTx4"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-22T10:27:39.732Z",
+      "id": "iCzAuIs"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-23T11:18:10.925Z",
+      "id": "HGWjTl1"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "next_clicked",
+      "timestamp": "2026-09-23T11:18:13.084Z",
+      "id": "j_bB8yB"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 2,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-23T11:18:14.381Z",
+      "id": "yJEyo9L"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "started",
+      "timestamp": "2026-09-25T09:20:55.884Z",
+      "id": "UHBra3M"
+    },
+    {
+      "customerId": "NX-4829-0055",
+      "panNumber": "ABCDE1234F",
+      "userId": "user_123",
+      "viewId": "DASHBOARD_VIEW",
+      "step": 1,
+      "totalSteps": 12,
+      "status": "skipped",
+      "timestamp": "2026-09-25T09:21:02.414Z",
+      "id": "0ZANmKy"
     }
   ],
   "activities": {
@@ -8881,6 +10307,77 @@
       "id": 1,
       "Reward points Balance": "1245 pts",
       "Reward Points Expiry": "1245 pts"
+    }
+  ],
+  "inwardChequeAccounts": [
+    {
+      "id": "1",
+      "customer": "NX-4829-0055",
+      "number": "5D0100123456789",
+      "name": "Super Saver Salary Account",
+      "status": "Active"
+    },
+    {
+      "id": "2",
+      "customer": "NX-4829-0055",
+      "number": "5D0200987654321",
+      "name": "Current Account - Biz",
+      "status": "Active"
+    }
+  ],
+  "inwardCheques": [
+    {
+      "id": "c1",
+      "casaId": "5D0100123456789",
+      "title": "Inward Cheque",
+      "subtitle": "HDFC Bank - MG Road",
+      "status": "Cleared",
+      "fields": {
+        "Cheque Number": "123456",
+        "Amount": "₹5,000",
+        "Drawer": "John Doe",
+        "Date": "18 Sep 2026"
+      }
+    },
+    {
+      "id": "c2",
+      "casaId": "5D0100123456789",
+      "title": "Inward Cheque",
+      "subtitle": "SBI - Koramangala",
+      "status": "Pending",
+      "fields": {
+        "Cheque Number": "987654",
+        "Amount": "₹12,500",
+        "Drawer": "Acme Corp",
+        "Date": "19 Sep 2026"
+      }
+    },
+    {
+      "id": "c3",
+      "casaId": "5D0200987654321",
+      "title": "Inward Cheque",
+      "subtitle": "SBI - Connaught Place",
+      "status": "Bounced",
+      "fields": {
+        "Cheque Number": "987654",
+        "Amount": "₹1,50,000",
+        "Drawer": "Vendor LLC",
+        "Date": "15 Sep 2026"
+      }
+    },
+    {
+      "id": "c4",
+      "casaId": "5D0200987654321",
+      "chequeNumber": "445566",
+      "amount": "₹25,000",
+      "date": "20 Sep 2026",
+      "status": "Pending",
+      "fields": {
+        "Cheque Number": "987654",
+        "Amount": "₹1,50,000",
+        "Drawer": "Vendor LLC",
+        "Date": "15 Sep 2026"
+      }
     }
   ]
 }
